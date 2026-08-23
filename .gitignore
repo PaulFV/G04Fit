@@ -1,0 +1,5 @@
+   src/
+   docs/
+   *.sln
+   obj/
+   bin/
