@@ -10,12 +10,36 @@
 .fig-box{position:relative;width:100%;overflow:hidden}
 .fig-box > .fig,
 .fig-box > .mmap{position:absolute;top:8px;left:8px;width:calc(100% - 16px);height:calc(100% - 16px)}
-.fig .bone{stroke:var(--tx-1);stroke-width:7;stroke-linecap:round;fill:none;transition:stroke .3s}
-.fig .head{fill:var(--tx-1);stroke:none}
-.fig .load{stroke:var(--neon);stroke-width:8;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(61,255,158,.6))}
-.fig .plate{fill:var(--neon);filter:drop-shadow(0 0 8px rgba(61,255,158,.55))}
-.fig .bench{stroke:rgba(255,255,255,.16);stroke-width:6;stroke-linecap:round}
-.fig .accent{stroke:var(--neon)}
+/* Der Fotorahmen bleibt schmal und mittig – ein hochformatiges Bild soll
+   nicht in einem übermäßig breiten Kasten schwimmen. */
+.fig-box > .exphoto{
+  position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:min(calc(100% - 16px),320px);height:calc(100% - 16px);
+}
+/* ---- Körper ---- */
+.fig .body{fill:#B6C7BF;stroke:none}
+/* Hintere Gliedmaßen dunkler — erzeugt Tiefe */
+.fig .body--far{fill:#6E7F79}
+/* Arbeitender Muskel */
+.fig .hl{
+  fill:var(--hl,#3DFF9E);
+  filter:drop-shadow(0 0 7px var(--hl,#3DFF9E));
+  opacity:.95;
+}
+
+/* ---- Geräte ---- */
+.fig .floor{fill:rgba(255,255,255,.14)}
+.fig .pad{fill:#33454F;stroke:rgba(255,255,255,.20);stroke-width:1.2}
+.fig .frame{fill:#2C3D47;stroke:rgba(255,255,255,.16);stroke-width:1.2}
+.fig .steel{stroke:#5E727F;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.fig .steel-dot{fill:#5E727F}
+.fig .pulley{fill:#4A5D69;stroke:rgba(255,255,255,.2);stroke-width:1.5}
+.fig .cable{stroke:rgba(255,255,255,.5);stroke-width:1.8;fill:none;stroke-linecap:round}
+
+/* ---- Gewichte ---- */
+.fig .bar{fill:#93A7B2}
+.fig .plate{fill:#0E1721;stroke:var(--neon);stroke-width:2.6;filter:drop-shadow(0 0 7px rgba(61,255,158,.45))}
+.fig .plate-hub{fill:var(--neon)}
 
 /* Alle rotierenden Gruppen bekommen ihren Drehpunkt per Attribut mitgeteilt */
 .fig g[data-joint]{transform-box:fill-box;transform-origin:center}
@@ -116,6 +140,79 @@
 .p-shrug .j-bar{animation-name:sh-bar}
 @keyframes sh-shrug{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 @keyframes sh-bar{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* ============ 15. KNIEBEUGE ============ */
+.p-squat .j-squat{animation-name:sq-body}
+.p-squat .j-legU{animation-name:sq-legU}
+.p-squat .j-legL{animation-name:sq-legL}
+@keyframes sq-body{0%,100%{transform:translateY(0)}50%{transform:translateY(22px)}}
+@keyframes sq-legU{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-26deg)}}
+@keyframes sq-legL{0%,100%{transform:rotate(0deg)}50%{transform:rotate(30deg)}}
+
+/* ============ 16. HÜFTBEUGE (Kreuzheben) ============ */
+.p-hinge .j-torso{animation-name:hg-torso}
+@keyframes hg-torso{0%,100%{transform:rotate(0deg)}50%{transform:rotate(58deg)}}
+
+/* ============ 17. BEINMASCHINE (Strecker, Beuger, Abduktion) ============ */
+.p-legmachine .j-legL{animation-name:lm-legL}
+@keyframes lm-legL{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-72deg)}}
+
+/* ============ 18. WADENHEBEN ============ */
+.p-calf .j-calf{animation-name:cf-lift;animation-duration:2.2s}
+@keyframes cf-lift{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+
+/* ============ 19. AUSFALLSCHRITT / STEP UP ============ */
+.p-lunge .j-lunge{animation-name:lg-body}
+.p-lunge .j-legU{animation-name:lg-legU}
+.p-lunge .j-legL{animation-name:lg-legL}
+@keyframes lg-body{0%,100%{transform:translateY(0)}50%{transform:translateY(20px)}}
+@keyframes lg-legU{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-14deg)}}
+@keyframes lg-legL{0%,100%{transform:rotate(0deg)}50%{transform:rotate(22deg)}}
+
+/* ============ 20. HIP THRUST ============ */
+.p-hipthrust .j-hip{animation-name:ht-hip}
+@keyframes ht-hip{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-19deg)}}
+
+/* ============ 21. KICKBACK (Po) ============ */
+.p-legkick .j-legU{animation-name:kb-leg}
+@keyframes kb-leg{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-30deg)}}
+
+/* ============================================================
+   AUSFÜHRUNGSFOTOS
+
+   Liegen zwei Aufnahmen vor, blendet GoFit im Takt der Animation
+   zwischen Start- und Endposition über. Die gezeichnete Silhouette
+   liegt darunter und wird sichtbar, wenn ein Bild fehlt.
+   ============================================================ */
+.exphoto{
+  position:relative;display:block;width:100%;height:100%;
+  border-radius:var(--r-sm);overflow:hidden;
+  background:#0A1014;
+}
+/* contain statt cover: die Aufnahmen stammen aus Übersichtsgrafiken und sind
+   klein und unterschiedlich proportioniert. So bleibt die ganze Ausführung
+   sichtbar, statt stark hochskaliert angeschnitten zu werden. */
+.exphoto img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:contain;object-position:center;
+  display:block;
+}
+.exphoto__fallback{position:absolute;inset:0;display:none}
+.exphoto__fallback .fig{width:100%;height:100%}
+
+/* Überblendung nur, wenn wirklich zwei Aufnahmen vorliegen */
+.exphoto--pair .exphoto__b{
+  animation:xfade 2.6s cubic-bezier(.45,0,.55,1) infinite;
+}
+@keyframes xfade{0%,12%{opacity:0}50%,62%{opacity:1}100%{opacity:0}}
+
+/* Bild nicht ladbar: auf die Silhouette zurückfallen */
+.exphoto--off img{display:none}
+.exphoto--off{background:none}
+.exphoto--off .exphoto__fallback{display:block}
+
+.fig--paused .exphoto__b,
+.fig-box--paused .exphoto__b{animation-play-state:paused}
 
 /* ============================================================
    MUSKELKARTE

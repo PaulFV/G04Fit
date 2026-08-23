@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit v1.0.0 — Design Tokens
+   GoFit v2.0.0 — Design Tokens
    Dark Mode · Glassmorphism · Neon-Grün · Cyan-Akzente
    ============================================================ */
 
@@ -40,6 +40,10 @@
   --m-biceps:#A78BFA;
   --m-triceps:#FF8FA3;
   --m-shoulders:#5EEAD4;
+  --m-traps:#BEF264;
+  --m-legs:#FF8A3D;
+  --m-glutes:#E879F9;
+  --m-calves:#8AB4FF;
 
   /* --- Maße --- */
   --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:22px; --r-xl:30px;

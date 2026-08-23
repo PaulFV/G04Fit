@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit v1.0.0 — Anwendung, Navigation, Start
+   GoFit v2.0.0 — Anwendung, Navigation, Start
    ============================================================ */
 (function (G) {
   'use strict';

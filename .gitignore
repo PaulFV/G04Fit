@@ -1,5 +1,12 @@
-   src/
-   docs/
-   *.sln
-   obj/
-   bin/
+src/
+docs/
+*.sln
+obj/
+bin/
+*.user
+*.suo
+.vs/
+
+Thumbs.db
+desktop.ini
+.DS_Store

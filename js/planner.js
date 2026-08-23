@@ -1,8 +1,8 @@
 /* ============================================================
    GoFit — Wochenplanung
 
-   Konzept Abschnitt 1: GoFit erstellt Wochenpläne für die
-   Schwerpunkte Brust, Rücken, Bauch, Bizeps, Trizeps, Schulter.
+   Ab v2.0.0 plant GoFit den ganzen Körper: Brust, Rücken, Schulter,
+   Trapez, Bizeps, Trizeps, Bauch, Beine, Po und Waden.
    Der Split richtet sich nach der Anzahl der Trainingstage.
    ============================================================ */
 (function (G) {
@@ -14,34 +14,34 @@
   /* ---------- Split-Vorlagen ---------- */
   var SPLITS = {
     2: [
-      { key: 'full-a', name: 'Ganzkörper A', muscles: ['chest', 'back', 'abs'] },
-      { key: 'full-b', name: 'Ganzkörper B', muscles: ['shoulders', 'biceps', 'triceps'] }
+      { key: 'full-a', name: 'Ganzkörper A', muscles: ['chest', 'back', 'legs'] },
+      { key: 'full-b', name: 'Ganzkörper B', muscles: ['shoulders', 'glutes', 'biceps', 'triceps'] }
     ],
     3: [
-      { key: 'push', name: 'Push · Brust & Trizeps', muscles: ['chest', 'triceps', 'shoulders'] },
-      { key: 'pull', name: 'Pull · Rücken & Bizeps', muscles: ['back', 'biceps'] },
-      { key: 'core', name: 'Schulter & Bauch', muscles: ['shoulders', 'abs'] }
+      { key: 'push', name: 'Push · Brust, Schulter & Trizeps', muscles: ['chest', 'shoulders', 'triceps'] },
+      { key: 'pull', name: 'Pull · Rücken, Trapez & Bizeps', muscles: ['back', 'traps', 'biceps'] },
+      { key: 'legs', name: 'Legs · Beine, Po & Bauch', muscles: ['legs', 'glutes', 'calves', 'abs'] }
     ],
     4: [
       { key: 'chest', name: 'Brust & Trizeps', muscles: ['chest', 'triceps'] },
       { key: 'back', name: 'Rücken & Bizeps', muscles: ['back', 'biceps'] },
-      { key: 'shoulder', name: 'Schulter', muscles: ['shoulders'] },
-      { key: 'core', name: 'Bauch & Arme', muscles: ['abs', 'biceps', 'triceps'] }
+      { key: 'legs', name: 'Beine, Po & Waden', muscles: ['legs', 'glutes', 'calves'] },
+      { key: 'shoulder', name: 'Schulter, Trapez & Bauch', muscles: ['shoulders', 'traps', 'abs'] }
     ],
     5: [
       { key: 'chest', name: 'Brust', muscles: ['chest'] },
-      { key: 'back', name: 'Rücken', muscles: ['back'] },
-      { key: 'shoulder', name: 'Schulter', muscles: ['shoulders'] },
-      { key: 'arms', name: 'Arme', muscles: ['biceps', 'triceps'] },
-      { key: 'core', name: 'Bauch & Restvolumen', muscles: ['abs', 'chest'] }
+      { key: 'back', name: 'Rücken & Trapez', muscles: ['back', 'traps'] },
+      { key: 'legs', name: 'Beine & Waden', muscles: ['legs', 'calves'] },
+      { key: 'arms', name: 'Schulter & Arme', muscles: ['shoulders', 'biceps', 'triceps'] },
+      { key: 'core', name: 'Po & Bauch', muscles: ['glutes', 'abs'] }
     ],
     6: [
       { key: 'chest', name: 'Brust', muscles: ['chest'] },
-      { key: 'back', name: 'Rücken', muscles: ['back'] },
+      { key: 'back', name: 'Rücken & Trapez', muscles: ['back', 'traps'] },
       { key: 'shoulder', name: 'Schulter', muscles: ['shoulders'] },
-      { key: 'biceps', name: 'Bizeps', muscles: ['biceps'] },
-      { key: 'triceps', name: 'Trizeps', muscles: ['triceps'] },
-      { key: 'abs', name: 'Bauch', muscles: ['abs'] }
+      { key: 'legs', name: 'Beine & Waden', muscles: ['legs', 'calves'] },
+      { key: 'arms', name: 'Arme', muscles: ['biceps', 'triceps'] },
+      { key: 'core', name: 'Po & Bauch', muscles: ['glutes', 'abs'] }
     ]
   };
 
@@ -50,7 +50,7 @@
   }
 
   /** Grundübungen zuerst, danach Isolation */
-  var COMPOUND = ['pressflat', 'pressover', 'row', 'pulldown', 'dip'];
+  var COMPOUND = ['pressflat', 'pressover', 'row', 'pulldown', 'dip', 'squat', 'hinge', 'lunge'];
   function isCompound(ex) { return COMPOUND.indexOf(ex.pattern) >= 0; }
 
   /**
@@ -91,7 +91,10 @@
     var seen = {}, out = [];
     chosen.forEach(function (e) { if (!seen[e.id]) { seen[e.id] = 1; out.push(e); } });
     out.sort(function (a, b) { return (isCompound(b) ? 1 : 0) - (isCompound(a) ? 1 : 0); });
-    return out;
+
+    // Obergrenze, damit ein Tag mit vielen Gruppen nicht ausufert.
+    // Gekürzt wird am Ende, also zuerst bei den Isolationsübungen.
+    return out.slice(0, 8);
   }
 
   /* ------------------------------------------------------------
