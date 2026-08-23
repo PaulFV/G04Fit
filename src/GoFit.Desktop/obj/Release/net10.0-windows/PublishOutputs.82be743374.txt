@@ -1,0 +1,14 @@
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\GoFit.exe
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\runtimes\win-x86\native\WebView2Loader.dll
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\runtimes\win-x64\native\WebView2Loader.dll
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\runtimes\win-arm64\native\WebView2Loader.dll
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\GoFit.dll
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\GoFit.deps.json
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\GoFit.runtimeconfig.json
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\GoFit.pdb
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\Microsoft.Web.WebView2.Core.dll
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\Microsoft.Web.WebView2.WinForms.dll
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\Microsoft.Web.WebView2.Wpf.dll
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\Microsoft.Web.WebView2.Core.xml
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\Microsoft.Web.WebView2.WinForms.xml
+C:\Users\Fodor\AppData\Local\Temp\gofit-pub2\Microsoft.Web.WebView2.Wpf.xml

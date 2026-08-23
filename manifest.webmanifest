@@ -1,0 +1,27 @@
+{
+  "id": "gofit-v1",
+  "name": "GoFit — Trainingsplaner",
+  "short_name": "GoFit",
+  "description": "Trainingsplaner für Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter. Wochenplan, Journey, Coach und Fortschritt — alle Daten bleiben auf deinem Gerät.",
+  "lang": "de",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait-primary",
+  "background_color": "#05070A",
+  "theme_color": "#05070A",
+  "categories": ["health", "fitness", "lifestyle"],
+  "icons": [
+    { "src": "icons/icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Training starten", "short_name": "Workout", "url": "./index.html#workout" },
+    { "name": "Fortschritt", "short_name": "Fortschritt", "url": "./index.html#progress" },
+    { "name": "Journey", "short_name": "Journey", "url": "./index.html#journey" }
+  ]
+}

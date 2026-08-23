@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>GoFit.Desktop</RootNamespace>
+    <AssemblyName>GoFit</AssemblyName>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <AssemblyTitle>GoFit</AssemblyTitle>
+    <Product>GoFit</Product>
+    <Version>1.0.0</Version>
+    <Company>GoFit</Company>
+    <Description>Trainingsplaner für Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- WebView2 zeigt die GoFit-Oberfläche in einem echten Fenster an.
+         Die Laufzeitumgebung ist in Windows 11 bereits enthalten. -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3124.44" />
+  </ItemGroup>
+
+  <!-- ============================================================
+       Beim Veröffentlichen die Weboberfläche in den Unterordner
+       "app" neben die EXE kopieren. Damit ist der veröffentlichte
+       Build eigenständig lauffähig.
+       Beim Start aus Visual Studio wird der Projektstamm verwendet,
+       sodass Änderungen an CSS und JS sofort sichtbar sind.
+       ============================================================ -->
+  <PropertyGroup>
+    <GoFitWebRoot>$(MSBuildProjectDirectory)\..\..</GoFitWebRoot>
+  </PropertyGroup>
+
+  <Target Name="CopyGoFitWebApp" AfterTargets="Publish">
+    <ItemGroup>
+      <GoFitRootFiles Include="$(GoFitWebRoot)\index.html" />
+      <GoFitRootFiles Include="$(GoFitWebRoot)\manifest.webmanifest" />
+      <GoFitRootFiles Include="$(GoFitWebRoot)\sw.js" />
+      <GoFitCss    Include="$(GoFitWebRoot)\css\**\*" />
+      <GoFitJs     Include="$(GoFitWebRoot)\js\**\*" />
+      <GoFitAssets Include="$(GoFitWebRoot)\assets\**\*" />
+      <GoFitIcons  Include="$(GoFitWebRoot)\icons\**\*" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(GoFitRootFiles)" DestinationFolder="$(PublishDir)app" />
+    <Copy SourceFiles="@(GoFitCss)"    DestinationFolder="$(PublishDir)app\css\%(RecursiveDir)" />
+    <Copy SourceFiles="@(GoFitJs)"     DestinationFolder="$(PublishDir)app\js\%(RecursiveDir)" />
+    <Copy SourceFiles="@(GoFitAssets)" DestinationFolder="$(PublishDir)app\assets\%(RecursiveDir)" />
+    <Copy SourceFiles="@(GoFitIcons)"  DestinationFolder="$(PublishDir)app\icons\%(RecursiveDir)" />
+
+    <Message Importance="high" Text="GoFit: Weboberfläche nach $(PublishDir)app kopiert." />
+  </Target>
+
+</Project>

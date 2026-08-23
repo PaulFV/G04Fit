@@ -1,0 +1,198 @@
+/* ============================================================
+   GoFit — Übungs-Animationen (reines SVG/CSS, keine GIFs nötig)
+   Jede Bewegung animiert benannte Gelenk-Gruppen der Figur.
+   ============================================================ */
+
+/* Die Figur füllt ihren Rahmen; preserveAspectRatio zentriert sie darin.
+   Absolute Positionierung, weil eine SVG mit height:100% in einem
+   inhaltsabhängigen Rahmen sonst auf ihre Eigenhöhe zurückfällt. */
+.fig{display:block;width:100%;height:100%}
+.fig-box{position:relative;width:100%;overflow:hidden}
+.fig-box > .fig,
+.fig-box > .mmap{position:absolute;top:8px;left:8px;width:calc(100% - 16px);height:calc(100% - 16px)}
+.fig .bone{stroke:var(--tx-1);stroke-width:7;stroke-linecap:round;fill:none;transition:stroke .3s}
+.fig .head{fill:var(--tx-1);stroke:none}
+.fig .load{stroke:var(--neon);stroke-width:8;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(61,255,158,.6))}
+.fig .plate{fill:var(--neon);filter:drop-shadow(0 0 8px rgba(61,255,158,.55))}
+.fig .bench{stroke:rgba(255,255,255,.16);stroke-width:6;stroke-linecap:round}
+.fig .accent{stroke:var(--neon)}
+
+/* Alle rotierenden Gruppen bekommen ihren Drehpunkt per Attribut mitgeteilt */
+.fig g[data-joint]{transform-box:fill-box;transform-origin:center}
+
+.fig--paused *{animation-play-state:paused!important}
+
+/* ---- gemeinsame Taktung ---- */
+.fig g{animation-duration:2.6s;animation-iteration-count:infinite;animation-timing-function:cubic-bezier(.45,0,.55,1)}
+
+/* ============ 1. DRÜCKEN LIEGEND (Bankdrücken, Maschine) ============ */
+.p-pressflat .j-armU{animation-name:pf-armU}
+.p-pressflat .j-armF{animation-name:pf-armF}
+.p-pressflat .j-bar{animation-name:pf-bar}
+@keyframes pf-armU{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-46deg)}}
+@keyframes pf-armF{0%,100%{transform:rotate(0deg)}50%{transform:rotate(52deg)}}
+@keyframes pf-bar{0%,100%{transform:translateY(0)}50%{transform:translateY(40px)}}
+
+/* ============ 2. ÜBERKOPFDRÜCKEN (Schulterdrücken) ============ */
+.p-pressover .j-armU{animation-name:po-armU}
+.p-pressover .j-armF{animation-name:po-armF}
+.p-pressover .j-bar{animation-name:po-bar}
+@keyframes po-armU{0%,100%{transform:rotate(0deg)}50%{transform:rotate(34deg)}}
+@keyframes po-armF{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-40deg)}}
+@keyframes po-bar{0%,100%{transform:translateY(0)}50%{transform:translateY(46px)}}
+
+/* ============ 3. FLIEGENDE (Butterfly / Kurzhantel-Fly) ============ */
+.p-fly .j-armL{animation-name:fly-l}
+.p-fly .j-armR{animation-name:fly-r}
+@keyframes fly-l{0%,100%{transform:rotate(0deg)}50%{transform:rotate(58deg)}}
+@keyframes fly-r{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-58deg)}}
+
+/* ============ 4. RUDERN (Row) ============ */
+.p-row .j-armU{animation-name:row-armU}
+.p-row .j-armF{animation-name:row-armF}
+.p-row .j-bar{animation-name:row-bar}
+.p-row .j-torso{animation-name:row-torso}
+@keyframes row-armU{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-38deg)}}
+@keyframes row-armF{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-30deg)}}
+@keyframes row-bar{0%,100%{transform:translateX(0)}50%{transform:translateX(-42px)}}
+@keyframes row-torso{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-4deg)}}
+
+/* ============ 5. LATZIEHEN / KLIMMZUG ============ */
+.p-pulldown .j-armU{animation-name:pd-armU}
+.p-pulldown .j-armF{animation-name:pd-armF}
+.p-pulldown .j-bar{animation-name:pd-bar}
+@keyframes pd-armU{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-40deg)}}
+@keyframes pd-armF{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-18deg)}}
+@keyframes pd-bar{0%,100%{transform:translateY(0)}50%{transform:translateY(56px)}}
+
+/* ============ 6. CURL (Bizeps) ============ */
+.p-curl .j-armF{animation-name:cu-armF}
+.p-curl .j-bar{animation-name:cu-bar}
+@keyframes cu-armF{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-118deg)}}
+@keyframes cu-bar{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-58px) translateX(14px)}}
+
+/* ============ 7. TRIZEPS-STRECKEN ============ */
+.p-extension .j-armF{animation-name:ex-armF}
+.p-extension .j-bar{animation-name:ex-bar}
+@keyframes ex-armF{0%,100%{transform:rotate(0deg)}50%{transform:rotate(92deg)}}
+@keyframes ex-bar{0%,100%{transform:translateY(0)}50%{transform:translateY(46px)}}
+
+/* ============ 8. SEITHEBEN (Schulter) ============ */
+.p-raise .j-armL{animation-name:ra-l}
+.p-raise .j-armR{animation-name:ra-r}
+@keyframes ra-l{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-82deg)}}
+@keyframes ra-r{0%,100%{transform:rotate(0deg)}50%{transform:rotate(82deg)}}
+
+/* ============ 9. CRUNCH / BAUCH ============ */
+.p-crunch .j-torso{animation-name:cr-torso}
+.p-crunch .j-armU{animation-name:cr-arm}
+@keyframes cr-torso{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-34deg)}}
+@keyframes cr-arm{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-12deg)}}
+
+/* ============ 10. BEINHEBEN ============ */
+.p-legraise .j-legU{animation-name:lr-legU}
+.p-legraise .j-legL{animation-name:lr-legL}
+@keyframes lr-legU{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-74deg)}}
+@keyframes lr-legL{0%,100%{transform:rotate(0deg)}50%{transform:rotate(18deg)}}
+
+/* ============ 11. PLANK (Halten, sanftes Atmen) ============ */
+.p-plank .j-torso{animation-name:pl-breath;animation-duration:4s}
+@keyframes pl-breath{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* ============ 12. DIP / LIEGESTÜTZ ============ */
+.p-dip .j-armU{animation-name:di-armU}
+.p-dip .j-armF{animation-name:di-armF}
+.p-dip .j-torso{animation-name:di-torso}
+@keyframes di-armU{0%,100%{transform:rotate(0deg)}50%{transform:rotate(30deg)}}
+@keyframes di-armF{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-44deg)}}
+@keyframes di-torso{0%,100%{transform:translateY(0)}50%{transform:translateY(34px)}}
+
+/* ============ 13. ÜBERZUG / PULLOVER ============ */
+.p-pullover .j-armU{animation-name:pv-armU}
+@keyframes pv-armU{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-84deg)}}
+
+/* ============ 14. SHRUG (Nackenheben) ============ */
+.p-shrug .j-torso{animation-name:sh-shrug}
+.p-shrug .j-bar{animation-name:sh-bar}
+@keyframes sh-shrug{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes sh-bar{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* ============================================================
+   MUSKELKARTE
+   Anatomische Vorder- und Rückansicht mit hervorgehobenen
+   Muskelgruppen. Wird bei jeder Übung mit angezeigt.
+   ============================================================ */
+.mmap{width:100%;height:100%;display:block;overflow:visible}
+
+/* Rumpf und Kopf */
+.mmap .body{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.13);stroke-width:1.3}
+
+/* Gliedmaßen in drei Lagen, damit sie exakt wie der Rumpf wirken:
+   Kontur → dunkler Grund → gleiche helle Füllung wie .body */
+.mmap .limb-o,.mmap .limb-k,.mmap .limb{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.mmap .limb-o{stroke:rgba(255,255,255,.13);stroke-width:16.6}
+.mmap .limb-k{stroke:#060A0D;stroke-width:14}
+.mmap .limb{stroke:rgba(255,255,255,.05);stroke-width:14}
+
+/* Muskelgruppen */
+.mmap .mg{
+  fill:rgba(255,255,255,.085);
+  stroke:rgba(255,255,255,.14);stroke-width:.9;
+  transition:fill .45s var(--ease),opacity .45s var(--ease),filter .45s var(--ease);
+}
+.mmap .mg.primary{
+  fill:var(--hl,#3DFF9E);opacity:.95;
+  stroke:var(--hl,#3DFF9E);
+  filter:drop-shadow(0 0 9px var(--hl,#3DFF9E));
+}
+.mmap .mg.secondary{fill:var(--hl,#3DFF9E);opacity:.34;stroke:none}
+
+/* Bauchmuskel-Unterteilung */
+.mmap .seg{fill:none;stroke:rgba(5,7,10,.5);stroke-width:1.1}
+.mmap .mg:not(.primary):not(.secondary) .seg{stroke:rgba(255,255,255,.09)}
+
+/* Seitenbeschriftung */
+.mmap .mmap-side{
+  fill:rgba(255,255,255,.32);font-size:9.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+
+/* Beschriftung unterhalb der Karte */
+.mmap-legend{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  font-size:11.5px;margin-top:10px;align-items:center;
+}
+.mmap-legend i{display:inline-flex;align-items:center;gap:5px;font-style:normal}
+.mmap-legend i::before{content:"";width:9px;height:9px;border-radius:3px;background:currentColor;flex:none}
+.mmap-legend .lg-on b{font-weight:700}
+.mmap-legend .lg-sec{opacity:.6}
+.mmap-legend__hint{color:var(--tx-2);font-size:10.5px;width:100%;text-align:center}
+
+/* ============================================================
+   XP-Zugewinn-Flug
+   ============================================================ */
+.xp-pop{
+  position:fixed;z-index:95;pointer-events:none;font-weight:800;font-size:19px;color:var(--neon);
+  text-shadow:0 0 18px rgba(61,255,158,.85);animation:xpFly 1.25s var(--ease) forwards;
+}
+@keyframes xpFly{0%{opacity:0;transform:translateY(6px) scale(.85)}22%{opacity:1;transform:translateY(-8px) scale(1.1)}100%{opacity:0;transform:translateY(-64px) scale(.95)}}
+
+/* ============================================================
+   Level-Up Overlay
+   ============================================================ */
+.levelup{
+  position:fixed;inset:0;z-index:98;display:grid;place-items:center;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(61,255,158,.16),transparent 68%);
+  animation:luFade 2.4s var(--ease) forwards;
+}
+.levelup__box{text-align:center;animation:luPop .7s var(--ease) both}
+.levelup__box b{display:block;font-size:clamp(34px,7vw,62px);font-weight:800;color:var(--neon);text-shadow:0 0 46px rgba(61,255,158,.7);letter-spacing:-.04em}
+.levelup__box span{color:var(--tx-1);letter-spacing:.22em;text-transform:uppercase;font-size:12px}
+@keyframes luFade{0%{opacity:0}12%{opacity:1}78%{opacity:1}100%{opacity:0}}
+@keyframes luPop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+
+/* ============================================================
+   Skelett-Ladeeffekt
+   ============================================================ */
+.skel{background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.1),rgba(255,255,255,.05));background-size:200% 100%;animation:skel 1.4s linear infinite;border-radius:8px}
+@keyframes skel{to{background-position:-200% 0}}

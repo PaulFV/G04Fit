@@ -1,0 +1,232 @@
+/* ============================================================
+   GoFit v1.0.0 — Anwendung, Navigation, Start
+   ============================================================ */
+(function (G) {
+  'use strict';
+  var u = G.u;
+
+  /* Die zehn Bereiche aus dem Konzept, Abschnitt 13 */
+  var NAV = [
+    { k: 'dashboard', n: 'Dashboard', ic: 'dashboard', tab: true },
+    { k: 'journey', n: 'Journey', ic: 'journey', tab: true },
+    { k: 'workout', n: 'Workout', ic: 'workout', tab: true },
+    { k: 'exercises', n: 'Übungen', ic: 'exercises', tab: true },
+    { k: 'progress', n: 'Fortschritt', ic: 'progress', tab: true },
+    { k: 'profile', n: 'Profil', ic: 'profile' },
+    { k: 'coach', n: 'GoFit Coach', ic: 'coach' },
+    { k: 'reminders', n: 'Erinnerungen', ic: 'reminders' },
+    { k: 'obsidian', n: 'Obsidian', ic: 'obsidian' },
+    { k: 'privacy', n: 'Datenschutz', ic: 'privacy' }
+  ];
+
+  var current = 'dashboard';
+  var currentParams = null;
+
+  /* ------------------------------------------------------------
+     Navigation aufbauen
+     ------------------------------------------------------------ */
+  function buildNav() {
+    var s = G.store.state;
+
+    u.$('#nav').innerHTML = NAV.map(function (v) {
+      var badge = '';
+      if (v.k === 'workout' && s.session) badge = '<span class="nav__badge">läuft</span>';
+      if (v.k === 'coach' && G.coach.allowed()) {
+        var n = G.coach.insights().filter(function (i) { return i.kind === 'warn'; }).length;
+        if (n) badge = '<span class="nav__badge">' + n + '</span>';
+      }
+      return '<button class="nav__item" data-nav="' + v.k + '">' +
+        u.icon(v.ic, 19) + '<span>' + u.esc(v.n) + '</span>' + badge + '</button>';
+    }).join('');
+
+    u.$('#tabbar').innerHTML = NAV.filter(function (v) { return v.tab; }).map(function (v) {
+      return '<button class="tabbar__item" data-nav="' + v.k + '">' +
+        u.icon(v.ic, 21) + '<span>' + u.esc(v.n) + '</span></button>';
+    }).join('');
+
+    markActive();
+  }
+
+  function markActive() {
+    u.$$('[data-nav]').forEach(function (b) {
+      var on = b.getAttribute('data-nav') === current;
+      b.classList.toggle('is-active', on);
+      if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
+  }
+
+  /* ------------------------------------------------------------
+     Kopfzeile und Seitenleiste
+     ------------------------------------------------------------ */
+  function updateChrome() {
+    var s = G.store.state;
+    var li = G.store.levelInfo();
+
+    var chip = u.$('#streakChip');
+    var streak = s.journey.streak;
+    chip.innerHTML = u.icon('flame', 15) + ' ' + streak;
+    chip.classList.toggle('is-hot', streak >= 3);
+    chip.title = streak
+      ? 'Trainingsserie: ' + streak + (streak === 1 ? ' Woche' : ' Wochen') + ' in Folge'
+      : 'Noch keine Serie – trainiere diese Woche, um zu starten.';
+
+    u.$('#sideLevel').innerHTML =
+      G.avatar.render(40, { ring: li.pct, level: li.level, action: true }) +
+      '<div class="lvl-chip__meta" style="margin-left:6px"><b>' +
+      u.esc(s.profile.name || 'Level ' + li.level) + '</b>' +
+      '<span>' + u.esc(li.title) + ' · Level ' + li.level + '</span></div>';
+  }
+
+  /* ------------------------------------------------------------
+     Ansicht wechseln
+     ------------------------------------------------------------ */
+  var lastView = null;
+
+  function render(afterFn) {
+    var view = G.views[current];
+    if (!view) { current = 'dashboard'; view = G.views.dashboard; }
+
+    if (lastView && lastView.unmount) {
+      try { lastView.unmount(); } catch (e) { console.error(e); }
+    }
+
+    u.$('#viewTitle').textContent = typeof view.title === 'function' ? view.title() : view.title;
+    var sub = typeof view.sub === 'function' ? view.sub() : (view.sub || '');
+    u.$('#viewSub').textContent = sub;
+    document.title = 'GoFit — ' + (typeof view.title === 'function' ? view.title() : view.title);
+
+    var host = u.$('#viewHost');
+    host.innerHTML = view.render(currentParams) || '';
+
+    if (view.mount) {
+      try { view.mount(host); } catch (e) { console.error(e); }
+    }
+    lastView = view;
+
+    // Navigationsknöpfe innerhalb einer Ansicht
+    u.on(host, 'click', '[data-go]', function (e, t) {
+      go(t.getAttribute('data-go'));
+    });
+
+    buildNav();
+    updateChrome();
+    if (afterFn) afterFn();
+  }
+
+  function go(key, params) {
+    if (!G.views[key]) return;
+    current = key;
+    currentParams = params || null;
+    closeMobileNav();
+    if (location.hash !== '#' + key) {
+      history.replaceState(null, '', '#' + key);
+    }
+    render();
+    var main = u.$('#main');
+    if (main) main.scrollIntoView({ block: 'start' });
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+
+  function rerender(afterFn) {
+    currentParams = null;
+    render(afterFn);
+  }
+
+  /* ------------------------------------------------------------
+     Mobile Navigation
+     ------------------------------------------------------------ */
+  function openMobileNav() {
+    u.$('.sidebar').classList.add('is-open');
+    u.$('#scrim').hidden = false;
+  }
+  function closeMobileNav() {
+    var sb = u.$('.sidebar');
+    if (sb) sb.classList.remove('is-open');
+    if (u.$('#sheet').hidden) u.$('#scrim').hidden = true;
+  }
+
+  /* ------------------------------------------------------------
+     Start
+     ------------------------------------------------------------ */
+  function boot() {
+    G.store.load();
+    var s = G.store.state;
+
+    if (s.settings.reduceMotion) document.body.classList.add('no-motion');
+    G.store.recomputeStreak();
+
+    // Globale Ereignisse
+    document.addEventListener('click', function (e) {
+      var nav = e.target.closest('[data-nav]');
+      if (nav) { go(nav.getAttribute('data-nav')); return; }
+
+      // Avatar antippen öffnet überall die Bildauswahl
+      var av = e.target.closest('[data-avatar-pick]');
+      if (av) { e.preventDefault(); G.avatar.choose(); return; }
+    });
+
+    u.$('#mobileMenuBtn').addEventListener('click', openMobileNav);
+    u.$('#privacyBtn').addEventListener('click', function () { go('privacy'); });
+    u.$('#sheetClose').addEventListener('click', u.closeSheet);
+    u.$('#scrim').addEventListener('click', function () {
+      if (!u.$('#sheet').hidden) u.closeSheet();
+      closeMobileNav();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        if (!u.$('#sheet').hidden) u.closeSheet();
+        closeMobileNav();
+      }
+    });
+
+    window.addEventListener('hashchange', function () {
+      var k = location.hash.replace('#', '');
+      if (k && G.views[k] && k !== current) go(k);
+    });
+
+    // Ersteinrichtung oder App
+    if (!s.onboarded) {
+      G.onboarding.start();
+      return;
+    }
+
+    u.$('#app').hidden = false;
+    var start = location.hash.replace('#', '');
+    current = G.views[start] ? start : 'dashboard';
+    render();
+
+    if (G.store.hasConsent('push')) G.reminders.start();
+
+    // Hinweis, falls der Browser nichts speichern darf
+    if (!G.store.storageOk) {
+      u.toast('Kein lokaler Speicher', 'Der Browser blockiert Website-Daten. GoFit vergisst alles beim Schließen.', 'warn', 7000);
+    }
+
+    // Laufende Einheit aus einer früheren Sitzung
+    if (s.session) {
+      u.toast('Einheit fortsetzen', s.session.title + ' ist noch offen.', 'ok', 5000);
+    }
+  }
+
+  /* ------------------------------------------------------------
+     Service Worker (nur über http/https sinnvoll)
+     ------------------------------------------------------------ */
+  function registerSW() {
+    if (!('serviceWorker' in navigator)) return;
+    if (location.protocol === 'file:') return;
+    navigator.serviceWorker.register('sw.js').catch(function () { /* offline-Betrieb bleibt optional */ });
+  }
+
+  G.app = {
+    NAV: NAV,
+    go: go,
+    rerender: rerender,
+    get current() { return current; }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { boot(); registerSW(); });
+  } else {
+    boot(); registerSW();
+  }
+})(GoFit);
