@@ -37,6 +37,7 @@
     {
       id: 'bench-bb', name: 'Bankdrücken (Langhantel)', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Langhantel', pattern: 'pressflat',
+      demo: 'assets/exercises/bench-bb.gif',
       level: 2, inc: 2.5, f: 0.60, reps: [6, 10],
       cues: [
         'Schulterblätter fest zusammenziehen und nach unten fixieren',

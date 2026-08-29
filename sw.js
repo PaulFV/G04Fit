@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert – keine
    Nutzerdaten, keine Anfragen an fremde Server.
    ============================================================ */
-var CACHE = 'gofit-v1.0.0';
+var CACHE = 'gofit-v1.0.2';
 
 var ASSETS = [
   './',
@@ -41,7 +41,8 @@ var ASSETS = [
   './icons/icon-180.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/icon-maskable-512.png'
+  './icons/icon-maskable-512.png',
+  './assets/exercises/bench-bb.gif'
 ];
 
 self.addEventListener('install', function (e) {

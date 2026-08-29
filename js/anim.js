@@ -252,6 +252,10 @@
 
   /** SVG-Markup einer Übungsanimation */
   function figure(ex) {
+    if (ex && ex.demo) {
+      return '<img class="fig fig--real" src="' + ex.demo + '" alt="Animierte Ausführung: ' +
+        G.u.esc(ex.name) + '" loading="lazy" decoding="async">';
+    }
     var pattern = (ex && ex.pattern) || 'curl';
     var fn = POSE[pattern] || POSE.curl;
     return fn(pattern);

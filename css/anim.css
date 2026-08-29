@@ -7,6 +7,7 @@
    Absolute Positionierung, weil eine SVG mit height:100% in einem
    inhaltsabhängigen Rahmen sonst auf ihre Eigenhöhe zurückfällt. */
 .fig{display:block;width:100%;height:100%}
+.fig--real{object-fit:cover;object-position:center;border-radius:12px;background:#07090b}
 .fig-box{position:relative;width:100%;overflow:hidden}
 .fig-box > .fig,
 .fig-box > .mmap{position:absolute;top:8px;left:8px;width:calc(100% - 16px);height:calc(100% - 16px)}
