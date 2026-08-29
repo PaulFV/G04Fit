@@ -11,8 +11,9 @@ async function main() {
   const cols = Number(process.argv[4] || 3);
   const rows = Number(process.argv[5] || 2);
   const frameWidth = 512;
-  const frameHeight = 340;
-  const hold = [420, 170, 170, 420, 170, 170];
+  const frameHeight = 512;
+  // Langsamer Lehrmodus: Umkehrpunkte bewusst länger zeigen.
+  const hold = [900, 550, 550, 900, 550, 550];
 
   fs.mkdirSync(path.dirname(outputBase), { recursive: true });
   fs.mkdirSync(outputBase + '-frames', { recursive: true });
@@ -29,8 +30,15 @@ async function main() {
     const ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
+    // Sprite-Zellen sind quadratisch. Seitenverhältnis beibehalten, damit
+    // Geräte und Körper weder gestaucht noch zwischen Ansichten beschnitten werden.
+    ctx.fillStyle = '#07090b';
+    ctx.fillRect(0, 0, frameWidth, frameHeight);
+    const scale = Math.min(frameWidth / cellWidth, frameHeight / cellHeight);
+    const drawWidth = cellWidth * scale;
+    const drawHeight = cellHeight * scale;
     ctx.drawImage(sheet, col * cellWidth, row * cellHeight, cellWidth, cellHeight,
-      0, 0, frameWidth, frameHeight);
+      (frameWidth - drawWidth) / 2, (frameHeight - drawHeight) / 2, drawWidth, drawHeight);
     const framePath = path.join(outputBase + '-frames',
       String(index + 1).padStart(2, '0') + '.png');
     fs.writeFileSync(framePath, canvas.toBuffer('image/png'));

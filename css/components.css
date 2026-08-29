@@ -229,7 +229,7 @@
 .ex-card__fig,.ex-card__map{position:relative;min-width:0}
 .ex-card__fig > .fig{position:absolute;top:12px;left:12px;width:calc(100% - 24px);height:calc(100% - 24px)}
 .ex-card__map{border-left:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.22)}
-.ex-card__map > .mmap{position:absolute;top:9px;left:5px;width:calc(100% - 10px);height:calc(100% - 18px)}
+.ex-card__map > .mmap,.ex-card__map > .avatar-mmap{position:absolute;top:9px;left:5px;width:calc(100% - 10px);height:calc(100% - 18px)}
 .ex-card__body{padding:14px 15px 16px;display:flex;flex-direction:column;gap:7px;flex:1}
 .ex-card__body b{font-size:14.5px;font-weight:640;line-height:1.3}
 .ex-card__tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:4px}

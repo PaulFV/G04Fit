@@ -7,7 +7,7 @@
    Absolute Positionierung, weil eine SVG mit height:100% in einem
    inhaltsabhängigen Rahmen sonst auf ihre Eigenhöhe zurückfällt. */
 .fig{display:block;width:100%;height:100%}
-.fig--real{object-fit:cover;object-position:center;border-radius:12px;background:#07090b}
+.fig--real{object-fit:contain;object-position:center;border-radius:12px;background:#07090b}
 .fig-box{position:relative;width:100%;overflow:hidden}
 .fig-box > .fig,
 .fig-box > .mmap{position:absolute;top:8px;left:8px;width:calc(100% - 16px);height:calc(100% - 16px)}
@@ -31,7 +31,7 @@
 .fig--paused *{animation-play-state:paused!important}
 
 /* ---- gemeinsame Taktung ---- */
-.fig g[data-joint]{animation-duration:3.2s;animation-iteration-count:infinite;animation-timing-function:cubic-bezier(.5,.08,.32,.98)}
+.fig g[data-joint]{animation-duration:4.5s;animation-iteration-count:infinite;animation-timing-function:cubic-bezier(.5,.08,.32,.98)}
 
 /* ============ 1. DRÜCKEN LIEGEND (Bankdrücken, Maschine) ============ */
 .p-pressflat .j-armU{animation-name:pf-armU}
@@ -104,7 +104,7 @@
 @keyframes lr-legL{0%,100%{transform:rotate(0deg)}50%{transform:rotate(18deg)}}
 
 /* ============ 11. PLANK (Halten, sanftes Atmen) ============ */
-.p-plank .j-torso{animation-name:pl-breath;animation-duration:4s}
+.p-plank .j-torso{animation-name:pl-breath;animation-duration:5.5s}
 @keyframes pl-breath{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 
 /* ============ 12. DIP / LIEGESTÜTZ ============ */
@@ -131,6 +131,18 @@
    Muskelgruppen. Wird bei jeder Übung mit angezeigt.
    ============================================================ */
 .mmap{width:100%;height:100%;display:block;overflow:visible}
+
+/* Realistischer PF-Avatar in den kompakten Muskelkarten. */
+.avatar-mmap{position:relative;display:block;width:100%;height:100%;overflow:hidden}
+.avatar-mmap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 24%;opacity:.88}
+.avatar-mmap__zone{position:absolute;z-index:1;display:block;pointer-events:none;opacity:.9;mix-blend-mode:screen;filter:blur(1.5px) drop-shadow(0 0 7px var(--hl))}
+.avatar-mmap__zone.is-secondary{opacity:.32;filter:blur(2.5px) drop-shadow(0 0 4px var(--hl))}
+.avatar-mmap .zone-chest{left:25%;top:25%;width:50%;height:20%;background:radial-gradient(ellipse,var(--hl) 0,transparent 69%)}
+.avatar-mmap .zone-abs{left:34%;top:39%;width:32%;height:34%;background:radial-gradient(ellipse,var(--hl) 0,transparent 72%)}
+.avatar-mmap .zone-shoulders{left:8%;top:20%;width:84%;height:24%;background:radial-gradient(ellipse at 8% 48%,var(--hl) 0,transparent 20%),radial-gradient(ellipse at 92% 48%,var(--hl) 0,transparent 20%)}
+.avatar-mmap .zone-biceps{left:8%;top:32%;width:84%;height:31%;background:radial-gradient(ellipse at 9% 50%,var(--hl) 0,transparent 17%),radial-gradient(ellipse at 91% 50%,var(--hl) 0,transparent 17%)}
+.avatar-mmap .zone-back{left:20%;top:22%;width:60%;height:40%;background:radial-gradient(ellipse,var(--hl) 0,transparent 73%)}
+.avatar-mmap .zone-triceps{left:7%;top:31%;width:86%;height:31%;background:radial-gradient(ellipse at 8% 48%,var(--hl) 0,transparent 16%),radial-gradient(ellipse at 92% 48%,var(--hl) 0,transparent 16%)}
 
 /* Rumpf und Kopf */
 .mmap .body{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.13);stroke-width:1.3}

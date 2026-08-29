@@ -284,6 +284,25 @@
   var FRONT_ORDER = ['shoulders', 'chest', 'biceps', 'abs'];
   var BACK_ORDER = ['shoulders', 'back', 'triceps'];
 
+  /** Realistische Avataransicht für kleine Karten und Workout-Zeilen. */
+  function avatarMuscleMap(primary, secondary, side) {
+    secondary = secondary || [];
+    var groups = [primary].concat(secondary).filter(function (m, i, all) {
+      return m && all.indexOf(m) === i;
+    });
+    var names = groups.map(function (m) {
+      return G.MUSCLES[m] ? G.MUSCLES[m].name : '';
+    }).filter(Boolean);
+    var zones = groups.map(function (m, i) {
+      return '<i class="avatar-mmap__zone zone-' + m + (i ? ' is-secondary' : '') +
+        '" style="--hl:' + (MCOLOR[m] || '#3DFF9E') + '"></i>';
+    }).join('');
+    return '<span class="avatar-mmap avatar-mmap--' + side + '" role="img" ' +
+      'aria-label="Beanspruchte Muskelgruppen: ' + names.join(', ') + '">' +
+      '<img src="assets/avatar/avatar-' + side + '-map.png" alt="" loading="lazy" decoding="async">' +
+      zones + '</span>';
+  }
+
   /* --- Muskelgruppen der Vorderansicht --- */
   var MG_FRONT = {
     shoulders:
@@ -377,6 +396,7 @@
     if (view === 'auto') {
       // Die Ansicht wählen, auf der die Hauptgruppe zu sehen ist
       view = BACK_ONLY.indexOf(primary) >= 0 ? 'back' : 'front';
+      return avatarMuscleMap(primary, secondary, view);
     }
 
     var labels = opts.labels !== false && view === 'both';
