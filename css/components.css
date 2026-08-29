@@ -212,10 +212,6 @@
 .m-biceps{color:var(--m-biceps);background:var(--m-biceps)}
 .m-triceps{color:var(--m-triceps);background:var(--m-triceps)}
 .m-shoulders{color:var(--m-shoulders);background:var(--m-shoulders)}
-.m-traps{color:var(--m-traps);background:var(--m-traps)}
-.m-legs{color:var(--m-legs);background:var(--m-legs)}
-.m-glutes{color:var(--m-glutes);background:var(--m-glutes)}
-.m-calves{color:var(--m-calves);background:var(--m-calves)}
 
 /* ---------- Übungskarte ---------- */
 .ex-card{
@@ -232,7 +228,6 @@
 }
 .ex-card__fig,.ex-card__map{position:relative;min-width:0}
 .ex-card__fig > .fig{position:absolute;top:12px;left:12px;width:calc(100% - 24px);height:calc(100% - 24px)}
-.ex-card__fig > .exphoto{position:absolute;top:8px;left:8px;width:calc(100% - 16px);height:calc(100% - 16px)}
 .ex-card__map{border-left:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.22)}
 .ex-card__map > .mmap{position:absolute;top:9px;left:5px;width:calc(100% - 10px);height:calc(100% - 18px)}
 .ex-card__body{padding:14px 15px 16px;display:flex;flex-direction:column;gap:7px;flex:1}

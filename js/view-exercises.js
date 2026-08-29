@@ -210,9 +210,7 @@
      ------------------------------------------------------------ */
   G.views.exercises = {
     title: 'Übungen',
-    sub: function () {
-      return G.EXERCISES.length + ' Übungen · ' + G.MUSCLE_ORDER.length + ' Muskelgruppen';
-    },
+    sub: function () { return G.EXERCISES.length + ' Übungen · 6 Muskelgruppen'; },
     render: function () {
       var equips = ['all'].concat(Object.keys(u.groupBy(G.EXERCISES, function (e) { return e.equip; })).sort());
       var list = G.EXERCISES.filter(matches);

@@ -1,8 +1,8 @@
 {
-  "id": "gofit-v2",
+  "id": "gofit-v1",
   "name": "GoFit — Trainingsplaner",
   "short_name": "GoFit",
-  "description": "Ganzkörper-Trainingsplaner mit Wochenplan, Journey, Coach und Fortschritt — alle Daten bleiben auf deinem Gerät.",
+  "description": "Trainingsplaner für Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter. Wochenplan, Journey, Coach und Fortschritt — alle Daten bleiben auf deinem Gerät.",
   "lang": "de",
   "dir": "ltr",
   "start_url": "./index.html",

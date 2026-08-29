@@ -1,12 +1,11 @@
-src/
-docs/
-*.sln
-obj/
+# .NET
 bin/
+obj/
 *.user
 *.suo
 .vs/
 
+# Betriebssystem
 Thumbs.db
 desktop.ini
 .DS_Store

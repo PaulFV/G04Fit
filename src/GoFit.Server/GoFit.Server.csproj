@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>GoFit.Server</RootNamespace>
+    <AssemblyName>GoFit.Server</AssemblyName>
+    <!-- Der Webinhalt liegt im Projektstamm (index.html, css/, js/), nicht in wwwroot. -->
+    <NoDefaultLaunchSettingsFile>false</NoDefaultLaunchSettingsFile>
+  </PropertyGroup>
+
+</Project>

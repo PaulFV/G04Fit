@@ -1,11 +1,11 @@
 /* ============================================================
-   GoFit v2.0.0 — Hilfsfunktionen
+   GoFit v1.0.0 — Hilfsfunktionen
    Klassisches Script (kein Modul), damit die App auch per
    Doppelklick über file:// läuft.
    ============================================================ */
 var GoFit = window.GoFit || {};
 window.GoFit = GoFit;
-GoFit.VERSION = '2.0.0';
+GoFit.VERSION = '1.0.0';
 
 (function (G) {
   'use strict';

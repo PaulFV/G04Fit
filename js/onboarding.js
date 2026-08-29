@@ -30,9 +30,9 @@
     return '<div class="ob-step">' + progress() +
       '<div>' +
       '<h2 class="big">Willkommen bei GoFit</h2>' +
-      '<p class="muted" style="margin-top:10px">Dein Trainingsplaner für den ganzen Körper — ' +
-      'Oberkörper, Beine, Po und Waden, mit Wochenplan, Journey und einem Coach, der mit ' +
-      'deinen echten Zahlen arbeitet.</p></div>' +
+      '<p class="muted" style="margin-top:10px">Dein Trainingsplaner für Brust, Rücken, Bauch, ' +
+      'Bizeps, Trizeps und Schulter — mit Wochenplan, Journey und einem Coach, der mit deinen ' +
+      'echten Zahlen arbeitet.</p></div>' +
 
       '<div class="grid grid--2" style="--sp:10px">' +
       feature('journey', 'Journey', 'Level, Regionen und Modi von Easy bis Beast.') +
