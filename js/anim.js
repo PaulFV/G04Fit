@@ -253,6 +253,12 @@
   /** SVG-Markup einer Übungsanimation */
   function figure(ex) {
     if (ex && ex.demo) {
+      if (/\.(?:mp4|webm)(?:[?#]|$)/i.test(ex.demo)) {
+        return '<video class="fig fig--real fig--video" src="' + ex.demo + '"' +
+          (ex.demoPoster ? ' poster="' + ex.demoPoster + '"' : '') +
+          ' aria-label="Animierte Ausführung: ' + G.u.esc(ex.name) +
+          '" autoplay muted loop playsinline preload="metadata"></video>';
+      }
       return '<img class="fig fig--real" src="' + ex.demo + '" alt="Animierte Ausführung: ' +
         G.u.esc(ex.name) + '" loading="lazy" decoding="async">';
     }
