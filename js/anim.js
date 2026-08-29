@@ -259,7 +259,8 @@
           ' aria-label="Animierte Ausführung: ' + G.u.esc(ex.name) +
           '" autoplay muted loop playsinline preload="metadata"></video>';
       }
-      return '<img class="fig fig--real" src="' + ex.demo + '" alt="Animierte Ausführung: ' +
+      return '<img class="fig fig--real' + (ex.demoStyle === 'anatomy' ? ' fig--anatomy' : '') +
+        '" src="' + ex.demo + '" alt="Animierte Ausführung: ' +
         G.u.esc(ex.name) + '" loading="lazy" decoding="async">';
     }
     var pattern = (ex && ex.pattern) || 'curl';

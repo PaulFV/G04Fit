@@ -229,6 +229,7 @@
 .ex-card__fig,.ex-card__map{position:relative;min-width:0}
 .ex-card__fig > .fig{position:absolute;top:12px;left:12px;width:calc(100% - 24px);height:calc(100% - 24px)}
 .ex-card__fig > .fig--real{inset:0;width:100%;height:100%;object-fit:cover;object-position:center;border-radius:0}
+.ex-card__fig > .fig--anatomy{object-fit:contain;background:#fff}
 .ex-card__map{border-left:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.22)}
 .ex-card__map > .mmap,.ex-card__map > .avatar-mmap{position:absolute;top:9px;left:5px;width:calc(100% - 10px);height:calc(100% - 18px)}
 .ex-card__body{padding:14px 15px 16px;display:flex;flex-direction:column;gap:7px;flex:1}
