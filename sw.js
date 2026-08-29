@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert – keine
    Nutzerdaten, keine Anfragen an fremde Server.
    ============================================================ */
-var CACHE = 'gofit-v1.0.6';
+var CACHE = 'gofit-v1.0.7';
 
 var ASSETS = [
   './',
