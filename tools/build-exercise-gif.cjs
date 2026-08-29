@@ -12,8 +12,7 @@ async function main() {
   const rows = Number(process.argv[5] || 2);
   const frameWidth = 512;
   const frameHeight = 512;
-  // Langsamer Lehrmodus: Umkehrpunkte bewusst länger zeigen.
-  const hold = [900, 550, 550, 900, 550, 550];
+  const tweenCount = 3;
 
   fs.mkdirSync(path.dirname(outputBase), { recursive: true });
   fs.mkdirSync(outputBase + '-frames', { recursive: true });
@@ -21,7 +20,7 @@ async function main() {
   const sheet = await loadImage(sheetPath);
   const cellWidth = sheet.width / cols;
   const cellHeight = sheet.height / rows;
-  const encoder = new GifEncoder(frameWidth, frameHeight, { repeat: 0, quality: 8 });
+  const frames = [];
 
   for (let index = 0; index < cols * rows; index++) {
     const col = index % cols;
@@ -43,9 +42,37 @@ async function main() {
       String(index + 1).padStart(2, '0') + '.png');
     fs.writeFileSync(framePath, canvas.toBuffer('image/png'));
     const pixels = ctx.getImageData(0, 0, frameWidth, frameHeight).data;
-    const rgba = new Uint8Array(pixels.buffer, pixels.byteOffset, pixels.byteLength);
-    encoder.addFrame(rgba, frameWidth, frameHeight, { delay: hold[index] || 170 });
+    frames.push(new Uint8Array(pixels.buffer.slice(
+      pixels.byteOffset, pixels.byteOffset + pixels.byteLength)));
   }
+
+  const encoder = new GifEncoder(frameWidth, frameHeight, { repeat: 0, quality: 10 });
+  // Hin und zurück: Der Loop endet wieder im exakten Startbild. Damit entfällt
+  // der harte Sprung zwischen zwei separat generierten Lockout-Posen.
+  const order = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0];
+  const endpoint = new Set([0, 3, 5]);
+
+  function add(index, delay) {
+    encoder.addFrame(frames[index], frameWidth, frameHeight, { delay: delay });
+  }
+
+  function addTween(from, to, amount) {
+    const a = frames[from], b = frames[to];
+    const mixed = new Uint8Array(a.length);
+    for (let p = 0; p < a.length; p++) {
+      mixed[p] = Math.round(a[p] + (b[p] - a[p]) * amount);
+    }
+    encoder.addFrame(mixed, frameWidth, frameHeight, { delay: 80 });
+  }
+
+  for (let step = 0; step < order.length - 1; step++) {
+    const from = order[step], to = order[step + 1];
+    add(from, endpoint.has(from) ? 650 : 220);
+    for (let tween = 1; tween <= tweenCount; tween++) {
+      addTween(from, to, tween / (tweenCount + 1));
+    }
+  }
+  add(order[order.length - 1], 650);
 
   fs.writeFileSync(outputBase + '.gif', encoder.finish());
   encoder.dispose();
