@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert – keine
    Nutzerdaten, keine Anfragen an fremde Server.
    ============================================================ */
-var CACHE = 'gofit-v1.0.10';
+var CACHE = 'gofit-v1.0.11';
 
 var ASSETS = [
   './',
@@ -42,7 +42,7 @@ var ASSETS = [
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-maskable-512.png',
-  './assets/exercises/bench-db-anatomy.gif',
+  './assets/exercises/bench-db-anatomy-v2.gif',
   './assets/avatar/avatar-front-map.png',
   './assets/avatar/avatar-back-map.png'
 ];
