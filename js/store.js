@@ -84,7 +84,8 @@
         reduceMotion: false,
         restTimer: true,
         reentry: true,               // Wiedereinstiegsmodus
-        soundless: true
+        soundless: true,
+        alarmSound: 'signal'         // signal | pulse | chime
       }
     };
   }

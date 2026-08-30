@@ -87,12 +87,15 @@ body{
   background:var(--bg-0);
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  min-height:100vh;
+  min-height:100dvh;
   font-size:15px;
   line-height:1.5;
   /* iOS: kein Gummiband-Effekt und kein grauer Tipp-Schleier */
   overscroll-behavior-y:none;
   -webkit-tap-highlight-color:transparent;
 }
+button,a,[role="button"]{touch-action:manipulation}
 :root[data-theme="light"] body{background:var(--bg-0)}
 h1,h2,h3,h4{margin:0;font-weight:640;letter-spacing:-.015em;line-height:1.2}
 p{margin:0}

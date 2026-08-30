@@ -8,6 +8,17 @@
   var u = G.u;
   G.views = G.views || {};
 
+  function iosInstallHint() {
+    var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+    if (!ios || standalone) return '';
+    return '<div class="note note--warn">' + u.icon('info', 18) +
+      '<div><b>Für Benachrichtigungen auf dem iPhone</b><br>' +
+      'Öffne in Safari „Teilen“ und wähle „Zum Home-Bildschirm“. Starte GoFit danach über das App-Symbol ' +
+      'und erlaube die Benachrichtigungen.</div></div>';
+  }
+
   function permissionBox() {
     var perm = G.reminders.permission();
     if (!G.store.hasConsent('push')) return '';
@@ -84,7 +95,7 @@
           : '<button class="btn btn--primary" data-act="on">Erinnerungen erlauben</button>') +
         '</div></div></div>' +
 
-        permissionBox() +
+        iosInstallHint() + permissionBox() +
 
         '<div class="grid grid--2">' +
 

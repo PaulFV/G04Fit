@@ -277,6 +277,24 @@
 }
 .timer__v{font-family:var(--mono);font-size:30px;font-weight:700;color:var(--cyan);letter-spacing:-.02em}
 
+@media (max-width:430px){
+  .input,.select,.textarea,.set-row .input{font-size:16px}
+  .card{padding:16px;border-radius:18px}
+  .card--pad-sm{padding:13px}
+  .btn{min-height:44px;padding:10px 15px}
+  .btn--sm{min-height:42px;padding:8px 12px}
+  .chip{min-height:42px}
+  .set-row{grid-template-columns:30px minmax(0,1fr) minmax(0,1fr) 42px;gap:6px;padding:7px 4px}
+  .set-head{grid-template-columns:30px minmax(0,1fr) minmax(0,1fr) 42px;gap:6px;padding-left:4px;padding-right:4px}
+  .set-row__n{width:28px;height:28px}
+  .set-check{width:42px;height:42px}
+  .timer{display:grid;grid-template-columns:auto 1fr;gap:10px 12px;padding:14px}
+  .timer .btn{min-width:0;width:100%}
+  .timer .btn:first-of-type{grid-column:1/2}
+  .timer .btn:last-of-type{grid-column:2/3}
+  .timer__v{font-size:28px}
+}
+
 /* ---------- Coach-Bubble ---------- */
 .coach{display:flex;gap:13px;align-items:flex-start}
 .coach__av{

@@ -6,42 +6,56 @@
   var u = G.u;
   G.views = G.views || {};
 
-  var rest = { left: 0, timer: null, exId: null };
+  var rest = { left: 0, timer: null, exId: null, endAt: 0, finished: false };
 
   function stopRest() {
     if (rest.timer) clearInterval(rest.timer);
-    rest.timer = null; rest.left = 0; rest.exId = null;
+    rest.timer = null; rest.left = 0; rest.exId = null; rest.endAt = 0;
     var el = u.$('#restBox');
     if (el) el.remove();
+  }
+
+  function showRestBox() {
+    var host = u.$('#restHost');
+    if (!host || !rest.endAt || rest.finished) return;
+    var old = u.$('#restBox');
+    if (old) old.remove();
+
+    host.appendChild(u.el(
+      '<div class="timer" id="restBox">' +
+      '<span style="color:var(--cyan)">' + u.icon('clock', 22) + '</span>' +
+      '<div style="flex:1"><div class="timer__v" id="restV">' + u.mmss(rest.left) + '</div>' +
+      '<span class="tiny muted">Satzpause</span></div>' +
+      '<button class="btn btn--sm" data-act="rest-skip">Überspringen</button>' +
+      '<button class="btn btn--sm" data-act="rest-plus">+30 s</button>' +
+      '</div>'
+    ));
   }
 
   function startRest(seconds, exId) {
     if (!G.store.state.settings.restTimer) return;
     stopRest();
     rest.left = seconds; rest.exId = exId;
+    rest.endAt = Date.now() + seconds * 1000;
+    rest.finished = false;
+    G.reminders.prepareAlarm();
 
-    var box = u.el(
-      '<div class="timer" id="restBox">' +
-      '<span style="color:var(--cyan)">' + u.icon('clock', 22) + '</span>' +
-      '<div style="flex:1"><div class="timer__v" id="restV">' + u.mmss(seconds) + '</div>' +
-      '<span class="tiny muted">Satzpause</span></div>' +
-      '<button class="btn btn--sm" data-act="rest-skip">Überspringen</button>' +
-      '<button class="btn btn--sm" data-act="rest-plus">+30 s</button>' +
-      '</div>'
-    );
-    var host = u.$('#restHost');
-    if (host) host.appendChild(box);
+    showRestBox();
 
-    rest.timer = setInterval(function () {
-      rest.left--;
+    function updateRest() {
+      rest.left = Math.max(0, Math.ceil((rest.endAt - Date.now()) / 1000));
       var v = u.$('#restV');
       if (v) v.textContent = u.mmss(rest.left);
-      if (rest.left <= 0) {
+      if (rest.left <= 0 && !rest.finished) {
+        rest.finished = true;
         stopRest();
         u.toast('Pause vorbei', 'Weiter mit dem nächsten Satz.', 'ok', 2600);
-        if (G.store.hasConsent('push')) G.reminders.notify('GoFit', 'Pause vorbei – nächster Satz.', 'gofit-rest');
+        G.reminders.restFinished();
       }
-    }, 1000);
+    }
+
+    rest.timer = setInterval(updateRest, 500);
+    updateRest();
   }
 
   /* ------------------------------------------------------------
@@ -385,9 +399,13 @@
       }
       return planPreview();
     },
-    unmount: stopRest,
+    // Der Pausentimer gehört zur laufenden Einheit und läuft auch weiter,
+    // wenn innerhalb von GoFit eine andere Ansicht geöffnet wird.
+    unmount: function () {},
     mount: function (host) {
       var s = G.store.state;
+
+      showRestBox();
 
       /* --- Start --- */
       u.on(host, 'click', '[data-act="start-plan"]', function () {
@@ -455,7 +473,12 @@
 
       /* --- Pausensteuerung --- */
       u.on(host, 'click', '[data-act="rest-skip"]', function () { stopRest(); });
-      u.on(host, 'click', '[data-act="rest-plus"]', function () { rest.left += 30; });
+      u.on(host, 'click', '[data-act="rest-plus"]', function () {
+        rest.endAt += 30000;
+        rest.left = Math.max(0, Math.ceil((rest.endAt - Date.now()) / 1000));
+        var v = u.$('#restV');
+        if (v) v.textContent = u.mmss(rest.left);
+      });
 
       /* --- Satz ergänzen --- */
       u.on(host, 'click', '[data-act="add-set"]', function (e, t) {

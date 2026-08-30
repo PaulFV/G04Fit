@@ -254,6 +254,13 @@
         sw('setReentry', 'Wiedereinstiegsmodus', 'Nach längeren Pausen reduziert GoFit Gewicht und Volumen automatisch.', s.settings.reentry) +
         sw('setMotion', 'Animationen reduzieren', 'Schaltet Bewegungseffekte weitgehend ab.', s.settings.reduceMotion) +
         sw('setSilent', 'Benachrichtigungen stumm', 'Erinnerungen ohne Ton zustellen.', s.settings.soundless) +
+        '<div class="field" style="margin:14px 13px 4px"><label>Alarmton für Satzpausen</label>' +
+        '<div class="row row--wrap"><select class="select" id="alarmSound" style="flex:1;min-width:180px">' +
+        '<option value="signal"' + ((s.settings.alarmSound || 'signal') === 'signal' ? ' selected' : '') + '>Signal</option>' +
+        '<option value="pulse"' + (s.settings.alarmSound === 'pulse' ? ' selected' : '') + '>Puls</option>' +
+        '<option value="chime"' + (s.settings.alarmSound === 'chime' ? ' selected' : '') + '>Glockenspiel</option>' +
+        '</select><button class="btn btn--sm" data-act="test-alarm">Anhören</button></div>' +
+        '<span class="field__hint">Der Ton wird abgespielt, wenn eine Satzpause endet.</span></div>' +
         '</div>' +
 
         '<div class="note note--warn">' + u.icon('warn', 18) +
@@ -379,6 +386,16 @@
       bindSwitch(host, 'setMotion', function (v) {
         s.settings.reduceMotion = v;
         document.body.classList.toggle('no-motion', v);
+      });
+
+      var alarmSound = host.querySelector('#alarmSound');
+      if (alarmSound) alarmSound.addEventListener('change', function () {
+        s.settings.alarmSound = alarmSound.value;
+        G.store.commit('settings');
+        G.reminders.playAlarm(true);
+      });
+      u.on(host, 'click', '[data-act="test-alarm"]', function () {
+        G.reminders.playAlarm(true);
       });
     }
   };

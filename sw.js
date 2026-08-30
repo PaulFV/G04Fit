@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert – keine
    Nutzerdaten, keine Anfragen an fremde Server.
    ============================================================ */
-var CACHE = 'gofit-v1.0.13';
+var CACHE = 'gofit-v1.0.19';
 
 var ASSETS = [
   './',
@@ -100,6 +100,22 @@ self.addEventListener('fetch', function (e) {
       return caches.match(req).then(function (hit) {
         return hit || Response.error();
       });
+    })
+  );
+});
+
+self.addEventListener('notificationclick', function (e) {
+  e.notification.close();
+  var target = (e.notification.data && e.notification.data.url) || './index.html#workout';
+  e.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (windows) {
+      for (var i = 0; i < windows.length; i++) {
+        if ('focus' in windows[i]) {
+          windows[i].navigate(target);
+          return windows[i].focus();
+        }
+      }
+      return clients.openWindow ? clients.openWindow(target) : null;
     })
   );
 });

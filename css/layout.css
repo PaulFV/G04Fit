@@ -139,7 +139,7 @@
 .scrim{position:fixed;inset:0;z-index:60;background:rgba(3,5,7,.72);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);animation:fadeIn .25s var(--ease)}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .sheet{
-  position:fixed;z-index:70;right:0;top:0;height:100vh;width:min(580px,100%);
+  position:fixed;z-index:70;right:0;top:0;height:100vh;height:100dvh;width:min(580px,100%);
   border-radius:var(--r-xl) 0 0 var(--r-xl);border-width:1px 0 0 1px;
   display:flex;flex-direction:column;
   animation:sheetIn .38s var(--ease) both;
@@ -192,7 +192,7 @@
   .main{padding-bottom:calc(var(--tabbar-h) + 34px)}
   .grid--3{grid-template-columns:1fr}
   .sheet{
-    right:0;left:0;top:auto;bottom:0;width:100%;height:min(88vh,100%);
+    right:0;left:0;top:auto;bottom:0;width:100%;height:min(88vh,100%);height:min(88dvh,100%);
     border-radius:var(--r-xl) var(--r-xl) 0 0;border-width:1px 0 0 0;
     animation:sheetUp .38s var(--ease) both;
   }
@@ -212,9 +212,44 @@
   .grid--2,.grid--4{grid-template-columns:1fr}
   /* Sicherheitsabstand oben beibehalten — sonst rutscht die Kopfzeile
      auf dem iPhone unter die Statusleiste. */
-  .topbar{padding:max(14px,calc(env(safe-area-inset-top) + 6px)) 16px 14px}
+  .topbar{
+    gap:10px;
+    padding:max(14px,calc(env(safe-area-inset-top) + 6px))
+            max(12px,env(safe-area-inset-right)) 12px
+            max(12px,env(safe-area-inset-left));
+  }
+  .topbar__title{min-width:0;flex:1}
+  .topbar__title h1,.topbar__title p{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar__actions{gap:6px}
+  .icon-btn{width:44px;height:44px}
+  .tabbar__item{min-width:0;padding-top:4px;padding-bottom:3px}
+  .tabbar__item span{max-width:100%;overflow:hidden;text-overflow:ellipsis}
   .view-host{
     padding-left:max(16px,env(safe-area-inset-left));
     padding-right:max(16px,env(safe-area-inset-right));
+  }
+}
+
+/* Kleine iPhones (SE/mini): Kopfzeile und Workout-Bedienung bleiben
+   ohne horizontales Scrollen vollständig erreichbar. */
+@media (max-width:390px){
+  :root{--sp:12px;--tabbar-h:62px}
+  .topbar__title p{display:none}
+  .streak-chip{padding:7px 9px}
+  .topbar .icon-btn{width:40px;height:40px}
+  .tabbar__item{font-size:9.5px}
+  .tabbar__item svg{width:20px;height:20px}
+}
+
+/* Querformat mit Notch: Inhalte dürfen nicht hinter die seitlichen
+   Sensorbereiche rutschen. */
+@media (max-height:500px) and (orientation:landscape){
+  .topbar{
+    padding-left:max(16px,env(safe-area-inset-left));
+    padding-right:max(16px,env(safe-area-inset-right));
+  }
+  .tabbar{
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
   }
 }
