@@ -1,6 +1,6 @@
 /* ============================================================
    GoFit v1.0.0 — Design Tokens
-   Dark Mode · Glassmorphism · Neon-Grün · Cyan-Akzente
+   Dark/Light Mode · Glassmorphism · Neon-Grün · Cyan-Akzente
    ============================================================ */
 
 :root{
@@ -57,6 +57,23 @@
   --mono:"Cascadia Mono",ui-monospace,"SF Mono",Consolas,monospace;
 }
 
+:root[data-theme="light"]{
+  --bg-0:#F3F7F5;
+  --bg-1:#EAF1ED;
+  --bg-2:#DDE8E2;
+  --tx-0:#13231C;
+  --tx-1:#425C50;
+  --tx-2:#71877D;
+  --glass-bg:rgba(255,255,255,.62);
+  --glass-bg-2:rgba(255,255,255,.82);
+  --glass-br:rgba(18,65,44,.14);
+  --glass-hi:rgba(255,255,255,.94);
+  --sh-1:0 1px 0 rgba(255,255,255,.88) inset,0 12px 34px rgba(31,72,53,.12);
+  --exercise-canvas:#E9F0ED;
+}
+
+:root:not([data-theme="light"]){--exercise-canvas:#07100D}
+
 *,*::before,*::after{box-sizing:border-box}
 html,body{height:100%}
 html{
@@ -76,6 +93,7 @@ body{
   overscroll-behavior-y:none;
   -webkit-tap-highlight-color:transparent;
 }
+:root[data-theme="light"] body{background:var(--bg-0)}
 h1,h2,h3,h4{margin:0;font-weight:640;letter-spacing:-.015em;line-height:1.2}
 p{margin:0}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -89,6 +107,17 @@ a{color:var(--neon);text-decoration:none}
     linear-gradient(90deg,rgba(61,255,158,.028) 1px,transparent 1px) 0 0/64px 64px,
     var(--bg-0);
   mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 20%,transparent 80%);
+}
+:root[data-theme="light"] .bg-grid{
+  background:
+    linear-gradient(rgba(22,112,72,.045) 1px,transparent 1px) 0 0/64px 64px,
+    linear-gradient(90deg,rgba(22,112,72,.045) 1px,transparent 1px) 0 0/64px 64px,
+    var(--bg-0);
+}
+:root[data-theme="light"] .bg-glow{
+  background:
+    radial-gradient(700px 460px at 12% -8%,rgba(61,255,158,.18),transparent 62%),
+    radial-gradient(620px 420px at 92% 4%,rgba(34,211,238,.12),transparent 62%);
 }
 .bg-glow{
   position:fixed;inset:0;z-index:-1;pointer-events:none;

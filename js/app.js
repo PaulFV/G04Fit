@@ -22,6 +22,37 @@
   var current = 'dashboard';
   var currentParams = null;
 
+  function themeIcon(theme) {
+    if (theme === 'light') {
+      return '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20.2 15.2A8 8 0 018.8 3.8 8.5 8.5 0 1020.2 15.2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+    }
+    return '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  }
+
+  function applyTheme(theme) {
+    theme = theme === 'light' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.style.colorScheme = theme;
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', theme === 'light' ? '#F3F7F5' : '#05070A');
+    var button = u.$('#themeBtn');
+    if (button) {
+      var isLight = theme === 'light';
+      var label = isLight ? 'Dunklen Modus aktivieren' : 'Hellen Modus aktivieren';
+      button.innerHTML = themeIcon(theme);
+      button.title = label;
+      button.setAttribute('aria-label', label);
+      button.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+    }
+    return theme;
+  }
+
+  function setTheme(theme) {
+    var selected = applyTheme(theme);
+    G.store.state.settings.theme = selected;
+    G.store.commit('theme');
+  }
+
   /* ------------------------------------------------------------
      Navigation aufbauen
      ------------------------------------------------------------ */
@@ -152,6 +183,7 @@
     G.store.load();
     var s = G.store.state;
 
+    applyTheme(s.settings.theme);
     if (s.settings.reduceMotion) document.body.classList.add('no-motion');
     G.store.recomputeStreak();
 
@@ -166,6 +198,9 @@
     });
 
     u.$('#mobileMenuBtn').addEventListener('click', openMobileNav);
+    u.$('#themeBtn').addEventListener('click', function () {
+      setTheme(G.store.state.settings.theme === 'light' ? 'dark' : 'light');
+    });
     u.$('#privacyBtn').addEventListener('click', function () { go('privacy'); });
     u.$('#sheetClose').addEventListener('click', u.closeSheet);
     u.$('#scrim').addEventListener('click', function () {
@@ -221,6 +256,7 @@
     NAV: NAV,
     go: go,
     rerender: rerender,
+    setTheme: setTheme,
     get current() { return current; }
   };
 

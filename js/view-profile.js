@@ -249,6 +249,7 @@
         /* Einstellungen */
         '<div class="card">' +
         '<div class="card__head">' + u.icon('refresh', 18) + '<h3>App-Einstellungen</h3></div>' +
+        sw('setLight', 'Heller Modus', 'Wechselt zwischen dem dunklen und hellen GoFit-Design.', s.settings.theme === 'light') +
         sw('setRest', 'Pausentimer', 'Nach jedem abgehakten Satz startet automatisch eine Pause.', s.settings.restTimer) +
         sw('setReentry', 'Wiedereinstiegsmodus', 'Nach längeren Pausen reduziert GoFit Gewicht und Volumen automatisch.', s.settings.reentry) +
         sw('setMotion', 'Animationen reduzieren', 'Schaltet Bewegungseffekte weitgehend ab.', s.settings.reduceMotion) +
@@ -371,6 +372,7 @@
       });
 
       /* Einstellungen */
+      bindSwitch(host, 'setLight', function (v) { G.app.setTheme(v ? 'light' : 'dark'); }, false);
       bindSwitch(host, 'setRest', function (v) { s.settings.restTimer = v; });
       bindSwitch(host, 'setReentry', function (v) { s.settings.reentry = v; });
       bindSwitch(host, 'setSilent', function (v) { s.settings.soundless = v; });
@@ -387,12 +389,12 @@
       '<span class="switch__label"><b>' + u.esc(title) + '</b><span>' + u.esc(desc) + '</span></span></label>';
   }
 
-  function bindSwitch(host, id, fn) {
+  function bindSwitch(host, id, fn, commit) {
     var e = host.querySelector('#' + id);
     if (!e) return;
     e.addEventListener('change', function () {
       fn(e.checked);
-      G.store.commit('settings');
+      if (commit !== false) G.store.commit('settings');
     });
   }
 })(GoFit);

@@ -80,6 +80,7 @@
       },
 
       settings: {
+        theme: 'dark',
         reduceMotion: false,
         restTimer: true,
         reentry: true,               // Wiedereinstiegsmodus

@@ -8,7 +8,7 @@
    inhaltsabhängigen Rahmen sonst auf ihre Eigenhöhe zurückfällt. */
 .fig{display:block;width:100%;height:100%}
 .fig--real{object-fit:contain;object-position:center;border-radius:12px;background:#07090b}
-.fig--anatomy{background:#fff}
+.fig--anatomy{background:var(--exercise-canvas)}
 .fig--video{pointer-events:none}
 .fig-box{position:relative;width:100%;overflow:hidden}
 .fig-box > .fig,
