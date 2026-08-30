@@ -252,15 +252,16 @@
 
   /** SVG-Markup einer Übungsanimation */
   function figure(ex) {
-    if (ex && ex.demo) {
-      if (/\.(?:mp4|webm)(?:[?#]|$)/i.test(ex.demo)) {
-        return '<video class="fig fig--real fig--video" src="' + ex.demo + '"' +
+    var demo = ex && (ex.demo || ('assets/exercises/anatomy/' + ex.id + '.webp'));
+    if (demo) {
+      if (/\.(?:mp4|webm)(?:[?#]|$)/i.test(demo)) {
+        return '<video class="fig fig--real fig--video" src="' + demo + '"' +
           (ex.demoPoster ? ' poster="' + ex.demoPoster + '"' : '') +
           ' aria-label="Animierte Ausführung: ' + G.u.esc(ex.name) +
           '" autoplay muted loop playsinline preload="metadata"></video>';
       }
-      return '<img class="fig fig--real' + (ex.demoStyle === 'anatomy' ? ' fig--anatomy' : '') +
-        '" src="' + ex.demo + '" alt="Animierte Ausführung: ' +
+      return '<img class="fig fig--real fig--anatomy' +
+        '" src="' + demo + '" alt="Animierte Ausführung: ' +
         G.u.esc(ex.name) + '" loading="lazy" decoding="async">';
     }
     var pattern = (ex && ex.pattern) || 'curl';

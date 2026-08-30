@@ -49,7 +49,7 @@
     {
       id: 'bench-db', name: 'Kurzhantel-Bankdrücken', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Kurzhanteln', pattern: 'pressflat',
-      demo: 'assets/exercises/bench-db-anatomy-v3.webp', demoStyle: 'anatomy',
+      demo: 'assets/exercises/anatomy/bench-db.webp', demoStyle: 'anatomy',
       level: 1, inc: 2, f: 0.24, reps: [8, 12],
       cues: [
         'Hanteln auf Höhe der unteren Brust starten',
