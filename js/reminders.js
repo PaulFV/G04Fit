@@ -4,11 +4,12 @@
    Konzept Abschnitt 8: geplante Einheiten erinnern und nach
    längeren Pausen den Wiedereinstieg anstoßen.
 
-   Umsetzung im Prototyp:
+   Umsetzung:
    · Solange die App geöffnet ist, wird lokal geprüft und über die
      Notification-API erinnert.
-   · Wenn Notification Triggers verfügbar sind, werden nächste Termine
-     zusätzlich für den Hintergrund vorgemerkt.
+   · Web Push synchronisiert Uhrzeit und Trainingstage mit dem optionalen
+     GoFit Push Worker und funktioniert dadurch auch bei geschlossener App.
+   · Notification Triggers bleiben als zusätzlicher lokaler Fallback aktiv.
    · Ist keine Systembenachrichtigung erlaubt oder möglich,
      erscheint die Erinnerung als Hinweis in der App.
    · Ohne Einwilligung "Benachrichtigungen" passiert nichts.
@@ -20,6 +21,7 @@
   var timer = null;
   var firedToday = {};
   var audioContext = null;
+  var PUSH_API = String(window.GOFIT_PUSH_API || '').replace(/\/+$/, '');
 
   function st() { return G.store.state; }
   function allowed() { return G.store.hasConsent('push'); }
@@ -31,6 +33,153 @@
   function permission() {
     if (!supported()) return 'unsupported';
     return Notification.permission;
+  }
+
+  function isIOSDevice() {
+    return /iPad|iPhone|iPod/i.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+
+  function isStandaloneApp() {
+    return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  }
+
+  function backgroundSupported() {
+    return 'serviceWorker' in navigator && 'PushManager' in window && supported();
+  }
+
+  function backgroundStatus() {
+    if (!PUSH_API) return 'unconfigured';
+    if (isIOSDevice() && !isStandaloneApp()) return 'install-required';
+    if (!backgroundSupported()) return 'unsupported';
+    if (Notification.permission === 'denied') return 'denied';
+    if (Notification.permission === 'granted') return 'available';
+    return 'permission-required';
+  }
+
+  function base64UrlToBytes(value) {
+    var padding = '='.repeat((4 - value.length % 4) % 4);
+    var binary = atob((value + padding).replace(/-/g, '+').replace(/_/g, '/'));
+    return Uint8Array.from(binary, function (char) { return char.charCodeAt(0); });
+  }
+
+  function randomBase64Url(bytes) {
+    var values = new Uint8Array(bytes);
+    crypto.getRandomValues(values);
+    var binary = '';
+    values.forEach(function (value) { binary += String.fromCharCode(value); });
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  function pushIdentity() {
+    var deviceId = localStorage.getItem('gofit.push.deviceId');
+    var deviceSecret = localStorage.getItem('gofit.push.deviceSecret');
+    if (!deviceId) {
+      deviceId = crypto.randomUUID ? crypto.randomUUID() : randomBase64Url(18);
+      localStorage.setItem('gofit.push.deviceId', deviceId);
+    }
+    if (!deviceSecret) {
+      deviceSecret = randomBase64Url(32);
+      localStorage.setItem('gofit.push.deviceSecret', deviceSecret);
+    }
+    return { deviceId: deviceId, deviceSecret: deviceSecret };
+  }
+
+  async function pushRequest(path, options) {
+    if (!PUSH_API) throw new Error('Der Push-Server ist noch nicht konfiguriert.');
+    options = options || {};
+    var identity = pushIdentity();
+    var response = await fetch(PUSH_API + path, Object.assign({}, options, {
+      headers: Object.assign({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + identity.deviceSecret
+      }, options.headers || {})
+    }));
+    if (!response.ok) {
+      var detail = await response.json().catch(function () { return {}; });
+      throw new Error(detail.error || 'Push-Server nicht erreichbar.');
+    }
+    return response.json().catch(function () { return {}; });
+  }
+
+  async function syncPushSchedule(subscription) {
+    if (!allowed() || !PUSH_API || !backgroundSupported() || Notification.permission !== 'granted') return false;
+    var registration = await navigator.serviceWorker.ready;
+    var active = subscription || await registration.pushManager.getSubscription();
+    if (!active) return false;
+    var identity = pushIdentity();
+    await pushRequest('/api/devices/' + encodeURIComponent(identity.deviceId), {
+      method: 'PUT',
+      body: JSON.stringify({
+        subscription: active.toJSON(),
+        reminder: {
+          enabled: true,
+          time: st().profile.reminderTime || '18:00',
+          days: st().profile.trainingDays || [1, 3, 5],
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Berlin'
+        }
+      })
+    });
+    return true;
+  }
+
+  async function enableBackgroundPush() {
+    if (!PUSH_API) throw new Error('Der GoFit Push-Server ist noch nicht verbunden.');
+    if (isIOSDevice() && !isStandaloneApp()) {
+      throw new Error('Füge GoFit zuerst zum iPhone-Home-Bildschirm hinzu und öffne es von dort.');
+    }
+    if (!backgroundSupported()) throw new Error('Dieser Browser unterstützt keine Hintergrund-Benachrichtigungen.');
+
+    var granted = await requestPermission();
+    if (granted !== 'granted') {
+      throw new Error('Benachrichtigungen wurden nicht erlaubt. Du kannst sie in den Systemeinstellungen freigeben.');
+    }
+
+    var keyResponse = await fetch(PUSH_API + '/vapid-public-key');
+    if (!keyResponse.ok) throw new Error('Der Push-Server ist nicht erreichbar.');
+    var keyData = await keyResponse.json();
+    if (!keyData.publicKey) throw new Error('Der Push-Server ist noch nicht vollständig eingerichtet.');
+
+    var registration = await navigator.serviceWorker.ready;
+    var subscription = await registration.pushManager.getSubscription();
+    if (!subscription) {
+      subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: base64UrlToBytes(keyData.publicKey)
+      });
+    }
+    await syncPushSchedule(subscription);
+    return true;
+  }
+
+  async function disableBackgroundPush() {
+    if (!backgroundSupported()) return;
+    var registration = await navigator.serviceWorker.ready;
+    var subscription = await registration.pushManager.getSubscription();
+    var deviceId = localStorage.getItem('gofit.push.deviceId');
+    var serverError = null;
+    try {
+      if (PUSH_API && deviceId) {
+        await pushRequest('/api/devices/' + encodeURIComponent(deviceId), { method: 'DELETE' });
+      }
+    } catch (e) {
+      serverError = e;
+    } finally {
+      if (subscription) await subscription.unsubscribe();
+    }
+    if (serverError) throw serverError;
+  }
+
+  async function testBackgroundPush() {
+    if (!PUSH_API || !backgroundSupported() || Notification.permission !== 'granted') return false;
+    var registration = await navigator.serviceWorker.ready;
+    var subscription = await registration.pushManager.getSubscription();
+    if (!subscription) return false;
+    var identity = pushIdentity();
+    await pushRequest('/api/devices/' + encodeURIComponent(identity.deviceId) + '/test', {
+      method: 'POST', body: '{}'
+    });
+    return true;
   }
 
   /** Systemerlaubnis anfragen – nur nach ausdrücklicher Nutzeraktion aufrufen */
@@ -79,15 +228,11 @@
     return false;
   }
 
-  /*
-     Zukunftstermine direkt beim Betriebssystem vormerken, wenn der Browser
-     Notification Triggers unterstützt. Das ist die einzige Web-API, die eine
-     lokale Benachrichtigung auch nach dem Schließen der Seite zuverlässig
-     übergeben kann. Nicht unterstützte Browser bleiben beim normalen
-     Hintergrund-Timer und zeigen keinen falschen Erfolg an.
-  */
+  /* Push-Zeitplan synchronisieren und zusätzlich lokale Notification
+     Triggers verwenden, wenn der Browser sie anbietet. */
   async function scheduleBackground() {
     if (!allowed() || !supported() || Notification.permission !== 'granted') return 0;
+    try { await syncPushSchedule(); } catch (e) { /* lokale Erinnerung bleibt aktiv */ }
     if (!('serviceWorker' in navigator) || typeof TimestampTrigger === 'undefined') return 0;
     try {
       var registration = await navigator.serviceWorker.ready;
@@ -281,6 +426,14 @@
     if (supported() && Notification.permission === 'default') {
       await requestPermission();
     }
+    try {
+      if (await testBackgroundPush()) {
+        u.toast('Test gesendet', 'Die Push-Nachricht sollte gleich erscheinen.', 'ok');
+        return;
+      }
+    } catch (e) {
+      u.toast('Push-Test fehlgeschlagen', e.message || 'Der Push-Server ist nicht erreichbar.', 'warn', 6500);
+    }
     var ok = await notify('GoFit · Testerinnerung',
       'So sieht deine Trainingserinnerung aus.', 'gofit-test');
     if (!ok) {
@@ -304,6 +457,11 @@
     stop: stop,
     check: check,
     scheduleBackground: scheduleBackground,
+    syncPushSchedule: syncPushSchedule,
+    enableBackgroundPush: enableBackgroundPush,
+    disableBackgroundPush: disableBackgroundPush,
+    backgroundSupported: backgroundSupported,
+    backgroundStatus: backgroundStatus,
     test: test
   };
 })(GoFit);

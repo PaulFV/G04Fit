@@ -30,9 +30,8 @@
     }
     if (perm === 'granted') {
       return '<div class="note note--neon">' + u.icon('check', 18) +
-        '<div>Systembenachrichtigungen sind erlaubt. GoFit erinnert dich zur eingestellten Zeit, ' +
-        'auch wenn die App im Hintergrund läuft. Unterstützt das Gerät geplante Benachrichtigungen, ' +
-        'werden sie beim Aktivieren direkt vorgemerkt.</div></div>';
+        '<div>Systembenachrichtigungen sind erlaubt. GoFit synchronisiert deine Trainingstage mit dem ' +
+        'Push-Dienst und kann dich dadurch auch bei vollständig geschlossener App erinnern.</div></div>';
     }
     if (perm === 'denied') {
       return '<div class="note note--warn">' + u.icon('warn', 18) +
@@ -148,11 +147,10 @@
         '</div>' +
 
       '<div class="note">' + u.icon('info', 18) +
-        '<div><b>Wie Erinnerungen im Prototyp funktionieren</b><br>' +
-        'GoFit prüft offene Sitzungen minütlich. Auf unterstützten Android-/Desktop-Browsern werden ' +
-        'die nächsten Termine zusätzlich als lokale Hintergrund-Benachrichtigungen vorgemerkt. ' +
-        'Auf dem iPhone muss GoFit dafür als Home-Bildschirm-App installiert sein. ' +
-        'Echte Push-Nachrichten von einem Server brauchen weiterhin ein Backend.</div></div>' +
+        '<div><b>Hintergrund-Benachrichtigungen wie bei GoSleep</b><br>' +
+        'GoFit meldet Uhrzeit und Trainingstage verschlüsselt beim Push-Dienst an. Auf dem iPhone muss ' +
+        'GoFit dafür als Home-Bildschirm-App installiert und von dort geöffnet sein. Ohne Push-Unterstützung ' +
+        'bleibt die lokale Erinnerung innerhalb der geöffneten App aktiv.</div></div>' +
 
         '</div>';
     },
@@ -161,13 +159,19 @@
 
       u.on(host, 'click', '[data-act="on"]', async function () {
         G.store.setConsent('push', true);
-        await G.reminders.requestPermission();
+        try {
+          await G.reminders.enableBackgroundPush();
+          u.toast('Push aktiv', 'GoFit erinnert dich auch bei geschlossener App.', 'ok');
+        } catch (e) {
+          await G.reminders.requestPermission();
+          u.toast('Lokale Erinnerung aktiv', e.message || 'Hintergrund-Push ist noch nicht verfügbar.', 'warn', 7000);
+        }
         G.reminders.start();
-        u.toast('Erinnerungen aktiv', 'GoFit meldet sich an deinen Trainingstagen.', 'ok');
         G.app.rerender();
       });
 
-      u.on(host, 'click', '[data-act="off"]', function () {
+      u.on(host, 'click', '[data-act="off"]', async function () {
+        try { await G.reminders.disableBackgroundPush(); } catch (e) { /* lokal trotzdem abschalten */ }
         G.store.setConsent('push', false);
         G.reminders.stop();
         u.toast('Erinnerungen aus', 'GoFit sendet keine Hinweise mehr.', 'warn');
@@ -175,9 +179,12 @@
       });
 
       u.on(host, 'click', '[data-act="ask"]', async function () {
-        var p = await G.reminders.requestPermission();
-        if (p === 'granted') u.toast('Erlaubt', 'Systembenachrichtigungen sind freigegeben.', 'ok');
-        else u.toast('Nicht erlaubt', 'GoFit zeigt Erinnerungen weiterhin in der App.', 'warn');
+        try {
+          await G.reminders.enableBackgroundPush();
+          u.toast('Erlaubt', 'Hintergrund-Benachrichtigungen sind freigegeben.', 'ok');
+        } catch (e) {
+          u.toast('Nicht aktiviert', e.message || 'GoFit zeigt Erinnerungen weiterhin in der App.', 'warn', 7000);
+        }
         G.app.rerender();
       });
 

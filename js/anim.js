@@ -321,8 +321,8 @@
 
     return '<span class="anatomy-mmap anatomy-mmap--' + side + '" role="img" ' +
       'aria-label="Beanspruchte Muskelgruppen: ' + names.join(', ') + '">' +
-      '<img src="assets/avatar/anatomy-' + side + '-v4.webp" alt="" loading="lazy" decoding="async">' +
-      '<svg class="mmap anatomy-mmap__zones" viewBox="0 0 100 200" ' +
+      '<img src="assets/avatar/avatar-' + side + '-map.png" alt="" loading="lazy" decoding="async">' +
+      '<svg class="mmap anatomy-mmap__zones" viewBox="0 0 100 161.7" ' +
       'xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + zones + '</svg></span>';
   }
 
@@ -375,14 +375,14 @@
   /* Präzise Masken für die realistische Ganzkörperfigur in den Karten. */
   var CARD_FRONT = {
     shoulders:
-      '<ellipse cx="31" cy="47" rx="7.8" ry="8.8" transform="rotate(-18 31 47)"/>' +
-      '<ellipse cx="69" cy="47" rx="7.8" ry="8.8" transform="rotate(18 69 47)"/>',
+      '<path d="M31 43C25 40 18 43 15.5 49.5 14 54.5 17 60.5 21.5 61.5 25 58 28.5 52 31.5 47Z"/>' +
+      '<path d="M69 43C75 40 82 43 84.5 49.5 86 54.5 83 60.5 78.5 61.5 75 58 71.5 52 68.5 47Z"/>',
     chest:
       '<path d="M49 46C44 43 37 44 33 48 31.5 52 33 58 37.5 61.5 42 59.5 46 59.5 49 60Z"/>' +
       '<path d="M51 46C56 43 63 44 67 48 68.5 52 67 58 62.5 61.5 58 59.5 54 59.5 51 60Z"/>',
     biceps:
-      '<ellipse cx="24.5" cy="69" rx="5.2" ry="11" transform="rotate(8 24.5 69)"/>' +
-      '<ellipse cx="75.5" cy="69" rx="5.2" ry="11" transform="rotate(-8 75.5 69)"/>',
+      '<ellipse cx="18.5" cy="71" rx="4.8" ry="11.5" transform="rotate(12 18.5 71)"/>' +
+      '<ellipse cx="81.5" cy="71" rx="4.8" ry="11.5" transform="rotate(-12 81.5 71)"/>',
     abs:
       '<path d="M41.5 63h17v31c0 6-3.8 10-8.5 10s-8.5-4-8.5-10z"/>' +
       '<path class="seg" d="M41.5 72h17M41.5 81h17M41.5 90h17M50 63v41"/>'
@@ -390,15 +390,15 @@
 
   var CARD_BACK = {
     shoulders:
-      '<ellipse cx="31" cy="47" rx="7.8" ry="8.8" transform="rotate(-18 31 47)"/>' +
-      '<ellipse cx="69" cy="47" rx="7.8" ry="8.8" transform="rotate(18 69 47)"/>',
+      '<path d="M31 43C25 40 18 43 15.5 49.5 14 54.5 17 60.5 21.5 61.5 25 58 28.5 52 31.5 47Z"/>' +
+      '<path d="M69 43C75 40 82 43 84.5 49.5 86 54.5 83 60.5 78.5 61.5 75 58 71.5 52 68.5 47Z"/>',
     back:
-      '<path d="M50 33 38 42 42 58 50 52 58 58 62 42Z"/>' +
-      '<path d="M35 51C31 61 31.5 78 36 88L47 77C45 66 45 57 47 49Z"/>' +
-      '<path d="M65 51C69 61 68.5 78 64 88L53 77C55 66 55 57 53 49Z"/>',
+      '<path d="M50 34 35 43 41 64 50 56 59 64 65 43Z"/>' +
+      '<path d="M33 50C27 62 27 82 34 98L47 82C45 69 45 58 47 49Z"/>' +
+      '<path d="M67 50C73 62 73 82 66 98L53 82C55 69 55 58 53 49Z"/>',
     triceps:
-      '<ellipse cx="24.5" cy="69" rx="5.2" ry="11" transform="rotate(8 24.5 69)"/>' +
-      '<ellipse cx="75.5" cy="69" rx="5.2" ry="11" transform="rotate(-8 75.5 69)"/>'
+      '<ellipse cx="18.5" cy="71" rx="4.8" ry="11.5" transform="rotate(12 18.5 71)"/>' +
+      '<ellipse cx="81.5" cy="71" rx="4.8" ry="11.5" transform="rotate(-12 81.5 71)"/>'
   };
 
   /* --- Silhouette (für beide Ansichten gleich) --- */

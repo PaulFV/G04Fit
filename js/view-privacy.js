@@ -38,7 +38,7 @@
       k: 'push', t: 'Erinnerungen & Benachrichtigungen',
       d: 'GoFit erinnert an geplante Einheiten und meldet sich nach längeren Pausen. ' +
         'Systembenachrichtigungen benötigen zusätzlich die Erlaubnis des Browsers.',
-      data: 'Trainingstage, Uhrzeit, Datum der letzten Einheit'
+      data: 'Zufällige Geräte-ID, Push-Anmeldung, Trainingstage, Uhrzeit und Zeitzone'
     }
   ];
 
@@ -99,9 +99,10 @@
       'Die Verarbeitung erfolgt ausschließlich auf Grundlage deiner Einwilligung nach Art. 6 Abs. 1 lit. a ' +
       'DSGVO. Die Einwilligungen sind nach Zweck getrennt und einzeln erteilbar.'],
     ['Speicherort und Speicherdauer',
-      'Alle Daten liegen im lokalen Speicher deines Browsers (localStorage) auf dem jeweiligen Gerät. ' +
-      'Es findet keine Übertragung an Dritte statt. Die Daten bleiben so lange erhalten, bis du sie löschst, ' +
-      'die Einwilligung widerrufst oder die Browserdaten entfernst.'],
+      'Profil, Foto und Trainingsdaten liegen im lokalen Speicher deines Browsers (localStorage) auf dem ' +
+      'jeweiligen Gerät. Nur bei aktivierten Benachrichtigungen werden die unter „Benachrichtigungen“ ' +
+      'genannten technischen Daten an den Push-Dienst übertragen. Die Daten bleiben erhalten, bis du sie ' +
+      'löschst, die jeweilige Einwilligung widerrufst oder die Browserdaten entfernst.'],
     ['Verarbeitung durch den GoFit Coach',
       'Der Coach ist ein regelbasiertes Verfahren, das auf deinem Gerät rechnet. Es werden keine Daten an ' +
       'einen KI-Dienst gesendet. Die Regeln (Wiederholungsbereiche, Gewichtsschritte, Pausenlängen, ' +
@@ -112,10 +113,10 @@
       'eigenständig auf dein Dateisystem zu. Was nach dem Export in deinem Vault passiert, liegt in deiner ' +
       'Verantwortung.'],
     ['Benachrichtigungen',
-      'Erinnerungen werden lokal ausgelöst, solange die App geöffnet ist. Unterstützt der Browser geplante ' +
-      'Notification Triggers, können die nächsten Termine auch im Hintergrund vorgemerkt werden. Für ' +
-      'Systembenachrichtigungen ist zusätzlich die Erlaubnis des Browsers nötig. Es werden keine Geräte-' +
-      'Kennungen an einen Push-Dienst übermittelt.'],
+      'Nach deiner Einwilligung werden eine zufällige Geräte-ID, die technische Web-Push-Anmeldung, ' +
+      'Trainingstage, Erinnerungszeit und Zeitzone an den GoFit Push-Dienst auf Cloudflare übertragen. ' +
+      'Name, Profil, Trainingsverlauf, Gewichte und Fotos werden nicht übertragen. Beim Widerruf werden ' +
+      'die Push-Anmeldung und der zugehörige Zeitplan auf dem Dienst gelöscht.'],
     ['Deine Rechte',
       'Du kannst deine Daten jederzeit als Datei exportieren (Recht auf Datenübertragbarkeit), einzeln oder ' +
       'vollständig löschen (Recht auf Löschung) und jede Einwilligung mit Wirkung für die Zukunft widerrufen. ' +
@@ -127,8 +128,8 @@
       'Bei Beschwerden oder Vorerkrankungen ist ärztlicher Rat einzuholen.'],
     ['Stand und offene Punkte',
       'Dieser Text ist ein Entwurf für den Prototyp. Vor einer Veröffentlichung ist er mit den tatsächlich ' +
-      'eingesetzten Diensten abzugleichen und rechtlich prüfen zu lassen – insbesondere, sobald Backend, ' +
-      'Benutzerkonten oder externe Push-Dienste hinzukommen.']
+      'eingesetzten Diensten abzugleichen und rechtlich prüfen zu lassen – insbesondere hinsichtlich des ' +
+      'Cloudflare Push-Dienstes und möglicher künftiger Benutzerkonten.']
   ];
 
   function openPolicy() {
@@ -218,7 +219,7 @@
         '</div></div>' +
 
         '<p class="tiny dim center" style="padding:10px 0 4px">GoFit ' + G.VERSION +
-        ' · Prototyp ohne Backend · Einwilligung zuletzt geändert: ' +
+        ' · Push-Dienst nur nach Einwilligung · Einwilligung zuletzt geändert: ' +
         (s.consent.decidedAt ? u.esc(new Date(s.consent.decidedAt).toLocaleString('de-DE')) : 'nie') + '</p>' +
 
         '</div>';
@@ -245,6 +246,10 @@
           if (!ok) { t.checked = true; return; }
         }
 
+        if (!want && (k === 'push' || (k === 'profile' && G.store.hasConsent('push')))) {
+          try { await G.reminders.disableBackgroundPush(); } catch (e) { /* Widerruf lokal fortsetzen */ }
+        }
+
         G.store.setConsent(k, want);
 
         // Folgeabhängigkeiten sichtbar machen
@@ -259,7 +264,15 @@
           G.store.setConsent('profile', true);
           u.toast('Profil-Speicherung ergänzt', 'Die Historie braucht ein gespeichertes Profil.', 'ok');
         }
-        if (k === 'push' && want) G.reminders.start();
+        if (k === 'push' && want) {
+          try {
+            await G.reminders.enableBackgroundPush();
+            u.toast('Push aktiv', 'GoFit erinnert dich auch bei geschlossener App.', 'ok');
+          } catch (e) {
+            u.toast('Lokale Erinnerung aktiv', e.message || 'Hintergrund-Push ist nicht verfügbar.', 'warn', 7000);
+          }
+          G.reminders.start();
+        }
         if (k === 'push' && !want) G.reminders.stop();
 
         G.app.rerender();

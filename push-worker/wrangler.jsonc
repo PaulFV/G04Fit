@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "gofit-push",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-05",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "APP_ORIGIN": "https://paulfv.github.io",
+    "APP_URL": "https://paulfv.github.io/GoFit/#workout",
+    "VAPID_SUBJECT": "https://paulfv.github.io/GoFit/"
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "REMINDER_DEVICE", "class_name": "ReminderDevice" }
+    ]
+  },
+  "exports": {
+    "ReminderDevice": { "type": "durable-object", "storage": "sqlite" }
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

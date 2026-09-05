@@ -69,7 +69,8 @@
     return '<div class="ob-step">' + progress() +
       '<div><h2 class="big">Zuerst: dein Datenschutz</h2>' +
       '<p class="muted" style="margin-top:10px">GoFit speichert nichts ohne deine ausdrückliche ' +
-      'Zustimmung. Alles bleibt auf diesem Gerät — kein Konto, kein Server, kein Tracking. ' +
+      'Zustimmung. Alles bleibt auf diesem Gerät — kein Konto und kein Tracking. Nur aktivierte ' +
+      'Benachrichtigungen benötigen die technische Push-Anmeldung. ' +
       'Jede Einwilligung ist einzeln und jederzeit widerrufbar.</p></div>' +
 
       '<div class="stack" style="--sp:2px">' +
@@ -297,7 +298,9 @@
         u.$('#app').hidden = false;
         G.app.go('dashboard');
         if (G.store.hasConsent('push')) {
-          G.reminders.requestPermission().then(function () { G.reminders.start(); });
+          G.reminders.enableBackgroundPush()
+            .catch(function () { return G.reminders.requestPermission(); })
+            .then(function () { G.reminders.start(); });
         }
         u.toast('Willkommen bei GoFit',
           G.store.hasConsent('profile')

@@ -2,14 +2,15 @@
    GoFit — Service Worker
    Sorgt dafür, dass die App nach dem ersten Aufruf auch ohne
    Internetverbindung startet. Es werden ausschließlich die
-   eigenen Programmdateien zwischengespeichert – keine
-   Nutzerdaten, keine Anfragen an fremde Server.
+   eigenen Programmdateien zwischengespeichert. Der optionale
+   Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'gofit-v1.0.62';
+var CACHE = 'gofit-v1.0.64';
 
 var ASSETS = [
   './',
   './index.html',
+  './push-config.js',
   './manifest.webmanifest',
   './css/theme.css',
   './css/layout.css',
@@ -215,7 +216,12 @@ self.addEventListener('notificationclick', function (e) {
 // Ohne Server werden keine Daten übertragen; lokale Trigger bleiben davon
 // vollständig unabhängig.
 self.addEventListener('push', function (e) {
-  var data = {};
+  var data = {
+    title: 'GoFit · Training steht an',
+    body: 'Zeit für dein Training. Öffne GoFit und leg los.',
+    tag: 'gofit-training',
+    url: './index.html#workout'
+  };
   try { data = e.data ? e.data.json() : {}; } catch (err) {
     data = { body: e.data ? e.data.text() : 'Deine GoFit-Erinnerung ist da.' };
   }
@@ -224,6 +230,8 @@ self.addEventListener('push', function (e) {
     tag: data.tag || 'gofit-push',
     icon: './icons/icon-v2-192.png',
     badge: './icons/icon-v2-192.png',
+    renotify: true,
+    requireInteraction: true,
     data: { url: data.url || './index.html#workout' }
   }));
 });

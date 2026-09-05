@@ -10,6 +10,8 @@ obj/
 tools/__pycache__/
 tools/refine_animation_batch.py
 assets/exercises/sources/
+push-worker/node_modules/
+push-worker/.wrangler/
 
 # Betriebssystem
 Thumbs.db

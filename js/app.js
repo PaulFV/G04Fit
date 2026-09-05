@@ -270,7 +270,9 @@
   function registerSW() {
     if (!('serviceWorker' in navigator)) return;
     if (location.protocol === 'file:') return;
-    navigator.serviceWorker.register('sw.js').catch(function () { /* offline-Betrieb bleibt optional */ });
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (registration) {
+      return registration.update();
+    }).catch(function () { /* offline-Betrieb bleibt optional */ });
   }
 
   G.app = {
