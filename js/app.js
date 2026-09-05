@@ -270,6 +270,19 @@
   function registerSW() {
     if (!('serviceWorker' in navigator)) return;
     if (location.protocol === 'file:') return;
+
+    // Falls bereits eine ältere installierte GoFit-Version läuft, übernimmt
+    // der neue Worker sofort. Danach einmal neu laden, damit HTML, Daten und
+    // Ansichten garantiert aus derselben Version stammen.
+    var hadController = !!navigator.serviceWorker.controller;
+    var reloadingForUpdate = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadController) return;
+      if (reloadingForUpdate) return;
+      reloadingForUpdate = true;
+      location.reload();
+    });
+
     navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (registration) {
       return registration.update();
     }).catch(function () { /* offline-Betrieb bleibt optional */ });

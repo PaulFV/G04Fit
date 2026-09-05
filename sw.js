@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'gofit-v1.0.64';
+var CACHE = 'gofit-v1.0.65';
 
 var ASSETS = [
   './',
@@ -172,7 +172,7 @@ self.addEventListener('fetch', function (e) {
   // Navigationsanfragen: erst Netz, sonst die zwischengespeicherte Startseite
   if (req.mode === 'navigate') {
     e.respondWith(
-      fetch(req).catch(function () {
+      fetch(req, { cache: 'no-store' }).catch(function () {
         return caches.match('./index.html');
       })
     );
@@ -182,14 +182,14 @@ self.addEventListener('fetch', function (e) {
   // Programmdateien: erst das Netz, damit Änderungen sofort ankommen.
   // Der Cache dient als Rückfallebene, wenn keine Verbindung besteht.
   e.respondWith(
-    fetch(req).then(function (res) {
+    fetch(req, { cache: 'no-store' }).then(function (res) {
       if (res && res.status === 200 && res.type === 'basic') {
         var copy = res.clone();
         caches.open(CACHE).then(function (c) { c.put(req, copy); });
       }
       return res;
     }).catch(function () {
-      return caches.match(req).then(function (hit) {
+      return caches.match(req, { ignoreSearch: true }).then(function (hit) {
         return hit || Response.error();
       });
     })
