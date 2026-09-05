@@ -308,7 +308,7 @@
   var FRONT_ORDER = ['shoulders', 'chest', 'biceps', 'abs'];
   var BACK_ORDER = ['shoulders', 'back', 'triceps'];
 
-  /** Anatomische GIF-artige Ganzkörperfigur für die kompakten Übungskarten. */
+  /** Anatomische Ganzkörperfigur für Muskelkarten und Detailansichten. */
   function anatomyMuscleMap(primary, secondary, side, names) {
     var defs = side === 'front' ? CARD_FRONT : CARD_BACK;
     var order = side === 'front' ? FRONT_ORDER : BACK_ORDER;
@@ -316,7 +316,7 @@
       var cls = 'mg';
       if (k === primary) cls += ' primary';
       else if (secondary.indexOf(k) >= 0) cls += ' secondary';
-      return '<g class="' + cls + '" style="--hl:#E95A3C">' + defs[k] + '</g>';
+      return '<g class="' + cls + '" style="--hl:' + MCOLOR[k] + '">' + defs[k] + '</g>';
     }).join('');
 
     return '<span class="anatomy-mmap anatomy-mmap--' + side + '" role="img" ' +
@@ -324,6 +324,20 @@
       '<img src="assets/avatar/anatomy-' + side + '-v4.webp" alt="" loading="lazy" decoding="async">' +
       '<svg class="mmap anatomy-mmap__zones" viewBox="0 0 100 200" ' +
       'xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + zones + '</svg></span>';
+  }
+
+  /** Neue Anatomiefigur als Vorder-/Rückseiten-Paar für das Detailfenster. */
+  function anatomyMusclePair(primary, secondary, names, labels) {
+    function sidePanel(side, label) {
+      return '<span class="anatomy-mmap-pair__panel">' +
+        anatomyMuscleMap(primary, secondary, side, names) +
+        (labels ? '<span class="anatomy-mmap-pair__label">' + label + '</span>' : '') +
+        '</span>';
+    }
+
+    return '<span class="anatomy-mmap-pair" role="group" ' +
+      'aria-label="Beanspruchte Muskelgruppen: ' + names.join(', ') + '">' +
+      sidePanel('front', 'Vorderseite') + sidePanel('back', 'Rückseite') + '</span>';
   }
 
   /* --- Muskelgruppen der Vorderansicht --- */
@@ -459,10 +473,7 @@
     var box, body;
 
     if (view === 'both') {
-      // Ganzkörper, beide Ansichten nebeneinander
-      box = '0 0 212 ' + (labels ? 224 : 210);
-      body = '<g>' + panel('front', primary, secondary, labels, true, false) + '</g>' +
-        '<g transform="translate(112,0)">' + panel('back', primary, secondary, labels, true, false) + '</g>';
+      return anatomyMusclePair(primary, secondary, names, labels);
     } else {
       // Einzelansicht: auf den Oberkörper zugeschnitten, damit die
       // Hervorhebung auch in kleinen Kacheln erkennbar bleibt.

@@ -17,7 +17,8 @@
 .fig--video{pointer-events:none}
 .fig-box{position:relative;width:100%;overflow:hidden}
 .fig-box > .fig,
-.fig-box > .mmap{position:absolute;top:8px;left:8px;width:calc(100% - 16px);height:calc(100% - 16px)}
+.fig-box > .mmap,
+.fig-box > .anatomy-mmap-pair{position:absolute;top:8px;left:8px;width:calc(100% - 16px);height:calc(100% - 16px)}
 .fig .body-shadow,.fig .body-shell,.fig .bone{stroke-linecap:round;fill:none}
 .fig .body-shadow{stroke:#020406;stroke-width:17;opacity:.9}
 .fig .body-shell{stroke:url(#gf-body);stroke-width:14}
@@ -168,11 +169,18 @@
 .anatomy-mmap > img{display:block;object-fit:contain;filter:drop-shadow(0 5px 7px rgba(0,0,0,.42))}
 .anatomy-mmap__zones .mg{fill:transparent;stroke:none}
 .anatomy-mmap__zones .mg.primary{
-  fill:var(--hl);stroke:#F67C5E;stroke-width:.65;opacity:.7;
-  filter:drop-shadow(0 0 2px rgba(233,90,60,.55));
+  fill:var(--hl);stroke:var(--hl);stroke-width:.65;opacity:.72;
+  filter:drop-shadow(0 0 3px var(--hl));
 }
-.anatomy-mmap__zones .mg.secondary{fill:var(--hl);stroke:#E98A73;stroke-width:.4;opacity:.28}
+.anatomy-mmap__zones .mg.secondary{fill:var(--hl);stroke:var(--hl);stroke-width:.4;opacity:.32}
 .anatomy-mmap__zones .seg{fill:none;stroke:rgba(73,25,16,.75);stroke-width:1.05}
+.anatomy-mmap-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;overflow:hidden}
+.anatomy-mmap-pair__panel{min-width:0;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto}
+.anatomy-mmap-pair__panel > .anatomy-mmap{min-height:0}
+.anatomy-mmap-pair__label{
+  color:var(--tx-2);font-size:10px;font-weight:700;letter-spacing:.06em;
+  text-align:center;text-transform:uppercase;padding-top:2px;
+}
 
 /* Bauchmuskel-Unterteilung */
 .mmap .seg{fill:none;stroke:rgba(5,7,10,.5);stroke-width:1.1}
