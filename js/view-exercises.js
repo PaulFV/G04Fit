@@ -9,9 +9,21 @@
   G.views = G.views || {};
 
   var filter = { muscle: 'all', q: '', equip: 'all' };
+  var filtersOpen = false;
 
   function levelLabel(n) {
     return n === 1 ? 'Einsteiger' : n === 2 ? 'Fortgeschritten' : 'Profi';
+  }
+
+  function equipIcon(name) {
+    if (name === 'all') return 'equipment';
+    if (/Körpergewicht/i.test(name)) return 'bodyweight';
+    if (/Klimmzug/i.test(name)) return 'pullup';
+    if (/Kabel/i.test(name)) return 'cable';
+    if (/Scheibe/i.test(name)) return 'plate';
+    if (/Maschine/i.test(name)) return 'machine';
+    if (/Scottbank/i.test(name)) return 'bench';
+    return 'dumbbell';
   }
 
   function matches(ex) {
@@ -30,8 +42,6 @@
     return '<article class="ex-card" data-ex="' + ex.id + '" tabindex="0">' +
       '<div class="ex-card__vis">' +
       '<span class="ex-card__fig">' + G.anim.figure(ex) + '</span>' +
-      '<span class="ex-card__map" title="Beanspruchte Muskeln">' +
-      G.anim.muscleMap(ex.muscle, ex.sec, { view: 'auto' }) + '</span>' +
       '</div>' +
       '<div class="ex-card__body">' +
       '<b>' + u.esc(ex.name) + '</b>' +
@@ -44,7 +54,8 @@
       }).join('') +
       (rec ? '<span class="pill pill--gold">' + u.icon('medal', 11) + ' ' +
         (ex.time ? rec.reps + ' s' : u.fmt(rec.weight) + '×' + rec.reps) + '</span>' : '') +
-      '</div></div></article>';
+      '</div><span class="ex-card__open">Ausführung ansehen' + u.icon('chevron', 15) + '</span>' +
+      '</div></article>';
   }
 
   /* ------------------------------------------------------------
@@ -214,25 +225,31 @@
     render: function () {
       var equips = ['all'].concat(Object.keys(u.groupBy(G.EXERCISES, function (e) { return e.equip; })).sort());
       var list = G.EXERCISES.filter(matches);
+      var activeFilters = (filter.muscle !== 'all' ? 1 : 0) + (filter.equip !== 'all' ? 1 : 0);
 
       return '<div class="view stack">' +
-        '<div class="card">' +
-        '<div class="stack" style="--sp:12px">' +
-        '<input class="input" id="exSearch" type="search" placeholder="Übung suchen …" value="' + u.esc(filter.q) + '">' +
+        '<div class="card ex-filters' + (filtersOpen ? ' is-open' : '') + '">' +
+        '<div class="ex-search-row">' +
+        '<label class="ex-search" aria-label="Übung suchen">' + u.icon('search', 18) +
+        '<input class="input" id="exSearch" type="search" placeholder="Übung suchen …" value="' + u.esc(filter.q) + '"></label>' +
+        '<button class="btn ex-filter-toggle' + (activeFilters ? ' btn--primary' : '') + '" data-act="filters" aria-expanded="' +
+        (filtersOpen ? 'true' : 'false') + '">' + u.icon('filter', 17) + '<span>Filter</span>' +
+        (activeFilters ? '<b>' + activeFilters + '</b>' : '') + '</button></div>' +
+        '<div class="ex-filter-options">' +
         '<div class="tabs" id="exTabs">' +
         '<button class="tabs__b' + (filter.muscle === 'all' ? ' is-on' : '') + '" data-m="all">Alle</button>' +
         G.MUSCLE_ORDER.map(function (m) {
           return '<button class="tabs__b' + (filter.muscle === m ? ' is-on' : '') + '" data-m="' + m + '">' +
-            G.MUSCLES[m].icon + ' ' + u.esc(G.MUSCLES[m].name) + '</button>';
+            u.icon(G.MUSCLES[m].icon, 17) + '<span>' + u.esc(G.MUSCLES[m].name) + '</span></button>';
         }).join('') + '</div>' +
         '<div class="chips">' + equips.map(function (e) {
           return '<button class="chip' + (filter.equip === e ? ' is-on' : '') + '" data-eq="' + u.esc(e) + '">' +
-            (e === 'all' ? 'Alle Geräte' : u.esc(e)) + '</button>';
+            u.icon(equipIcon(e), 15) + '<span>' + (e === 'all' ? 'Alle Geräte' : u.esc(e)) + '</span></button>';
         }).join('') + '</div>' +
         '</div></div>' +
 
-        '<div class="row"><span class="small muted">' + list.length + ' Übungen</span><span class="spacer"></span>' +
-        '<span class="tiny dim">Tippen für Ausführung, Muskelkarte und Technik</span></div>' +
+        '<div class="row ex-results"><span class="small muted"><b>' + list.length + '</b> Übungen</span><span class="spacer"></span>' +
+        '<span class="tiny dim ex-results__hint">Tippen für Ausführung, Muskelkarte und Technik</span></div>' +
 
         (list.length
           ? '<div class="grid grid--auto">' + list.map(card).join('') + '</div>'
@@ -257,6 +274,10 @@
       });
       u.on(host, 'click', '[data-eq]', function (e, t) {
         filter.equip = t.getAttribute('data-eq');
+        G.app.rerender();
+      });
+      u.on(host, 'click', '[data-act="filters"]', function () {
+        filtersOpen = !filtersOpen;
         G.app.rerender();
       });
       u.on(host, 'click', '[data-ex]', function (e, t) { openDetail(t.getAttribute('data-ex')); });

@@ -252,6 +252,15 @@
 
   /** SVG-Markup einer Übungsanimation */
   function figure(ex) {
+    var referenceTone = ex && ex.demoStyle === 'reference-gif' ? ' fig--reference' : '';
+    if (ex && ex.demoCrop && ex.demoDark && ex.demoLight) {
+      return '<span class="fig fig--real fig--anatomy fig--cropped-pair" role="img"' +
+        ' aria-label="Animierte Ausführung: ' + G.u.esc(ex.name) + '">' +
+        '<span class="fig--crop-frame">' +
+        '<img class="fig--theme-dark" src="' + ex.demoDark + '" alt="" loading="lazy" decoding="async">' +
+        '<img class="fig--theme-light" src="' + ex.demoLight + '" alt="" loading="lazy" decoding="async">' +
+        '</span></span>';
+    }
     if (ex && ex.demoDark && ex.demoLight) {
       return '<span class="fig fig--real fig--anatomy fig--theme-pair" role="img"' +
         ' aria-label="Animierte Ausführung: ' + G.u.esc(ex.name) + '">' +
@@ -267,7 +276,7 @@
           ' aria-label="Animierte Ausführung: ' + G.u.esc(ex.name) +
           '" autoplay muted loop playsinline preload="metadata"></video>';
       }
-      return '<img class="fig fig--real fig--anatomy' +
+      return '<img class="fig fig--real fig--anatomy' + referenceTone +
         '" src="' + demo + '" alt="Animierte Ausführung: ' +
         G.u.esc(ex.name) + '" loading="lazy" decoding="async">';
     }
@@ -299,23 +308,22 @@
   var FRONT_ORDER = ['shoulders', 'chest', 'biceps', 'abs'];
   var BACK_ORDER = ['shoulders', 'back', 'triceps'];
 
-  /** Realistische Avataransicht für kleine Karten und Workout-Zeilen. */
-  function avatarMuscleMap(primary, secondary, side) {
-    secondary = secondary || [];
-    var groups = [primary].concat(secondary).filter(function (m, i, all) {
-      return m && all.indexOf(m) === i;
-    });
-    var names = groups.map(function (m) {
-      return G.MUSCLES[m] ? G.MUSCLES[m].name : '';
-    }).filter(Boolean);
-    var zones = groups.map(function (m, i) {
-      return '<i class="avatar-mmap__zone zone-' + m + (i ? ' is-secondary' : '') +
-        '" style="--hl:' + (MCOLOR[m] || '#3DFF9E') + '"></i>';
+  /** Anatomische GIF-artige Ganzkörperfigur für die kompakten Übungskarten. */
+  function anatomyMuscleMap(primary, secondary, side, names) {
+    var defs = side === 'front' ? CARD_FRONT : CARD_BACK;
+    var order = side === 'front' ? FRONT_ORDER : BACK_ORDER;
+    var zones = order.map(function (k) {
+      var cls = 'mg';
+      if (k === primary) cls += ' primary';
+      else if (secondary.indexOf(k) >= 0) cls += ' secondary';
+      return '<g class="' + cls + '" style="--hl:#E95A3C">' + defs[k] + '</g>';
     }).join('');
-    return '<span class="avatar-mmap avatar-mmap--' + side + '" role="img" ' +
+
+    return '<span class="anatomy-mmap anatomy-mmap--' + side + '" role="img" ' +
       'aria-label="Beanspruchte Muskelgruppen: ' + names.join(', ') + '">' +
-      '<img src="assets/avatar/avatar-' + side + '-map.png" alt="" loading="lazy" decoding="async">' +
-      zones + '</span>';
+      '<img src="assets/avatar/anatomy-' + side + '-v4.webp" alt="" loading="lazy" decoding="async">' +
+      '<svg class="mmap anatomy-mmap__zones" viewBox="0 0 100 200" ' +
+      'xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + zones + '</svg></span>';
   }
 
   /* --- Muskelgruppen der Vorderansicht --- */
@@ -350,6 +358,35 @@
       '<ellipse cx="83.5" cy="71" rx="7.5" ry="14" transform="rotate(7 83.5 71)"/>'
   };
 
+  /* Präzise Masken für die realistische Ganzkörperfigur in den Karten. */
+  var CARD_FRONT = {
+    shoulders:
+      '<ellipse cx="31" cy="47" rx="7.8" ry="8.8" transform="rotate(-18 31 47)"/>' +
+      '<ellipse cx="69" cy="47" rx="7.8" ry="8.8" transform="rotate(18 69 47)"/>',
+    chest:
+      '<path d="M49 46C44 43 37 44 33 48 31.5 52 33 58 37.5 61.5 42 59.5 46 59.5 49 60Z"/>' +
+      '<path d="M51 46C56 43 63 44 67 48 68.5 52 67 58 62.5 61.5 58 59.5 54 59.5 51 60Z"/>',
+    biceps:
+      '<ellipse cx="24.5" cy="69" rx="5.2" ry="11" transform="rotate(8 24.5 69)"/>' +
+      '<ellipse cx="75.5" cy="69" rx="5.2" ry="11" transform="rotate(-8 75.5 69)"/>',
+    abs:
+      '<path d="M41.5 63h17v31c0 6-3.8 10-8.5 10s-8.5-4-8.5-10z"/>' +
+      '<path class="seg" d="M41.5 72h17M41.5 81h17M41.5 90h17M50 63v41"/>'
+  };
+
+  var CARD_BACK = {
+    shoulders:
+      '<ellipse cx="31" cy="47" rx="7.8" ry="8.8" transform="rotate(-18 31 47)"/>' +
+      '<ellipse cx="69" cy="47" rx="7.8" ry="8.8" transform="rotate(18 69 47)"/>',
+    back:
+      '<path d="M50 33 38 42 42 58 50 52 58 58 62 42Z"/>' +
+      '<path d="M35 51C31 61 31.5 78 36 88L47 77C45 66 45 57 47 49Z"/>' +
+      '<path d="M65 51C69 61 68.5 78 64 88L53 77C55 66 55 57 53 49Z"/>',
+    triceps:
+      '<ellipse cx="24.5" cy="69" rx="5.2" ry="11" transform="rotate(8 24.5 69)"/>' +
+      '<ellipse cx="75.5" cy="69" rx="5.2" ry="11" transform="rotate(-8 75.5 69)"/>'
+  };
+
   /* --- Silhouette (für beide Ansichten gleich) --- */
   var LIMBS = [
     'M23 43 13 78 15 114',   // Arm links
@@ -377,7 +414,7 @@
   }
 
   /** Eine Ansicht (Vorder- oder Rückseite) */
-  function panel(side, primary, secondary, label, withLegs) {
+  function panel(side, primary, secondary, label, withLegs, compact) {
     var defs = side === 'front' ? MG_FRONT : MG_BACK;
     var order = side === 'front' ? FRONT_ORDER : BACK_ORDER;
     var out = [silhouette(withLegs)];
@@ -386,7 +423,7 @@
       var cls = 'mg';
       if (k === primary) cls += ' primary';
       else if (secondary.indexOf(k) >= 0) cls += ' secondary';
-      out.push('<g class="' + cls + '" style="--hl:' + MCOLOR[k] + '">' + defs[k] + '</g>');
+      out.push('<g class="' + cls + '" style="--hl:' + (compact ? '#E95A3C' : MCOLOR[k]) + '">' + defs[k] + '</g>');
     });
 
     if (label) {
@@ -407,11 +444,15 @@
     opts = opts || {};
     secondary = secondary || [];
 
+    var names = [G.MUSCLES[primary] ? G.MUSCLES[primary].name : ''].concat(
+      secondary.map(function (m) { return G.MUSCLES[m] ? G.MUSCLES[m].name : ''; })
+    ).filter(Boolean);
+
     var view = opts.view || 'both';
     if (view === 'auto') {
       // Die Ansicht wählen, auf der die Hauptgruppe zu sehen ist
       view = BACK_ONLY.indexOf(primary) >= 0 ? 'back' : 'front';
-      return avatarMuscleMap(primary, secondary, view);
+      return anatomyMuscleMap(primary, secondary, view, names);
     }
 
     var labels = opts.labels !== false && view === 'both';
@@ -420,18 +461,14 @@
     if (view === 'both') {
       // Ganzkörper, beide Ansichten nebeneinander
       box = '0 0 212 ' + (labels ? 224 : 210);
-      body = '<g>' + panel('front', primary, secondary, labels, true) + '</g>' +
-        '<g transform="translate(112,0)">' + panel('back', primary, secondary, labels, true) + '</g>';
+      body = '<g>' + panel('front', primary, secondary, labels, true, false) + '</g>' +
+        '<g transform="translate(112,0)">' + panel('back', primary, secondary, labels, true, false) + '</g>';
     } else {
       // Einzelansicht: auf den Oberkörper zugeschnitten, damit die
       // Hervorhebung auch in kleinen Kacheln erkennbar bleibt.
       box = '3 3 94 118';
-      body = panel(view, primary, secondary, false, false);
+      body = panel(view, primary, secondary, false, false, false);
     }
-
-    var names = [G.MUSCLES[primary] ? G.MUSCLES[primary].name : ''].concat(
-      secondary.map(function (m) { return G.MUSCLES[m] ? G.MUSCLES[m].name : ''; })
-    ).filter(Boolean);
 
     return '<svg class="mmap" viewBox="' + box + '" xmlns="http://www.w3.org/2000/svg" ' +
       'role="img" aria-label="Beanspruchte Muskelgruppen: ' + names.join(', ') + '">' +
