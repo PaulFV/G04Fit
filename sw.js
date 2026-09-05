@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert – keine
    Nutzerdaten, keine Anfragen an fremde Server.
    ============================================================ */
-var CACHE = 'gofit-v1.0.22';
+var CACHE = 'gofit-v1.0.23';
 
 var ASSETS = [
   './',
@@ -38,10 +38,10 @@ var ASSETS = [
   './js/view-privacy.js',
   './js/onboarding.js',
   './js/app.js',
-  './icons/icon-180.png',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/icon-maskable-512.png',
+  './icons/icon-v2-180.png',
+  './icons/icon-v2-192.png',
+  './icons/icon-v2-512.png',
+  './icons/icon-v2-maskable-512.png',
   './assets/avatar/avatar-front-map.png',
   './assets/avatar/avatar-back-map.png'
 ];
@@ -131,8 +131,8 @@ self.addEventListener('push', function (e) {
   e.waitUntil(self.registration.showNotification(data.title || 'GoFit · Erinnerung', {
     body: data.body || 'Zeit für dein Training.',
     tag: data.tag || 'gofit-push',
-    icon: './icons/icon-192.png',
-    badge: './icons/icon-192.png',
+    icon: './icons/icon-v2-192.png',
+    badge: './icons/icon-v2-192.png',
     data: { url: data.url || './index.html#workout' }
   }));
 });

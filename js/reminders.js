@@ -51,8 +51,8 @@
       var notificationOptions = {
         body: body,
         tag: tag || 'gofit',
-        icon: './icons/icon-192.png',
-        badge: './icons/icon-192.png',
+        icon: './icons/icon-v2-192.png',
+        badge: './icons/icon-v2-192.png',
         silent: options.silent == null ? !!st().settings.soundless : !!options.silent,
         requireInteraction: !!options.requireInteraction,
         data: { url: options.url || './index.html#workout' }
@@ -101,8 +101,8 @@
         return registration.showNotification('GoFit · Training steht an', {
           body: i.title + ((i.muscles && i.muscles.length) ? ' — ' + i.muscles.join(', ') : ''),
           tag: 'gofit-plan-' + i.day,
-          icon: './icons/icon-192.png',
-          badge: './icons/icon-192.png',
+          icon: './icons/icon-v2-192.png',
+          badge: './icons/icon-v2-192.png',
           silent: !!st().settings.soundless,
           data: { url: './index.html#workout' },
           showTrigger: new TimestampTrigger(timestamp)
