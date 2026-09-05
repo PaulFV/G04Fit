@@ -9,6 +9,11 @@
 .fig{display:block;width:100%;height:100%}
 .fig--real{object-fit:contain;object-position:center;border-radius:12px;background:#07090b}
 .fig--anatomy{background:var(--exercise-canvas)}
+.fig--theme-pair{position:relative;overflow:hidden}
+.fig--theme-pair > img{display:block;width:100%;height:100%;object-fit:contain}
+.fig--theme-pair > img + img{position:absolute;inset:0}
+:root[data-theme="light"] .fig--theme-dark,
+:root:not([data-theme="light"]) .fig--theme-light{display:none}
 .fig--video{pointer-events:none}
 .fig-box{position:relative;width:100%;overflow:hidden}
 .fig-box > .fig,

@@ -112,9 +112,10 @@
       'eigenständig auf dein Dateisystem zu. Was nach dem Export in deinem Vault passiert, liegt in deiner ' +
       'Verantwortung.'],
     ['Benachrichtigungen',
-      'Erinnerungen werden lokal ausgelöst, solange die App geöffnet ist. Für Systembenachrichtigungen ist ' +
-      'zusätzlich die Erlaubnis des Browsers nötig. Es werden keine Geräte-Kennungen an einen Push-Dienst ' +
-      'übermittelt.'],
+      'Erinnerungen werden lokal ausgelöst, solange die App geöffnet ist. Unterstützt der Browser geplante ' +
+      'Notification Triggers, können die nächsten Termine auch im Hintergrund vorgemerkt werden. Für ' +
+      'Systembenachrichtigungen ist zusätzlich die Erlaubnis des Browsers nötig. Es werden keine Geräte-' +
+      'Kennungen an einen Push-Dienst übermittelt.'],
     ['Deine Rechte',
       'Du kannst deine Daten jederzeit als Datei exportieren (Recht auf Datenübertragbarkeit), einzeln oder ' +
       'vollständig löschen (Recht auf Löschung) und jede Einwilligung mit Wirkung für die Zukunft widerrufen. ' +

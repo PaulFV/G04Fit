@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert – keine
    Nutzerdaten, keine Anfragen an fremde Server.
    ============================================================ */
-var CACHE = 'gofit-v1.0.19';
+var CACHE = 'gofit-v1.0.22';
 
 var ASSETS = [
   './',
@@ -118,4 +118,21 @@ self.addEventListener('notificationclick', function (e) {
       return clients.openWindow ? clients.openWindow(target) : null;
     })
   );
+});
+
+// Optionaler Einstieg für spätere Web-Push- oder Periodic-Sync-Anbieter.
+// Ohne Server werden keine Daten übertragen; lokale Trigger bleiben davon
+// vollständig unabhängig.
+self.addEventListener('push', function (e) {
+  var data = {};
+  try { data = e.data ? e.data.json() : {}; } catch (err) {
+    data = { body: e.data ? e.data.text() : 'Deine GoFit-Erinnerung ist da.' };
+  }
+  e.waitUntil(self.registration.showNotification(data.title || 'GoFit · Erinnerung', {
+    body: data.body || 'Zeit für dein Training.',
+    tag: data.tag || 'gofit-push',
+    icon: './icons/icon-192.png',
+    badge: './icons/icon-192.png',
+    data: { url: data.url || './index.html#workout' }
+  }));
 });

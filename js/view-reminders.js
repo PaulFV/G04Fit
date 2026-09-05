@@ -31,7 +31,8 @@
     if (perm === 'granted') {
       return '<div class="note note--neon">' + u.icon('check', 18) +
         '<div>Systembenachrichtigungen sind erlaubt. GoFit erinnert dich zur eingestellten Zeit, ' +
-        'solange die App geöffnet oder im Hintergrund aktiv ist.</div></div>';
+        'auch wenn die App im Hintergrund läuft. Unterstützt das Gerät geplante Benachrichtigungen, ' +
+        'werden sie beim Aktivieren direkt vorgemerkt.</div></div>';
     }
     if (perm === 'denied') {
       return '<div class="note note--warn">' + u.icon('warn', 18) +
@@ -146,13 +147,12 @@
               : 'Deine Pausen sind im normalen Bereich. Es ist keine Anpassung nötig.') + '</p>') +
         '</div>' +
 
-        '<div class="note">' + u.icon('info', 18) +
+      '<div class="note">' + u.icon('info', 18) +
         '<div><b>Wie Erinnerungen im Prototyp funktionieren</b><br>' +
-        'Die Prüfung läuft, solange GoFit geöffnet ist. Beim Start über einen lokalen Server oder als ' +
-        'installierte App auf dem Handy werden Systembenachrichtigungen zugestellt. ' +
-        'Beim Öffnen direkt aus dem Dateisystem erscheinen sie als Hinweis in der App. ' +
-        'Echte Push-Nachrichten bei geschlossener App brauchen ein Backend – das ist laut Konzept für ' +
-        'eine spätere Version vorgesehen.</div></div>' +
+        'GoFit prüft offene Sitzungen minütlich. Auf unterstützten Android-/Desktop-Browsern werden ' +
+        'die nächsten Termine zusätzlich als lokale Hintergrund-Benachrichtigungen vorgemerkt. ' +
+        'Auf dem iPhone muss GoFit dafür als Home-Bildschirm-App installiert sein. ' +
+        'Echte Push-Nachrichten von einem Server brauchen weiterhin ein Backend.</div></div>' +
 
         '</div>';
     },
@@ -187,6 +187,7 @@
       if (t) t.addEventListener('change', function () {
         s.profile.reminderTime = t.value || '18:00';
         G.store.commit('reminder-time');
+        G.reminders.scheduleBackground();
         u.toast('Zeit gespeichert', 'Erinnerung um ' + s.profile.reminderTime + ' Uhr.', 'ok');
         G.app.rerender();
       });
@@ -199,6 +200,7 @@
         if (!arr.length) arr.push(d);
         s.profile.trainingDays = arr;
         G.store.commit('days');
+        G.reminders.scheduleBackground();
         G.app.rerender();
       });
 

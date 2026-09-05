@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
-<meta name="theme-color" content="#05070A">
+<meta name="theme-color" content="#07100D">
 <meta name="description" content="GoFit — Trainingsplaner für Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter. Wochenplan, Journey, Coach und Fortschritt. Alle Daten bleiben auf deinem Gerät.">
 <title>GoFit — Trainingsplaner</title>
 
@@ -16,14 +16,18 @@
 <meta name="apple-mobile-web-app-title" content="GoFit">
 <meta name="format-detection" content="telephone=no">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="apple-touch-icon-precomposed" href="icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2305070A'/%3E%3Cpath d='M9 21 L15 11 L17 15 L20 11 L23 21' stroke='%233DFF9E' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/theme.css?v=1.0.18">
-<link rel="stylesheet" href="css/layout.css?v=1.0.18">
-<link rel="stylesheet" href="css/components.css?v=1.0.18">
-<link rel="stylesheet" href="css/anim.css?v=1.0.13">
+<link rel="stylesheet" href="css/theme.css?v=1.0.19">
+<link rel="stylesheet" href="css/layout.css?v=1.0.22">
+<link rel="stylesheet" href="css/components.css?v=1.0.19">
+<link rel="stylesheet" href="css/anim.css?v=1.0.19">
 </head>
 <body>
+
+<a class="skip-link" href="#main">Zum Inhalt springen</a>
 
 <div class="bg-grid" aria-hidden="true"></div>
 <div class="bg-glow" aria-hidden="true"></div>
@@ -58,18 +62,18 @@
 
   <main class="main" id="main">
     <header class="topbar">
-      <button class="icon-btn only-mobile" id="mobileMenuBtn" aria-label="Menü">
-        <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      <button class="icon-btn only-mobile" id="mobileMenuBtn" aria-label="Menü öffnen" aria-controls="nav" aria-expanded="false">
+        <svg class="ui-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
       </button>
       <div class="topbar__title">
-        <h1 id="viewTitle">Dashboard</h1>
+        <h1 id="viewTitle">GoFit</h1>
         <p id="viewSub"></p>
       </div>
       <div class="topbar__actions">
         <div class="streak-chip" id="streakChip" title="Trainingsserie"></div>
         <button class="icon-btn" id="themeBtn" title="Hellen Modus aktivieren" aria-label="Hellen Modus aktivieren" aria-pressed="false"></button>
-        <button class="icon-btn" id="privacyBtn" title="Datenschutz">
-          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 3l7 3v6c0 4.2-2.8 7.7-7 9-4.2-1.3-7-4.8-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" fill="none"/></svg>
+        <button class="icon-btn" id="privacyBtn" title="Datenschutz" aria-label="Datenschutz öffnen">
+          <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 3l7 3v6c0 4.2-2.8 7.7-7 9-4.2-1.3-7-4.8-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" fill="none"/></svg>
         </button>
       </div>
     </header>
@@ -85,8 +89,8 @@
 <div class="sheet glass" id="sheet" hidden role="dialog" aria-modal="true">
   <div class="sheet__head">
     <h2 id="sheetTitle"></h2>
-    <button class="icon-btn" id="sheetClose" aria-label="Schließen">
-      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <button class="icon-btn" id="sheetClose" aria-label="Schließen">
+      <svg class="ui-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
   </div>
   <div class="sheet__body" id="sheetBody"></div>
@@ -95,28 +99,28 @@
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
 <!-- ============ SCRIPTS (klassisch, damit file:// funktioniert) ============ -->
-<script src="js/util.js"></script>
-<script src="js/data-exercises.js?v=1.0.13"></script>
+<script src="js/util.js?v=1.0.21"></script>
+<script src="js/data-exercises.js?v=1.0.20"></script>
 <script src="js/data-journey.js"></script>
 <script src="js/store.js?v=1.0.19"></script>
-<script src="js/anim.js?v=1.0.14"></script>
+<script src="js/anim.js?v=1.0.20"></script>
 <script src="js/charts.js"></script>
 <script src="js/avatar.js"></script>
 <script src="js/coach.js"></script>
 <script src="js/planner.js"></script>
-<script src="js/reminders.js?v=1.0.19"></script>
+<script src="js/reminders.js?v=1.0.21"></script>
 <script src="js/obsidian.js"></script>
-<script src="js/view-dashboard.js"></script>
+<script src="js/view-dashboard.js?v=1.0.21"></script>
 <script src="js/view-journey.js"></script>
 <script src="js/view-workout.js?v=1.0.17"></script>
 <script src="js/view-exercises.js"></script>
 <script src="js/view-progress.js"></script>
 <script src="js/view-profile.js?v=1.0.19"></script>
 <script src="js/view-coach.js"></script>
-<script src="js/view-reminders.js?v=1.0.18"></script>
+<script src="js/view-reminders.js?v=1.0.21"></script>
 <script src="js/view-obsidian.js"></script>
-<script src="js/view-privacy.js"></script>
+<script src="js/view-privacy.js?v=1.0.21"></script>
 <script src="js/onboarding.js"></script>
-<script src="js/app.js?v=1.0.13"></script>
+<script src="js/app.js?v=1.0.21"></script>
 </body>
 </html>

@@ -35,8 +35,10 @@
   var EX = [
     /* ================= BRUST ================= */
     {
-      id: 'bench-bb', name: 'Bankdrücken (Langhantel)', muscle: 'chest',
+      id: 'bench-bb', name: 'Negativ-Bankdrücken (Langhantel)', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Langhantel', pattern: 'pressflat',
+      demoDark: 'assets/exercises/anatomy/bench-bb-v2-dark.webp?v=14',
+      demoLight: 'assets/exercises/anatomy/bench-bb-v2-light.webp?v=14', demoStyle: 'anatomy',
       level: 2, inc: 2.5, f: 0.60, reps: [6, 10],
       cues: [
         'Schulterblätter fest zusammenziehen und nach unten fixieren',
@@ -73,6 +75,8 @@
     {
       id: 'fly-cable', name: 'Kabel-Fliegende', muscle: 'chest',
       sec: ['shoulders'], equip: 'Kabelzug', pattern: 'fly',
+      demoDark: 'assets/exercises/anatomy/fly-cable-v2-dark.webp?v=4',
+      demoLight: 'assets/exercises/anatomy/fly-cable-v2-light.webp?v=4', demoStyle: 'anatomy',
       level: 1, inc: 2.5, f: 0.14, reps: [10, 15],
       cues: [
         'Ellenbogen leicht gebeugt und den ganzen Satz über konstant halten',
@@ -84,6 +88,8 @@
     {
       id: 'fly-machine', name: 'Butterfly (Maschine)', muscle: 'chest',
       sec: [], equip: 'Maschine', pattern: 'fly',
+      demoDark: 'assets/exercises/anatomy/fly-machine-v2-dark.webp?v=6',
+      demoLight: 'assets/exercises/anatomy/fly-machine-v2-light.webp?v=6', demoStyle: 'anatomy',
       level: 1, inc: 5, f: 0.30, reps: [10, 15],
       cues: [
         'Sitzhöhe so wählen, dass die Griffe auf Brusthöhe liegen',

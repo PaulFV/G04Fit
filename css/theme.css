@@ -23,13 +23,13 @@
 
   /* --- Text --- */
   --tx-0:#EAF3EE;
-  --tx-1:#9FB2A9;
-  --tx-2:#6B7F77;
+  --tx-1:#B4C6BD;
+  --tx-2:#82968D;
 
   /* --- Glas --- */
-  --glass-bg:rgba(255,255,255,.035);
-  --glass-bg-2:rgba(255,255,255,.055);
-  --glass-br:rgba(255,255,255,.085);
+  --glass-bg:rgba(255,255,255,.045);
+  --glass-bg-2:rgba(255,255,255,.07);
+  --glass-br:rgba(255,255,255,.11);
   --glass-hi:rgba(255,255,255,.14);
   --blur:18px;
 
@@ -95,7 +95,7 @@ body{
   overscroll-behavior-y:none;
   -webkit-tap-highlight-color:transparent;
 }
-button,a,[role="button"]{touch-action:manipulation}
+button,a,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 :root[data-theme="light"] body{background:var(--bg-0)}
 h1,h2,h3,h4{margin:0;font-weight:640;letter-spacing:-.015em;line-height:1.2}
 p{margin:0}
@@ -150,6 +150,8 @@ a{color:var(--neon);text-decoration:none}
 /* --- Auswahl / Fokus --- */
 ::selection{background:var(--neon-dim);color:var(--neon)}
 :focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:6px}
+.skip-link{position:fixed;z-index:200;left:12px;top:10px;transform:translateY(-160%);padding:10px 14px;border-radius:var(--r-sm);background:var(--neon);color:#04120A;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.3);transition:transform .2s var(--ease)}
+.skip-link:focus{transform:none}
 
 /* --- Reduzierte Bewegung --- */
 @media (prefers-reduced-motion:reduce){

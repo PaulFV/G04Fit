@@ -7,6 +7,8 @@
    Umsetzung im Prototyp:
    · Solange die App geöffnet ist, wird lokal geprüft und über die
      Notification-API erinnert.
+   · Wenn Notification Triggers verfügbar sind, werden nächste Termine
+     zusätzlich für den Hintergrund vorgemerkt.
    · Ist keine Systembenachrichtigung erlaubt oder möglich,
      erscheint die Erinnerung als Hinweis in der App.
    · Ohne Einwilligung "Benachrichtigungen" passiert nichts.
@@ -75,6 +77,42 @@
     }
     u.toast(title, body, 'ok', 6500);
     return false;
+  }
+
+  /*
+     Zukunftstermine direkt beim Betriebssystem vormerken, wenn der Browser
+     Notification Triggers unterstützt. Das ist die einzige Web-API, die eine
+     lokale Benachrichtigung auch nach dem Schließen der Seite zuverlässig
+     übergeben kann. Nicht unterstützte Browser bleiben beim normalen
+     Hintergrund-Timer und zeigen keinen falschen Erfolg an.
+  */
+  async function scheduleBackground() {
+    if (!allowed() || !supported() || Notification.permission !== 'granted') return 0;
+    if (!('serviceWorker' in navigator) || typeof TimestampTrigger === 'undefined') return 0;
+    try {
+      var registration = await navigator.serviceWorker.ready;
+      var items = upcoming(14).filter(function (i) { return !i.done; });
+      var jobs = items.map(function (i) {
+        var day = G.u.parseDay(i.day);
+        var hm = String(i.time || '18:00').split(':');
+        day.setHours(+hm[0] || 0, +hm[1] || 0, 0, 0);
+        var timestamp = day.getTime();
+        if (timestamp <= Date.now()) return null;
+        return registration.showNotification('GoFit · Training steht an', {
+          body: i.title + ((i.muscles && i.muscles.length) ? ' — ' + i.muscles.join(', ') : ''),
+          tag: 'gofit-plan-' + i.day,
+          icon: './icons/icon-192.png',
+          badge: './icons/icon-192.png',
+          silent: !!st().settings.soundless,
+          data: { url: './index.html#workout' },
+          showTrigger: new TimestampTrigger(timestamp)
+        });
+      }).filter(Boolean);
+      await Promise.all(jobs);
+      return jobs.length;
+    } catch (e) {
+      return 0;
+    }
   }
 
   /** Audio bei einer Nutzeraktion freischalten, bevor die App im Hintergrund ist. */
@@ -225,6 +263,7 @@
   function start() {
     stop();
     check();
+    scheduleBackground();
     timer = setInterval(check, 60000);
   }
 
@@ -264,6 +303,7 @@
     start: start,
     stop: stop,
     check: check,
+    scheduleBackground: scheduleBackground,
     test: test
   };
 })(GoFit);

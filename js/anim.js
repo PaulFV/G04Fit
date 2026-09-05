@@ -252,6 +252,13 @@
 
   /** SVG-Markup einer Übungsanimation */
   function figure(ex) {
+    if (ex && ex.demoDark && ex.demoLight) {
+      return '<span class="fig fig--real fig--anatomy fig--theme-pair" role="img"' +
+        ' aria-label="Animierte Ausführung: ' + G.u.esc(ex.name) + '">' +
+        '<img class="fig--theme-dark" src="' + ex.demoDark + '" alt="" loading="lazy" decoding="async">' +
+        '<img class="fig--theme-light" src="' + ex.demoLight + '" alt="" loading="lazy" decoding="async">' +
+        '</span>';
+    }
     var demo = ex && (ex.demo || ('assets/exercises/anatomy/' + ex.id + '.webp'));
     if (demo) {
       if (/\.(?:mp4|webm)(?:[?#]|$)/i.test(demo)) {

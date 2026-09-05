@@ -212,7 +212,7 @@
   }
 
   G.views.dashboard = {
-    title: 'Dashboard',
+    title: 'GoFit',
     sub: function () {
       var s = G.store.state;
       return u.fmtDate(u.today()) + ' · ' + G.journey.mode(s.profile.mode).name + '-Modus';

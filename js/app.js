@@ -24,9 +24,15 @@
 
   function themeIcon(theme) {
     if (theme === 'light') {
-      return '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20.2 15.2A8 8 0 018.8 3.8 8.5 8.5 0 1020.2 15.2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+      return '<svg class="ui-icon icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M20.2 15.2A8 8 0 018.8 3.8 8.5 8.5 0 1020.2 15.2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
     }
-    return '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+    return '<svg class="ui-icon icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  }
+
+  function menuIcon(open) {
+    return open
+      ? '<svg class="ui-icon icon-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
+      : '<svg class="ui-icon icon-menu" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>';
   }
 
   function applyTheme(theme) {
@@ -97,9 +103,11 @@
     var streak = s.journey.streak;
     chip.innerHTML = u.icon('flame', 15) + ' ' + streak;
     chip.classList.toggle('is-hot', streak >= 3);
-    chip.title = streak
+    var streakLabel = streak
       ? 'Trainingsserie: ' + streak + (streak === 1 ? ' Woche' : ' Wochen') + ' in Folge'
       : 'Noch keine Serie – trainiere diese Woche, um zu starten.';
+    chip.title = streakLabel;
+    chip.setAttribute('aria-label', streakLabel);
 
     u.$('#sideLevel').innerHTML =
       G.avatar.render(40, { ring: li.pct, level: li.level, action: true }) +
@@ -167,12 +175,25 @@
      Mobile Navigation
      ------------------------------------------------------------ */
   function openMobileNav() {
-    u.$('.sidebar').classList.add('is-open');
+    var sidebar = u.$('.sidebar');
+    sidebar.classList.add('is-open');
+    var menu = u.$('#mobileMenuBtn');
+    menu.innerHTML = menuIcon(true);
+    menu.setAttribute('aria-label', 'Menü schließen');
+    menu.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
     u.$('#scrim').hidden = false;
   }
   function closeMobileNav() {
     var sb = u.$('.sidebar');
     if (sb) sb.classList.remove('is-open');
+    var menu = u.$('#mobileMenuBtn');
+    if (menu) {
+      menu.innerHTML = menuIcon(false);
+      menu.setAttribute('aria-label', 'Menü öffnen');
+      menu.setAttribute('aria-expanded', 'false');
+    }
+    if (u.$('#sheet').hidden) document.body.style.overflow = '';
     if (u.$('#sheet').hidden) u.$('#scrim').hidden = true;
   }
 

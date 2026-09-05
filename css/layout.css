@@ -37,19 +37,20 @@
 .nav{display:flex;flex-direction:column;gap:3px;overflow-y:auto;flex:1;margin:0 -4px;padding:0 4px}
 .nav__item{
   display:flex;align-items:center;gap:11px;width:100%;
-  padding:10px 12px;border-radius:var(--r-sm);
+  min-height:44px;padding:10px 12px;border-radius:var(--r-sm);
   background:transparent;border:1px solid transparent;
   color:var(--tx-1);cursor:pointer;text-align:left;
   transition:background var(--dur) var(--ease),color var(--dur) var(--ease);
   font-size:14.5px;
 }
-.nav__item svg{flex:none;opacity:.85}
+.ui-icon{display:block;flex:none;overflow:visible;vector-effect:non-scaling-stroke}
+.nav__item .ui-icon{opacity:.85;transition:filter var(--dur) var(--ease),opacity var(--dur) var(--ease)}
 .nav__item:hover{background:var(--glass-bg-2);color:var(--tx-0)}
 .nav__item.is-active{
   background:linear-gradient(90deg,var(--neon-dim),transparent 85%);
   border-color:var(--neon-line);color:var(--neon);
 }
-.nav__item.is-active svg{opacity:1;filter:drop-shadow(0 0 6px rgba(61,255,158,.6))}
+.nav__item.is-active .ui-icon{opacity:1;filter:drop-shadow(0 0 6px rgba(61,255,158,.6))}
 .nav__badge{margin-left:auto;font-size:11px;padding:1px 7px;border-radius:99px;background:var(--neon-dim);color:var(--neon)}
 .sidebar__foot{border-top:1px solid var(--glass-br);padding-top:12px}
 
@@ -80,9 +81,10 @@
   transition:all var(--dur) var(--ease);
 }
 .icon-btn:hover{color:var(--neon);border-color:var(--neon-line);background:var(--neon-dim)}
+.icon-btn:active{transform:scale(.94)}
 
 .streak-chip{
-  display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:99px;
+  display:flex;align-items:center;gap:6px;min-height:40px;padding:7px 12px;border-radius:99px;
   border:1px solid var(--glass-br);background:var(--glass-bg);font-size:13px;font-weight:600;
 }
 .streak-chip.is-hot{border-color:rgba(255,200,87,.4);color:var(--gold);box-shadow:0 0 18px rgba(255,200,87,.16)}
@@ -104,17 +106,25 @@
 .tabbar{
   position:fixed;left:0;right:0;bottom:0;z-index:50;
   height:calc(var(--tabbar-h) + env(safe-area-inset-bottom));
-  padding-bottom:env(safe-area-inset-bottom);
   border-radius:0;border-width:1px 0 0 0;
-  display:grid;grid-auto-flow:column;grid-auto-columns:1fr;
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;
+  padding:6px max(8px,env(safe-area-inset-left)) max(6px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right));
+  background:var(--bg-1);
+  box-shadow:0 -8px 24px rgba(0,0,0,.22);
 }
 .tabbar__item{
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  background:none;border:0;color:var(--tx-2);cursor:pointer;font-size:10.5px;
-  transition:color var(--dur) var(--ease);
+  min-width:0;min-height:54px;padding:5px 3px;border-radius:14px;
+  background:transparent;border:1px solid transparent;color:var(--tx-2);cursor:pointer;
+  font-size:10.5px;font-weight:600;line-height:1.15;
+  transition:color var(--dur) var(--ease),background var(--dur) var(--ease),border-color var(--dur) var(--ease),transform .2s var(--ease);
 }
-.tabbar__item.is-active{color:var(--neon)}
-.tabbar__item.is-active svg{filter:drop-shadow(0 0 7px rgba(61,255,158,.65))}
+.tabbar__item .ui-icon{width:21px;height:21px;opacity:.86;transition:filter var(--dur) var(--ease),transform .2s var(--ease)}
+.tabbar__item span{white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.tabbar__item:hover{color:var(--tx-0);background:var(--glass-bg-2)}
+.tabbar__item:active{transform:scale(.96)}
+.tabbar__item.is-active{color:var(--neon);background:var(--neon-dim);border-color:var(--neon-line)}
+.tabbar__item.is-active .ui-icon{opacity:1;filter:drop-shadow(0 0 7px rgba(61,255,158,.65));transform:translateY(-1px)}
 
 /* ---------- Onboarding ---------- */
 .onboarding{
@@ -136,7 +146,8 @@
 .ob-progress i.on{background:var(--neon);box-shadow:0 0 10px rgba(61,255,158,.6)}
 
 /* ---------- Sheet / Scrim ---------- */
-.scrim{position:fixed;inset:0;z-index:60;background:rgba(3,5,7,.72);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);animation:fadeIn .25s var(--ease)}
+.scrim{position:fixed;inset:0;z-index:60;background:rgba(3,5,7,.42);animation:fadeIn .25s var(--ease)}
+:root[data-theme="light"] .scrim{background:rgba(27,48,38,.22)}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .sheet{
   position:fixed;z-index:70;right:0;top:0;height:100vh;height:100dvh;width:min(580px,100%);
@@ -182,11 +193,14 @@
 @media (max-width:980px){
   :root{--sidebar-w:0px}
   .only-mobile{display:flex}
+  .tabbar.only-mobile{display:grid}
   .shell{grid-template-columns:1fr}
   .sidebar{
-    position:fixed;left:0;top:0;width:270px;
+    position:fixed;left:0;top:0;width:min(310px,88vw);z-index:65;
     transform:translateX(-100%);transition:transform .38s var(--ease);
     border-radius:0 var(--r-xl) var(--r-xl) 0;border-width:0 1px 0 0;
+    background:var(--bg-1);-webkit-backdrop-filter:none;backdrop-filter:none;
+    box-shadow:18px 0 48px rgba(0,0,0,.36);
   }
   .sidebar.is-open{transform:none}
   .main{padding-bottom:calc(var(--tabbar-h) + 34px)}
@@ -223,7 +237,6 @@
   .topbar__actions{gap:6px}
   .icon-btn{width:44px;height:44px}
   .tabbar__item{min-width:0;padding-top:4px;padding-bottom:3px}
-  .tabbar__item span{max-width:100%;overflow:hidden;text-overflow:ellipsis}
   .view-host{
     padding-left:max(16px,env(safe-area-inset-left));
     padding-right:max(16px,env(safe-area-inset-right));
@@ -238,7 +251,7 @@
   .streak-chip{padding:7px 9px}
   .topbar .icon-btn{width:40px;height:40px}
   .tabbar__item{font-size:9.5px}
-  .tabbar__item svg{width:20px;height:20px}
+  .tabbar__item .ui-icon{width:20px;height:20px}
 }
 
 /* Querformat mit Notch: Inhalte dürfen nicht hinter die seitlichen

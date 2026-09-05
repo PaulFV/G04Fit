@@ -251,8 +251,11 @@ GoFit.VERSION = '1.0.0';
 
   function icon(name, size) {
     size = size || 20;
-    return '<svg viewBox="0 0 24 24" width="' + size + '" height="' + size + '" fill="currentColor" aria-hidden="true">' +
-      (ICONS[name] || '') + '</svg>';
+    /* Einheitlicher Wrapper: alle Symbole bleiben gestochen scharf, reagieren
+       auf die Textfarbe und nehmen nie versehentlich den Fokus. */
+    var shape = ICONS[name] || ICONS.info;
+    return '<svg class="ui-icon icon-' + esc(name) + '" viewBox="0 0 24 24" width="' + size + '" height="' + size + '" fill="currentColor" aria-hidden="true" focusable="false" stroke-linecap="round" stroke-linejoin="round">' +
+      shape + '</svg>';
   }
 
   /* ---------- Toast ---------- */
