@@ -316,14 +316,15 @@
       var cls = 'mg';
       if (k === primary) cls += ' primary';
       else if (secondary.indexOf(k) >= 0) cls += ' secondary';
-      return '<g class="' + cls + '" style="--hl:' + MCOLOR[k] + '">' + defs[k] + '</g>';
+      return '<g class="' + cls + '">' + defs[k] + '</g>';
     }).join('');
 
-    return '<span class="anatomy-mmap anatomy-mmap--' + side + '" role="img" ' +
+    return '<svg class="mmap anatomy-mmap anatomy-mmap--' + side + '" viewBox="0 35 400 430" ' +
+      'xmlns="http://www.w3.org/2000/svg" role="img" preserveAspectRatio="xMidYMid meet" ' +
       'aria-label="Beanspruchte Muskelgruppen: ' + names.join(', ') + '">' +
-      '<img src="assets/avatar/avatar-' + side + '-map.png" alt="" loading="lazy" decoding="async">' +
-      '<svg class="mmap anatomy-mmap__zones" viewBox="0 0 100 161.7" ' +
-      'xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + zones + '</svg></span>';
+      '<image class="anatomy-mmap__image" href="assets/avatar/anatomy-' + side + '-v4.webp" ' +
+      'x="0" y="0" width="400" height="800" preserveAspectRatio="xMidYMid meet"/>' +
+      '<g class="anatomy-mmap__zones">' + zones + '</g></svg>';
   }
 
   /** Neue Anatomiefigur als Vorder-/Rückseiten-Paar für das Detailfenster. */
@@ -372,33 +373,42 @@
       '<ellipse cx="83.5" cy="71" rx="7.5" ry="14" transform="rotate(7 83.5 71)"/>'
   };
 
-  /* Präzise Masken für die realistische Ganzkörperfigur in den Karten. */
+  /*
+   * Muskelkonturen passend zu anatomy-front-v4.webp und
+   * anatomy-back-v4.webp (jeweils 400 × 800 Pixel).
+   */
   var CARD_FRONT = {
     shoulders:
-      '<path d="M31 43C25 40 18 43 15.5 49.5 14 54.5 17 60.5 21.5 61.5 25 58 28.5 52 31.5 47Z"/>' +
-      '<path d="M69 43C75 40 82 43 84.5 49.5 86 54.5 83 60.5 78.5 61.5 75 58 71.5 52 68.5 47Z"/>',
+      '<path d="M151 184C132 176 110 184 99 201 92 215 94 233 103 247 117 245 131 234 142 220 149 210 153 196 151 184Z"/>' +
+      '<path d="M249 184C268 176 290 184 301 201 308 215 306 233 297 247 283 245 269 234 258 220 251 210 247 196 249 184Z"/>',
     chest:
-      '<path d="M49 46C44 43 37 44 33 48 31.5 52 33 58 37.5 61.5 42 59.5 46 59.5 49 60Z"/>' +
-      '<path d="M51 46C56 43 63 44 67 48 68.5 52 67 58 62.5 61.5 58 59.5 54 59.5 51 60Z"/>',
+      '<path d="M197 187C177 181 146 185 128 201 121 216 126 238 141 254 159 260 179 254 197 243Z"/>' +
+      '<path d="M203 187C223 181 254 185 272 201 279 216 274 238 259 254 241 260 221 254 203 243Z"/>',
     biceps:
-      '<ellipse cx="18.5" cy="71" rx="4.8" ry="11.5" transform="rotate(12 18.5 71)"/>' +
-      '<ellipse cx="81.5" cy="71" rx="4.8" ry="11.5" transform="rotate(-12 81.5 71)"/>',
+      '<path d="M104 246C89 256 81 278 81 303 82 325 89 339 101 341 112 328 118 304 117 280 116 263 111 251 104 246Z"/>' +
+      '<path d="M296 246C311 256 319 278 319 303 318 325 311 339 299 341 288 328 282 304 283 280 284 263 289 251 296 246Z"/>',
     abs:
-      '<path d="M41.5 63h17v31c0 6-3.8 10-8.5 10s-8.5-4-8.5-10z"/>' +
-      '<path class="seg" d="M41.5 72h17M41.5 81h17M41.5 90h17M50 63v41"/>'
+      '<path d="M165 261C176 266 188 264 197 259L197 392C188 398 176 396 168 387 162 354 159 290 165 261Z"/>' +
+      '<path d="M235 261C224 266 212 264 203 259L203 392C212 398 224 396 232 387 238 354 241 290 235 261Z"/>' +
+      '<path class="seg" d="M164 292H236M162 327H238M164 363H236M200 259V395"/>'
   };
 
   var CARD_BACK = {
     shoulders:
-      '<path d="M31 43C25 40 18 43 15.5 49.5 14 54.5 17 60.5 21.5 61.5 25 58 28.5 52 31.5 47Z"/>' +
-      '<path d="M69 43C75 40 82 43 84.5 49.5 86 54.5 83 60.5 78.5 61.5 75 58 71.5 52 68.5 47Z"/>',
+      '<path d="M151 184C132 179 110 188 100 204 93 218 95 237 105 250 119 246 135 234 148 219 154 208 156 195 151 184Z"/>' +
+      '<path d="M249 184C268 179 290 188 300 204 307 218 305 237 295 250 281 246 265 234 252 219 246 208 244 195 249 184Z"/>',
     back:
-      '<path d="M50 34 35 43 41 64 50 56 59 64 65 43Z"/>' +
-      '<path d="M33 50C27 62 27 82 34 98L47 82C45 69 45 58 47 49Z"/>' +
-      '<path d="M67 50C73 62 73 82 66 98L53 82C55 69 55 58 53 49Z"/>',
+      /* Trapezmuskel */
+      '<path d="M200 157C188 171 174 181 158 191 164 218 176 248 200 272 224 248 236 218 242 191 226 181 212 171 200 157Z"/>' +
+      /* Oberer Rücken */
+      '<path d="M158 197C143 205 132 222 132 242 139 257 154 266 174 264L195 225C184 213 171 204 158 197Z"/>' +
+      '<path d="M242 197C257 205 268 222 268 242 261 257 246 266 226 264L205 225C216 213 229 204 242 197Z"/>' +
+      /* Latissimus */
+      '<path d="M155 258C139 280 134 312 139 346 143 375 153 397 168 410L194 366C184 333 182 297 188 266Z"/>' +
+      '<path d="M245 258C261 280 266 312 261 346 257 375 247 397 232 410L206 366C216 333 218 297 212 266Z"/>',
     triceps:
-      '<ellipse cx="18.5" cy="71" rx="4.8" ry="11.5" transform="rotate(12 18.5 71)"/>' +
-      '<ellipse cx="81.5" cy="71" rx="4.8" ry="11.5" transform="rotate(-12 81.5 71)"/>'
+      '<path d="M102 249C87 262 80 286 82 313 84 334 91 346 103 341 113 325 119 300 117 276 115 262 109 253 102 249Z"/>' +
+      '<path d="M298 249C313 262 320 286 318 313 316 334 309 346 297 341 287 325 281 300 283 276 285 262 291 253 298 249Z"/>'
   };
 
   /* --- Silhouette (für beide Ansichten gleich) --- */
