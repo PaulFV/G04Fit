@@ -434,18 +434,6 @@
       ],
       err: ['Griff zu breit', 'Hantel zu weit absenken', 'Starkes Hohlkreuz']
     },
-    {
-      id: 'facepull', name: 'Face Pull', muscle: 'back',
-      sec: ['shoulders'], equip: 'Kabelzug', pattern: 'row',
-      level: 1, inc: 2.5, f: 0.16, reps: [12, 18],
-      cues: [
-        'Seil auf Gesichtshöhe einstellen',
-        'Zum Gesicht ziehen, Hände enden neben den Ohren',
-        'Ellenbogen bleiben hoch'
-      ],
-      err: ['Zu schwer, dadurch Zug nach unten', 'Kopf schiebt nach vorne']
-    },
-
     /* ================= SCHULTER ================= */
     {
       id: 'ohp-db', name: 'Schulterdrücken (Kurzhantel)', muscle: 'shoulders',
@@ -642,17 +630,6 @@
       err: ['Zurücklehnen', 'Ellenbogen wandern nach vorn', 'Hanteln nur halb absenken']
     },
     {
-      id: 'curl-hammer', name: 'Hammer-Curl', muscle: 'biceps',
-      sec: [], equip: 'Kurzhanteln', pattern: 'curl',
-      level: 1, inc: 2, f: 0.14, reps: [10, 14],
-      cues: [
-        'Neutraler Griff, Daumen zeigt nach oben',
-        'Ellenbogen bleibt fixiert',
-        'Trainiert zusätzlich den Unterarm'
-      ],
-      err: ['Hanteln rotieren', 'Schwung aus dem Rumpf']
-    },
-    {
       id: 'curl-preacher', name: 'Scott-Curl (Preacher)', muscle: 'biceps',
       sec: [], equip: 'Scottbank', pattern: 'curl',
       demo: 'assets/exercises/gifs/curl-preacher-whiteclean.gif?v=1', demoStyle: 'reference-gif',
@@ -679,17 +656,6 @@
 
     /* ================= TRIZEPS ================= */
     {
-      id: 'pushdown', name: 'Trizepsdrücken am Kabel', muscle: 'triceps',
-      sec: [], equip: 'Kabelzug', pattern: 'extension',
-      level: 1, inc: 2.5, f: 0.30, reps: [10, 15],
-      cues: [
-        'Oberarme bleiben eng am Rumpf',
-        'Nur der Unterarm bewegt sich',
-        'Am unteren Punkt kurz vollständig strecken'
-      ],
-      err: ['Oberkörper drückt mit', 'Ellenbogen wandern nach hinten']
-    },
-    {
       id: 'triceps-cable-lying', name: 'Trizepsdrücken am Kabelzug liegend', muscle: 'triceps',
       sec: ['shoulders'], equip: 'Kabelzug + Bank', pattern: 'extension',
       demo: 'assets/exercises/gifs/triceps-cable-lying-whiteclean.gif?v=1', demoStyle: 'reference-gif',
@@ -712,17 +678,6 @@
         'Aus dem Trizeps kontrolliert zurück in die Streckung drücken'
       ],
       err: ['Schultern nach vorn kippen', 'Zu tief absenken', 'Mit den Beinen nachhelfen']
-    },
-    {
-      id: 'bench-close', name: 'Enges Bankdrücken', muscle: 'triceps',
-      sec: ['chest', 'shoulders'], equip: 'Langhantel', pattern: 'pressflat',
-      level: 2, inc: 2.5, f: 0.45, reps: [6, 10],
-      cues: [
-        'Griff etwa schulterbreit, nicht enger',
-        'Ellenbogen dicht am Rumpf führen',
-        'Stange auf Höhe des unteren Brustbeins'
-      ],
-      err: ['Zu enger Griff belastet die Handgelenke', 'Ellenbogen spreizen ab']
     },
     {
       id: 'bench-db-triceps', name: 'Trizeps-Bankdrücken mit Kurzhanteln', muscle: 'triceps',
@@ -783,17 +738,6 @@
         'Rumpf fest halten und beide Seiten gleich trainieren'
       ],
       err: ['Oberarm fällt nach außen', 'Rücken weicht ins Hohlkreuz', 'Schwung aus dem Oberkörper']
-    },
-    {
-      id: 'dip-triceps', name: 'Dips (trizepsbetont)', muscle: 'triceps',
-      sec: ['chest', 'shoulders'], equip: 'Barren', pattern: 'dip',
-      level: 3, bw: true, inc: 2.5, f: 0, reps: [6, 12],
-      cues: [
-        'Oberkörper möglichst aufrecht halten',
-        'Ellenbogen eng nach hinten führen',
-        'Bis etwa 90° Ellenbogenwinkel absenken'
-      ],
-      err: ['Zu weites Absenken', 'Schulterblätter rollen nach vorne']
     },
     {
       id: 'kickback', name: 'Trizeps-Kickback', muscle: 'triceps',
@@ -882,17 +826,6 @@
       err: ['Schwung aus dem Körper', 'Schultern vollständig aushängen', 'Beine unkontrolliert fallen lassen']
     },
     {
-      id: 'legraise-floor', name: 'Beinheben (liegend)', muscle: 'abs',
-      sec: [], equip: 'Körpergewicht', pattern: 'legraise',
-      level: 1, bw: true, inc: 2.5, f: 0, reps: [12, 20],
-      cues: [
-        'Hände unter das Gesäß legen',
-        'Unterer Rücken bleibt in Bodenkontakt',
-        'Beine nicht ganz ablegen, Spannung halten'
-      ],
-      err: ['Hohlkreuz beim Absenken']
-    },
-    {
       id: 'plank', name: 'Unterarmstütz (Plank)', muscle: 'abs',
       sec: ['shoulders'], equip: 'Körpergewicht', pattern: 'plank',
       demo: 'assets/exercises/gifs/plank-whiteclean.gif?v=1', demoStyle: 'reference-gif',
@@ -951,17 +884,6 @@
         'Hüftwinkel bleibt weitgehend konstant'
       ],
       err: ['Bewegung aus der Hüfte statt aus dem Bauch', 'Arme ziehen mit']
-    },
-    {
-      id: 'russian-twist', name: 'Russian Twist', muscle: 'abs',
-      sec: [], equip: 'Gewichtsscheibe', pattern: 'crunch',
-      level: 2, inc: 2.5, f: 0.10, reps: [16, 24],
-      cues: [
-        'Oberkörper etwa 45° zurückgelehnt halten',
-        'Rotation kommt aus dem Rumpf, Blick folgt den Händen',
-        'Rücken bleibt lang'
-      ],
-      err: ['Nur die Arme bewegen sich', 'Runder Rücken']
     }
   ];
 

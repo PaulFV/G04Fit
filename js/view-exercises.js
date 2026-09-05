@@ -26,6 +26,18 @@
     return 'dumbbell';
   }
 
+  function equipTone(name) {
+    if (name === 'all') return 'all';
+    if (/Kabel/i.test(name)) return 'cable';
+    if (/Kurzhantel/i.test(name)) return 'dumbbell';
+    if (/Langhantel|SZ-Stange/i.test(name)) return 'barbell';
+    if (/Körpergewicht|Klimmzug|Barren/i.test(name)) return 'body';
+    if (/Maschine|Multipresse/i.test(name)) return 'machine';
+    if (/Bank/i.test(name)) return 'bench';
+    if (/Gewicht|Scheibe/i.test(name)) return 'weight';
+    return 'neutral';
+  }
+
   function matches(ex) {
     if (filter.muscle !== 'all' && ex.muscle !== filter.muscle) return false;
     if (filter.equip !== 'all' && ex.equip !== filter.equip) return false;
@@ -243,7 +255,7 @@
             u.icon(G.MUSCLES[m].icon, 17) + '<span>' + u.esc(G.MUSCLES[m].name) + '</span></button>';
         }).join('') + '</div>' +
         '<div class="chips">' + equips.map(function (e) {
-          return '<button class="chip' + (filter.equip === e ? ' is-on' : '') + '" data-eq="' + u.esc(e) + '">' +
+          return '<button class="chip' + (filter.equip === e ? ' is-on' : '') + '" data-tone="' + equipTone(e) + '" data-eq="' + u.esc(e) + '">' +
             u.icon(equipIcon(e), 15) + '<span>' + (e === 'all' ? 'Alle Geräte' : u.esc(e)) + '</span></button>';
         }).join('') + '</div>' +
         '</div></div>' +

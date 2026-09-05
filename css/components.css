@@ -214,7 +214,13 @@
 .m-shoulders{color:var(--m-shoulders);background:var(--m-shoulders)}
 
 /* ---------- Übungskarte ---------- */
-.ex-filters{padding:16px}
+.ex-filters{
+  padding:16px;
+  background:
+    radial-gradient(520px 170px at 8% -30%,rgba(61,255,158,.11),transparent 68%),
+    radial-gradient(480px 190px at 94% 120%,rgba(34,211,238,.08),transparent 70%),
+    var(--glass-bg);
+}
 .ex-search-row{display:flex;align-items:center;gap:10px}
 .ex-search{position:relative;display:block;flex:1;min-width:0}
 .ex-search > .ui-icon{position:absolute;z-index:1;left:15px;top:50%;transform:translateY(-50%);color:var(--tx-2);pointer-events:none}
@@ -225,6 +231,47 @@
 .ex-filter-options .tabs__b,.ex-filter-options .chip{display:inline-flex;align-items:center;justify-content:center;gap:7px}
 .ex-filter-options .tabs__b .ui-icon,.ex-filter-options .chip .ui-icon{opacity:.8}
 .ex-filter-options .tabs__b.is-on .ui-icon,.ex-filter-options .chip.is-on .ui-icon{opacity:1;filter:drop-shadow(0 0 5px currentColor)}
+.ex-filter-options .tabs__b[data-m]{--filter-accent:var(--neon)}
+.ex-filter-options .tabs__b[data-m="chest"]{--filter-accent:var(--m-chest)}
+.ex-filter-options .tabs__b[data-m="back"]{--filter-accent:var(--m-back)}
+.ex-filter-options .tabs__b[data-m="shoulders"]{--filter-accent:var(--m-shoulders)}
+.ex-filter-options .tabs__b[data-m="biceps"]{--filter-accent:var(--m-biceps)}
+.ex-filter-options .tabs__b[data-m="triceps"]{--filter-accent:var(--m-triceps)}
+.ex-filter-options .tabs__b[data-m="abs"]{--filter-accent:var(--m-abs)}
+.ex-filter-options .tabs__b[data-m]:not(.is-on){
+  color:color-mix(in srgb,var(--filter-accent) 68%,var(--tx-1));
+  background:color-mix(in srgb,var(--filter-accent) 6%,transparent);
+}
+.ex-filter-options .tabs__b[data-m].is-on{
+  color:var(--filter-accent);
+  background:color-mix(in srgb,var(--filter-accent) 16%,transparent);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--filter-accent) 42%,transparent),0 0 18px color-mix(in srgb,var(--filter-accent) 12%,transparent);
+}
+.ex-filter-options .chip{--filter-accent:var(--tx-1)}
+.ex-filter-options .chip[data-tone="all"]{--filter-accent:var(--neon)}
+.ex-filter-options .chip[data-tone="cable"]{--filter-accent:var(--cyan)}
+.ex-filter-options .chip[data-tone="dumbbell"]{--filter-accent:var(--m-biceps)}
+.ex-filter-options .chip[data-tone="barbell"]{--filter-accent:var(--m-triceps)}
+.ex-filter-options .chip[data-tone="body"]{--filter-accent:var(--gold)}
+.ex-filter-options .chip[data-tone="machine"]{--filter-accent:var(--m-shoulders)}
+.ex-filter-options .chip[data-tone="bench"]{--filter-accent:var(--warn)}
+.ex-filter-options .chip[data-tone="weight"]{--filter-accent:var(--gold)}
+.ex-filter-options .chip:not(.is-on){
+  color:color-mix(in srgb,var(--filter-accent) 58%,var(--tx-1));
+  border-color:color-mix(in srgb,var(--filter-accent) 22%,var(--glass-br));
+  background:color-mix(in srgb,var(--filter-accent) 5%,var(--glass-bg));
+}
+.ex-filter-options .chip:hover{
+  color:var(--filter-accent);
+  border-color:color-mix(in srgb,var(--filter-accent) 48%,transparent);
+  background:color-mix(in srgb,var(--filter-accent) 11%,transparent);
+}
+.ex-filter-options .chip.is-on{
+  color:var(--filter-accent);
+  border-color:color-mix(in srgb,var(--filter-accent) 52%,transparent);
+  background:color-mix(in srgb,var(--filter-accent) 17%,transparent);
+  box-shadow:0 0 18px color-mix(in srgb,var(--filter-accent) 14%,transparent);
+}
 .ex-results b{color:var(--tx-0)}
 .ex-results + .grid--auto{grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
 .ex-card{
