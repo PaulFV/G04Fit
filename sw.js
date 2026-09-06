@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'gofit-v1.0.66';
+var CACHE = 'gofit-v1.0.68';
 
 var ASSETS = [
   './',
@@ -215,8 +215,8 @@ self.addEventListener('notificationclick', function (e) {
 // vollständig unabhängig.
 self.addEventListener('push', function (e) {
   var data = {
-    title: 'GoFit · Training steht an',
-    body: 'Zeit für dein Training. Öffne GoFit und leg los.',
+    title: 'Heute ist ein guter Tag zum Trainieren',
+    body: 'Dein Plan wartet auf dich. Öffne GoFit und leg los.',
     tag: 'gofit-training',
     url: './index.html#workout'
   };

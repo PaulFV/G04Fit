@@ -85,7 +85,7 @@
         '<div style="flex:1;min-width:200px">' +
         '<h2 style="font-size:20px">' + (on ? 'Erinnerungen sind aktiv' : 'Erinnerungen sind aus') + '</h2>' +
         '<p class="muted small" style="margin-top:5px">' +
-        (on ? 'GoFit meldet sich an deinen Trainingstagen um ' + u.esc(s.profile.reminderTime) + ' Uhr.'
+        (on ? 'GoFit motiviert dich an deinen Trainingstagen um ' + u.esc(s.profile.reminderTime) + ' Uhr mit wechselnden Nachrichten.'
           : 'Ohne die Einwilligung „Benachrichtigungen“ erinnert GoFit dich nicht.') + '</p>' +
         '</div>' +
         '<div class="btn-row">' +
@@ -103,7 +103,7 @@
         '<div class="card__head">' + u.icon('clock', 18) + '<h3>Zeitpunkt</h3></div>' +
         '<div class="field"><label>Uhrzeit der Erinnerung</label>' +
         '<input class="input" id="remTime" type="time" value="' + u.esc(s.profile.reminderTime || '18:00') + '">' +
-        '<span class="field__hint">Gilt für alle Trainingstage.</span></div>' +
+        '<span class="field__hint">Gilt für alle Trainingstage. Der Motivationstext wechselt automatisch.</span></div>' +
 
         '<div class="field" style="margin-top:16px"><label>Trainingstage</label>' +
         '<div class="chips" style="margin-top:6px">' +
@@ -147,7 +147,7 @@
         '</div>' +
 
       '<div class="note">' + u.icon('info', 18) +
-        '<div><b>Hintergrund-Benachrichtigungen wie bei GoSleep</b><br>' +
+        '<div><b>Motivation auch bei geschlossener App</b><br>' +
         'GoFit meldet Uhrzeit und Trainingstage verschlüsselt beim Push-Dienst an. Auf dem iPhone muss ' +
         'GoFit dafür als Home-Bildschirm-App installiert und von dort geöffnet sein. Ohne Push-Unterstützung ' +
         'bleibt die lokale Erinnerung innerhalb der geöffneten App aktiv.</div></div>' +

@@ -2,6 +2,16 @@ import webpush from 'web-push';
 import { DurableObject } from 'cloudflare:workers';
 
 const encoder = new TextEncoder();
+const MOTIVATION_MESSAGES = [
+  { title: 'Komm, trainieren! 💪', body: 'Dein Plan wartet auf dich. Öffne GoFit und leg los.' },
+  { title: 'Heute ist ein guter Tag zum Trainieren', body: 'Ein kleiner Anfang reicht – der Rest kommt mit der Bewegung.' },
+  { title: 'Zeit für dich und dein Training', body: 'Schenk dir diese Einheit. Danach wirst du froh sein, angefangen zu haben.' },
+  { title: 'Nur anfangen', body: 'Du musst nicht perfekt trainieren. Du musst nur den ersten Satz machen.' },
+  { title: 'Dein stärkeres Ich wartet', body: 'Jede Einheit zählt. Öffne GoFit und mach heute deinen nächsten Schritt.' },
+  { title: 'Los geht’s! 🔥', body: 'Deine heutige Einheit bringt dich deinem Ziel ein Stück näher.' },
+  { title: 'Mach heute zu deinem Trainingstag', body: 'Motivation kommt beim Machen. Starte jetzt mit GoFit.' },
+  { title: 'Du kannst das', body: 'Ein Training, ein Schritt, ein Erfolg. Heute zählt.' }
+];
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -108,11 +118,20 @@ function validReminder(reminder) {
   }
 }
 
-async function sendNotification(env, subscription, test = false) {
+function motivationMessage(reminder, timestamp = Date.now()) {
+  const local = localParts(timestamp, reminder?.timezone || 'Europe/Berlin');
+  const dayKey = (local.year * 10000) + (local.month * 100) + local.day;
+  return MOTIVATION_MESSAGES[dayKey % MOTIVATION_MESSAGES.length];
+}
+
+async function sendNotification(env, subscription, reminder, test = false) {
   webpush.setVapidDetails(env.VAPID_SUBJECT, env.VAPID_PUBLIC_KEY, env.VAPID_PRIVATE_KEY);
+  const message = test
+    ? { title: 'GoFit · Test erfolgreich', body: 'Hintergrund-Benachrichtigungen funktionieren. GoFit motiviert dich ab jetzt regelmäßig.' }
+    : motivationMessage(reminder);
   return webpush.sendNotification(subscription, JSON.stringify({
-    title: test ? 'GoFit · Test' : 'GoFit · Training steht an',
-    body: test ? 'Hintergrund-Benachrichtigungen funktionieren.' : 'Zeit für dein Training. Öffne GoFit und leg los.',
+    title: message.title,
+    body: message.body,
     tag: test ? 'gofit-test' : 'gofit-training',
     url: env.APP_URL
   }), { TTL: 300, urgency: 'high' });
@@ -161,7 +180,8 @@ export class ReminderDevice extends DurableObject {
       const subscription = await this.ctx.storage.get('subscription');
       if (!subscription) return json({ error: 'Keine Push-Anmeldung vorhanden.' }, 404);
       try {
-        await sendNotification(this.env, subscription, true);
+        const reminder = await this.ctx.storage.get('reminder');
+        await sendNotification(this.env, subscription, reminder, true);
         return json({ ok: true });
       } catch (error) {
         if (error?.statusCode === 404 || error?.statusCode === 410) {
@@ -179,7 +199,7 @@ export class ReminderDevice extends DurableObject {
     const data = await this.ctx.storage.get(['subscription', 'reminder']);
     if (!data.subscription || !data.reminder?.enabled) return;
     try {
-      await sendNotification(this.env, data.subscription, false);
+      await sendNotification(this.env, data.subscription, data.reminder, false);
     } catch (error) {
       if (error?.statusCode === 404 || error?.statusCode === 410) {
         await this.ctx.storage.deleteAll();

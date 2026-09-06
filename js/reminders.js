@@ -22,9 +22,32 @@
   var firedToday = {};
   var audioContext = null;
   var PUSH_API = String(window.GOFIT_PUSH_API || '').replace(/\/+$/, '');
+  var MOTIVATION_MESSAGES = [
+    { title: 'Komm, trainieren! 💪', body: 'Dein Plan wartet auf dich. Öffne GoFit und leg los.' },
+    { title: 'Heute ist ein guter Tag zum Trainieren', body: 'Ein kleiner Anfang reicht – der Rest kommt mit der Bewegung.' },
+    { title: 'Zeit für dich und dein Training', body: 'Schenk dir diese Einheit. Danach wirst du froh sein, angefangen zu haben.' },
+    { title: 'Nur anfangen', body: 'Du musst nicht perfekt trainieren. Du musst nur den ersten Satz machen.' },
+    { title: 'Dein stärkeres Ich wartet', body: 'Jede Einheit zählt. Öffne GoFit und mach heute deinen nächsten Schritt.' },
+    { title: 'Los geht’s! 🔥', body: 'Deine heutige Einheit bringt dich deinem Ziel ein Stück näher.' },
+    { title: 'Mach heute zu deinem Trainingstag', body: 'Motivation kommt beim Machen. Starte jetzt mit GoFit.' },
+    { title: 'Du kannst das', body: 'Ein Training, ein Schritt, ein Erfolg. Heute zählt.' }
+  ];
 
   function st() { return G.store.state; }
   function allowed() { return G.store.hasConsent('push'); }
+
+  /* Für denselben Kalendertag bleibt der Text stabil, an den nächsten
+     Trainingstagen wechselt er automatisch. */
+  function motivationFor(day, planTitle) {
+    var key = String(day || u.today());
+    var hash = 0;
+    for (var i = 0; i < key.length; i++) hash = ((hash * 31) + key.charCodeAt(i)) >>> 0;
+    var message = MOTIVATION_MESSAGES[hash % MOTIVATION_MESSAGES.length];
+    return {
+      title: message.title,
+      body: planTitle ? message.body + ' Heute: ' + planTitle + '.' : message.body
+    };
+  }
 
   function supported() {
     return typeof Notification !== 'undefined';
@@ -243,8 +266,9 @@
         day.setHours(+hm[0] || 0, +hm[1] || 0, 0, 0);
         var timestamp = day.getTime();
         if (timestamp <= Date.now()) return null;
-        return registration.showNotification('GoFit · Training steht an', {
-          body: i.title + ((i.muscles && i.muscles.length) ? ' — ' + i.muscles.join(', ') : ''),
+        var message = motivationFor(i.day, i.title);
+        return registration.showNotification(message.title, {
+          body: message.body,
           tag: 'gofit-plan-' + i.day,
           icon: './icons/icon-v2-192.png',
           badge: './icons/icon-v2-192.png',
@@ -389,8 +413,8 @@
 
     if (plan && !already && !firedToday[key] && hhmm >= (s.profile.reminderTime || '18:00')) {
       firedToday[key] = true;
-      notify('GoFit · Training steht an',
-        plan.name + ' — ' + plan.exercises.length + ' Übungen geplant.', 'gofit-train');
+      var message = motivationFor(today, plan.name);
+      notify(message.title, message.body, 'gofit-train');
     }
 
     // 2) Wiedereinstieg nach längerer Pause
@@ -434,8 +458,8 @@
     } catch (e) {
       u.toast('Push-Test fehlgeschlagen', e.message || 'Der Push-Server ist nicht erreichbar.', 'warn', 6500);
     }
-    var ok = await notify('GoFit · Testerinnerung',
-      'So sieht deine Trainingserinnerung aus.', 'gofit-test');
+    var preview = motivationFor(u.today(), 'dein Training');
+    var ok = await notify(preview.title, preview.body, 'gofit-test');
     if (!ok) {
       u.toast('Als App-Hinweis zugestellt',
         'Systembenachrichtigungen sind hier nicht verfügbar – beim Start über einen lokalen Server funktionieren sie.', 'warn', 6000);
@@ -453,6 +477,7 @@
     restFinished: restFinished,
     upcoming: upcoming,
     nextReminder: nextReminder,
+    motivationFor: motivationFor,
     start: start,
     stop: stop,
     check: check,

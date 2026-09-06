@@ -289,8 +289,7 @@ veröffentlicht werden.
 Das Konzept sieht für spätere Versionen vor:
 
 * Portierung auf React, TypeScript, Tailwind CSS und Framer Motion
-* Backend mit Datenbank, Benutzerkonten und echten Push-Benachrichtigungen
-  (nötig für Erinnerungen bei geschlossener App)
+* Optionales Benutzerkonto für die Synchronisation zwischen mehreren Geräten
 * 3D-Avatar mit hervorgehobenen Muskelgruppen
 * Obsidian-Plugin für die direkte Synchronisation in den Vault
 * Erweiterung um Beine und Ganzkörperübungen

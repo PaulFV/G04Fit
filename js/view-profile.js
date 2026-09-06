@@ -253,6 +253,7 @@
         sw('setRest', 'Pausentimer', 'Nach jedem abgehakten Satz startet automatisch eine Pause.', s.settings.restTimer) +
         sw('setReentry', 'Wiedereinstiegsmodus', 'Nach längeren Pausen reduziert GoFit Gewicht und Volumen automatisch.', s.settings.reentry) +
         sw('setMotion', 'Animationen reduzieren', 'Schaltet Bewegungseffekte weitgehend ab.', s.settings.reduceMotion) +
+        sw('setMotivation', 'Trainingsmotivation aufs iPhone', 'Sendet an deinen Trainingstagen wechselnde motivierende Push-Nachrichten.', G.store.hasConsent('push')) +
         sw('setSilent', 'Benachrichtigungen stumm', 'Erinnerungen ohne Ton zustellen.', s.settings.soundless) +
         '<div class="field" style="margin:14px 13px 4px"><label>Alarmton für Satzpausen</label>' +
         '<div class="row row--wrap"><select class="select" id="alarmSound" style="flex:1;min-width:180px">' +
@@ -324,6 +325,7 @@
         if (!arr.length) { arr.push(d); u.toast('Mindestens ein Tag', 'Ein Trainingstag muss bestehen bleiben.', 'warn'); }
         s.profile.trainingDays = arr;
         G.store.commit('days');
+        G.reminders.scheduleBackground();
         G.app.rerender();
       });
 
@@ -386,6 +388,28 @@
       bindSwitch(host, 'setMotion', function (v) {
         s.settings.reduceMotion = v;
         document.body.classList.toggle('no-motion', v);
+      });
+
+      var motivation = host.querySelector('#setMotivation');
+      if (motivation) motivation.addEventListener('change', async function () {
+        motivation.disabled = true;
+        if (motivation.checked) {
+          G.store.setConsent('push', true);
+          try {
+            await G.reminders.enableBackgroundPush();
+            G.reminders.start();
+            u.toast('Trainingsmotivation aktiv', 'GoFit motiviert dich auch bei geschlossener App.', 'ok');
+          } catch (e) {
+            G.reminders.start();
+            u.toast('Lokale Motivation aktiv', e.message || 'iPhone-Push ist noch nicht verfügbar.', 'warn', 7000);
+          }
+        } else {
+          try { await G.reminders.disableBackgroundPush(); } catch (e) { /* lokal trotzdem abschalten */ }
+          G.store.setConsent('push', false);
+          G.reminders.stop();
+          u.toast('Trainingsmotivation aus', 'GoFit sendet keine Trainingshinweise mehr.', 'warn');
+        }
+        G.app.rerender();
       });
 
       var alarmSound = host.querySelector('#alarmSound');
