@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'gofit-v1.0.77';
+var CACHE = 'gofit-v1.0.78';
 
 var ASSETS = [
   './',
