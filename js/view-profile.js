@@ -312,6 +312,12 @@
         '<div class="card__head">' + u.icon('refresh', 18) + '<h3>App-Einstellungen</h3></div>' +
         sw('setLight', 'Heller Modus', 'Wechselt zwischen dem dunklen und hellen GoFit-Design.', s.settings.theme === 'light') +
         sw('setRest', 'Pausentimer', 'Nach jedem abgehakten Satz startet automatisch eine Pause.', s.settings.restTimer) +
+        '<div class="field" style="margin:10px 13px 14px">' +
+        '<label>Pausendauer</label>' +
+        '<div class="input-suffix" style="max-width:120px">' +
+        '<input class="input" type="number" id="restSecondsSetting" min="15" max="500" step="5" value="' + (s.settings.restSeconds || 90) + '">' +
+        '<span>s</span></div>' +
+        '<span class="field__hint">Vorschlag beim Start einer neuen Einheit (Freies Training oder Plan) — dort weiterhin änderbar.</span></div>' +
         sw('setReentry', 'Wiedereinstiegsmodus', 'Nach längeren Pausen reduziert GoFit Gewicht und Volumen automatisch.', s.settings.reentry) +
         sw('setMotion', 'Animationen reduzieren', 'Schaltet Bewegungseffekte weitgehend ab.', s.settings.reduceMotion) +
         sw('setMotivation', 'Trainingsmotivation aufs iPhone', 'Sendet an deinen Trainingstagen wechselnde motivierende Push-Nachrichten.', G.store.hasConsent('push')) +
@@ -507,6 +513,14 @@
           u.toast('Trainingsmotivation aus', 'GoFit sendet keine Trainingshinweise mehr.', 'warn');
         }
         G.app.rerender();
+      });
+
+      var restSecondsSetting = host.querySelector('#restSecondsSetting');
+      if (restSecondsSetting) restSecondsSetting.addEventListener('change', function () {
+        var v = u.clamp(u.num(restSecondsSetting.value, s.settings.restSeconds || 90), 15, 500);
+        restSecondsSetting.value = v;
+        s.settings.restSeconds = v;
+        G.store.commit('settings');
       });
 
       var alarmSound = host.querySelector('#alarmSound');

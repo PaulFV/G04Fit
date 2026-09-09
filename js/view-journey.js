@@ -55,6 +55,26 @@
       '</div>';
   }
 
+  // Gleiche Pausentimer-Kurzsteuerung wie auf Dashboard und Workout, damit
+  // sie auch von der Journey-Ansicht aus erreichbar ist (dort, wo ohnehin
+  // die Satzpause je Modus angezeigt wird).
+  function restCard() {
+    var s = G.store.state;
+    return '<div class="card">' +
+      '<div class="card__head">' + u.icon('clock', 18) + '<h3>Pause zwischen Sätzen</h3></div>' +
+      '<div class="row row--wrap" style="gap:10px;align-items:center">' +
+      '<label class="switch" style="padding:0;flex:1;min-width:170px">' +
+      '<input type="checkbox" id="restEnableJourney"' + (s.settings.restTimer !== false ? ' checked' : '') + '>' +
+      '<span class="switch__track"></span>' +
+      '<span class="switch__label"><b>Aktiv</b><span>Gilt für die nächste gestartete Einheit</span></span>' +
+      '</label>' +
+      '<div class="input-suffix" style="max-width:110px">' +
+      '<input class="input" type="number" id="restSecondsJourney" min="15" max="500" step="5" ' +
+      'value="' + (s.settings.restSeconds || 90) + '"' + (s.settings.restTimer === false ? ' disabled' : '') + '>' +
+      '<span>s</span>' +
+      '</div></div></div>';
+  }
+
   function modeCards() {
     var s = G.store.state;
     return '<div class="grid grid--auto" style="--sp:12px">' + G.MODES.map(function (m) {
@@ -116,6 +136,8 @@
         '<span class="tiny dim">wirkt auf Sätze, Pausen und Progression</span></div>' +
         modeCards() +
 
+        restCard() +
+
         '<div class="note note--neon" style="margin-top:4px">' + u.icon('info', 18) +
         '<div>Level und XP sind ein Motivationssystem, kein Leistungsurteil. ' +
         'Die Einstufung sagt nichts über deine Gesundheit aus.</div></div>' +
@@ -130,6 +152,21 @@
         G.store.commit('mode');
         u.toast('Modus: ' + m.name, m.sets + ' Sätze, ' + m.restSec + ' s Pause, ' + m.weekly + ' Einheiten pro Woche.', 'ok');
         G.app.rerender();
+      });
+
+      u.on(host, 'change', '#restEnableJourney', function (e, t) {
+        G.store.state.settings.restTimer = t.checked;
+        var secInput = host.querySelector('#restSecondsJourney');
+        if (secInput) secInput.disabled = !t.checked;
+        G.store.commit('settings');
+      });
+
+      u.on(host, 'change', '#restSecondsJourney', function (e, t) {
+        var s = G.store.state;
+        var v = u.clamp(u.num(t.value, s.settings.restSeconds || 90), 15, 500);
+        t.value = v;
+        s.settings.restSeconds = v;
+        G.store.commit('settings');
       });
 
       u.on(host, 'click', '[data-level]', function (e, t) {

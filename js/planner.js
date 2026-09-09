@@ -180,6 +180,12 @@
       };
     }).filter(Boolean);
 
+    // Eine einzige Satzpause für die ganze Einheit (statt je Übung
+    // unterschiedlich) — Startwert ist die vom Nutzer hinterlegte
+    // Einstellung (vor dem Start wählbar, Standard 90 s), in der
+    // laufenden Einheit weiterhin frei änderbar (15–500 s).
+    var restSeconds = u.clamp(s.settings.restSeconds || 90, 15, 500);
+
     return {
       id: u.uid(),
       day: opts.day || u.today(),
@@ -190,6 +196,8 @@
       muscles: dayPlan.muscles,
       reentry: re && s.settings.reentry ? { days: re.days, factor: re.factor } : null,
       exercises: blocks,
+      restEnabled: s.settings.restTimer !== false,
+      restSeconds: restSeconds,
       notes: '',
       newRecords: 0,
       totalSets: 0,

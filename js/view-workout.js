@@ -136,7 +136,21 @@
       '<div class="btn-row" style="margin-top:18px">' +
       (show ? '<button class="btn btn--primary btn--lg" data-act="start-plan">' + u.icon('play', 18) + ' Einheit starten</button>' : '') +
       '<button class="btn btn--lg" data-act="open-free">' + u.icon('plus', 18) + ' Freies Training</button>' +
-      '</div></div>';
+      '</div>' +
+
+      '<div class="row row--wrap" style="gap:12px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--glass-br)">' +
+      '<label class="switch" style="padding:0;flex:1;min-width:190px">' +
+      '<input type="checkbox" id="restEnablePreset"' + (s.settings.restTimer !== false ? ' checked' : '') + '>' +
+      '<span class="switch__track"></span>' +
+      '<span class="switch__label"><b>Pause zwischen Sätzen</b>' +
+      '<span>Gilt für die nächste gestartete Einheit</span></span>' +
+      '</label>' +
+      '<div class="input-suffix" style="max-width:120px">' +
+      '<input class="input" type="number" id="restSecondsPreset" min="15" max="500" step="5" ' +
+      'value="' + (s.settings.restSeconds || 90) + '"' + (s.settings.restTimer === false ? ' disabled' : '') + '>' +
+      '<span>s</span>' +
+      '</div></div>' +
+      '</div>';
 
     var list = '';
     if (show) {
@@ -541,6 +555,23 @@
           G.store.commit('session-start');
           G.app.rerender();
         });
+      }, signal);
+
+      /* --- Satzpause vor dem Start: an/aus + Sekunden ---
+         Wirkt auf die globale Einstellung (s.settings), die buildSession()
+         als Startwert für die nächste Einheit verwendet. */
+      u.on(host, 'change', '#restEnablePreset', function (e, t) {
+        s.settings.restTimer = t.checked;
+        var secInput = host.querySelector('#restSecondsPreset');
+        if (secInput) secInput.disabled = !t.checked;
+        G.store.commit('settings');
+      }, signal);
+
+      u.on(host, 'change', '#restSecondsPreset', function (e, t) {
+        var v = u.clamp(u.num(t.value, s.settings.restSeconds || 90), 15, 500);
+        t.value = v;
+        s.settings.restSeconds = v;
+        G.store.commit('settings');
       }, signal);
 
       u.on(host, 'click', '[data-ex]', function (e, t) {

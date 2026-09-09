@@ -89,6 +89,7 @@
         theme: 'dark',
         reduceMotion: false,
         restTimer: true,
+        restSeconds: 90,
         reentry: true,               // Wiedereinstiegsmodus
         soundless: true,
         alarmSound: 'signal'         // signal | pulse | chime

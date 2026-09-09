@@ -127,6 +127,24 @@
 
     var li = G.store.levelInfo();
 
+    // Pausentimer-Kurzsteuerung: überall dort verfügbar, wo direkt eine
+    // Einheit gestartet werden kann (also nicht während running), damit
+    // die Einstellung nicht nur über den Workout-Reiter erreichbar ist.
+    var restRow = !running ? (
+      '<div class="row row--wrap" style="gap:10px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--glass-br)">' +
+      '<label class="switch" style="padding:0;flex:1;min-width:170px">' +
+      '<input type="checkbox" id="restEnableDash"' + (s.settings.restTimer !== false ? ' checked' : '') + '>' +
+      '<span class="switch__track"></span>' +
+      '<span class="switch__label"><b>Pause zwischen Sätzen</b>' +
+      '<span>Gilt für die nächste gestartete Einheit</span></span>' +
+      '</label>' +
+      '<div class="input-suffix" style="max-width:110px">' +
+      '<input class="input" type="number" id="restSecondsDash" min="15" max="500" step="5" ' +
+      'value="' + (s.settings.restSeconds || 90) + '"' + (s.settings.restTimer === false ? ' disabled' : '') + '>' +
+      '<span>s</span>' +
+      '</div></div>'
+    ) : '';
+
     return '<div class="card card--hero card--hl">' +
       '<div class="row" style="gap:18px;align-items:flex-start">' +
       '<div style="padding-top:4px">' +
@@ -137,6 +155,7 @@
       head + body +
       '</div></div>' +
       '<div class="btn-row" style="margin-top:20px">' + cta + '</div>' +
+      restRow +
       '</div>';
   }
 
@@ -242,6 +261,21 @@
       });
       u.on(host, 'click', '[data-act="free"]', function () {
         G.app.go('workout', { free: true });
+      });
+
+      u.on(host, 'change', '#restEnableDash', function (e, t) {
+        G.store.state.settings.restTimer = t.checked;
+        var secInput = host.querySelector('#restSecondsDash');
+        if (secInput) secInput.disabled = !t.checked;
+        G.store.commit('settings');
+      });
+
+      u.on(host, 'change', '#restSecondsDash', function (e, t) {
+        var s = G.store.state;
+        var v = u.clamp(u.num(t.value, s.settings.restSeconds || 90), 15, 500);
+        t.value = v;
+        s.settings.restSeconds = v;
+        G.store.commit('settings');
       });
     }
   };
