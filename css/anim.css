@@ -192,6 +192,20 @@
   letter-spacing:.06em;text-transform:uppercase;
 }
 
+/* Die Muskelkarte (Körper-Silhouette, Gliedmaßen, Segment-Linien,
+   Seitenbeschriftung) ist komplett in halbtransparentem Weiß gezeichnet —
+   passend für den dunklen Karten-Hintergrund im Dark Mode. Im Hell-Modus
+   sitzt sie auf einer hellen Fläche (siehe .list__ic--map/.map-chip),
+   dort wäre helles-auf-hellem praktisch unsichtbar. Deshalb hier auf
+   dunkle, dem Text-Ton entsprechende Linien umgestellt. */
+:root[data-theme="light"] .mmap .body{fill:rgba(18,65,44,.055);stroke:rgba(18,65,44,.24)}
+:root[data-theme="light"] .mmap .limb-o{stroke:rgba(18,65,44,.24)}
+:root[data-theme="light"] .mmap .limb-k{stroke:var(--exercise-canvas)}
+:root[data-theme="light"] .mmap .limb{stroke:rgba(18,65,44,.055)}
+:root[data-theme="light"] .mmap .mg{fill:rgba(18,65,44,.09);stroke:rgba(18,65,44,.24)}
+:root[data-theme="light"] .mmap .mg:not(.primary):not(.secondary) .seg{stroke:rgba(18,65,44,.16)}
+:root[data-theme="light"] .mmap .mmap-side{fill:rgba(18,65,44,.4)}
+
 /* Beschriftung unterhalb der Karte */
 .mmap-legend{
   display:flex;gap:12px;flex-wrap:wrap;justify-content:center;

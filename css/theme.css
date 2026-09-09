@@ -55,6 +55,15 @@
 
   --font:"Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,"Inter",Roboto,sans-serif;
   --mono:"Cascadia Mono",ui-monospace,"SF Mono",Consolas,monospace;
+
+  /* Sagt dem Browser, welches Schema gerade aktiv ist, damit native
+     Bedienelemente (z. B. das Kalender-Icon von <input type="date">,
+     Scrollbalken) zum tatsächlich gewählten App-Theme passen statt zur
+     Systemeinstellung. Ohne das rendert z. B. Firefox/Chrome das
+     Datums-Icon eines hellen App-Themes u. U. weiterhin in der für dunkle
+     Oberflächen gedachten (hellen) Variante — auf dem jetzt hellen
+     Eingabefeld dann kaum sichtbar. */
+  color-scheme:dark;
 }
 
 :root[data-theme="light"]{
@@ -70,6 +79,26 @@
   --glass-hi:rgba(255,255,255,.94);
   --sh-1:0 1px 0 rgba(255,255,255,.88) inset,0 12px 34px rgba(31,72,53,.12);
   --exercise-canvas:#E9F0ED;
+
+  /* Die Neon-/Akzentfarben sind für Text auf fast-schwarzem Grund (Dark
+     Mode) abgestimmt und haben auf dem hellen Hintergrund viel zu wenig
+     Kontrast (z. B. #3DFF9E auf #F3F7F5 liegt bei ca. 1.2:1 statt der
+     nötigen 4.5:1). Für Hell-Modus deshalb deutlich dunklere, aber
+     farblich passende Varianten — nur für die Basisvariablen, damit jede
+     Stelle im CSS, die var(--neon)/var(--cyan)/… als Text-, Rahmen- oder
+     Icon-Farbe nutzt, automatisch lesbar wird. Glüh-Schatten (box-shadow)
+     nutzen eigene feste rgba()-Werte und bleiben dadurch unverändert
+     leuchtend. Hintergrund-Verwendungen (z. B. abgehakter Satz) haben
+     durchweg dunklen Text (#04120A) und funktionieren mit den dunkleren
+     Tönen weiterhin bzw. noch kontrastreicher. */
+  --neon:#067647;
+  --neon-2:#0B7D4D;
+  --cyan:#0E7C91;
+  --gold:#8A5A00;
+  --danger:#B0244F;
+  --warn:#8F5000;
+
+  color-scheme:light;
 }
 
 :root:not([data-theme="light"]){--exercise-canvas:#07100D}
