@@ -1,12 +1,12 @@
 /* ============================================================
-   GoFit — Obsidian-Anbindung
+   G04Fit — Obsidian-Anbindung
 
    Konzept Abschnitt 9: Trainingsprotokolle und ausgewählte
    Auswertungen können als Markdown synchronisiert werden.
    Die Synchronisation darf ausschließlich nach ausdrücklicher
    Zustimmung aktiviert werden.
 
-   Im Prototyp erzeugt GoFit die Markdown-Dateien und stellt sie
+   Im Prototyp erzeugt G04Fit die Markdown-Dateien und stellt sie
    zum Kopieren bzw. Herunterladen bereit. Ein direkter
    Schreibzugriff auf den Vault ist ohne Backend bzw. ohne
    Obsidian-Plugin nicht möglich – und wäre ohne ausdrückliche
@@ -39,7 +39,7 @@
     var out = [];
 
     out.push(fm({
-      titel: '"GoFit ' + u.fmtDate(d) + ' – ' + session.title + '"',
+      titel: '"G04Fit ' + u.fmtDate(d) + ' – ' + session.title + '"',
       datum: d,
       typ: 'training',
       split: session.planKey,
@@ -109,18 +109,18 @@
         out.push('');
         out = out.concat(sug);
         out.push('');
-        out.push('> Auswertung des GoFit Coach. Keine medizinische Beratung.');
+        out.push('> Auswertung des G04Fit Coach. Keine medizinische Beratung.');
         out.push('');
       }
     }
 
     out.push('---');
-    out.push('*Erstellt mit GoFit ' + G.VERSION + '*');
+    out.push('*Erstellt mit G04Fit ' + G.VERSION + '*');
     return out.join('\n');
   }
 
   function sessionFilename(session) {
-    return 'GoFit ' + session.day + ' ' + session.title.replace(/[\\/:*?"<>|]/g, '-') + '.md';
+    return 'G04Fit ' + session.day + ' ' + session.title.replace(/[\\/:*?"<>|]/g, '-') + '.md';
   }
 
   /* ------------------------------------------------------------
@@ -132,7 +132,7 @@
     var out = [];
 
     out.push(fm({
-      titel: '"GoFit Übersicht"',
+      titel: '"G04Fit Übersicht"',
       aktualisiert: u.today(),
       typ: 'uebersicht',
       level: li.level,
@@ -141,7 +141,7 @@
       tags: ['gofit', 'uebersicht']
     }));
     out.push('');
-    out.push('# GoFit Übersicht');
+    out.push('# G04Fit Übersicht');
     out.push('');
     out.push('| Kennzahl | Wert |');
     out.push('|:--|--:|');
@@ -176,7 +176,7 @@
         out.push('');
         ins.forEach(function (i) { out.push('- **' + i.title + ':** ' + i.text); });
         out.push('');
-        out.push('> Auswertung des GoFit Coach. Keine medizinische Beratung.');
+        out.push('> Auswertung des G04Fit Coach. Keine medizinische Beratung.');
         out.push('');
       }
     }
@@ -184,11 +184,11 @@
     out.push('## Letzte Einheiten');
     out.push('');
     s.history.slice(-12).reverse().forEach(function (x) {
-      out.push('- [[GoFit ' + x.day + ' ' + x.title + ']] — ' + u.fmt(x.volume) + ' kg, ' + x.totalSets + ' Sätze');
+      out.push('- [[G04Fit ' + x.day + ' ' + x.title + ']] — ' + u.fmt(x.volume) + ' kg, ' + x.totalSets + ' Sätze');
     });
     out.push('');
     out.push('---');
-    out.push('*Erstellt mit GoFit ' + G.VERSION + '*');
+    out.push('*Erstellt mit G04Fit ' + G.VERSION + '*');
     return out.join('\n');
   }
 
@@ -208,8 +208,8 @@
   function targetPath(session) {
     var s = st();
     var base = (s.obsidian.vault ? s.obsidian.vault.replace(/[\\/]+$/, '') + '\\' : '');
-    var folder = (s.obsidian.folder || 'GoFit').replace(/^[\\/]+|[\\/]+$/g, '');
-    return base + folder + '\\' + (session ? sessionFilename(session) : 'GoFit Übersicht.md');
+    var folder = (s.obsidian.folder || 'G04Fit').replace(/^[\\/]+|[\\/]+$/g, '');
+    return base + folder + '\\' + (session ? sessionFilename(session) : 'G04Fit Übersicht.md');
   }
 
   function markSynced() {
@@ -226,4 +226,4 @@
     targetPath: targetPath,
     markSynced: markSynced
   };
-})(GoFit);
+})(G04Fit);

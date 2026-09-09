@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Erinnerungen
+   G04Fit — Erinnerungen
 
    Konzept Abschnitt 8: geplante Einheiten erinnern und nach
    längeren Pausen den Wiedereinstieg anstoßen.
@@ -8,7 +8,7 @@
    · Solange die App geöffnet ist, wird lokal geprüft und über die
      Notification-API erinnert.
    · Web Push synchronisiert Uhrzeit und Trainingstage mit dem optionalen
-     GoFit Push Worker und funktioniert dadurch auch bei geschlossener App.
+     G04Fit Push Worker und funktioniert dadurch auch bei geschlossener App.
    · Notification Triggers bleiben als zusätzlicher lokaler Fallback aktiv.
    · Ist keine Systembenachrichtigung erlaubt oder möglich,
      erscheint die Erinnerung als Hinweis in der App.
@@ -23,13 +23,13 @@
   var audioContext = null;
   var PUSH_API = String(window.GOFIT_PUSH_API || '').replace(/\/+$/, '');
   var MOTIVATION_MESSAGES = [
-    { title: 'Komm, trainieren! 💪', body: 'Dein Plan wartet auf dich. Öffne GoFit und leg los.' },
+    { title: 'Komm, trainieren! 💪', body: 'Dein Plan wartet auf dich. Öffne G04Fit und leg los.' },
     { title: 'Heute ist ein guter Tag zum Trainieren', body: 'Ein kleiner Anfang reicht – der Rest kommt mit der Bewegung.' },
     { title: 'Zeit für dich und dein Training', body: 'Schenk dir diese Einheit. Danach wirst du froh sein, angefangen zu haben.' },
     { title: 'Nur anfangen', body: 'Du musst nicht perfekt trainieren. Du musst nur den ersten Satz machen.' },
-    { title: 'Dein stärkeres Ich wartet', body: 'Jede Einheit zählt. Öffne GoFit und mach heute deinen nächsten Schritt.' },
+    { title: 'Dein stärkeres Ich wartet', body: 'Jede Einheit zählt. Öffne G04Fit und mach heute deinen nächsten Schritt.' },
     { title: 'Los geht’s! 🔥', body: 'Deine heutige Einheit bringt dich deinem Ziel ein Stück näher.' },
-    { title: 'Mach heute zu deinem Trainingstag', body: 'Motivation kommt beim Machen. Starte jetzt mit GoFit.' },
+    { title: 'Mach heute zu deinem Trainingstag', body: 'Motivation kommt beim Machen. Starte jetzt mit G04Fit.' },
     { title: 'Du kannst das', body: 'Ein Training, ein Schritt, ein Erfolg. Heute zählt.' }
   ];
 
@@ -147,9 +147,9 @@
   }
 
   async function enableBackgroundPush() {
-    if (!PUSH_API) throw new Error('Der GoFit Push-Server ist noch nicht verbunden.');
+    if (!PUSH_API) throw new Error('Der G04Fit Push-Server ist noch nicht verbunden.');
     if (isIOSDevice() && !isStandaloneApp()) {
-      throw new Error('Füge GoFit zuerst zum iPhone-Home-Bildschirm hinzu und öffne es von dort.');
+      throw new Error('Füge G04Fit zuerst zum iPhone-Home-Bildschirm hinzu und öffne es von dort.');
     }
     if (!backgroundSupported()) throw new Error('Dieser Browser unterstützt keine Hintergrund-Benachrichtigungen.');
 
@@ -223,15 +223,15 @@
       var notificationOptions = {
         body: body,
         tag: tag || 'gofit',
-        icon: './icons/icon-v2-192.png',
-        badge: './icons/icon-v2-192.png',
+        icon: './icons/icon-v3-192.png',
+        badge: './icons/icon-v3-192.png',
         silent: options.silent == null ? !!st().settings.soundless : !!options.silent,
         requireInteraction: !!options.requireInteraction,
         data: { url: options.url || './index.html#workout' }
       };
 
       // Eine Service-Worker-Benachrichtigung bleibt auch sichtbar, wenn
-      // GoFit minimiert ist oder der Browser die Seite in den Hintergrund legt.
+      // G04Fit minimiert ist oder der Browser die Seite in den Hintergrund legt.
       try {
         if ('serviceWorker' in navigator) {
           var registration = await navigator.serviceWorker.ready;
@@ -270,8 +270,8 @@
         return registration.showNotification(message.title, {
           body: message.body,
           tag: 'gofit-plan-' + i.day,
-          icon: './icons/icon-v2-192.png',
-          badge: './icons/icon-v2-192.png',
+          icon: './icons/icon-v3-192.png',
+          badge: './icons/icon-v3-192.png',
           silent: !!st().settings.soundless,
           data: { url: './index.html#workout' },
           showTrigger: new TimestampTrigger(timestamp)
@@ -347,7 +347,7 @@
 
   function restFinished() {
     playAlarm();
-    return notify('GoFit · Pause vorbei', 'Weiter mit dem nächsten Satz.', 'gofit-rest', {
+    return notify('G04Fit · Pause vorbei', 'Weiter mit dem nächsten Satz.', 'gofit-rest', {
       silent: st().settings.soundless,
       requireInteraction: true,
       url: './index.html#workout'
@@ -446,8 +446,8 @@
       var rkey = 're-' + today;
       if (re && !firedToday[rkey]) {
         firedToday[rkey] = true;
-        notify('GoFit · Wiedereinstieg',
-          re.days + ' Tage ohne Training. GoFit hat die Gewichte für den Neustart angepasst.', 'gofit-reentry');
+        notify('G04Fit · Wiedereinstieg',
+          re.days + ' Tage ohne Training. G04Fit hat die Gewichte für den Neustart angepasst.', 'gofit-reentry');
       }
     }
   }
@@ -514,4 +514,4 @@
     backgroundStatus: backgroundStatus,
     test: test
   };
-})(GoFit);
+})(G04Fit);

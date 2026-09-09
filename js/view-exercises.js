@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Übungsbibliothek
+   G04Fit — Übungsbibliothek
    Konzept Abschnitt 5: Bewegungsausführung, beanspruchte
    Muskelgruppen und Technikhinweise je Übung.
    ============================================================ */
@@ -124,7 +124,7 @@
         '</div>' +
         '<p class="small muted" style="margin-top:12px">' + u.esc(sug.reason) + '</p>'
         : '<div class="note">' + u.icon('lock', 17) + '<div>Für konkrete Vorschläge benötigt der Coach die Einwilligung ' +
-        '<b>KI-Analyse</b>. Ohne sie zeigt GoFit nur den allgemeinen Bereich: ' +
+        '<b>KI-Analyse</b>. Ohne sie zeigt G04Fit nur den allgemeinen Bereich: ' +
         range[0] + '–' + range[1] + ' Wiederholungen, ' + G.coach.setCount(ex) + ' Sätze.</div></div>',
       '</div>',
 
@@ -149,7 +149,7 @@
         '<div class="card">' +
         '<div class="card__head">' + u.icon('dumbbell', 17) + '<h3>Eigenes Startgewicht</h3></div>' +
         '<p class="small muted" style="margin-bottom:12px">Trage hier ein, womit du realistisch arbeitest. ' +
-        'GoFit startet dich dann nicht künstlich leicht.</p>' +
+        'G04Fit startet dich dann nicht künstlich leicht.</p>' +
         '<div class="row"><div class="input-suffix" style="flex:1">' +
         '<input class="input" id="startW" type="number" inputmode="decimal" step="' + (ex.inc || 2.5) +
         '" min="0" value="' + (s.profile.startWeights[ex.id] != null ? s.profile.startWeights[ex.id] : '') +
@@ -196,7 +196,7 @@
     var s = G.store.state;
     if (!G.store.hasConsent('history')) {
       return '<div class="note">' + u.icon('lock', 17) +
-        '<div>Ohne die Einwilligung <b>Trainingshistorie</b> speichert GoFit keine vergangenen Sätze – ' +
+        '<div>Ohne die Einwilligung <b>Trainingshistorie</b> speichert G04Fit keine vergangenen Sätze – ' +
         'deshalb gibt es hier keinen Verlauf.</div></div>';
     }
     if (!rec && !last) {
@@ -299,4 +299,4 @@
     },
     openDetail: openDetail
   };
-})(GoFit);
+})(G04Fit);

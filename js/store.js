@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Zustand & Speicherung (Privacy First)
+   G04Fit — Zustand & Speicherung (Privacy First)
 
    Grundregel aus dem Konzept (Abschnitt 10):
    Es wird NICHTS dauerhaft gespeichert, solange die betreffende
@@ -7,7 +7,7 @@
 
      consent.profile   Profil & Einstellungen lokal sichern
      consent.history   Trainingshistorie & Rekorde sichern
-     consent.ai        Auswertung durch den GoFit Coach
+     consent.ai        Auswertung durch den G04Fit Coach
      consent.obsidian  Markdown-Export für Obsidian
      consent.push      Erinnerungen / Benachrichtigungen
 
@@ -60,7 +60,7 @@
         weightLog: [],
 
         // Trainings-Avatar (siehe js/avatar.js) — jede Person lädt ihr
-        // eigenes Bild hoch, GoFit liefert keines mit.
+        // eigenes Bild hoch, G04Fit liefert keines mit.
         avatar: null,                // quadratischer Ausschnitt als Data-URL
         avatarFull: null             // Hochformat als Data-URL
       },
@@ -80,7 +80,7 @@
 
       obsidian: {
         vault: '',
-        folder: 'GoFit',
+        folder: 'G04Fit',
         includeAi: true,
         lastSync: null
       },
@@ -172,7 +172,7 @@
       }
       state.session = d.session || null;
     } catch (e) {
-      G.u.toast('Gespeicherte Daten unlesbar', 'GoFit startet mit einem leeren Profil.', 'warn');
+      G.u.toast('Gespeicherte Daten unlesbar', 'G04Fit startet mit einem leeren Profil.', 'warn');
     }
     return state;
   }
@@ -344,7 +344,7 @@
   /* ---------- Export / Löschen ---------- */
   function exportAll() {
     return JSON.stringify({
-      app: 'GoFit',
+      app: 'G04Fit',
       version: state.version,
       exportedAt: new Date().toISOString(),
       consent: state.consent,
@@ -359,7 +359,7 @@
 
   function importAll(json) {
     var d = JSON.parse(json);
-    if (!d || d.app !== 'GoFit') throw new Error('Keine GoFit-Sicherung.');
+    if (!d || d.app !== 'G04Fit') throw new Error('Keine G04Fit-Sicherung.');
     if (d.profile) Object.assign(state.profile, d.profile);
     if (d.settings) Object.assign(state.settings, d.settings);
     if (d.journey) Object.assign(state.journey, d.journey);
@@ -414,4 +414,4 @@
     deleteHistoryOnly: deleteHistoryOnly,
     get storageOk() { return storageOk; }
   };
-})(GoFit);
+})(G04Fit);

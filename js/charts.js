@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Diagramme (reines SVG, keine Bibliothek)
+   G04Fit — Diagramme (reines SVG, keine Bibliothek)
    Ring, Verlaufskurve, Netzdiagramm, Wochen-Heatmap
    ============================================================ */
 (function (G) {
@@ -209,4 +209,4 @@
   }
 
   G.charts = { ring: ring, line: line, radar: radar, balance: balance, columns: columns };
-})(GoFit);
+})(G04Fit);

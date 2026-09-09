@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Profil
+   G04Fit — Profil
    Konzept Abschnitt 2: Trainingslevel, Alter, Größe, Gewicht,
    Ziele und eigene Startgewichte. Erfahrene Personen sollen
    nicht automatisch mit sehr leichten Gewichten beginnen.
@@ -70,7 +70,7 @@
 
       (log.length >= 2
         ? G.charts.line(pts.slice(-24), { height: 170 }) + deltaText
-        : '<p class="small muted">Trage dein Gewicht an mindestens zwei Tagen ein, dann zeigt GoFit hier ' +
+        : '<p class="small muted">Trage dein Gewicht an mindestens zwei Tagen ein, dann zeigt G04Fit hier ' +
           'einen Verlauf statt nur des aktuellen Werts.</p>') +
 
       '<div class="row row--wrap" style="gap:10px;margin-top:16px;align-items:flex-end">' +
@@ -116,7 +116,7 @@
       '<div class="card__head">' + u.icon('dumbbell', 18) + '<h3>Startgewichte</h3>' +
       '<span class="spacer"></span><span class="pill pill--muted">' + set.length + ' gesetzt</span></div>' +
       '<div class="note note--neon" style="margin-bottom:16px">' + u.icon('info', 17) +
-      '<div>Trage ein, womit du tatsächlich arbeitest. GoFit übernimmt diese Werte statt eines ' +
+      '<div>Trage ein, womit du tatsächlich arbeitest. G04Fit übernimmt diese Werte statt eines ' +
       'pauschalen Einsteigergewichts – der Coach baut die Progression darauf auf.</div></div>' +
       '<div class="list">' +
       list.map(function (ex) {
@@ -165,7 +165,7 @@
         ? 'Dein Bild begleitet dich durch Dashboard, Profil, Journey und die Abschluss-Übersicht ' +
         'nach jeder Einheit. Ein Antippen des Avatars ändert es jederzeit.'
         : 'Lade ein eigenes Bild hoch — es erscheint dann im Dashboard, im Profil, in der Journey ' +
-        'und nach jeder abgeschlossenen Einheit. Ohne Bild zeigt GoFit deine Initialen.') + '</p>' +
+        'und nach jeder abgeschlossenen Einheit. Ohne Bild zeigt G04Fit deine Initialen.') + '</p>' +
 
       '<div class="btn-row" style="margin-top:16px">' +
       '<button class="btn btn--primary btn--sm" data-act="av-pick">' +
@@ -174,7 +174,7 @@
         u.icon('trash', 15) + ' Entfernen</button>' : '') +
       '</div>' +
 
-      '<p class="tiny dim" style="margin-top:10px">Beliebiges Bildformat. GoFit verkleinert es ' +
+      '<p class="tiny dim" style="margin-top:10px">Beliebiges Bildformat. G04Fit verkleinert es ' +
       'automatisch auf 512 Pixel und schneidet für den runden Avatar mittig zu.</p>' +
 
       '<div class="note" style="margin-top:14px">' + u.icon('privacy', 17) +
@@ -310,7 +310,7 @@
         /* Einstellungen */
         '<div class="card">' +
         '<div class="card__head">' + u.icon('refresh', 18) + '<h3>App-Einstellungen</h3></div>' +
-        sw('setLight', 'Heller Modus', 'Wechselt zwischen dem dunklen und hellen GoFit-Design.', s.settings.theme === 'light') +
+        sw('setLight', 'Heller Modus', 'Wechselt zwischen dem dunklen und hellen G04Fit-Design.', s.settings.theme === 'light') +
         sw('setRest', 'Pausentimer', 'Nach jedem abgehakten Satz startet automatisch eine Pause.', s.settings.restTimer) +
         '<div class="field" style="margin:10px 13px 14px">' +
         '<label>Pausendauer</label>' +
@@ -318,7 +318,7 @@
         '<input class="input" type="number" id="restSecondsSetting" min="15" max="500" step="5" value="' + (s.settings.restSeconds || 90) + '">' +
         '<span>s</span></div>' +
         '<span class="field__hint">Vorschlag beim Start einer neuen Einheit (Freies Training oder Plan) — dort weiterhin änderbar.</span></div>' +
-        sw('setReentry', 'Wiedereinstiegsmodus', 'Nach längeren Pausen reduziert GoFit Gewicht und Volumen automatisch.', s.settings.reentry) +
+        sw('setReentry', 'Wiedereinstiegsmodus', 'Nach längeren Pausen reduziert G04Fit Gewicht und Volumen automatisch.', s.settings.reentry) +
         sw('setMotion', 'Animationen reduzieren', 'Schaltet Bewegungseffekte weitgehend ab.', s.settings.reduceMotion) +
         sw('setMotivation', 'Trainingsmotivation aufs iPhone', 'Sendet an deinen Trainingstagen wechselnde motivierende Push-Nachrichten.', G.store.hasConsent('push')) +
         sw('setSilent', 'Benachrichtigungen stumm', 'Erinnerungen ohne Ton zustellen.', s.settings.soundless) +
@@ -332,7 +332,7 @@
         '</div>' +
 
         '<div class="note note--warn">' + u.icon('warn', 18) +
-        '<div>GoFit ersetzt keine ärztliche oder physiotherapeutische Beratung. ' +
+        '<div>G04Fit ersetzt keine ärztliche oder physiotherapeutische Beratung. ' +
         'Bei Vorerkrankungen, Schmerzen oder nach Verletzungen kläre dein Training vorher fachlich ab.</div></div>' +
 
         '</div>';
@@ -448,7 +448,7 @@
       u.on(host, 'click', '[data-act="av-remove"]', async function () {
         var ok = await u.confirmSheet({
           title: 'Bild entfernen',
-          body: 'Dein Avatar-Bild wird gelöscht. GoFit zeigt danach wieder deine Initialen. ' +
+          body: 'Dein Avatar-Bild wird gelöscht. G04Fit zeigt danach wieder deine Initialen. ' +
             'Die Bilddatei auf deinem Gerät bleibt unberührt.',
           ok: 'Entfernen'
         });
@@ -474,7 +474,7 @@
       u.on(host, 'click', '[data-act="sw-clear"]', async function () {
         var ok = await u.confirmSheet({
           title: 'Startgewichte zurücksetzen',
-          body: 'Alle eigenen Startgewichte werden entfernt. GoFit verwendet dann wieder Richtwerte.',
+          body: 'Alle eigenen Startgewichte werden entfernt. G04Fit verwendet dann wieder Richtwerte.',
           ok: 'Zurücksetzen'
         });
         if (!ok) return;
@@ -501,7 +501,7 @@
           try {
             await G.reminders.enableBackgroundPush();
             G.reminders.start();
-            u.toast('Trainingsmotivation aktiv', 'GoFit motiviert dich auch bei geschlossener App.', 'ok');
+            u.toast('Trainingsmotivation aktiv', 'G04Fit motiviert dich auch bei geschlossener App.', 'ok');
           } catch (e) {
             G.reminders.start();
             u.toast('Lokale Motivation aktiv', e.message || 'iPhone-Push ist noch nicht verfügbar.', 'warn', 7000);
@@ -510,7 +510,7 @@
           try { await G.reminders.disableBackgroundPush(); } catch (e) { /* lokal trotzdem abschalten */ }
           G.store.setConsent('push', false);
           G.reminders.stop();
-          u.toast('Trainingsmotivation aus', 'GoFit sendet keine Trainingshinweise mehr.', 'warn');
+          u.toast('Trainingsmotivation aus', 'G04Fit sendet keine Trainingshinweise mehr.', 'warn');
         }
         G.app.rerender();
       });
@@ -549,4 +549,4 @@
       if (commit !== false) G.store.commit('settings');
     });
   }
-})(GoFit);
+})(G04Fit);

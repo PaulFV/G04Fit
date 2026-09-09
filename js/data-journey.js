@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Journey, Regionen, Schwierigkeitsmodi
+   G04Fit — Journey, Regionen, Schwierigkeitsmodi
    Konzept Abschnitt 4: spielerisches Fortschrittssystem mit
    Weltkarte, Level 1 als Start, Modi Easy → Beast.
    ============================================================ */
@@ -144,4 +144,4 @@
     xpForSession: xpForSession,
     titleFor: titleFor
   };
-})(GoFit);
+})(G04Fit);

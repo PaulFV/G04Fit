@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Ersteinrichtung
+   G04Fit — Ersteinrichtung
    Beginnt bewusst mit dem Datenschutz: erst die Einwilligungen,
    dann die persönlichen Angaben.
    ============================================================ */
@@ -29,14 +29,14 @@
   function sWillkommen() {
     return '<div class="ob-step">' + progress() +
       '<div>' +
-      '<h2 class="big">Willkommen bei GoFit</h2>' +
+      '<h2 class="big">Willkommen bei G04Fit</h2>' +
       '<p class="muted" style="margin-top:10px">Dein Trainingsplaner für Brust, Rücken, Bauch, ' +
       'Bizeps, Trizeps und Schulter — mit Wochenplan, Journey und einem Coach, der mit deinen ' +
       'echten Zahlen arbeitet.</p></div>' +
 
       '<div class="grid grid--2" style="--sp:10px">' +
       feature('journey', 'Journey', 'Level, Regionen und Modi von Easy bis Beast.') +
-      feature('coach', 'GoFit Coach', 'Vorschläge zu Gewicht, Wiederholungen und Progression.') +
+      feature('coach', 'G04Fit Coach', 'Vorschläge zu Gewicht, Wiederholungen und Progression.') +
       feature('exercises', 'Übungen', 'Ausführung, Muskelkarte und Technikhinweise.') +
       feature('privacy', 'Privacy First', 'Nichts wird gespeichert ohne deine Zustimmung.') +
       '</div>' +
@@ -58,7 +58,7 @@
         'Ohne diese Zustimmung ist nach dem Schließen alles weg.', true],
       ['history', 'Trainingshistorie & Rekorde',
         'Grundlage für Fortschritt, Bestleistungen und Verlaufskurven.', true],
-      ['ai', 'Auswertung durch den GoFit Coach',
+      ['ai', 'Auswertung durch den G04Fit Coach',
         'Rechnet ausschließlich auf diesem Gerät. Keine Übertragung an Dienste.', true],
       ['push', 'Erinnerungen',
         'Hinweise an deinen Trainingstagen und nach längeren Pausen.', false],
@@ -68,7 +68,7 @@
 
     return '<div class="ob-step">' + progress() +
       '<div><h2 class="big">Zuerst: dein Datenschutz</h2>' +
-      '<p class="muted" style="margin-top:10px">GoFit speichert nichts ohne deine ausdrückliche ' +
+      '<p class="muted" style="margin-top:10px">G04Fit speichert nichts ohne deine ausdrückliche ' +
       'Zustimmung. Alles bleibt auf diesem Gerät — kein Konto und kein Tracking. Nur aktivierte ' +
       'Benachrichtigungen benötigen die technische Push-Anmeldung. ' +
       'Jede Einwilligung ist einzeln und jederzeit widerrufbar.</p></div>' +
@@ -85,7 +85,7 @@
       }).join('') + '</div>' +
 
       '<div class="note">' + u.icon('info', 17) +
-      '<div>Du kannst GoFit auch ganz ohne Einwilligung ausprobieren. Dann funktioniert alles, ' +
+      '<div>Du kannst G04Fit auch ganz ohne Einwilligung ausprobieren. Dann funktioniert alles, ' +
       'aber nichts bleibt nach dem Schließen erhalten. ' +
       '<a href="#" data-ob="policy">Datenschutzerklärung lesen</a></div></div>' +
 
@@ -96,7 +96,7 @@
     var p = G.store.state.profile;
     return '<div class="ob-step">' + progress() +
       '<div><h2 class="big">Ein paar Angaben</h2>' +
-      '<p class="muted" style="margin-top:10px">Alles freiwillig. Größe und Gewicht helfen GoFit ' +
+      '<p class="muted" style="margin-top:10px">Alles freiwillig. Größe und Gewicht helfen G04Fit ' +
       'nur dabei, sinnvolle Richtwerte für Startgewichte vorzuschlagen.</p></div>' +
 
       '<div class="row" style="gap:18px;align-items:center">' +
@@ -136,7 +136,7 @@
 
     return '<div class="ob-step">' + progress() +
       '<div><h2 class="big">Wie weit bist du?</h2>' +
-      '<p class="muted" style="margin-top:10px">Wichtig: Wenn du bereits stark bist, startet GoFit dich ' +
+      '<p class="muted" style="margin-top:10px">Wichtig: Wenn du bereits stark bist, startet G04Fit dich ' +
       'nicht künstlich leicht. Deine Stufe steuert die Richtwerte und die Übungsauswahl.</p></div>' +
 
       '<div class="stack" style="--sp:10px">' +
@@ -169,7 +169,7 @@
 
     return '<div class="ob-step">' + progress() +
       '<div><h2 class="big">Dein Wochenplan</h2>' +
-      '<p class="muted" style="margin-top:10px">Wähle deine Trainingstage. GoFit setzt daraus den ' +
+      '<p class="muted" style="margin-top:10px">Wähle deine Trainingstage. G04Fit setzt daraus den ' +
       'passenden Split zusammen.</p></div>' +
 
       '<div class="field"><label>Trainingstage</label>' +
@@ -235,7 +235,7 @@
       '<div>Deine Startgewichte kannst du jederzeit im Profil eintragen. ' +
       'Der Coach passt die Progression dann an deine echten Zahlen an.</div></div>' +
 
-      nav('Zurück', 'GoFit starten', 'finish') + '</div>';
+      nav('Zurück', 'G04Fit starten', 'finish') + '</div>';
   }
 
   function miniStat(k, v) {
@@ -302,7 +302,7 @@
             .catch(function () { return G.reminders.requestPermission(); })
             .then(function () { G.reminders.start(); });
         }
-        u.toast('Willkommen bei GoFit',
+        u.toast('Willkommen bei G04Fit',
           G.store.hasConsent('profile')
             ? 'Dein Profil wird auf diesem Gerät gespeichert.'
             : 'Ohne Einwilligung wird nichts gespeichert – du kannst das im Datenschutz ändern.',
@@ -371,4 +371,4 @@
   }
 
   G.onboarding = { start: start };
-})(GoFit);
+})(G04Fit);

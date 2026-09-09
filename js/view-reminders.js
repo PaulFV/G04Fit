@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Erinnerungen
+   G04Fit — Erinnerungen
    Konzept Abschnitt 8: intelligente Erinnerungen an geplante
    Einheiten und ein Wiedereinstiegsmodus nach längeren Pausen.
    ============================================================ */
@@ -15,7 +15,7 @@
     if (!ios || standalone) return '';
     return '<div class="note note--warn">' + u.icon('info', 18) +
       '<div><b>Für Benachrichtigungen auf dem iPhone</b><br>' +
-      'Öffne in Safari „Teilen“ und wähle „Zum Home-Bildschirm“. Starte GoFit danach über das App-Symbol ' +
+      'Öffne in Safari „Teilen“ und wähle „Zum Home-Bildschirm“. Starte G04Fit danach über das App-Symbol ' +
       'und erlaube die Benachrichtigungen.</div></div>';
   }
 
@@ -26,11 +26,11 @@
     if (perm === 'unsupported') {
       return '<div class="note note--warn">' + u.icon('warn', 18) +
         '<div>Dieser Browser unterstützt keine Systembenachrichtigungen. ' +
-        'GoFit zeigt Erinnerungen stattdessen als Hinweis in der App an, solange sie geöffnet ist.</div></div>';
+        'G04Fit zeigt Erinnerungen stattdessen als Hinweis in der App an, solange sie geöffnet ist.</div></div>';
     }
     if (perm === 'granted') {
       return '<div class="note note--neon">' + u.icon('check', 18) +
-        '<div>Systembenachrichtigungen sind erlaubt. GoFit synchronisiert deine Trainingstage mit dem ' +
+        '<div>Systembenachrichtigungen sind erlaubt. G04Fit synchronisiert deine Trainingstage mit dem ' +
         'Push-Dienst und kann dich dadurch auch bei vollständig geschlossener App erinnern.</div></div>';
     }
     if (perm === 'denied') {
@@ -85,8 +85,8 @@
         '<div style="flex:1;min-width:200px">' +
         '<h2 style="font-size:20px">' + (on ? 'Erinnerungen sind aktiv' : 'Erinnerungen sind aus') + '</h2>' +
         '<p class="muted small" style="margin-top:5px">' +
-        (on ? 'GoFit motiviert dich an deinen Trainingstagen um ' + u.esc(s.profile.reminderTime) + ' Uhr mit wechselnden Nachrichten.'
-          : 'Ohne die Einwilligung „Benachrichtigungen“ erinnert GoFit dich nicht.') + '</p>' +
+        (on ? 'G04Fit motiviert dich an deinen Trainingstagen um ' + u.esc(s.profile.reminderTime) + ' Uhr mit wechselnden Nachrichten.'
+          : 'Ohne die Einwilligung „Benachrichtigungen“ erinnert G04Fit dich nicht.') + '</p>' +
         '</div>' +
         '<div class="btn-row">' +
         (on
@@ -116,7 +116,7 @@
         '<input type="checkbox" id="remReentry"' + (s.settings.reentry ? ' checked' : '') + '>' +
         '<span class="switch__track"></span>' +
         '<span class="switch__label"><b>Wiedereinstiegsmodus</b>' +
-        '<span>Nach mehr als 10 Tagen ohne Training erinnert GoFit gesondert und reduziert die Gewichte.</span></span></label>' +
+        '<span>Nach mehr als 10 Tagen ohne Training erinnert G04Fit gesondert und reduziert die Gewichte.</span></span></label>' +
         '</div>' +
 
         '<div class="card">' +
@@ -140,7 +140,7 @@
           '</div>'
           : '<p class="small muted">' +
           (days == null
-            ? 'Sobald du die erste Einheit abgeschlossen hast, überwacht GoFit deine Pausen.'
+            ? 'Sobald du die erste Einheit abgeschlossen hast, überwacht G04Fit deine Pausen.'
             : days > 10
               ? 'Der Wiedereinstiegsmodus greift, sobald der Coach die Auswertung übernehmen darf.'
               : 'Deine Pausen sind im normalen Bereich. Es ist keine Anpassung nötig.') + '</p>') +
@@ -148,8 +148,8 @@
 
       '<div class="note">' + u.icon('info', 18) +
         '<div><b>Motivation auch bei geschlossener App</b><br>' +
-        'GoFit meldet Uhrzeit und Trainingstage verschlüsselt beim Push-Dienst an. Auf dem iPhone muss ' +
-        'GoFit dafür als Home-Bildschirm-App installiert und von dort geöffnet sein. Ohne Push-Unterstützung ' +
+        'G04Fit meldet Uhrzeit und Trainingstage verschlüsselt beim Push-Dienst an. Auf dem iPhone muss ' +
+        'G04Fit dafür als Home-Bildschirm-App installiert und von dort geöffnet sein. Ohne Push-Unterstützung ' +
         'bleibt die lokale Erinnerung innerhalb der geöffneten App aktiv.</div></div>' +
 
         '</div>';
@@ -161,7 +161,7 @@
         G.store.setConsent('push', true);
         try {
           await G.reminders.enableBackgroundPush();
-          u.toast('Push aktiv', 'GoFit erinnert dich auch bei geschlossener App.', 'ok');
+          u.toast('Push aktiv', 'G04Fit erinnert dich auch bei geschlossener App.', 'ok');
         } catch (e) {
           await G.reminders.requestPermission();
           u.toast('Lokale Erinnerung aktiv', e.message || 'Hintergrund-Push ist noch nicht verfügbar.', 'warn', 7000);
@@ -174,7 +174,7 @@
         try { await G.reminders.disableBackgroundPush(); } catch (e) { /* lokal trotzdem abschalten */ }
         G.store.setConsent('push', false);
         G.reminders.stop();
-        u.toast('Erinnerungen aus', 'GoFit sendet keine Hinweise mehr.', 'warn');
+        u.toast('Erinnerungen aus', 'G04Fit sendet keine Hinweise mehr.', 'warn');
         G.app.rerender();
       });
 
@@ -183,7 +183,7 @@
           await G.reminders.enableBackgroundPush();
           u.toast('Erlaubt', 'Hintergrund-Benachrichtigungen sind freigegeben.', 'ok');
         } catch (e) {
-          u.toast('Nicht aktiviert', e.message || 'GoFit zeigt Erinnerungen weiterhin in der App.', 'warn', 7000);
+          u.toast('Nicht aktiviert', e.message || 'G04Fit zeigt Erinnerungen weiterhin in der App.', 'warn', 7000);
         }
         G.app.rerender();
       });
@@ -219,4 +219,4 @@
       });
     }
   };
-})(GoFit);
+})(G04Fit);

@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Datenschutz (Privacy First)
+   G04Fit — Datenschutz (Privacy First)
    Konzept Abschnitt 10 und 11: getrennte Einwilligungen,
    Export, Löschung, jederzeitiger Widerruf, Entwurf der
    Datenschutzerklärung.
@@ -24,19 +24,19 @@
       data: 'Datum, Übungen, Sätze, Gewicht, Wiederholungen, Notizen'
     },
     {
-      k: 'ai', t: 'Auswertung durch den GoFit Coach',
+      k: 'ai', t: 'Auswertung durch den G04Fit Coach',
       d: 'Der Coach analysiert deine gespeicherten Trainingsdaten und leitet daraus Vorschläge für Gewicht, ' +
         'Wiederholungen, Progression und Wiedereinstieg ab. Die Berechnung läuft ausschließlich auf diesem Gerät.',
       data: 'Trainingshistorie, Rekorde, Pausen zwischen Einheiten'
     },
     {
       k: 'obsidian', t: 'Obsidian-Synchronisation',
-      d: 'GoFit erzeugt Markdown-Notizen für deinen Vault. Der Export erfolgt nur, wenn du ihn selbst auslöst.',
+      d: 'G04Fit erzeugt Markdown-Notizen für deinen Vault. Der Export erfolgt nur, wenn du ihn selbst auslöst.',
       data: 'Trainingsprotokolle, optional Coach-Auswertungen'
     },
     {
       k: 'push', t: 'Erinnerungen & Benachrichtigungen',
-      d: 'GoFit erinnert an geplante Einheiten und meldet sich nach längeren Pausen. ' +
+      d: 'G04Fit erinnert an geplante Einheiten und meldet sich nach längeren Pausen. ' +
         'Systembenachrichtigungen benötigen zusätzlich die Erlaubnis des Browsers.',
       data: 'Zufällige Geräte-ID, Push-Anmeldung, Trainingstage, Uhrzeit und Zeitzone'
     }
@@ -81,7 +81,7 @@
      ------------------------------------------------------------ */
   var POLICY = [
     ['Verantwortlicher',
-      'GoFit läuft in dieser Fassung vollständig auf deinem Gerät. Es gibt keinen Serverbetrieb und keine ' +
+      'G04Fit läuft in dieser Fassung vollständig auf deinem Gerät. Es gibt keinen Serverbetrieb und keine ' +
       'Benutzerkonten. Verantwortlich für die Verarbeitung ist damit die Person, die die App auf ihrem Gerät ' +
       'nutzt. Sobald eine spätere Version ein Backend erhält, ist hier der Betreiber mit Anschrift und ' +
       'Kontaktmöglichkeit einzutragen.'],
@@ -103,27 +103,27 @@
       'jeweiligen Gerät. Nur bei aktivierten Benachrichtigungen werden die unter „Benachrichtigungen“ ' +
       'genannten technischen Daten an den Push-Dienst übertragen. Die Daten bleiben erhalten, bis du sie ' +
       'löschst, die jeweilige Einwilligung widerrufst oder die Browserdaten entfernst.'],
-    ['Verarbeitung durch den GoFit Coach',
+    ['Verarbeitung durch den G04Fit Coach',
       'Der Coach ist ein regelbasiertes Verfahren, das auf deinem Gerät rechnet. Es werden keine Daten an ' +
       'einen KI-Dienst gesendet. Die Regeln (Wiederholungsbereiche, Gewichtsschritte, Pausenlängen, ' +
       'Wiedereinstieg) sind in der App dokumentiert. Sollte in einer späteren Version ein externer ' +
       'KI-Dienst hinzukommen, ist dafür eine gesonderte Einwilligung nötig.'],
     ['Obsidian',
-      'Der Export erzeugt Markdown-Dateien, die du selbst kopierst oder speicherst. GoFit greift nicht ' +
+      'Der Export erzeugt Markdown-Dateien, die du selbst kopierst oder speicherst. G04Fit greift nicht ' +
       'eigenständig auf dein Dateisystem zu. Was nach dem Export in deinem Vault passiert, liegt in deiner ' +
       'Verantwortung.'],
     ['Benachrichtigungen',
       'Nach deiner Einwilligung werden eine zufällige Geräte-ID, die technische Web-Push-Anmeldung, ' +
-      'Trainingstage, Erinnerungszeit und Zeitzone an den GoFit Push-Dienst auf Cloudflare übertragen. ' +
+      'Trainingstage, Erinnerungszeit und Zeitzone an den G04Fit Push-Dienst auf Cloudflare übertragen. ' +
       'Name, Profil, Trainingsverlauf, Gewichte und Fotos werden nicht übertragen. Beim Widerruf werden ' +
       'die Push-Anmeldung und der zugehörige Zeitplan auf dem Dienst gelöscht.'],
     ['Deine Rechte',
       'Du kannst deine Daten jederzeit als Datei exportieren (Recht auf Datenübertragbarkeit), einzeln oder ' +
       'vollständig löschen (Recht auf Löschung) und jede Einwilligung mit Wirkung für die Zukunft widerrufen. ' +
-      'Ein Widerruf löscht die betroffenen Daten in GoFit unmittelbar. Weitere Betroffenenrechte nach ' +
+      'Ein Widerruf löscht die betroffenen Daten in G04Fit unmittelbar. Weitere Betroffenenrechte nach ' +
       'Art. 15 bis 21 DSGVO bestehen unabhängig davon.'],
     ['Keine medizinische Beratung',
-      'GoFit ist kein Medizinprodukt. Kennzahlen wie Kraft, Ausdauer, Explosivität, Konstanz und Erholung ' +
+      'G04Fit ist kein Medizinprodukt. Kennzahlen wie Kraft, Ausdauer, Explosivität, Konstanz und Erholung ' +
       'sind ein spielerisches Profil aus deinen Trainingsdaten und ausdrücklich keine medizinischen Werte. ' +
       'Bei Beschwerden oder Vorerkrankungen ist ärztlicher Rat einzuholen.'],
     ['Stand und offene Punkte',
@@ -141,7 +141,7 @@
           '<h3 style="font-size:14.5px;margin-bottom:8px" class="neon">' + (i + 1) + '. ' + u.esc(p[0]) + '</h3>' +
           '<p class="small muted">' + u.esc(p[1]) + '</p></div>';
       }).join('') +
-      '<p class="tiny dim center">Stand: ' + u.fmtDate(u.today()) + ' · GoFit ' + G.VERSION + '</p>' +
+      '<p class="tiny dim center">Stand: ' + u.fmtDate(u.today()) + ' · G04Fit ' + G.VERSION + '</p>' +
       '</div>');
   }
 
@@ -164,7 +164,7 @@
         }) +
         '<div style="flex:1;min-width:220px">' +
         '<h2 style="font-size:21px">Privacy First</h2>' +
-        '<p class="muted small" style="margin-top:6px">GoFit speichert nichts, solange du nicht ' +
+        '<p class="muted small" style="margin-top:6px">G04Fit speichert nichts, solange du nicht ' +
         'ausdrücklich zustimmst. Jede Einwilligung gilt einzeln und ist jederzeit widerrufbar. ' +
         'Alle Daten bleiben auf diesem Gerät.</p>' +
         '<div class="row row--wrap" style="gap:7px;margin-top:14px">' +
@@ -176,7 +176,7 @@
 
         (!G.store.storageOk
           ? '<div class="note note--warn">' + u.icon('warn', 18) +
-          '<div>Der Browser erlaubt hier keinen lokalen Speicher. GoFit funktioniert, vergisst aber alles ' +
+          '<div>Der Browser erlaubt hier keinen lokalen Speicher. G04Fit funktioniert, vergisst aber alles ' +
           'beim Schließen. Im privaten Modus oder bei blockierten Website-Daten ist das normal.</div></div>'
           : '') +
 
@@ -218,7 +218,7 @@
         '<button class="btn btn--ghost" data-act="policy-md">Als Markdown speichern</button>' +
         '</div></div>' +
 
-        '<p class="tiny dim center" style="padding:10px 0 4px">GoFit ' + G.VERSION +
+        '<p class="tiny dim center" style="padding:10px 0 4px">G04Fit ' + G.VERSION +
         ' · Push-Dienst nur nach Einwilligung · Einwilligung zuletzt geändert: ' +
         (s.consent.decidedAt ? u.esc(new Date(s.consent.decidedAt).toLocaleString('de-DE')) : 'nie') + '</p>' +
 
@@ -258,7 +258,7 @@
             if (G.store.hasConsent(x)) G.store.setConsent(x, false);
           });
           u.toast('Alle Einwilligungen zurückgesetzt',
-            'Ohne gespeichertes Profil kann GoFit die übrigen Bereiche nicht dauerhaft führen.', 'warn', 6000);
+            'Ohne gespeichertes Profil kann G04Fit die übrigen Bereiche nicht dauerhaft führen.', 'warn', 6000);
         }
         if (k === 'history' && want && !G.store.hasConsent('profile')) {
           G.store.setConsent('profile', true);
@@ -267,7 +267,7 @@
         if (k === 'push' && want) {
           try {
             await G.reminders.enableBackgroundPush();
-            u.toast('Push aktiv', 'GoFit erinnert dich auch bei geschlossener App.', 'ok');
+            u.toast('Push aktiv', 'G04Fit erinnert dich auch bei geschlossener App.', 'ok');
           } catch (e) {
             u.toast('Lokale Erinnerung aktiv', e.message || 'Hintergrund-Push ist nicht verfügbar.', 'warn', 7000);
           }
@@ -279,7 +279,7 @@
       });
 
       u.on(host, 'click', '[data-act="export"]', function () {
-        var ok = u.download('GoFit-Sicherung-' + u.today() + '.json', G.store.exportAll(), 'application/json');
+        var ok = u.download('G04Fit-Sicherung-' + u.today() + '.json', G.store.exportAll(), 'application/json');
         u.toast(ok ? 'Exportiert' : 'Nicht möglich',
           ok ? 'Die Datei wurde gespeichert.' : 'Der Download wurde blockiert.', ok ? 'ok' : 'err');
       });
@@ -322,13 +322,13 @@
       u.on(host, 'click', '[data-act="del-all"]', async function () {
         var ok = await u.confirmSheet({
           title: 'Alles löschen',
-          body: 'GoFit wird vollständig zurückgesetzt: Profil, Trainingsdaten, Rekorde, Einstellungen ' +
+          body: 'G04Fit wird vollständig zurückgesetzt: Profil, Trainingsdaten, Rekorde, Einstellungen ' +
             'und alle Einwilligungen. Danach startet die App wieder mit der Ersteinrichtung.',
           ok: 'Alles löschen'
         });
         if (!ok) return;
 
-        // Vollständiger Reset schließt auch die Push-Anmeldung beim GoFit
+        // Vollständiger Reset schließt auch die Push-Anmeldung beim G04Fit
         // Push-Dienst ein — sonst bliebe die Erinnerung serverseitig aktiv,
         // obwohl lokal alles gelöscht wurde (siehe "Deine Rechte" in der
         // Datenschutzerklärung: ein Widerruf/Löschen wirkt sofort und überall).
@@ -345,16 +345,16 @@
       u.on(host, 'click', '[data-act="policy"]', openPolicy);
 
       u.on(host, 'click', '[data-act="policy-md"]', function () {
-        var md = '# GoFit — Datenschutzerklärung (Entwurf)\n\n' +
+        var md = '# G04Fit — Datenschutzerklärung (Entwurf)\n\n' +
           'Stand: ' + u.fmtDate(u.today()) + ' · Version ' + G.VERSION + '\n\n' +
           '> Entwurf für den Prototyp. Vor einer Veröffentlichung rechtlich prüfen lassen.\n\n' +
           POLICY.map(function (p, i) {
             return '## ' + (i + 1) + '. ' + p[0] + '\n\n' + p[1] + '\n';
           }).join('\n');
-        u.download('GoFit Datenschutzerklaerung.md', md, 'text/markdown');
+        u.download('G04Fit Datenschutzerklaerung.md', md, 'text/markdown');
       });
     },
     openPolicy: openPolicy,
     POLICY: POLICY
   };
-})(GoFit);
+})(G04Fit);

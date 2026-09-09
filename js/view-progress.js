@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Fortschritt
+   G04Fit — Fortschritt
    Konzept Abschnitt 7: Trainingshistorie, persönliche Rekorde,
    Kraftentwicklung, Trainingsserien, Muskelgruppen-Balance und
    ein spielerisches Leistungsprofil.
@@ -82,7 +82,7 @@
       '<div class="coach__av">' + u.icon('lock', 20) + '</div>' +
       '<div style="flex:1">' +
       '<h2 style="font-size:20px;margin-bottom:6px">Fortschritt wird nicht aufgezeichnet</h2>' +
-      '<p class="muted small">GoFit speichert Trainingshistorie und Rekorde nur, wenn du dem ausdrücklich ' +
+      '<p class="muted small">G04Fit speichert Trainingshistorie und Rekorde nur, wenn du dem ausdrücklich ' +
       'zustimmst. Ohne diese Einwilligung bleiben abgeschlossene Einheiten nicht erhalten und es gibt ' +
       'keine Verlaufsdaten, die ausgewertet werden könnten.</p>' +
       '<div class="btn-row" style="margin-top:18px">' +
@@ -211,7 +211,7 @@
     var ids = Object.keys(s.records);
     if (!ids.length) {
       return '<div class="empty">' + u.icon('medal', 40) + '<b>Noch keine Rekorde</b>' +
-        '<p>Sobald du eine Übung abschließt, merkt sich GoFit deine beste Leistung.</p></div>';
+        '<p>Sobald du eine Übung abschließt, merkt sich G04Fit deine beste Leistung.</p></div>';
     }
 
     var groups = u.groupBy(ids.filter(function (id) { return G.ex.byId(id); }), function (id) {
@@ -395,9 +395,9 @@
       });
       u.on(host, 'click', '[data-act="enable-history"]', function () {
         G.store.setConsent('history', true);
-        u.toast('Aufzeichnung aktiv', 'Ab jetzt merkt sich GoFit deine Einheiten – nur auf diesem Gerät.', 'ok');
+        u.toast('Aufzeichnung aktiv', 'Ab jetzt merkt sich G04Fit deine Einheiten – nur auf diesem Gerät.', 'ok');
         G.app.rerender();
       });
     }
   };
-})(GoFit);
+})(G04Fit);

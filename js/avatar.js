@@ -1,7 +1,7 @@
 /* ============================================================
-   GoFit — Trainings-Avatar
+   G04Fit — Trainings-Avatar
 
-   Jede Person lädt ihr eigenes Bild hoch. GoFit wird ohne
+   Jede Person lädt ihr eigenes Bild hoch. G04Fit wird ohne
    vorgegebenes Foto ausgeliefert; bis ein Bild gewählt wurde,
    erscheint ein neutraler Platzhalter.
 
@@ -233,4 +233,4 @@
     remove: remove,
     sizeKb: sizeKb
   };
-})(GoFit);
+})(G04Fit);

@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit v1.0.0 — Anwendung, Navigation, Start
+   G04Fit v1.0.0 — Anwendung, Navigation, Start
    ============================================================ */
 (function (G) {
   'use strict';
@@ -13,7 +13,7 @@
     { k: 'exercises', n: 'Übungen', ic: 'exercises', tab: true },
     { k: 'progress', n: 'Fortschritt', ic: 'progress', tab: true },
     { k: 'profile', n: 'Profil', ic: 'profile' },
-    { k: 'coach', n: 'GoFit Coach', ic: 'coach' },
+    { k: 'coach', n: 'G04Fit Coach', ic: 'coach' },
     { k: 'reminders', n: 'Erinnerungen', ic: 'reminders' },
     { k: 'obsidian', n: 'Obsidian', ic: 'obsidian' },
     { k: 'privacy', n: 'Datenschutz', ic: 'privacy' }
@@ -132,7 +132,7 @@
     u.$('#viewTitle').textContent = typeof view.title === 'function' ? view.title() : view.title;
     var sub = typeof view.sub === 'function' ? view.sub() : (view.sub || '');
     u.$('#viewSub').textContent = sub;
-    document.title = 'GoFit — ' + (typeof view.title === 'function' ? view.title() : view.title);
+    document.title = 'G04Fit — ' + (typeof view.title === 'function' ? view.title() : view.title);
 
     // #viewHost wird bei jedem render() durch einen frischen, leeren Klon
     // ersetzt (statt nur sein innerHTML zu ersetzen). Grund: mount() einer
@@ -269,7 +269,7 @@
 
     // Hinweis, falls der Browser nichts speichern darf
     if (!G.store.storageOk) {
-      u.toast('Kein lokaler Speicher', 'Der Browser blockiert Website-Daten. GoFit vergisst alles beim Schließen.', 'warn', 7000);
+      u.toast('Kein lokaler Speicher', 'Der Browser blockiert Website-Daten. G04Fit vergisst alles beim Schließen.', 'warn', 7000);
     }
 
     // Laufende Einheit aus einer früheren Sitzung
@@ -285,7 +285,7 @@
     if (!('serviceWorker' in navigator)) return;
     if (location.protocol === 'file:') return;
 
-    // Falls bereits eine ältere installierte GoFit-Version läuft, übernimmt
+    // Falls bereits eine ältere installierte G04Fit-Version läuft, übernimmt
     // der neue Worker sofort. Danach einmal neu laden, damit HTML, Daten und
     // Ansichten garantiert aus derselben Version stammen.
     var hadController = !!navigator.serviceWorker.controller;
@@ -315,4 +315,4 @@
   } else {
     boot(); registerSW();
   }
-})(GoFit);
+})(G04Fit);

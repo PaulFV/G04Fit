@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit Coach — regelbasierte Trainingsanalyse
+   G04Fit Coach — regelbasierte Trainingsanalyse
 
    Konzept Abschnitt 6: Der Coach wertet Trainingsdaten aus und
    schlägt Gewicht, Wiederholungen, Progression und den
@@ -149,7 +149,7 @@
 
     out.reason = out.reps[0] >= range[1]
       ? 'Bleib bei ' + u.fmtKg(topWeight) + ' und schaffe ' + range[1] +
-        ' Wiederholungen in jedem Satz. Sobald das steht, erhöht GoFit das Gewicht.'
+        ' Wiederholungen in jedem Satz. Sobald das steht, erhöht G04Fit das Gewicht.'
       : 'Bleib bei ' + u.fmtKg(topWeight) + ' und steigere auf ' + u.fmtReps(out.reps) +
         ' Wiederholungen. Danach geht es mit dem Gewicht weiter.';
     return out;
@@ -280,7 +280,7 @@
     if (re) {
       out.push({
         kind: 'warn', icon: 'refresh', title: 'Wiedereinstieg',
-        text: re.text + ' GoFit passt die Vorschläge in den nächsten ' + re.weeks +
+        text: re.text + ' G04Fit passt die Vorschläge in den nächsten ' + re.weeks +
           (re.weeks === 1 ? ' Woche' : ' Wochen') + ' automatisch an.'
       });
     }
@@ -381,7 +381,7 @@
     if (!allowed()) {
       return {
         locked: true,
-        text: 'Der GoFit Coach wertet erst aus, wenn du die Einwilligung "KI-Analyse" erteilst. ' +
+        text: 'Der G04Fit Coach wertet erst aus, wenn du die Einwilligung "KI-Analyse" erteilst. ' +
           'Die Auswertung findet ausschließlich auf diesem Gerät statt.'
       };
     }
@@ -404,4 +404,4 @@
     insights: insights,
     dailyTip: dailyTip
   };
-})(GoFit);
+})(G04Fit);

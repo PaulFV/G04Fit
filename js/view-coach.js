@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit Coach — Ansicht
+   G04Fit Coach — Ansicht
    Konzept Abschnitt 6: Analyse der Trainingsdaten und
    individuelle Vorschläge für Gewicht, Wiederholungen,
    Progression und Wiedereinstieg.
@@ -16,7 +16,7 @@
       '<div class="coach__av">' + u.icon('lock', 20) + '</div>' +
       '<div style="flex:1">' +
       '<h2 style="font-size:20px;margin-bottom:8px">Der Coach ist ausgeschaltet</h2>' +
-      '<p class="muted small">Damit GoFit Vorschläge zu Gewicht und Progression machen kann, muss er ' +
+      '<p class="muted small">Damit G04Fit Vorschläge zu Gewicht und Progression machen kann, muss er ' +
       'deine Trainingsdaten auswerten dürfen. Dafür brauchst du die Einwilligung <b>KI-Analyse</b>.</p>' +
       '</div></div>' +
       '<div class="btn-row" style="margin-top:20px">' +
@@ -26,7 +26,7 @@
 
       '<div class="note note--neon">' + u.icon('info', 18) +
       '<div><b>Was passiert bei der Auswertung?</b><br>' +
-      'GoFit rechnet ausschließlich auf diesem Gerät. Es werden keine Daten an einen Server oder an ' +
+      'G04Fit rechnet ausschließlich auf diesem Gerät. Es werden keine Daten an einen Server oder an ' +
       'einen externen Dienst gesendet. Die Regeln sind nachvollziehbar: Wiederholungen, Gewichte, ' +
       'Pausenlängen und der Abstand zwischen Einheiten.</div></div>' +
 
@@ -77,7 +77,7 @@
   }
 
   G.views.coach = {
-    title: 'GoFit Coach',
+    title: 'G04Fit Coach',
     sub: function () {
       if (!G.coach.allowed()) return 'Auswertung ist ausgeschaltet';
       var n = suggestionRows().filter(function (r) { return r.s.kind === 'up'; }).length;
@@ -165,7 +165,7 @@
             '</div>';
         }).join('') + '</div>' +
         '<div class="note note--warn" style="margin-top:16px">' + u.icon('warn', 17) +
-        '<div>Die Kennzahlen beschreiben nur dein Trainingsverhalten in GoFit. ' +
+        '<div>Die Kennzahlen beschreiben nur dein Trainingsverhalten in G04Fit. ' +
         '<b>Sie sind ausdrücklich keine medizinischen Werte.</b></div></div>' +
         '</div></div>' +
 
@@ -189,4 +189,4 @@
       });
     }
   };
-})(GoFit);
+})(G04Fit);

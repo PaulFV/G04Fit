@@ -1,11 +1,11 @@
 /* ============================================================
-   GoFit v1.0.0 — Hilfsfunktionen
+   G04Fit v1.0.0 — Hilfsfunktionen
    Klassisches Script (kein Modul), damit die App auch per
    Doppelklick über file:// läuft.
    ============================================================ */
-var GoFit = window.GoFit || {};
-window.GoFit = GoFit;
-GoFit.VERSION = '1.0.0';
+var G04Fit = window.G04Fit || {};
+window.G04Fit = G04Fit;
+G04Fit.VERSION = '1.0.0';
 
 (function (G) {
   'use strict';
@@ -362,4 +362,4 @@ GoFit.VERSION = '1.0.0';
     toast: toast, openSheet: openSheet, closeSheet: closeSheet, confirmSheet: confirmSheet,
     xpPop: xpPop, levelUpFx: levelUpFx
   };
-})(GoFit);
+})(G04Fit);

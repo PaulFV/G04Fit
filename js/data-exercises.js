@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Übungsdatenbank
+   G04Fit — Übungsdatenbank
    Schwerpunkt laut Konzept: Brust, Rücken, Bauch, Bizeps,
    Trizeps, Schulter.
 
@@ -916,4 +916,4 @@
   G.MUSCLE_ORDER = MUSCLE_ORDER;
   G.EXERCISES = EX;
   G.ex = { byId: byId, byMuscle: byMuscle, suggestStart: suggestStart };
-})(GoFit);
+})(G04Fit);

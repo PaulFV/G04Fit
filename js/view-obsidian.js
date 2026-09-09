@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Obsidian
+   G04Fit — Obsidian
    Konzept Abschnitt 9: optionale Verbindung, Trainingsprotokolle
    und ausgewählte Auswertungen als Markdown; ausschließlich nach
    ausdrücklicher Zustimmung.
@@ -18,7 +18,7 @@
       '<div class="coach__av" style="animation:none">' + u.icon('lock', 20) + '</div>' +
       '<div style="flex:1">' +
       '<h2 style="font-size:20px;margin-bottom:6px">Obsidian-Verbindung ist aus</h2>' +
-      '<p class="muted small">GoFit kann Trainingsprotokolle und Auswertungen als Markdown-Dateien ' +
+      '<p class="muted small">G04Fit kann Trainingsprotokolle und Auswertungen als Markdown-Dateien ' +
       'für deinen Vault erzeugen. Das passiert nur, wenn du dem ausdrücklich zustimmst.</p>' +
       '<div class="btn-row" style="margin-top:18px">' +
       '<button class="btn btn--primary" data-act="enable">Obsidian-Export erlauben</button>' +
@@ -44,10 +44,10 @@
 
   function currentFilename() {
     var s = G.store.state;
-    if (preview.mode === 'overview') return 'GoFit Übersicht.md';
-    if (preview.mode === 'all') return 'GoFit Export ' + u.today() + '.md';
+    if (preview.mode === 'overview') return 'G04Fit Übersicht.md';
+    if (preview.mode === 'all') return 'G04Fit Export ' + u.today() + '.md';
     var sess = s.history.filter(function (x) { return x.id === preview.sessionId; })[0];
-    return sess ? G.obsidian.sessionFilename(sess) : 'GoFit.md';
+    return sess ? G.obsidian.sessionFilename(sess) : 'G04Fit.md';
   }
 
   G.views.obsidian = {
@@ -79,7 +79,7 @@
         '<div style="flex:1;min-width:200px">' +
         '<h2 style="font-size:20px">Markdown für deinen Vault</h2>' +
         '<p class="muted small" style="margin-top:5px">' +
-        'GoFit erzeugt fertige Notizen. Kopiere sie in deinen Vault oder speichere sie direkt ' +
+        'G04Fit erzeugt fertige Notizen. Kopiere sie in deinen Vault oder speichere sie direkt ' +
         'in den unten angegebenen Ordner.</p></div>' +
         '<div class="btn-row">' +
         '<button class="btn btn--ghost" data-act="disable">Verbindung trennen</button>' +
@@ -94,9 +94,9 @@
         '<div class="field"><label>Vault-Pfad</label>' +
         '<input class="input" id="obVault" type="text" placeholder="C:\\Users\\...\\Obsidian\\MeinVault" value="' +
         u.esc(s.obsidian.vault) + '">' +
-        '<span class="field__hint">Nur zur Anzeige – GoFit schreibt nicht selbst in den Ordner.</span></div>' +
+        '<span class="field__hint">Nur zur Anzeige – G04Fit schreibt nicht selbst in den Ordner.</span></div>' +
         '<div class="field"><label>Unterordner</label>' +
-        '<input class="input" id="obFolder" type="text" placeholder="GoFit" value="' + u.esc(s.obsidian.folder) + '">' +
+        '<input class="input" id="obFolder" type="text" placeholder="G04Fit" value="' + u.esc(s.obsidian.folder) + '">' +
         '</div>' +
         '<label class="switch"><input type="checkbox" id="obAi"' + (s.obsidian.includeAi ? ' checked' : '') + '>' +
         '<span class="switch__track"></span>' +
@@ -154,7 +154,7 @@
 
       u.on(host, 'click', '[data-act="enable"]', function () {
         G.store.setConsent('obsidian', true);
-        u.toast('Obsidian aktiv', 'GoFit kann jetzt Markdown-Notizen erzeugen.', 'ok');
+        u.toast('Obsidian aktiv', 'G04Fit kann jetzt Markdown-Notizen erzeugen.', 'ok');
         G.app.rerender();
       });
 
@@ -221,9 +221,9 @@
       u.on(host, 'click', '[data-act="download-all"]', function () {
         var all = G.obsidian.exportAllNotes();
         if (!all) return;
-        var ok = u.download('GoFit Export ' + u.today() + '.md', all, 'text/markdown');
+        var ok = u.download('G04Fit Export ' + u.today() + '.md', all, 'text/markdown');
         if (ok) { G.obsidian.markSynced(); u.toast('Gespeichert', 'Alle Notizen in einer Datei.', 'ok'); }
       });
     }
   };
-})(GoFit);
+})(G04Fit);

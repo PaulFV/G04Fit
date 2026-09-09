@@ -1,7 +1,7 @@
 /* ============================================================
-   GoFit — Wochenplanung
+   G04Fit — Wochenplanung
 
-   Konzept Abschnitt 1: GoFit erstellt Wochenpläne für die
+   Konzept Abschnitt 1: G04Fit erstellt Wochenpläne für die
    Schwerpunkte Brust, Rücken, Bauch, Bizeps, Trizeps, Schulter.
    Der Split richtet sich nach der Anzahl der Trainingstage.
    ============================================================ */
@@ -267,4 +267,4 @@
     buildCustomSession: buildCustomSession,
     finishSession: finishSession
   };
-})(GoFit);
+})(G04Fit);

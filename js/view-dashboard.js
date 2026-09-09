@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Dashboard
+   G04Fit — Dashboard
    ============================================================ */
 (function (G) {
   'use strict';
@@ -180,7 +180,7 @@
   function coachCard() {
     var tip = G.coach.dailyTip();
     return '<div class="card">' +
-      '<div class="card__head">' + u.icon('coach', 18) + '<h3>GoFit Coach</h3></div>' +
+      '<div class="card__head">' + u.icon('coach', 18) + '<h3>G04Fit Coach</h3></div>' +
       '<div class="coach">' +
       '<div class="coach__av">' + u.icon(tip.locked ? 'lock' : 'coach', 20) + '</div>' +
       '<div class="coach__msg">' + u.esc(tip.text) + '</div>' +
@@ -231,7 +231,7 @@
   }
 
   G.views.dashboard = {
-    title: 'GoFit',
+    title: 'G04Fit',
     sub: function () {
       var s = G.store.state;
       return u.fmtDate(u.today()) + ' · ' + G.journey.mode(s.profile.mode).name + '-Modus';
@@ -279,4 +279,4 @@
       });
     }
   };
-})(GoFit);
+})(G04Fit);

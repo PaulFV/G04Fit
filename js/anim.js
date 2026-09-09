@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Übungsanimationen & Muskelkarte
+   G04Fit — Übungsanimationen & Muskelkarte
 
    Konzept Abschnitt 5: Jede Übung soll die Bewegungsausführung,
    die beanspruchten Muskelgruppen und Technikhinweise zeigen.
@@ -521,4 +521,4 @@
     MCOLOR: MCOLOR,
     BACK_ONLY: BACK_ONLY
   };
-})(GoFit);
+})(G04Fit);

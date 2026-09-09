@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Workout (laufende Einheit)
+   G04Fit — Workout (laufende Einheit)
    ============================================================ */
 (function (G) {
   'use strict';
@@ -526,7 +526,7 @@
       return planPreview();
     },
     // Der Pausentimer gehört zur laufenden Einheit und läuft auch weiter,
-    // wenn innerhalb von GoFit eine andere Ansicht geöffnet wird.
+    // wenn innerhalb von G04Fit eine andere Ansicht geöffnet wird.
     unmount: function () {},
     mount: function (host) {
       var s = G.store.state;
@@ -720,4 +720,4 @@
     },
     openPicker: openPicker
   };
-})(GoFit);
+})(G04Fit);

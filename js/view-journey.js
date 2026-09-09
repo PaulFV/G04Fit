@@ -1,5 +1,5 @@
 /* ============================================================
-   GoFit — Journey / Weltkarte
+   G04Fit — Journey / Weltkarte
    Konzept Abschnitt 4: Level 1 als Start, Regionen werden durch
    absolviertes Training freigeschaltet, Modi Easy bis Beast.
    ============================================================ */
@@ -195,4 +195,4 @@
     for (var l = 1; l < level; l++) total += G.journey.xpForNext(l);
     return total;
   }
-})(GoFit);
+})(G04Fit);
