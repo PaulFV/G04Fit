@@ -104,11 +104,13 @@
     var vol = weeklyVolume(8);
     var totalVol = u.sum(s.history, function (x) { return x.volume || 0; });
     var totalSets = u.sum(s.history, function (x) { return x.totalSets || 0; });
+    var totalReps = u.sum(s.history, function (x) { return x.totalReps || 0; });
 
     var cards = [
       { k: 'Einheiten', v: s.journey.completed, cls: '' },
       { k: 'Gesamtvolumen', v: totalVol >= 1000 ? u.fmt(totalVol / 1000, 1) : u.fmt(totalVol), d: totalVol >= 1000 ? 't' : 'kg', cls: 'stat--neon' },
       { k: 'Sätze gesamt', v: totalSets, cls: '' },
+      { k: 'Wiederholungen gesamt', v: totalReps, cls: '' },
       { k: 'Serie', v: s.journey.streak, d: 'Wochen', cls: 'stat--gold' },
       { k: 'Beste Serie', v: s.journey.bestStreak || 0, d: 'Wochen', cls: '' },
       { k: 'Rekorde', v: Object.keys(s.records).length, cls: 'stat--cyan' }
@@ -262,7 +264,8 @@
             '<div class="list__ic" style="border-color:var(--neon-line);color:var(--neon)">' +
             u.icon('check', 17) + '</div>' +
             '<div class="list__main"><b>' + u.esc(x.title) + '</b>' +
-            '<span>' + u.esc(u.dayName(x.day) + ', ' + u.fmtDate(x.day)) + ' · ' + x.totalSets + ' Sätze</span></div>' +
+            '<span>' + u.esc(u.dayName(x.day) + ', ' + u.fmtDate(x.day)) + ' · ' + x.totalSets + ' Sätze · ' +
+            (x.totalReps || 0) + ' Wdh.</span></div>' +
             '<div class="list__end"><b class="mono small">' + u.fmt(x.volume) + ' kg</b>' +
             (x.newRecords ? '<br><span class="pill pill--gold tiny">' + x.newRecords + '× PR</span>' : '') + '</div>' +
             '</div>';
@@ -279,6 +282,7 @@
       '<div class="row row--wrap" style="gap:7px">',
       '<span class="pill pill--neon">' + u.esc(u.fmtDate(sess.day)) + '</span>',
       '<span class="pill">' + sess.totalSets + ' Sätze</span>',
+      '<span class="pill">' + (sess.totalReps || 0) + ' Wdh.</span>',
       '<span class="pill">' + u.fmt(sess.volume) + ' kg</span>',
       sess.newRecords ? '<span class="pill pill--gold">' + sess.newRecords + ' Rekorde</span>' : '',
       sess.reentry ? '<span class="pill pill--gold">Wiedereinstieg</span>' : '',
@@ -290,8 +294,10 @@
       if (!ex) return;
       var done = (b.sets || []).filter(function (x) { return x.done; });
       if (!done.length) return;
+      var repsSum = u.sum(done, function (x) { return +x.reps || 0; });
       html.push('<div class="card card--pad-sm">' +
-        '<div class="card__head"><i class="mdot m-' + ex.muscle + '"></i><h3>' + u.esc(ex.name) + '</h3></div>' +
+        '<div class="card__head"><i class="mdot m-' + ex.muscle + '"></i><h3>' + u.esc(ex.name) + '</h3>' +
+        '<span class="spacer"></span><span class="pill">' + repsSum + (ex.time ? ' s' : ' Wdh.') + '</span></div>' +
         '<div class="set-head"><span>#</span><span>' + (ex.time ? '' : 'Gewicht') + '</span><span>' +
         (ex.time ? 'Sek.' : 'Wdh.') + '</span><span></span></div>' +
         done.map(function (x, i) {

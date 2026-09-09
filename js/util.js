@@ -28,12 +28,13 @@ GoFit.VERSION = '1.0.0';
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
-  /** Delegierter Event-Handler */
-  function on(root, evt, sel, fn) {
+  /** Delegierter Event-Handler. Optional: AbortSignal, um den Handler
+      später wieder zu entfernen (z. B. bei einem erneuten mount()). */
+  function on(root, evt, sel, fn, signal) {
     root.addEventListener(evt, function (e) {
       var t = e.target.closest(sel);
       if (t && root.contains(t)) fn.call(t, e, t);
-    });
+    }, signal ? { signal: signal } : undefined);
   }
 
   /* ---------- Zahlen ---------- */

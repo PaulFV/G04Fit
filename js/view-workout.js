@@ -8,6 +8,14 @@
 
   var rest = { left: 0, timer: null, exId: null, endAt: 0, finished: false };
 
+  // mount() wird bei jedem Rerender der laufenden Einheit erneut aufgerufen
+  // (Tab verlassen & zurück, "+ Satz", "Übung ergänzen" …). unmount() bleibt
+  // absichtlich leer, damit der Pausentimer weiterläuft — deshalb müssen die
+  // Klick-/Input-Handler selbst aufräumen, sonst hängen nach jedem Remount
+  // zusätzliche Handler am immer gleichen #viewHost und jeder Klick (z. B.
+  // "Satz abhaken") feuert mehrfach, wodurch sich Häkchen wieder aufheben.
+  var mountAbort = null;
+
   function stopRest() {
     if (rest.timer) clearInterval(rest.timer);
     rest.timer = null; rest.left = 0; rest.exId = null; rest.endAt = 0;
@@ -142,6 +150,13 @@
       '</div>';
   }
 
+  /** Summe der Wiederholungen (bzw. Sekunden bei Halte-Übungen) aller
+      bereits abgehakten Sätze einer Übung — live während des Trainings. */
+  function repsDoneLabel(b, ex) {
+    var reps = u.sum(b.sets, function (x) { return x.done ? (+x.reps || 0) : 0; });
+    return reps + ' ' + (ex.time ? 's' : 'Wdh.');
+  }
+
   function block(b, bi) {
     var ex = G.ex.byId(b.exId);
     if (!ex) return '';
@@ -178,9 +193,20 @@
       '<button class="btn btn--sm" data-act="rpe" data-b="' + bi + '" data-v="easy">War leicht</button>' +
       '<button class="btn btn--sm" data-act="rpe" data-b="' + bi + '" data-v="hard">War schwer</button>' +
       '<span class="spacer"></span>' +
-      '<span class="tiny dim nowrap">Pause ' + b.rest + ' s</span>' +
+      '<span class="tiny dim nowrap" data-reps-total="' + bi + '">' +
+      u.esc(repsDoneLabel(b, ex)) + ' · Pause ' + b.rest + ' s</span>' +
       '</div>' +
       '</div>';
+  }
+
+  /** Wiederholungszähler einer Übung (Fußzeile der Karte) ohne
+      Neuaufbau der Seite aktualisieren. */
+  function refreshRepsTotal(host, bi) {
+    var b = G.store.state.session.exercises[bi];
+    var ex = b && G.ex.byId(b.exId);
+    if (!ex) return;
+    var el = host.querySelector('[data-reps-total="' + bi + '"]');
+    if (el) el.textContent = repsDoneLabel(b, ex) + ' · Pause ' + b.rest + ' s';
   }
 
   /** Kopfbereich der laufenden Einheit ohne Neuaufbau der Seite aktualisieren */
@@ -328,8 +354,9 @@
       '<h2 class="big" style="margin:8px 0 4px">+' + res.xp + ' XP</h2>',
       '<p class="muted small">' + u.esc(sess.title) + ' abgeschlossen</p>',
       '</div>',
-      '<div class="grid grid--3" style="--sp:10px">',
+      '<div class="grid grid--4" style="--sp:10px">',
       stat('Sätze', res.totalSets),
+      stat('Wiederholungen', res.totalReps),
       stat('Volumen', u.fmt(res.volume) + ' kg'),
       stat('Rekorde', res.records),
       '</div>'
@@ -405,6 +432,12 @@
     mount: function (host) {
       var s = G.store.state;
 
+      // Alte Handler eines früheren mount() zuerst abmelden (siehe Hinweis
+      // bei mountAbort oben) — nur die DOM-Handler, nicht den Pausentimer.
+      if (mountAbort) mountAbort.abort();
+      mountAbort = new AbortController();
+      var signal = mountAbort.signal;
+
       showRestBox();
 
       /* --- Start --- */
@@ -415,7 +448,7 @@
         G.store.commit('session-start');
         u.toast('Los geht’s', plan.name + ' gestartet.', 'ok');
         G.app.rerender();
-      });
+      }, signal);
 
       u.on(host, 'click', '[data-act="open-free"]', function () {
         openPicker(function (ids) {
@@ -423,14 +456,14 @@
           G.store.commit('session-start');
           G.app.rerender();
         });
-      });
+      }, signal);
 
       u.on(host, 'click', '[data-ex]', function (e, t) {
         if (t.getAttribute('data-act') === 'info' || t.hasAttribute('data-ex')) {
           var id = t.getAttribute('data-ex');
           if (G.views.exercises && G.views.exercises.openDetail) G.views.exercises.openDetail(id);
         }
-      });
+      }, signal);
 
       if (!s.session) return;
 
@@ -441,8 +474,9 @@
         var f = t.getAttribute('data-f');
         s.session.exercises[bi].sets[si][f] = u.num(t.value, 0);
         refreshHero();
+        if (f === 'reps') refreshRepsTotal(host, bi);
         G.store.save();
-      });
+      }, signal);
 
       /* --- Satz abhaken --- */
       u.on(host, 'click', '[data-act="toggle"]', function (e, t) {
@@ -459,6 +493,7 @@
           head.textContent = d + '/' + b.sets.length;
           head.className = 'pill ' + (d === b.sets.length ? 'pill--neon' : 'pill--muted');
         }
+        refreshRepsTotal(host, bi);
 
         if (set.done) {
           var r = t.getBoundingClientRect();
@@ -469,16 +504,16 @@
         }
         refreshHero();
         G.store.save();
-      });
+      }, signal);
 
       /* --- Pausensteuerung --- */
-      u.on(host, 'click', '[data-act="rest-skip"]', function () { stopRest(); });
+      u.on(host, 'click', '[data-act="rest-skip"]', function () { stopRest(); }, signal);
       u.on(host, 'click', '[data-act="rest-plus"]', function () {
         rest.endAt += 30000;
         rest.left = Math.max(0, Math.ceil((rest.endAt - Date.now()) / 1000));
         var v = u.$('#restV');
         if (v) v.textContent = u.mmss(rest.left);
-      });
+      }, signal);
 
       /* --- Satz ergänzen --- */
       u.on(host, 'click', '[data-act="add-set"]', function (e, t) {
@@ -493,7 +528,7 @@
         });
         G.store.commit('set-added');
         G.app.rerender();
-      });
+      }, signal);
 
       /* --- Anstrengung markieren --- */
       u.on(host, 'click', '[data-act="rpe"]', function (e, t) {
@@ -503,7 +538,7 @@
         u.toast('Notiert', v === 'easy'
           ? 'Der Coach erhöht beim nächsten Mal stärker.'
           : 'Der Coach geht beim nächsten Mal vorsichtiger vor.', 'ok', 2600);
-      });
+      }, signal);
 
       /* --- Übung ergänzen --- */
       u.on(host, 'click', '[data-act="add-ex"]', function () {
@@ -513,14 +548,14 @@
           G.store.commit('ex-added');
           G.app.rerender();
         });
-      });
+      }, signal);
 
       /* --- Notizen --- */
       var notes = host.querySelector('#sessNotes');
       if (notes) notes.addEventListener('input', u.debounce(function () {
         s.session.notes = notes.value;
         G.store.save();
-      }, 400));
+      }, 400), { signal: signal });
 
       /* --- Abbrechen --- */
       u.on(host, 'click', '[data-act="abort"]', async function () {
@@ -534,7 +569,7 @@
         s.session = null;
         G.store.commit('session-abort');
         G.app.rerender();
-      });
+      }, signal);
 
       /* --- Abschließen --- */
       u.on(host, 'click', '[data-act="finish"]', async function () {
@@ -556,7 +591,7 @@
         stopRest();
         var res = G.planner.finishSession(sess);
         showSummary(res, sess);
-      });
+      }, signal);
     },
     openPicker: openPicker
   };

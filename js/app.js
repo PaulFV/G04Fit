@@ -134,8 +134,22 @@
     u.$('#viewSub').textContent = sub;
     document.title = 'GoFit — ' + (typeof view.title === 'function' ? view.title() : view.title);
 
-    var host = u.$('#viewHost');
+    // #viewHost wird bei jedem render() durch einen frischen, leeren Klon
+    // ersetzt (statt nur sein innerHTML zu ersetzen). Grund: mount() einer
+    // View hängt per u.on(host, ...) Klick-/Input-Handler an genau dieses
+    // Element; wäre es über die ganze App-Laufzeit dasselbe DOM-Element,
+    // würden sich bei jedem erneuten Aufruf von render() (Tab-Wechsel,
+    // "+ Satz", jede Aktion mit rerender()) weitere Handler dazu addieren,
+    // ohne dass alte je entfernt werden — nach einigen Wechseln feuert dann
+    // z. B. ein Klick mehrfach. Der Klon startet garantiert ohne jeden
+    // zuvor angehängten Handler; die alten hängen zwar technisch noch am
+    // alten (jetzt aus dem DOM entfernten) Knoten, bekommen aber nie wieder
+    // ein echtes Klick-Event. Genau dieser Mechanismus stand hinter dem
+    // Häkchen-Bug im Workout und betraf grundsätzlich jede View.
+    var oldHost = u.$('#viewHost');
+    var host = oldHost.cloneNode(false);
     host.innerHTML = view.render(currentParams) || '';
+    oldHost.replaceWith(host);
 
     if (view.mount) {
       try { view.mount(host); } catch (e) { console.error(e); }

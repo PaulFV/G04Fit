@@ -354,6 +354,29 @@
     });
   }
 
+  /* ---------- Klingeln bei Pausenende ---------- */
+  var ringTimer = null;
+
+  /** Wiederholt den Alarmton für ca. `ms` Millisekunden (Standard 10 s),
+      damit die abgelaufene Satzpause auch auffällt, wenn man kurz nicht
+      aufs Handy schaut. Respektiert die Stumm-Einstellung wie playAlarm().
+      Endet von selbst — oder sofort über stopRingAlarm(). */
+  function ringAlarm(ms) {
+    stopRingAlarm();
+    ms = ms || 10000;
+    var elapsed = 0, step = 1200;
+    ringTimer = setInterval(function () {
+      elapsed += step;
+      if (elapsed >= ms) { stopRingAlarm(); return; }
+      playAlarm();
+    }, step);
+  }
+
+  function stopRingAlarm() {
+    if (ringTimer) clearInterval(ringTimer);
+    ringTimer = null;
+  }
+
   function iconDataUrl() {
     return 'data:image/svg+xml,' + encodeURIComponent(
       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">' +
@@ -475,6 +498,8 @@
     prepareAlarm: prepareAlarm,
     playAlarm: playAlarm,
     restFinished: restFinished,
+    ringAlarm: ringAlarm,
+    stopRingAlarm: stopRingAlarm,
     upcoming: upcoming,
     nextReminder: nextReminder,
     motivationFor: motivationFor,

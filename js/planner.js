@@ -212,11 +212,12 @@
      ------------------------------------------------------------ */
   function finishSession(session) {
     var s = st();
-    var totalSets = 0, vol = 0, records = 0;
+    var totalSets = 0, totalReps = 0, vol = 0, records = 0;
 
     (session.exercises || []).forEach(function (b) {
       var done = (b.sets || []).filter(function (x) { return x.done; });
       totalSets += done.length;
+      totalReps += u.sum(done, function (x) { return +x.reps || 0; });
       vol += u.volume(b.sets);
       if (done.length && G.store.hasConsent('history')) {
         if (G.store.checkRecord(b.exId, b.sets, session.day)) records++;
@@ -225,6 +226,7 @@
 
     session.finishedAt = new Date().toISOString();
     session.totalSets = totalSets;
+    session.totalReps = totalReps;
     session.volume = Math.round(vol);
     session.newRecords = records;
 
@@ -243,7 +245,7 @@
     s.session = null;
     G.store.commit('session-finished');
 
-    return { xp: xp, level: lvl, records: records, totalSets: totalSets, volume: Math.round(vol) };
+    return { xp: xp, level: lvl, records: records, totalSets: totalSets, totalReps: totalReps, volume: Math.round(vol) };
   }
 
   G.planner = {
