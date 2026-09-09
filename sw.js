@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'gofit-v1.0.78';
+var CACHE = 'g04fit-v1.0.79';
 
 var ASSETS = [
   './',
@@ -39,10 +39,10 @@ var ASSETS = [
   './js/view-privacy.js',
   './js/onboarding.js',
   './js/app.js',
-  './icons/icon-v2-180.png',
-  './icons/icon-v2-192.png',
-  './icons/icon-v2-512.png',
-  './icons/icon-v2-maskable-512.png',
+  './icons/icon-v3-180.png',
+  './icons/icon-v3-192.png',
+  './icons/icon-v3-512.png',
+  './icons/icon-v3-maskable-512.png',
   './assets/avatar/anatomy-front-v4.webp',
   './assets/avatar/anatomy-back-v4.webp',
   './assets/exercises/anatomy/pushup-v2.webp',
@@ -226,8 +226,8 @@ self.addEventListener('push', function (e) {
   e.waitUntil(self.registration.showNotification(data.title || 'GoFit · Erinnerung', {
     body: data.body || 'Zeit für dein Training.',
     tag: data.tag || 'gofit-push',
-    icon: './icons/icon-v2-192.png',
-    badge: './icons/icon-v2-192.png',
+    icon: './icons/icon-v3-192.png',
+    badge: './icons/icon-v3-192.png',
     renotify: true,
     requireInteraction: true,
     data: { url: data.url || './index.html#workout' }
