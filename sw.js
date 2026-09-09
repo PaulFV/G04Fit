@@ -1,11 +1,11 @@
 /* ============================================================
-   GoFit — Service Worker
+   G04Fit — Service Worker
    Sorgt dafür, dass die App nach dem ersten Aufruf auch ohne
    Internetverbindung startet. Es werden ausschließlich die
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'g04fit-v1.0.79';
+var CACHE = 'g04fit-v1.0.80';
 
 var ASSETS = [
   './',
@@ -216,14 +216,14 @@ self.addEventListener('notificationclick', function (e) {
 self.addEventListener('push', function (e) {
   var data = {
     title: 'Heute ist ein guter Tag zum Trainieren',
-    body: 'Dein Plan wartet auf dich. Öffne GoFit und leg los.',
+    body: 'Dein Plan wartet auf dich. Öffne G04Fit und leg los.',
     tag: 'gofit-training',
     url: './index.html#workout'
   };
   try { data = e.data ? e.data.json() : {}; } catch (err) {
-    data = { body: e.data ? e.data.text() : 'Deine GoFit-Erinnerung ist da.' };
+    data = { body: e.data ? e.data.text() : 'Deine G04Fit-Erinnerung ist da.' };
   }
-  e.waitUntil(self.registration.showNotification(data.title || 'GoFit · Erinnerung', {
+  e.waitUntil(self.registration.showNotification(data.title || 'G04Fit · Erinnerung', {
     body: data.body || 'Zeit für dein Training.',
     tag: data.tag || 'gofit-push',
     icon: './icons/icon-v3-192.png',
