@@ -18,30 +18,62 @@
 
   function stopRest() {
     if (rest.timer) clearInterval(rest.timer);
-    rest.timer = null; rest.left = 0; rest.exId = null; rest.endAt = 0;
+    if (rest.autoDismiss) clearTimeout(rest.autoDismiss);
+    G.reminders.stopRingAlarm();
+    rest.timer = null; rest.autoDismiss = null;
+    rest.left = 0; rest.exId = null; rest.endAt = 0; rest.finished = false;
     var el = u.$('#restBox');
     if (el) el.remove();
   }
 
+  /** Zeigt die Satzpause zentriert als Overlay — entweder den laufenden
+      Countdown oder, sobald er abgelaufen ist, den "fertig"-Zustand zum
+      Antippen (rest.finished). Wird auch beim erneuten mount() aufgerufen,
+      damit der aktuelle Stand nach einem Tab-Wechsel wieder erscheint. */
   function showRestBox() {
-    var host = u.$('#restHost');
-    if (!host || !rest.endAt || rest.finished) return;
+    if (!rest.endAt) return;
     var old = u.$('#restBox');
     if (old) old.remove();
 
-    host.appendChild(u.el(
-      '<div class="timer" id="restBox">' +
-      '<span style="color:var(--cyan)">' + u.icon('clock', 22) + '</span>' +
-      '<div style="flex:1"><div class="timer__v" id="restV">' + u.mmss(rest.left) + '</div>' +
-      '<span class="tiny muted">Satzpause</span></div>' +
-      '<button class="btn btn--sm" data-act="rest-skip">Überspringen</button>' +
-      '<button class="btn btn--sm" data-act="rest-plus">+30 s</button>' +
-      '</div>'
+    var body = rest.finished
+      ? '<div class="timer-overlay__card timer-overlay__card--done">' +
+        '<span style="color:var(--neon)">' + u.icon('check', 26) + '</span>' +
+        '<div class="timer-overlay__v" id="restV" style="color:var(--neon)">00:00</div>' +
+        '<span class="tiny muted">Pause vorbei — antippen für den nächsten Satz</span>' +
+        '</div>'
+      : '<div class="timer-overlay__card">' +
+        '<span style="color:var(--cyan)">' + u.icon('clock', 24) + '</span>' +
+        '<div class="timer-overlay__v" id="restV">' + u.mmss(rest.left) + '</div>' +
+        '<span class="tiny muted">Satzpause</span>' +
+        '<div class="btn-row">' +
+        '<button class="btn btn--sm" data-act="rest-skip">Überspringen</button>' +
+        '<button class="btn btn--sm" data-act="rest-plus">+30 s</button>' +
+        '</div></div>';
+
+    // Im "fertig"-Zustand macht das ganze Overlay (inkl. Hintergrund) den
+    // vorhandenen "rest-skip"-Handler antippbar — bewusst nur dann, damit
+    // während des normalen Countdowns nichts aus Versehen übersprungen wird.
+    //
+    // Wird direkt an document.body gehängt (nicht an #restHost innerhalb
+    // der View): .view hat eine "both"-gefüllte Eintritts-Animation, die
+    // transform animiert — dadurch bleibt transform dauerhaft auf einer
+    // (visuell unsichtbaren) Identitätsmatrix stehen statt auf "none", und
+    // genau das erzeugt laut CSS-Spezifikation einen neuen Containing
+    // Block für alle position:fixed-Nachfahren. Das Overlay wäre dadurch
+    // nicht mehr am Bildschirm zentriert, sondern an der (oft sehr viel
+    // größeren) Höhe der gesamten Ansicht — bei längeren Einheiten landet
+    // der Countdown dann weit unterhalb des sichtbaren Bereichs. Direkt an
+    // body gehängt umgeht dieses Problem unabhängig von der jeweiligen
+    // View-Struktur.
+    document.body.appendChild(u.el(
+      '<div class="timer-overlay" id="restBox"' + (rest.finished ? ' data-act="rest-skip"' : '') + '>' +
+      body + '</div>'
     ));
   }
 
   function startRest(seconds, exId) {
-    if (!G.store.state.settings.restTimer) return;
+    var sess = G.store.state.session;
+    if (!sess || !sess.restEnabled) return;
     stopRest();
     rest.left = seconds; rest.exId = exId;
     rest.endAt = Date.now() + seconds * 1000;
@@ -53,18 +85,36 @@
     function updateRest() {
       rest.left = Math.max(0, Math.ceil((rest.endAt - Date.now()) / 1000));
       var v = u.$('#restV');
-      if (v) v.textContent = u.mmss(rest.left);
+      if (v && !rest.finished) v.textContent = u.mmss(rest.left);
       if (rest.left <= 0 && !rest.finished) {
         rest.finished = true;
-        stopRest();
-        u.toast('Pause vorbei', 'Weiter mit dem nächsten Satz.', 'ok', 2600);
+        if (rest.timer) { clearInterval(rest.timer); rest.timer = null; }
+        showRestBox();
         G.reminders.restFinished();
+        // Klingelt ca. 10 s (respektiert die Stumm-Einstellung) oder bis
+        // man antippt; danach wird notfalls automatisch weitergemacht.
+        G.reminders.ringAlarm(10000);
+        rest.autoDismiss = setTimeout(stopRest, 10000);
       }
     }
 
     rest.timer = setInterval(updateRest, 500);
     updateRest();
   }
+
+  // Überspringen/+30s/Antippen-zum-Weitermachen: einmalig an document
+  // gebunden, nicht an den jeweiligen View-Host — das Pausen-Overlay hängt
+  // jetzt direkt an document.body (siehe showRestBox) und ist damit kein
+  // Nachfahre von host mehr. Da dies nur EINMAL beim Laden des Moduls
+  // passiert (nicht bei jedem mount()), gibt es hier keine
+  // Mehrfach-Anmeldung von Handlern.
+  u.on(document, 'click', '[data-act="rest-skip"]', function () { stopRest(); });
+  u.on(document, 'click', '[data-act="rest-plus"]', function () {
+    rest.endAt += 30000;
+    rest.left = Math.max(0, Math.ceil((rest.endAt - Date.now()) / 1000));
+    var v = u.$('#restV');
+    if (v) v.textContent = u.mmss(rest.left);
+  });
 
   /* ------------------------------------------------------------
      Kein Training aktiv: Auswahl anzeigen
@@ -157,6 +207,12 @@
     return reps + ' ' + (ex.time ? 's' : 'Wdh.');
   }
 
+  /** Text für die Pausenanzeige in der Fußzeile einer Übungs-Karte —
+      eine einzige, für die ganze Einheit gültige Pausenzeit. */
+  function pauseLabel(sess) {
+    return sess.restEnabled ? 'Pause ' + sess.restSeconds + ' s' : 'Pause aus';
+  }
+
   function block(b, bi) {
     var ex = G.ex.byId(b.exId);
     if (!ex) return '';
@@ -194,19 +250,28 @@
       '<button class="btn btn--sm" data-act="rpe" data-b="' + bi + '" data-v="hard">War schwer</button>' +
       '<span class="spacer"></span>' +
       '<span class="tiny dim nowrap" data-reps-total="' + bi + '">' +
-      u.esc(repsDoneLabel(b, ex)) + ' · Pause ' + b.rest + ' s</span>' +
+      u.esc(repsDoneLabel(b, ex) + ' · ' + pauseLabel(G.store.state.session)) + '</span>' +
       '</div>' +
       '</div>';
   }
 
-  /** Wiederholungszähler einer Übung (Fußzeile der Karte) ohne
-      Neuaufbau der Seite aktualisieren. */
+  /** Wiederholungszähler + Pausenanzeige einer Übung (Fußzeile der Karte)
+      ohne Neuaufbau der Seite aktualisieren. */
   function refreshRepsTotal(host, bi) {
-    var b = G.store.state.session.exercises[bi];
+    var sess = G.store.state.session;
+    var b = sess.exercises[bi];
     var ex = b && G.ex.byId(b.exId);
     if (!ex) return;
     var el = host.querySelector('[data-reps-total="' + bi + '"]');
-    if (el) el.textContent = repsDoneLabel(b, ex) + ' · Pause ' + b.rest + ' s';
+    if (el) el.textContent = repsDoneLabel(b, ex) + ' · ' + pauseLabel(sess);
+  }
+
+  /** Aktualisiert die Fußzeile aller Übungs-Karten (nach Änderung der
+      Pauseneinstellungen in der Kopfkarte). */
+  function refreshAllRepsTotals(host) {
+    var sess = G.store.state.session;
+    if (!sess) return;
+    sess.exercises.forEach(function (b, bi) { refreshRepsTotal(host, bi); });
   }
 
   /** Kopfbereich der laufenden Einheit ohne Neuaufbau der Seite aktualisieren */
@@ -231,6 +296,11 @@
   }
 
   function activeSession(sess) {
+    // Sessions aus einer früheren Sitzung (vor diesem Feature gestartet)
+    // bekommen sinnvolle Standardwerte statt undefined.
+    if (sess.restSeconds == null) sess.restSeconds = 90;
+    if (sess.restEnabled == null) sess.restEnabled = true;
+
     var doneSets = u.sum(sess.exercises, function (b) { return b.sets.filter(function (x) { return x.done; }).length; });
     var allSets = u.sum(sess.exercises, function (b) { return b.sets.length; });
     var vol = u.sum(sess.exercises, function (b) { return u.volume(b.sets); });
@@ -252,7 +322,22 @@
       '<button class="btn btn--primary" data-act="finish">' + u.icon('check', 17) + ' Abschließen</button>' +
       '<button class="btn btn--ghost" data-act="abort">Abbrechen</button>' +
       '</div>' +
-      '</div></div>' +
+      '</div>' +
+
+      '<div class="row row--wrap" style="gap:12px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--glass-br)">' +
+      '<label class="switch" style="padding:0;flex:1;min-width:190px">' +
+      '<input type="checkbox" id="restToggle"' + (sess.restEnabled ? ' checked' : '') + '>' +
+      '<span class="switch__track"></span>' +
+      '<span class="switch__label"><b>Pause zwischen Sätzen</b>' +
+      '<span>Countdown in der Mitte nach jedem Satz</span></span>' +
+      '</label>' +
+      '<div class="input-suffix" style="max-width:120px">' +
+      '<input class="input" type="number" id="restSecondsInput" min="15" max="500" step="5" ' +
+      'value="' + sess.restSeconds + '"' + (sess.restEnabled ? '' : ' disabled') + '>' +
+      '<span>s</span>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
 
       '<div id="restHost"></div>' +
 
@@ -467,6 +552,24 @@
 
       if (!s.session) return;
 
+      /* --- Satzpause: an/aus + Sekunden --- */
+      u.on(host, 'change', '#restToggle', function (e, t) {
+        s.session.restEnabled = t.checked;
+        var secInput = host.querySelector('#restSecondsInput');
+        if (secInput) secInput.disabled = !t.checked;
+        if (!t.checked) stopRest();
+        refreshAllRepsTotals(host);
+        G.store.save();
+      }, signal);
+
+      u.on(host, 'change', '#restSecondsInput', function (e, t) {
+        var v = u.clamp(u.num(t.value, s.session.restSeconds), 15, 500);
+        t.value = v;
+        s.session.restSeconds = v;
+        refreshAllRepsTotals(host);
+        G.store.save();
+      }, signal);
+
       /* --- Werte ändern --- */
       u.on(host, 'input', '.set-row input', function (e, t) {
         var row = t.closest('.set-row');
@@ -498,21 +601,12 @@
         if (set.done) {
           var r = t.getBoundingClientRect();
           u.xpPop(Math.round(7 * G.journey.mode(s.profile.mode).xpMult), r.left, r.top);
-          startRest(s.session.exercises[bi].rest, s.session.exercises[bi].exId);
+          startRest(s.session.restSeconds, s.session.exercises[bi].exId);
         } else {
           stopRest();
         }
         refreshHero();
         G.store.save();
-      }, signal);
-
-      /* --- Pausensteuerung --- */
-      u.on(host, 'click', '[data-act="rest-skip"]', function () { stopRest(); }, signal);
-      u.on(host, 'click', '[data-act="rest-plus"]', function () {
-        rest.endAt += 30000;
-        rest.left = Math.max(0, Math.ceil((rest.endAt - Date.now()) / 1000));
-        var v = u.$('#restV');
-        if (v) v.textContent = u.mmss(rest.left);
       }, signal);
 
       /* --- Satz ergänzen --- */

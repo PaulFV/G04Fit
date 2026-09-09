@@ -84,19 +84,19 @@
       var yy = padT + ih * g / 3;
       var val = max - (max - min) * g / 3;
       out.push('<line x1="' + padL + '" y1="' + yy.toFixed(1) + '" x2="' + (W - padR) + '" y2="' + yy.toFixed(1) +
-        '" stroke="rgba(255,255,255,.055)" stroke-width="1"/>');
+        '" style="stroke:var(--glass-br)" stroke-width="1"/>');
       out.push('<text x="' + (padL - 7) + '" y="' + (yy + 3.5).toFixed(1) + '" text-anchor="end" ' +
-        'fill="rgba(255,255,255,.3)" font-size="9.5" font-family="monospace">' + Math.round(val) + '</text>');
+        'style="fill:var(--tx-2)" font-size="9.5" font-family="monospace">' + Math.round(val) + '</text>');
     }
 
     out.push('<path d="' + area + '" fill="url(#' + id + ')"/>');
-    out.push('<path d="' + d + '" fill="none" stroke="#3DFF9E" stroke-width="2.4" ' +
-      'stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 6px rgba(61,255,158,.55))"/>');
+    out.push('<path d="' + d + '" fill="none" style="stroke:var(--neon);filter:drop-shadow(0 0 6px rgba(61,255,158,.55))" stroke-width="2.4" ' +
+      'stroke-linejoin="round" stroke-linecap="round"/>');
 
     points.forEach(function (p, i) {
       var isLast = i === points.length - 1;
       out.push('<circle cx="' + px(i).toFixed(1) + '" cy="' + py(p.y).toFixed(1) + '" r="' + (isLast ? 4.6 : 3) +
-        '" fill="' + (isLast ? '#3DFF9E' : '#0B1118') + '" stroke="#3DFF9E" stroke-width="2"/>');
+        '" style="fill:' + (isLast ? 'var(--neon)' : 'var(--bg-1)') + ';stroke:var(--neon)" stroke-width="2"/>');
       out.push('<title>' + u.esc(p.x) + ': ' + u.fmt(p.y) + '</title>');
     });
 
@@ -105,7 +105,7 @@
       if (arr.indexOf(i) !== k) return;
       out.push('<text x="' + px(i).toFixed(1) + '" y="' + (H - 7) + '" text-anchor="' +
         (i === 0 ? 'start' : i === points.length - 1 ? 'end' : 'middle') + '" ' +
-        'fill="rgba(255,255,255,.32)" font-size="9.5">' + u.esc(points[i].x) + '</text>');
+        'style="fill:var(--tx-2)" font-size="9.5">' + u.esc(points[i].x) + '</text>');
     });
 
     out.push('</svg>');
@@ -134,33 +134,33 @@
     [0.25, 0.5, 0.75, 1].forEach(function (f) {
       var pts = [];
       for (var i = 0; i < n; i++) pts.push(pt(i, f).map(function (v) { return v.toFixed(1); }).join(','));
-      out.push('<polygon points="' + pts.join(' ') + '" fill="none" stroke="rgba(255,255,255,' +
-        (f === 1 ? '.13' : '.06') + ')" stroke-width="1"/>');
+      out.push('<polygon points="' + pts.join(' ') + '" fill="none" style="stroke:var(--glass-br);opacity:' +
+        (f === 1 ? '1' : '.6') + '" stroke-width="1"/>');
     });
 
     // Speichen
     for (var i = 0; i < n; i++) {
       var e = pt(i, 1);
       out.push('<line x1="' + cx + '" y1="' + cy + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) +
-        '" stroke="rgba(255,255,255,.06)" stroke-width="1"/>');
+        '" style="stroke:var(--glass-br);opacity:.6" stroke-width="1"/>');
     }
 
     // Datenfläche
     var dpts = axes.map(function (a, k) {
       return pt(k, u.clamp(a.value, 0.04, 1)).map(function (v) { return v.toFixed(1); }).join(',');
     });
-    out.push('<polygon points="' + dpts.join(' ') + '" fill="rgba(61,255,158,.16)" stroke="#3DFF9E" ' +
-      'stroke-width="2.2" stroke-linejoin="round" style="filter:drop-shadow(0 0 8px rgba(61,255,158,.4))"/>');
+    out.push('<polygon points="' + dpts.join(' ') + '" fill="rgba(61,255,158,.16)" style="stroke:var(--neon);filter:drop-shadow(0 0 8px rgba(61,255,158,.4))" ' +
+      'stroke-width="2.2" stroke-linejoin="round"/>');
 
     axes.forEach(function (a, k) {
       var p = pt(k, u.clamp(a.value, 0.04, 1));
-      out.push('<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3.4" fill="#3DFF9E"/>');
+      out.push('<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3.4" style="fill:var(--neon)"/>');
       var l = pt(k, 1.27);
       var anchor = Math.abs(l[0] - cx) < 6 ? 'middle' : (l[0] > cx ? 'start' : 'end');
       out.push('<text x="' + l[0].toFixed(1) + '" y="' + (l[1] + 3.5).toFixed(1) + '" text-anchor="' + anchor + '" ' +
-        'fill="rgba(255,255,255,.55)" font-size="10.5">' + u.esc(a.label) + '</text>');
+        'style="fill:var(--tx-1)" font-size="10.5">' + u.esc(a.label) + '</text>');
       out.push('<text x="' + l[0].toFixed(1) + '" y="' + (l[1] + 15).toFixed(1) + '" text-anchor="' + anchor + '" ' +
-        'fill="#3DFF9E" font-size="10" font-family="monospace">' + Math.round(a.value * 100) + '</text>');
+        'style="fill:var(--neon)" font-size="10" font-family="monospace">' + Math.round(a.value * 100) + '</text>');
     });
 
     out.push('</svg>');
@@ -201,7 +201,7 @@
           '<span class="tiny mono" style="color:' + (on ? 'var(--neon)' : 'var(--tx-2)') + '">' +
           (on ? Math.round(b.value / 1000) + 't' : '–') + '</span>' +
           '<div title="' + u.esc(b.label) + ': ' + u.fmt(b.value) + ' kg" style="width:100%;height:' + h + 'px;border-radius:6px 6px 3px 3px;' +
-          'background:' + (on ? 'linear-gradient(180deg,#3DFF9E,rgba(18,226,124,.28))' : 'rgba(255,255,255,.06)') + ';' +
+          'background:' + (on ? 'linear-gradient(180deg,var(--neon),rgba(18,226,124,.28))' : 'var(--glass-bg-2)') + ';' +
           (on ? 'box-shadow:0 0 14px rgba(61,255,158,.28);' : '') + 'transition:height .8s cubic-bezier(.22,.9,.25,1)"></div>' +
           '<span class="tiny dim">' + u.esc(b.label) + '</span>' +
           '</div>';
