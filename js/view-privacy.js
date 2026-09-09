@@ -327,6 +327,15 @@
           ok: 'Alles löschen'
         });
         if (!ok) return;
+
+        // Vollständiger Reset schließt auch die Push-Anmeldung beim GoFit
+        // Push-Dienst ein — sonst bliebe die Erinnerung serverseitig aktiv,
+        // obwohl lokal alles gelöscht wurde (siehe "Deine Rechte" in der
+        // Datenschutzerklärung: ein Widerruf/Löschen wirkt sofort und überall).
+        if (G.store.hasConsent('push')) {
+          try { await G.reminders.disableBackgroundPush(); } catch (e) { /* lokal trotzdem zurücksetzen */ }
+        }
+
         G.store.wipe();
         G.reminders.stop();
         u.toast('Zurückgesetzt', 'Alle Daten wurden gelöscht.', 'ok');

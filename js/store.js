@@ -53,6 +53,12 @@
         startWeights: {},            // exId -> kg
         units: 'kg',
 
+        // Körpergewichts-Verlauf: [{date:'YYYY-MM-DD', weight}], ein Eintrag
+        // je Tag. "weight" oben bleibt der jeweils neueste Wert daraus,
+        // siehe store.logWeight(). Gehört zur selben Einwilligung wie das
+        // übrige Profil (consent.profile) — keine eigene Einwilligung nötig.
+        weightLog: [],
+
         // Trainings-Avatar (siehe js/avatar.js) — jede Person lädt ihr
         // eigenes Bild hoch, GoFit liefert keines mit.
         avatar: null,                // quadratischer Ausschnitt als Data-URL
@@ -258,6 +264,44 @@
     return false;
   }
 
+  /* ---------- Körpergewichts-Verlauf ---------- */
+  /**
+   * Trägt ein Gewicht für einen Tag ein (Standard: heute). Ein zweiter
+   * Eintrag am selben Tag ersetzt den ersten, statt einen weiteren
+   * anzulegen. Das aktuelle Profilgewicht (profile.weight) wird danach
+   * immer auf den Eintrag mit dem jüngsten Datum gesetzt, damit Coach
+   * und Startgewicht-Richtwerte automatisch mit dem Verlauf mitziehen.
+   */
+  function logWeight(weight, day) {
+    var w = Math.round((+weight || 0) * 10) / 10;
+    if (!w || w <= 0) return false;
+    day = day || G.u.today();
+
+    var log = state.profile.weightLog || (state.profile.weightLog = []);
+    var existing = null;
+    for (var i = 0; i < log.length; i++) {
+      if (log[i].date === day) { existing = log[i]; break; }
+    }
+    if (existing) existing.weight = w; else log.push({ date: day, weight: w });
+    log.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+
+    state.profile.weight = log[log.length - 1].weight;
+    commit('weight-log');
+    return true;
+  }
+
+  /** Entfernt einen einzelnen Verlaufseintrag und passt das aktuelle
+      Gewicht danach wieder auf den jüngsten verbleibenden Eintrag an. */
+  function deleteWeightEntry(day) {
+    var log = state.profile.weightLog || [];
+    var next = log.filter(function (e) { return e.date !== day; });
+    if (next.length === log.length) return false;
+    state.profile.weightLog = next;
+    if (next.length) state.profile.weight = next[next.length - 1].weight;
+    commit('weight-log-delete');
+    return true;
+  }
+
   /* ---------- Historie-Abfragen ---------- */
   function lastSessionFor(exId) {
     for (var i = state.history.length - 1; i >= 0; i--) {
@@ -357,6 +401,8 @@
     addXp: addXp,
     levelInfo: levelInfo,
     checkRecord: checkRecord,
+    logWeight: logWeight,
+    deleteWeightEntry: deleteWeightEntry,
     lastSessionFor: lastSessionFor,
     daysSinceLastWorkout: daysSinceLastWorkout,
     sessionsInRange: sessionsInRange,

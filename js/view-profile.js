@@ -39,6 +39,66 @@
   }
 
   /* ------------------------------------------------------------
+     Gewichtsverlauf
+     Eigener Verlauf über der Zeit statt eines einzelnen Werts —
+     gehört zur selben Einwilligung wie das übrige Profil.
+     ------------------------------------------------------------ */
+  function weightLogCard() {
+    var s = G.store.state;
+    var log = (s.profile.weightLog || []).slice()
+      .sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+    var pts = log.map(function (e) { return { x: u.fmtDateShort(e.date), y: e.weight }; });
+
+    var deltaText = '';
+    if (log.length >= 2) {
+      var cutoff = u.addDays(u.today(), -28);
+      var inRange = log.filter(function (e) { return e.date >= cutoff; });
+      if (inRange.length >= 2) {
+        var delta = inRange[inRange.length - 1].weight - inRange[0].weight;
+        deltaText = '<p class="tiny dim center" style="margin-top:10px">Veränderung letzte 4 Wochen: ' +
+          '<span style="color:' + (delta <= 0 ? 'var(--neon)' : 'var(--tx-2)') + '">' +
+          (delta > 0 ? '+' : '') + u.fmt(delta, 1) + ' kg</span></p>';
+      }
+    }
+
+    var recent = log.slice(-6).reverse();
+
+    return '<div class="card">' +
+      '<div class="card__head">' + u.icon('progress', 18) + '<h3>Gewichtsverlauf</h3>' +
+      '<span class="spacer"></span><span class="pill pill--muted">' +
+      log.length + (log.length === 1 ? ' Eintrag' : ' Einträge') + '</span></div>' +
+
+      (log.length >= 2
+        ? G.charts.line(pts.slice(-24), { height: 170 }) + deltaText
+        : '<p class="small muted">Trage dein Gewicht an mindestens zwei Tagen ein, dann zeigt GoFit hier ' +
+          'einen Verlauf statt nur des aktuellen Werts.</p>') +
+
+      '<div class="row row--wrap" style="gap:10px;margin-top:16px;align-items:flex-end">' +
+      '<div style="flex:1;min-width:130px">' +
+      field('Datum', '<input class="input" id="wgDate" type="date" max="' + u.today() + '" value="' + u.today() + '">') +
+      '</div>' +
+      '<div style="flex:1;min-width:130px">' +
+      field('Gewicht', numInput('wgVal', s.profile.weight, 'kg', { decimal: true, step: 0.5, min: 30, max: 300, placeholder: '–' })) +
+      '</div>' +
+      '<button class="btn btn--primary" data-act="wg-add" style="margin-bottom:2px">' +
+      u.icon('plus', 16) + ' Eintragen</button>' +
+      '</div>' +
+
+      (recent.length ? '<div class="list" style="margin-top:16px">' +
+        recent.map(function (e) {
+          return '<div class="list__row">' +
+            '<div class="list__main"><b>' + u.fmt(e.weight) + ' kg</b>' +
+            '<span>' + u.esc(u.dayName(e.date) + ', ' + u.fmtDate(e.date)) + '</span></div>' +
+            '<button class="btn btn--sm btn--ghost" data-wg-del="' + e.date + '" aria-label="Eintrag löschen">' +
+            u.icon('trash', 15) + '</button></div>';
+        }).join('') + '</div>' : '') +
+
+      '<p class="tiny dim" style="margin-top:14px">Gespeichert wird der Verlauf mit derselben Einwilligung ' +
+      'wie das übrige Profil. Das aktuelle Gewicht oben übernimmt automatisch den jeweils neuesten Eintrag.</p>' +
+      '</div>';
+  }
+
+  /* ------------------------------------------------------------
      Startgewichte
      ------------------------------------------------------------ */
   function startWeightsCard() {
@@ -207,7 +267,7 @@
           'Fließt in die Vorsicht bei der Progression ein.') +
         field('Größe', numInput('pHeight', p.height, 'cm', { min: 100, max: 250, placeholder: '–' })) +
         field('Körpergewicht', numInput('pWeight', p.weight, 'kg', { decimal: true, step: 0.5, min: 30, max: 300, placeholder: '–' }),
-          'Basis für Richtwerte bei Startgewichten.') +
+          'Basis für Richtwerte bei Startgewichten. Wird beim Speichern zusätzlich in den Verlauf unten übernommen.') +
         '</div>' +
 
         '<div class="field" style="margin-top:18px"><label>Trainingserfahrung</label>' +
@@ -242,6 +302,7 @@
         '<button class="btn btn--primary" data-act="save">' + u.icon('check', 17) + ' Angaben speichern</button>' +
         '</div></div>' +
 
+        weightLogCard() +
         avatarCard() +
         daysCard() +
         startWeightsCard() +
@@ -278,7 +339,11 @@
         s.profile.name = g('pName').trim();
         s.profile.age = g('pAge') === '' ? null : u.num(g('pAge'), null);
         s.profile.height = g('pHeight') === '' ? null : u.num(g('pHeight'), null);
-        s.profile.weight = g('pWeight') === '' ? null : u.num(g('pWeight'), null);
+        var w = g('pWeight') === '' ? null : u.num(g('pWeight'), null);
+        // Ein gültiger Wert wandert zugleich in den Gewichtsverlauf (heutiger
+        // Tag) statt nur das einzelne Profilfeld zu überschreiben.
+        if (w != null && w > 0) G.store.logWeight(w);
+        else s.profile.weight = null;
       }
 
       u.on(host, 'click', '[data-act="save"]', function () {
@@ -335,6 +400,38 @@
         if (t.value === '') delete s.profile.startWeights[id];
         else s.profile.startWeights[id] = u.roundWeight(u.num(t.value, 0), ex ? ex.inc : 2.5);
         G.store.commit('start-weights');
+      });
+
+      /* Gewichtsverlauf */
+      u.on(host, 'click', '[data-act="wg-add"]', function () {
+        var dateEl = host.querySelector('#wgDate');
+        var valEl = host.querySelector('#wgVal');
+        var day = (dateEl && dateEl.value) || u.today();
+        var val = valEl ? u.num(valEl.value, null) : null;
+        if (!val || val <= 0) {
+          u.toast('Kein Gewicht angegeben', 'Trage einen Wert in Kilogramm ein.', 'warn');
+          return;
+        }
+        if (day > u.today()) {
+          u.toast('Datum in der Zukunft', 'Wähle den heutigen oder einen vergangenen Tag.', 'warn');
+          return;
+        }
+        G.store.logWeight(val, day);
+        u.toast('Eingetragen', u.fmt(val) + ' kg für ' + u.fmtDate(day) + '.', 'ok');
+        G.app.rerender();
+      });
+
+      u.on(host, 'click', '[data-wg-del]', async function (e, t) {
+        var day = t.getAttribute('data-wg-del');
+        var ok = await u.confirmSheet({
+          title: 'Eintrag löschen',
+          body: 'Der Gewichtseintrag vom ' + u.esc(u.fmtDate(day)) + ' wird entfernt.',
+          ok: 'Löschen'
+        });
+        if (!ok) return;
+        G.store.deleteWeightEntry(day);
+        u.toast('Gelöscht', 'Der Eintrag wurde entfernt.', 'ok');
+        G.app.rerender();
       });
 
       /* Trainings-Avatar */
