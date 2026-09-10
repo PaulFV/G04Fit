@@ -128,7 +128,16 @@
       return [cx + Math.cos(a) * R * f, cy + Math.sin(a) * R * f];
     }
 
-    var out = ['<svg viewBox="0 0 ' + S + ' ' + S + '" width="100%" style="display:block;max-width:' + S + 'px;margin:0 auto" role="img">'];
+    // Seitliche Achsenbeschriftungen ("Ausdauer", "Erholung" …) reichen bei
+    // waagerechten Speichen über den quadratischen Zeichenbereich hinaus und
+    // wurden dadurch am Rand abgeschnitten. Das viewBox bekommt deshalb
+    // zusätzlichen Rand links/rechts (M), max-width wächst im gleichen Maß
+    // mit, damit der Kreis/die Ringe optisch genauso groß bleiben wie vorher
+    // — nur der Platz für die Beschriftung kommt hinzu.
+    var M = Math.round(S * 0.145);
+    var VBW = S + 2 * M;
+
+    var out = ['<svg viewBox="' + (-M) + ' 0 ' + VBW + ' ' + S + '" width="100%" style="display:block;max-width:' + VBW + 'px;margin:0 auto" role="img">'];
 
     // Netzringe
     [0.25, 0.5, 0.75, 1].forEach(function (f) {
