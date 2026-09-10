@@ -63,6 +63,18 @@
 .btn--lg{padding:15px 26px;font-size:15.5px;border-radius:var(--r-md)}
 .btn--block{width:100%}
 .btn-row{display:flex;gap:10px;flex-wrap:wrap}
+/* Zwei/drei gleich wichtige Aktionen erzwungen in einer Reihe (z. B. "Einheit
+   starten" + "Freies Training") — schrumpft statt umzubrechen, Text darf
+   in der Schaltfläche selbst zweizeilig werden statt die ganze Reihe
+   auf ein neues Grid-Row zu werfen. */
+.btn-row--even{flex-wrap:nowrap}
+.btn-row--even .btn{
+  flex:1 1 0;min-width:0;white-space:normal;line-height:1.15;
+  text-align:center;padding:11px 10px;font-size:13.5px;
+}
+@media (max-width:390px){
+  .btn-row--even .btn{font-size:12.5px;padding:10px 7px;gap:5px}
+}
 
 /* ---------- Pills / Chips ---------- */
 .pill{
