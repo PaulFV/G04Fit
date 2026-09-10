@@ -86,6 +86,17 @@
 }
 .chip:hover{color:var(--tx-0);border-color:var(--glass-hi)}
 .chip.is-on{background:var(--neon-dim);border-color:var(--neon-line);color:var(--neon);box-shadow:0 0 16px rgba(61,255,158,.14)}
+/* Wochentags-Auswahl (Mo–So, immer genau 7 kurze Chips): in einer Reihe
+   halten statt umbrechen zu lassen — Chips schrumpfen dafür gleichmäßig
+   statt auf eine zweite Zeile zu springen. */
+.chips--days{flex-wrap:nowrap;gap:5px}
+.chips--days .chip{
+  flex:1 1 0;min-width:0;padding:8px 2px;
+  display:flex;align-items:center;justify-content:center;
+}
+@media (max-width:360px){
+  .chips--days .chip{font-size:11.5px}
+}
 
 /* ---------- Formular ---------- */
 .field{display:flex;flex-direction:column;gap:6px}
@@ -97,16 +108,20 @@
   transition:border-color .2s var(--ease),box-shadow .2s var(--ease);font-size:14.5px;
 }
 .input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--neon-line);box-shadow:0 0 0 3px var(--neon-dim)}
-/* Uhrzeit-/Datumsfelder rendern ihren Wert sonst linksbündig in der vollen
-   Feldbreite statt mittig darin. text-align allein reicht auf Android/Chrome
-   nicht aus, weil der interne Zeit-/Datums-Bereich dort ein eigenes,
-   schattendom-internes Kästchen ist, das text-align ignoriert — deshalb
-   zusätzlich als Flex-Container zentrieren. */
+/* Uhrzeit-/Datumsfelder: der native Wert (inkl. seinem eigenen dunklen
+   Hintergrund-Kästchen auf Android) sitzt browserintern und lässt sich per
+   text-align/flex nicht zuverlässig zentrieren — das Kästchen bleibt dabei
+   einfach an seiner intrinsischen Breite und wird vom Rest des riesigen,
+   volle-Breite-Felds nur "irgendwo" positioniert. Deshalb stattdessen das
+   Feld selbst schmal genug für den Inhalt halten und dieses kompakte Feld
+   im Formularfeld zentrieren — dann fällt eine Restverschiebung optisch
+   kaum noch auf. */
 .input[type="time"],.input[type="date"]{
   text-align:center;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width:auto;
+  min-width:120px;
+  max-width:100%;
+  align-self:center;
 }
 /* iOS zoomt beim Antippen in Felder mit weniger als 16 px Schriftgröße.
    Auf Touch-Geräten deshalb mindestens 16 px verwenden. */
