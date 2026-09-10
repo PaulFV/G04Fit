@@ -191,6 +191,7 @@
       (delta >= 0 ? '+' : '') + u.fmt(delta, 1) + '<span class="stat__u">' + (ex.time ? 's' : 'kg') + '</span></span></div>' +
       (rec ? '<div class="stat stat--gold"><span class="stat__k">Rekord</span>' +
         '<span class="stat__v">' + (ex.time ? rec.reps + '<span class="stat__u">s</span>'
+          : ex.bw ? u.fmtSetWeight(ex, rec.weight) + '<span class="stat__u"> × ' + rec.reps + '</span>'
           : u.fmt(rec.weight) + '<span class="stat__u">kg × ' + rec.reps + '</span>') + '</span></div>' : '') +
       '<div class="stat"><span class="stat__k">Einheiten</span>' +
       '<span class="stat__v">' + pts.length + '</span></div>' +
@@ -233,7 +234,8 @@
               '<span>' + u.esc(u.fmtDate(r.date)) + ' · ' + u.esc(u.relDay(r.date)) +
               (gain ? ' · <span style="color:var(--neon)">+' + u.fmt(gain, 1) + ' kg</span>' : '') + '</span></div>' +
               '<div class="pr__v">' + (ex.time ? r.reps + ' s'
-                : u.fmt(r.weight) + '×' + r.reps + '<br><span class="tiny dim">≈' + u.fmt(r.e1rm, 1) + ' kg</span>') + '</div>' +
+                : (ex.bw ? u.fmtSetWeight(ex, r.weight) + ' × ' + r.reps : u.fmt(r.weight) + '×' + r.reps) +
+                '<br><span class="tiny dim">≈' + u.fmt(r.e1rm, 1) + ' kg</span>') + '</div>' +
               '</div>';
           }).join('') +
         '</div></div>';
@@ -303,7 +305,7 @@
         done.map(function (x, i) {
           return '<div class="set-row is-done">' +
             '<span class="set-row__n">' + (i + 1) + '</span>' +
-            '<span class="center mono small">' + (ex.time ? '–' : u.fmt(x.weight) + ' kg') + '</span>' +
+            '<span class="center mono small">' + (ex.time ? '–' : u.fmtSetWeight(ex, x.weight)) + '</span>' +
             '<span class="center mono small">' + x.reps + (ex.time ? ' s' : '') + '</span>' +
             '<span class="tiny dim center">' + (x.rpe === 'easy' ? 'leicht' : x.rpe === 'hard' ? 'schwer' : '') + '</span>' +
             '</div>';

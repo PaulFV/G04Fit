@@ -133,9 +133,9 @@
         ? u.dayName(show.day, true) + ', ' + u.fmtDateShort(show.day) + ' · ' +
         show.muscles.map(function (m) { return G.MUSCLES[m].name; }).join(', ')
         : 'Wähle die Übungen selbst aus.') + '</p>' +
-      '<div class="btn-row" style="margin-top:18px">' +
-      (show ? '<button class="btn btn--primary btn--lg" data-act="start-plan">' + u.icon('play', 18) + ' Einheit starten</button>' : '') +
-      '<button class="btn btn--lg" data-act="open-free">' + u.icon('plus', 18) + ' Freies Training</button>' +
+      '<div class="btn-row btn-row--even" style="margin-top:18px">' +
+      (show ? '<button class="btn btn--primary btn--lg" data-act="start-plan">' + u.icon('play', 16) + ' Einheit starten</button>' : '') +
+      '<button class="btn btn--lg" data-act="open-free">' + u.icon('plus', 16) + ' Freies Training</button>' +
       '</div>' +
 
       '<div class="row row--wrap" style="gap:12px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--glass-br)">' +
@@ -169,7 +169,7 @@
             (ex.sec.length ? ' + ' + u.esc(ex.sec.map(function (m) { return G.MUSCLES[m].name; }).join(', ')) : '') +
             ' · ' + sug.sets + ' Sätze</span></div>' +
             '<div class="list__end"><b class="mono small' + (sug.kind === 'up' ? ' neon' : '') + '">' +
-            (ex.time ? u.fmtReps(sug.reps, 's') : u.fmt(sug.weight) + ' kg') + '</b>' +
+            (ex.time ? u.fmtReps(sug.reps, 's') : u.fmtSetWeight(ex, sug.weight)) + '</b>' +
             '<br><span class="tiny dim">' + (ex.time ? 'Haltezeit' : u.fmtReps(sug.reps, 'Wdh.')) + '</span></div>' +
             '</div>';
         }).join('') + '</div></div>';

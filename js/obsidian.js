@@ -79,7 +79,7 @@
       out.push('|---:|---:|---:|:--|');
       done.forEach(function (x, i) {
         var rpe = x.rpe === 'easy' ? 'leicht' : x.rpe === 'hard' ? 'schwer' : 'passend';
-        out.push('| ' + (i + 1) + ' | ' + (ex.time ? '–' : u.fmt(x.weight) + ' kg') + ' | ' +
+        out.push('| ' + (i + 1) + ' | ' + (ex.time ? '–' : u.fmtSetWeight(ex, x.weight)) + ' | ' +
           (ex.time ? x.reps + ' s' : x.reps) + ' | ' + rpe + ' |');
       });
       out.push('');
@@ -163,7 +163,7 @@
         .forEach(function (id) {
           var ex = G.ex.byId(id), r = s.records[id];
           if (!ex) return;
-          out.push('| ' + ex.name + ' | ' + u.fmt(r.weight) + ' kg × ' + r.reps + ' | ' +
+          out.push('| ' + ex.name + ' | ' + (ex.bw ? u.fmtSetWeight(ex, r.weight) : u.fmt(r.weight) + ' kg') + ' × ' + r.reps + ' | ' +
             u.fmt(r.e1rm, 1) + ' kg | ' + r.date + ' |');
         });
       out.push('');

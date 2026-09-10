@@ -56,6 +56,18 @@ G04Fit.VERSION = '1.0.0';
 
   function fmtKg(v) { return fmt(v) + ' kg'; }
 
+  /** Gewichtstext für einen trainierten Satz. Bei Eigengewichts-Übungen
+      (ex.bw) ohne eingetragenes Zusatzgewicht wird statt "0 kg" das
+      hinterlegte Körpergewicht des Nutzers angezeigt ("90 kg Eigengewicht"),
+      mit Zusatzgewicht entsprechend "Eigengewicht + 5 kg". */
+  function fmtSetWeight(ex, weight) {
+    var w = num(weight, 0);
+    if (!ex || !ex.bw) return fmt(w) + ' kg';
+    var bw = G.store && G.store.state && G.store.state.profile && G.store.state.profile.weight;
+    if (w > 0) return bw ? 'Eigengewicht + ' + fmt(w) + ' kg' : '+' + fmt(w) + ' kg';
+    return bw ? fmt(bw) + ' kg Eigengewicht' : 'Eigengewicht';
+  }
+
   /** Wiederholungsbereich als Text: [8,12] -> "8–12", [12,12] -> "12" */
   function fmtReps(range, unit) {
     if (!range) return '–';
@@ -350,7 +362,8 @@ G04Fit.VERSION = '1.0.0';
 
   G.u = {
     $: $, $$: $$, el: el, esc: esc, on: on,
-    clamp: clamp, round: round, num: num, roundWeight: roundWeight, fmt: fmt, fmtKg: fmtKg, fmtReps: fmtReps,
+    clamp: clamp, round: round, num: num, roundWeight: roundWeight, fmt: fmt, fmtKg: fmtKg,
+    fmtSetWeight: fmtSetWeight, fmtReps: fmtReps,
     DAYS: DAYS, DAYS_LONG: DAYS_LONG, MONTHS: MONTHS,
     isoDay: isoDay, today: today, parseDay: parseDay, daysBetween: daysBetween, addDays: addDays,
     dayName: dayName, fmtDate: fmtDate, fmtDateShort: fmtDateShort, relDay: relDay,
