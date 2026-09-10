@@ -97,6 +97,9 @@
   transition:border-color .2s var(--ease),box-shadow .2s var(--ease);font-size:14.5px;
 }
 .input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--neon-line);box-shadow:0 0 0 3px var(--neon-dim)}
+/* Uhrzeit-/Datumsfelder rendern ihren Wert sonst linksbündig in der vollen
+   Feldbreite statt mittig darin. */
+.input[type="time"],.input[type="date"]{text-align:center}
 /* iOS zoomt beim Antippen in Felder mit weniger als 16 px Schriftgröße.
    Auf Touch-Geräten deshalb mindestens 16 px verwenden. */
 @media (max-width:980px){

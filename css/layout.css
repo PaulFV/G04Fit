@@ -104,6 +104,15 @@
   padding:6px max(8px,env(safe-area-inset-left)) max(6px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right));
   background:var(--bg-1);
   box-shadow:0 -8px 24px rgba(0,0,0,.22);
+  /* Mobile Browser (v.a. Android Chrome) verschieben beim Scrollen kurz die
+     Adressleiste ein-/aus und berechnen dabei "position:fixed" neu, wodurch
+     die Leiste kurz mittig im Inhalt "schwebt" statt am Rand zu bleiben.
+     Eine eigene Compositor-Ebene verhindert dieses Neu-Layouten. */
+  transform:translateZ(0);
+  -webkit-transform:translateZ(0);
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  will-change:transform;
 }
 .tabbar__item{
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
