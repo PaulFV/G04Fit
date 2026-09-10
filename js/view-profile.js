@@ -199,7 +199,7 @@
       '<div class="card__head">' + u.icon('clock', 18) + '<h3>Trainingstage</h3>' +
       '<span class="spacer"></span><span class="pill ' + (sel.length === m.weekly ? 'pill--neon' : 'pill--muted') + '">' +
       sel.length + ' von ' + m.weekly + ' empfohlen</span></div>' +
-      '<div class="chips" style="margin-bottom:16px">' +
+      '<div class="chips chips--days" style="margin-bottom:16px">' +
       order.map(function (d) {
         return '<button class="chip' + (sel.indexOf(d) >= 0 ? ' is-on' : '') + '" data-day="' + d + '">' +
           u.DAYS[d] + '</button>';

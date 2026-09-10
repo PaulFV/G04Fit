@@ -106,7 +106,7 @@
         '<span class="field__hint">Gilt für alle Trainingstage. Der Motivationstext wechselt automatisch.</span></div>' +
 
         '<div class="field" style="margin-top:16px"><label>Trainingstage</label>' +
-        '<div class="chips" style="margin-top:6px">' +
+        '<div class="chips chips--days" style="margin-top:6px">' +
         [1, 2, 3, 4, 5, 6, 0].map(function (d) {
           return '<button class="chip' + ((s.profile.trainingDays || []).indexOf(d) >= 0 ? ' is-on' : '') +
             '" data-day="' + d + '">' + u.DAYS[d] + '</button>';

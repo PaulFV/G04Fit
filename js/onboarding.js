@@ -173,7 +173,7 @@
       'passenden Split zusammen.</p></div>' +
 
       '<div class="field"><label>Trainingstage</label>' +
-      '<div class="chips" style="margin-top:6px">' +
+      '<div class="chips chips--days" style="margin-top:6px">' +
       [1, 2, 3, 4, 5, 6, 0].map(function (d) {
         return '<button class="chip' + ((p.trainingDays || []).indexOf(d) >= 0 ? ' is-on' : '') +
           '" data-oday="' + d + '">' + u.DAYS[d] + '</button>';
