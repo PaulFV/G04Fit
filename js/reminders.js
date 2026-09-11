@@ -21,7 +21,7 @@
   var timer = null;
   var firedToday = {};
   var audioContext = null;
-  var PUSH_API = String(window.GOFIT_PUSH_API || '').replace(/\/+$/, '');
+  var PUSH_API = String(window.G04FIT_PUSH_API || window.GOFIT_PUSH_API || '').replace(/\/+$/, '');
   var MOTIVATION_MESSAGES = [
     { title: 'Komm, trainieren! 💪', body: 'Dein Plan wartet auf dich. Öffne G04Fit und leg los.' },
     { title: 'Heute ist ein guter Tag zum Trainieren', body: 'Ein kleiner Anfang reicht – der Rest kommt mit der Bewegung.' },
@@ -95,6 +95,8 @@
   }
 
   function pushIdentity() {
+    // Wie in store.js: der Schlüsselname bleibt unverändert, sonst würde
+    // sich jedes Gerät nach dem Update neu beim Push-Dienst anmelden.
     var deviceId = localStorage.getItem('gofit.push.deviceId');
     var deviceSecret = localStorage.getItem('gofit.push.deviceSecret');
     if (!deviceId) {
@@ -222,9 +224,9 @@
     if (supported() && Notification.permission === 'granted') {
       var notificationOptions = {
         body: body,
-        tag: tag || 'gofit',
-        icon: './icons/icon-v3-192.png',
-        badge: './icons/icon-v3-192.png',
+        tag: tag || 'g04fit',
+        icon: './icons/icon-v4-192.png',
+        badge: './icons/icon-v4-192.png',
         silent: options.silent == null ? !!st().settings.soundless : !!options.silent,
         requireInteraction: !!options.requireInteraction,
         data: { url: options.url || './index.html#workout' }
@@ -269,9 +271,9 @@
         var message = motivationFor(i.day, i.title);
         return registration.showNotification(message.title, {
           body: message.body,
-          tag: 'gofit-plan-' + i.day,
-          icon: './icons/icon-v3-192.png',
-          badge: './icons/icon-v3-192.png',
+          tag: 'g04fit-plan-' + i.day,
+          icon: './icons/icon-v4-192.png',
+          badge: './icons/icon-v4-192.png',
           silent: !!st().settings.soundless,
           data: { url: './index.html#workout' },
           showTrigger: new TimestampTrigger(timestamp)
@@ -347,7 +349,7 @@
 
   function restFinished() {
     playAlarm();
-    return notify('G04Fit · Pause vorbei', 'Weiter mit dem nächsten Satz.', 'gofit-rest', {
+    return notify('G04Fit · Pause vorbei', 'Weiter mit dem nächsten Satz.', 'g04fit-rest', {
       silent: st().settings.soundless,
       requireInteraction: true,
       url: './index.html#workout'
@@ -437,7 +439,7 @@
     if (plan && !already && !firedToday[key] && hhmm >= (s.profile.reminderTime || '18:00')) {
       firedToday[key] = true;
       var message = motivationFor(today, plan.name);
-      notify(message.title, message.body, 'gofit-train');
+      notify(message.title, message.body, 'g04fit-train');
     }
 
     // 2) Wiedereinstieg nach längerer Pause
@@ -447,7 +449,7 @@
       if (re && !firedToday[rkey]) {
         firedToday[rkey] = true;
         notify('G04Fit · Wiedereinstieg',
-          re.days + ' Tage ohne Training. G04Fit hat die Gewichte für den Neustart angepasst.', 'gofit-reentry');
+          re.days + ' Tage ohne Training. G04Fit hat die Gewichte für den Neustart angepasst.', 'g04fit-reentry');
       }
     }
   }
@@ -482,7 +484,7 @@
       u.toast('Push-Test fehlgeschlagen', e.message || 'Der Push-Server ist nicht erreichbar.', 'warn', 6500);
     }
     var preview = motivationFor(u.today(), 'dein Training');
-    var ok = await notify(preview.title, preview.body, 'gofit-test');
+    var ok = await notify(preview.title, preview.body, 'g04fit-test');
     if (!ok) {
       u.toast('Als App-Hinweis zugestellt',
         'Systembenachrichtigungen sind hier nicht verfügbar – beim Start über einen lokalen Server funktionieren sie.', 'warn', 6000);

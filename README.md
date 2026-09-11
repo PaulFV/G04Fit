@@ -1,4 +1,4 @@
-# GoFit v1.0.0
+# G04Fit v2.0.0
 
 Trainingsplaner für **Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter** — mit Wochenplan,
 Journey, regelbasiertem Coach, Fortschrittsauswertung, Obsidian-Export und einem
@@ -19,7 +19,7 @@ ohne Backend, ohne Konto, ohne Tracking.
 | **Übungen** | 37 Übungen mit animierter Ausführung, anatomischer Muskelkarte, Technikhinweisen und häufigen Fehlern |
 | **Fortschritt** | Volumen, Kraftentwicklung, Rekorde, Muskelbalance, Leistungsprofil, Historie |
 | **Profil** | Persönliche Angaben, Erfahrungsstufe, Ziele, Trainingstage, Startgewichte, Trainings-Avatar |
-| **GoFit Coach** | Vorschläge zu Gewicht, Wiederholungen, Progression und Wiedereinstieg |
+| **G04Fit Coach** | Vorschläge zu Gewicht, Wiederholungen, Progression und Wiedereinstieg |
 | **Erinnerungen** | Trainingstage, Uhrzeit, Benachrichtigungen, Wiedereinstiegsmodus |
 | **Obsidian** | Trainingsprotokolle und Übersicht als Markdown für deinen Vault |
 | **Datenschutz** | Fünf einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung |
@@ -37,11 +37,11 @@ und keine Installation als App. Erinnerungen erscheinen dann als Hinweis in der 
 
 ### 2. Visual Studio 2026 — als Desktop-Anwendung (empfohlen)
 
-[GoFit.sln](GoFit.sln) öffnen, **GoFit.Desktop** als Startprojekt setzen, **F5** drücken.
+[G04Fit.sln](G04Fit.sln) öffnen, **G04Fit.Desktop** als Startprojekt setzen, **F5** drücken.
 
-GoFit öffnet sich in einem eigenen Fenster mit eigenem Icon — wie eine normale
+G04Fit öffnet sich in einem eigenen Fenster mit eigenem Icon — wie eine normale
 Windows-Anwendung. Technisch ist es eine WPF-App, die die Oberfläche über WebView2 anzeigt.
-Der Projektordner wird dabei als virtueller Host `https://gofit.local` eingebunden, damit die
+Der Projektordner wird dabei als virtueller Host `https://g04fit.local` eingebunden, damit die
 App als sicherer Kontext gilt: localStorage, Service Worker und Benachrichtigungen
 funktionieren.
 
@@ -60,7 +60,7 @@ fehlt sie, zeigt die App einen Hinweis und die Server-Variante bleibt als Altern
 Für eine weitergebbare Fassung:
 
 ```bash
-dotnet publish src/GoFit.Desktop/GoFit.Desktop.csproj -c Release -o veroeffentlicht
+dotnet publish src/G04Fit.Desktop/G04Fit.Desktop.csproj -c Release -o veroeffentlicht
 ```
 
 Dabei wird die Weboberfläche automatisch nach `veroeffentlicht/app/` kopiert — der Ordner ist
@@ -68,17 +68,17 @@ dann eigenständig lauffähig.
 
 ### 3. Visual Studio 2026 — als lokaler Webserver
 
-Startprojekt **GoFit.Server** wählen und **F5** drücken. ASP.NET Core liefert die Oberfläche
+Startprojekt **G04Fit.Server** wählen und **F5** drücken. ASP.NET Core liefert die Oberfläche
 über `https://localhost:7181` aus. Diese Variante brauchst du für den **Test auf dem Handy**
 (siehe unten) und für die Installation als PWA im Browser.
 
 Der Server macht ausschließlich eines: statische Dateien ausliefern. Es gibt **keine Datenbank
-und keine Serverspeicherung** — GoFit hält alle Daten lokal im Browser.
+und keine Serverspeicherung** — G04Fit hält alle Daten lokal im Browser.
 
 ### 4. Ohne Visual Studio
 
 ```bash
-dotnet run --project src/GoFit.Server/GoFit.Server.csproj
+dotnet run --project src/G04Fit.Server/G04Fit.Server.csproj
 ```
 
 Danach `http://localhost:5181` aufrufen.
@@ -98,7 +98,7 @@ powershell -ExecutionPolicy Bypass -File Handy-Test-starten.ps1
 Das Skript ermittelt die IP-Adresse des Rechners, richtet auf Wunsch die Firewall-Freigabe ein
 und zeigt die Adresse an, die du am Handy eingibst — etwa `http://192.168.178.35:5181`.
 
-Alternativ von Hand: Serverprofil **„GoFit (im Netzwerk, für Handy-Test)"** in Visual Studio
+Alternativ von Hand: Serverprofil **„G04Fit (im Netzwerk, für Handy-Test)"** in Visual Studio
 starten, IP über `ipconfig` ablesen.
 
 Dann am Handy:
@@ -106,7 +106,7 @@ Dann am Handy:
 * **iPhone:** **Safari** öffnen → Adresse eingeben → Teilen-Symbol → *Zum Home-Bildschirm*
 * **Android:** Chrome öffnen → Adresse eingeben → Menü ⋮ → *App installieren*
 
-GoFit erscheint als Symbol auf dem Startbildschirm und startet im Vollbild ohne Adressleiste.
+G04Fit erscheint als Symbol auf dem Startbildschirm und startet im Vollbild ohne Adressleiste.
 
 **Grenzen dieses Weges:** Die Verbindung läuft über `http://`, nicht `https://`. iOS behandelt
 das nicht als sicheren Kontext — deshalb funktionieren **Offline-Betrieb und Benachrichtigungen
@@ -115,7 +115,7 @@ Anschauen und Bedienen reicht es vollkommen.
 
 ### Weg 2 — dauerhaft, mit vollem Funktionsumfang
 
-Damit GoFit unabhängig vom Rechner läuft, offline funktioniert und Erinnerungen senden kann,
+Damit G04Fit unabhängig vom Rechner läuft, offline funktioniert und Erinnerungen senden kann,
 braucht es `https://`. Am einfachsten über einen kostenlosen Hoster für statische Seiten —
 GitHub Pages, Netlify oder Cloudflare Pages. Hochgeladen werden nur:
 
@@ -123,7 +123,7 @@ GitHub Pages, Netlify oder Cloudflare Pages. Hochgeladen werden nur:
 index.html   manifest.webmanifest   sw.js   css/   js/   icons/
 ```
 
-Die Ordner `src/`, `docs/` und `GoFit.sln` werden **nicht** gebraucht.
+Die Ordner `src/`, `docs/` und `G04Fit.sln` werden **nicht** gebraucht.
 
 Es liegen keine persönlichen Inhalte im Projekt — der Avatar wird erst in der App hochgeladen
 und bleibt auf dem jeweiligen Gerät. Auf dem Server liegt ausschließlich das Programm selbst;
@@ -136,7 +136,7 @@ Tauri nötig. Für die private Nutzung bringt das gegenüber Weg 2 keinen Vortei
 
 ### Desktop
 
-* **Windows:** Projekt `GoFit.Desktop` starten (siehe oben) — echtes Programmfenster
+* **Windows:** Projekt `G04Fit.Desktop` starten (siehe oben) — echtes Programmfenster
 * **Chrome/Edge:** Installationssymbol in der Adressleiste
 
 ---
@@ -144,11 +144,11 @@ Tauri nötig. Für die private Nutzung bringt das gegenüber Weg 2 keinen Vortei
 ## Aufbau
 
 ```
-GoFit/
+G04Fit/
 ├── index.html                  Grundgerüst und Skript-Einbindung
 ├── manifest.webmanifest        Installation als App
 ├── sw.js                       Service Worker (Offline-Betrieb)
-├── GoFit.sln                   Visual-Studio-Solution
+├── G04Fit.sln                  Visual-Studio-Solution
 ├── Handy-Test-starten.ps1      Server fürs WLAN starten, Adresse anzeigen
 │
 ├── css/
@@ -176,11 +176,11 @@ GoFit/
 ├── icons/                      App-Icons
 │
 └── src/
-    ├── GoFit.Desktop/          Windows-Anwendung (WPF + WebView2, .NET 10)
-    └── GoFit.Server/           Lokaler Webserver (ASP.NET Core, .NET 10)
+    ├── G04Fit.Desktop/         Windows-Anwendung (WPF + WebView2, .NET 10)
+    └── G04Fit.Server/          Lokaler Webserver (ASP.NET Core, .NET 10)
 ```
 
-Alle Skripte sind klassische `<script>`-Dateien mit einem gemeinsamen `GoFit`-Namensraum —
+Alle Skripte sind klassische `<script>`-Dateien mit einem gemeinsamen `G04Fit`-Namensraum —
 bewusst ohne ES-Module, damit die App auch per Doppelklick über `file://` startet.
 Es gibt keine externen Abhängigkeiten, kein npm, keinen Build-Schritt.
 
@@ -246,12 +246,12 @@ und XP-Faktor:
 
 ## Datenschutz
 
-GoFit speichert **nichts**, solange keine ausdrückliche Einwilligung vorliegt. Es gibt fünf
+G04Fit speichert **nichts**, solange keine ausdrückliche Einwilligung vorliegt. Es gibt fünf
 getrennte Einwilligungen, jede einzeln erteilbar und jederzeit widerrufbar:
 
 1. **Profil, Foto & Einstellungen speichern**
 2. **Trainingshistorie & Rekorde**
-3. **Auswertung durch den GoFit Coach**
+3. **Auswertung durch den G04Fit Coach**
 4. **Obsidian-Export**
 5. **Erinnerungen & Benachrichtigungen**
 
@@ -267,11 +267,11 @@ Profil aus deinen Trainingsdaten — ausdrücklich keine medizinischen Werte.**
 
 ### Trainings-Avatar
 
-GoFit wird **ohne vorgegebenes Bild** ausgeliefert. Jede Person lädt ihr eigenes hoch — im
+G04Fit wird **ohne vorgegebenes Bild** ausgeliefert. Jede Person lädt ihr eigenes hoch — im
 Profil unter *Trainings-Avatar* oder durch Antippen des Avatars an beliebiger Stelle
 (Dashboard, Journey, Seitenleiste, Ersteinrichtung).
 
-Solange kein Bild gewählt wurde, zeigt GoFit die Initialen des eingetragenen Namens,
+Solange kein Bild gewählt wurde, zeigt G04Fit die Initialen des eingetragenen Namens,
 sonst ein neutrales Symbol.
 
 Das gewählte Bild wird im Browser auf 512 Pixel verkleinert, mittig zugeschnitten und als Teil
@@ -299,4 +299,4 @@ Die Fachlogik liegt bereits getrennt von der Oberfläche (`store.js`, `coach.js`
 
 ---
 
-*GoFit ist kein Medizinprodukt und ersetzt keine ärztliche oder physiotherapeutische Beratung.*
+*G04Fit ist kein Medizinprodukt und ersetzt keine ärztliche oder physiotherapeutische Beratung.*

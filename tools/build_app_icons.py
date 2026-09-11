@@ -1,4 +1,8 @@
-"""Build GoFit web-app icons from one square master image."""
+"""Aeltere Pillow-Fassung des Icon-Bauers (erzeugt noch das v2-Set).
+
+Fuer das aktuelle G04Fit-Icon wird build_app_icons.cjs verwendet: gleiche
+Aufgabe, aber ohne Pillow und damit ohne Python-Installation lauffaehig.
+"""
 
 from __future__ import annotations
 

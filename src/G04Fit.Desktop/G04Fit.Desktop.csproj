@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>G04Fit.Desktop</RootNamespace>
+    <AssemblyName>G04Fit</AssemblyName>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <AssemblyTitle>G04Fit</AssemblyTitle>
+    <Product>G04Fit</Product>
+    <Version>2.0.0</Version>
+    <Company>G04Fit</Company>
+    <Description>Trainingsplaner für Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- WebView2 zeigt die G04Fit-Oberfläche in einem echten Fenster an.
+         Die Laufzeitumgebung ist in Windows 11 bereits enthalten. -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3124.44" />
+  </ItemGroup>
+
+  <!-- ============================================================
+       Beim Veröffentlichen die Weboberfläche in den Unterordner
+       "app" neben die EXE kopieren. Damit ist der veröffentlichte
+       Build eigenständig lauffähig.
+       Beim Start aus Visual Studio wird der Projektstamm verwendet,
+       sodass Änderungen an CSS und JS sofort sichtbar sind.
+       ============================================================ -->
+  <PropertyGroup>
+    <G04FitWebRoot>$(MSBuildProjectDirectory)\..\..</G04FitWebRoot>
+  </PropertyGroup>
+
+  <Target Name="CopyG04FitWebApp" AfterTargets="Publish">
+    <ItemGroup>
+      <G04FitRootFiles Include="$(G04FitWebRoot)\index.html" />
+      <G04FitRootFiles Include="$(G04FitWebRoot)\manifest.webmanifest" />
+      <G04FitRootFiles Include="$(G04FitWebRoot)\sw.js" />
+      <G04FitCss    Include="$(G04FitWebRoot)\css\**\*" />
+      <G04FitJs     Include="$(G04FitWebRoot)\js\**\*" />
+      <G04FitAssets Include="$(G04FitWebRoot)\assets\**\*" />
+      <G04FitIcons  Include="$(G04FitWebRoot)\icons\**\*" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(G04FitRootFiles)" DestinationFolder="$(PublishDir)app" />
+    <Copy SourceFiles="@(G04FitCss)"    DestinationFolder="$(PublishDir)app\css\%(RecursiveDir)" />
+    <Copy SourceFiles="@(G04FitJs)"     DestinationFolder="$(PublishDir)app\js\%(RecursiveDir)" />
+    <Copy SourceFiles="@(G04FitAssets)" DestinationFolder="$(PublishDir)app\assets\%(RecursiveDir)" />
+    <Copy SourceFiles="@(G04FitIcons)"  DestinationFolder="$(PublishDir)app\icons\%(RecursiveDir)" />
+
+    <Message Importance="high" Text="G04Fit: Weboberfläche nach $(PublishDir)app kopiert." />
+  </Target>
+
+</Project>

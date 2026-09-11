@@ -1,16 +1,16 @@
 // ============================================================
-//  GoFit Desktop — Fensteranwendung
+//  G04Fit Desktop — Fensteranwendung
 //
-//  Zeigt die GoFit-Oberfläche in einem eigenen Fenster an.
+//  Zeigt die G04Fit-Oberfläche in einem eigenen Fenster an.
 //  Der Ordner mit index.html wird als virtueller Host
-//  https://gofit.local eingebunden. Damit gilt die App als
+//  https://g04fit.local eingebunden. Damit gilt die App als
 //  sicherer Kontext: localStorage, Service Worker und
 //  Benachrichtigungen funktionieren — anders als beim Öffnen
 //  per file://.
 //
 //  Es läuft kein Webserver und es gehen keine Daten nach außen.
 //  Trainingsdaten liegen im lokalen Speicher der WebView, der
-//  im Benutzerprofil unter GoFit abgelegt wird.
+//  im Benutzerprofil unter G04Fit abgelegt wird.
 // ============================================================
 
 using System.Diagnostics;
@@ -19,12 +19,12 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.Web.WebView2.Core;
 
-namespace GoFit.Desktop;
+namespace G04Fit.Desktop;
 
 public partial class MainWindow : Window
 {
-    private const string VirtualHost = "gofit.local";
-    private const string StartUrl = "https://gofit.local/index.html";
+    private const string VirtualHost = "g04fit.local";
+    private const string StartUrl = "https://g04fit.local/index.html";
 
     private string? _appFolder;
 
@@ -41,8 +41,8 @@ public partial class MainWindow : Window
 
         if (_appFolder is null)
         {
-            Fail("Die GoFit-Dateien wurden nicht gefunden.\n\n" +
-                 "Erwartet wird index.html im Projektstamm, also oberhalb von src\\GoFit.Desktop.");
+            Fail("Die G04Fit-Dateien wurden nicht gefunden.\n\n" +
+                 "Erwartet wird index.html im Projektstamm, also oberhalb von src\\G04Fit.Desktop.");
             return;
         }
 
@@ -52,7 +52,7 @@ public partial class MainWindow : Window
             // damit sie einen Neubau des Projekts überstehen.
             var dataFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "GoFit", "WebView2");
+                "G04Fit", "WebView2");
             Directory.CreateDirectory(dataFolder);
 
             var env = await CoreWebView2Environment.CreateAsync(null, dataFolder);
@@ -64,7 +64,7 @@ public partial class MainWindow : Window
                  "Sie ist in Windows 11 normalerweise vorhanden. " +
                  "Andernfalls kostenlos bei Microsoft herunterladen: " +
                  "Suche nach \"WebView2 Runtime\".\n\n" +
-                 "Alternative ohne WebView2: das Projekt GoFit.Server starten " +
+                 "Alternative ohne WebView2: das Projekt G04Fit.Server starten " +
                  "und http://localhost:5181 im Browser öffnen.");
             return;
         }
@@ -85,10 +85,10 @@ public partial class MainWindow : Window
         core.Settings.IsStatusBarEnabled = false;
         core.Settings.IsZoomControlEnabled = true;
         core.Settings.IsSwipeNavigationEnabled = false;
-        core.Settings.UserAgent += " GoFitDesktop/1.0.0";
+        core.Settings.UserAgent += " G04FitDesktop/2.0.0";
 
         // Benachrichtigungen ohne Rückfrage zulassen — es handelt sich um
-        // die eigene lokale Anwendung, die Einwilligung wird in GoFit selbst
+        // die eigene lokale Anwendung, die Einwilligung wird in G04Fit selbst
         // eingeholt.
         core.PermissionRequested += (_, args) =>
         {
@@ -116,7 +116,7 @@ public partial class MainWindow : Window
 
         core.DocumentTitleChanged += (_, _) =>
         {
-            Title = string.IsNullOrWhiteSpace(core.DocumentTitle) ? "GoFit" : core.DocumentTitle;
+            Title = string.IsNullOrWhiteSpace(core.DocumentTitle) ? "G04Fit" : core.DocumentTitle;
         };
 
         Web.NavigationCompleted += (_, args) =>

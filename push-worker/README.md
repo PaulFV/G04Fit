@@ -1,6 +1,6 @@
-# GoFit Push Worker
+# G04Fit Push Worker
 
-Der Worker speichert pro Gerät genau eine Web-Push-Anmeldung in einem eigenen Durable Object. Ein Durable-Object-Alarm weckt den Worker am gewählten Trainingstag und sendet die Erinnerung auch dann, wenn GoFit geschlossen ist.
+Der Worker speichert pro Gerät genau eine Web-Push-Anmeldung in einem eigenen Durable Object. Ein Durable-Object-Alarm weckt den Worker am gewählten Trainingstag und sendet die Erinnerung auch dann, wenn G04Fit geschlossen ist.
 
 ## Bereitstellung
 

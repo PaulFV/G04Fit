@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "gofit",
+      "name": "g04fit",
       "runtimeExecutable": "dotnet",
-      "runtimeArgs": ["run", "--project", "src/GoFit.Server/GoFit.Server.csproj", "--urls", "http://localhost:5181"],
+      "runtimeArgs": ["run", "--project", "src/G04Fit.Server/G04Fit.Server.csproj", "--urls", "http://localhost:5181"],
       "port": 5181
     }
   ]

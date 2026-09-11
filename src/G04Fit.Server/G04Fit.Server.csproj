@@ -4,8 +4,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>GoFit.Server</RootNamespace>
-    <AssemblyName>GoFit.Server</AssemblyName>
+    <RootNamespace>G04Fit.Server</RootNamespace>
+    <AssemblyName>G04Fit.Server</AssemblyName>
     <!-- Der Webinhalt liegt im Projektstamm (index.html, css/, js/), nicht in wwwroot. -->
     <NoDefaultLaunchSettingsFile>false</NoDefaultLaunchSettingsFile>
   </PropertyGroup>

@@ -8,7 +8,7 @@
 .brand{display:flex;align-items:center;gap:10px;padding:4px 2px}
 .brand__mark{
   width:38px;height:38px;border-radius:11px;flex:none;position:relative;
-  background:#05070A url("../icons/icon-v3-192.png") center/cover no-repeat;
+  background:#05070A url("../icons/icon-v4-192.png") center/cover no-repeat;
   border:1px solid rgba(255,255,255,.15);
   box-shadow:-5px 0 16px rgba(255,42,42,.18),5px 0 16px rgba(61,255,158,.2);
 }

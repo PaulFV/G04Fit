@@ -1,5 +1,5 @@
 # ============================================================
-#  GoFit — Test auf iPhone oder Android
+#  G04Fit — Test auf iPhone oder Android
 #
 #  Startet den lokalen Server so, dass er im WLAN erreichbar ist,
 #  und zeigt die Adresse an, die du am Handy eingeben musst.
@@ -10,10 +10,10 @@
 
 $ErrorActionPreference = 'Stop'
 $port = 5181
-$projekt = Join-Path $PSScriptRoot 'src\GoFit.Server\GoFit.Server.csproj'
+$projekt = Join-Path $PSScriptRoot 'src\G04Fit.Server\G04Fit.Server.csproj'
 
 Write-Host ''
-Write-Host '  GoFit — Handy-Test' -ForegroundColor Green
+Write-Host '  G04Fit — Handy-Test' -ForegroundColor Green
 Write-Host '  ================================================'
 Write-Host ''
 
@@ -44,7 +44,7 @@ $ip = $adressen[0].IPAddress
 $adapter = $adressen[0].InterfaceAlias
 
 # --- 3. Firewall prüfen ---
-$regelName = "GoFit Handy-Test (Port $port)"
+$regelName = "G04Fit Handy-Test (Port $port)"
 $regel = Get-NetFirewallRule -DisplayName $regelName -ErrorAction SilentlyContinue
 
 if (-not $regel) {

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "GoFit (https)": {
+    "G04Fit (https)": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
@@ -10,7 +10,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "GoFit (http)": {
+    "G04Fit (http)": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
@@ -19,7 +19,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "GoFit (im Netzwerk, für Handy-Test)": {
+    "G04Fit (im Netzwerk, für Handy-Test)": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,

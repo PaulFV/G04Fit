@@ -1,4 +1,4 @@
-# GoFit — Datenschutzerklärung
+# G04Fit — Datenschutzerklärung
 
 **Entwurf für den Prototyp · Version 1.0.0**
 
@@ -10,7 +10,7 @@
 
 ## 1. Verantwortlicher
 
-GoFit läuft in dieser Fassung vollständig auf dem Gerät der nutzenden Person. Es gibt keinen
+G04Fit läuft in dieser Fassung vollständig auf dem Gerät der nutzenden Person. Es gibt keinen
 Serverbetrieb und keine Benutzerkonten. Verantwortlich für die Verarbeitung ist damit die
 Person, die die App auf ihrem Gerät nutzt.
 
@@ -37,7 +37,7 @@ erteilbar:
 |:--|:--|
 | Profil, Foto & Einstellungen speichern | Persönliche Angaben über die Sitzung hinaus erhalten |
 | Trainingshistorie & Rekorde | Fortschritt, Bestleistungen, Verlaufskurven |
-| Auswertung durch den GoFit Coach | Vorschläge zu Gewicht, Wiederholungen, Progression |
+| Auswertung durch den G04Fit Coach | Vorschläge zu Gewicht, Wiederholungen, Progression |
 | Obsidian-Export | Erzeugung von Markdown-Notizen |
 | Erinnerungen & Benachrichtigungen | Hinweise an Trainingstagen und nach Pausen |
 
@@ -50,7 +50,7 @@ Alle Daten liegen im lokalen Speicher des Browsers (`localStorage`) auf dem jewe
 Es findet **keine Übertragung an Dritte** statt. Die Daten bleiben erhalten, bis sie gelöscht
 werden, die Einwilligung widerrufen wird oder die Browserdaten entfernt werden.
 
-## 5. Verarbeitung durch den GoFit Coach
+## 5. Verarbeitung durch den G04Fit Coach
 
 Der Coach ist ein **regelbasiertes Verfahren**, das auf dem Gerät rechnet. Es werden keine
 Daten an einen KI-Dienst gesendet. Die Regeln — Wiederholungsbereiche, Gewichtsschritte,
@@ -70,7 +70,7 @@ werden. Beim Löschen der Daten wird es mit entfernt.
 
 ## 7. Obsidian
 
-Der Export erzeugt Markdown-Dateien, die selbst kopiert oder gespeichert werden. GoFit greift
+Der Export erzeugt Markdown-Dateien, die selbst kopiert oder gespeichert werden. G04Fit greift
 **nicht eigenständig auf das Dateisystem zu**. Was nach dem Export im Vault geschieht, liegt in
 der Verantwortung der nutzenden Person.
 
@@ -86,12 +86,12 @@ Push-Dienst übermittelt**.
 * **Datenübertragbarkeit (Art. 20):** Export als JSON-Datei unter *Datenschutz*.
 * **Löschung (Art. 17):** Einzeln (Trainingsdaten) oder vollständig (alles zurücksetzen).
 * **Widerruf (Art. 7 Abs. 3):** Jede Einwilligung ist jederzeit mit Wirkung für die Zukunft
-  widerrufbar. Ein Widerruf löscht die betroffenen Daten in GoFit unmittelbar.
+  widerrufbar. Ein Widerruf löscht die betroffenen Daten in G04Fit unmittelbar.
 * **Berichtigung, Einschränkung, Widerspruch (Art. 16, 18, 21):** bestehen unabhängig davon.
 
 ## 10. Keine medizinische Beratung
 
-GoFit ist **kein Medizinprodukt**. Kennzahlen wie Kraft, Ausdauer, Explosivität, Konstanz und
+G04Fit ist **kein Medizinprodukt**. Kennzahlen wie Kraft, Ausdauer, Explosivität, Konstanz und
 Erholung sind ein spielerisches Profil aus den Trainingsdaten und **ausdrücklich keine
 medizinischen Werte**. Bei Beschwerden, Vorerkrankungen oder nach Verletzungen ist ärztlicher
 Rat einzuholen.

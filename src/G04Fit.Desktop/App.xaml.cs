@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace GoFit.Desktop;
+namespace G04Fit.Desktop;
 
 public partial class App : Application
 {
@@ -13,7 +13,7 @@ public partial class App : Application
         {
             MessageBox.Show(
                 args.Exception.Message,
-                "GoFit — unerwarteter Fehler",
+                "G04Fit — unerwarteter Fehler",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
             args.Handled = true;

@@ -1,26 +1,26 @@
-<Window x:Class="GoFit.Desktop.MainWindow"
+<Window x:Class="G04Fit.Desktop.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-        Title="GoFit"
+        Title="G04Fit"
         Height="900" Width="1320"
         MinHeight="560" MinWidth="380"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource GoFitBackground}">
+        Background="{StaticResource G04FitBackground}">
 
     <Grid>
         <!-- Ladeanzeige, bis WebView2 bereit ist -->
         <StackPanel x:Name="SplashPanel"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-            <TextBlock Text="GoFit"
+            <TextBlock Text="G04Fit"
                        FontSize="42" FontWeight="Bold"
-                       Foreground="{StaticResource GoFitNeon}"
+                       Foreground="{StaticResource G04FitNeon}"
                        HorizontalAlignment="Center" />
             <TextBlock x:Name="SplashText"
                        Text="wird gestartet …"
                        FontSize="13" Margin="0,10,0,0"
-                       Foreground="{StaticResource GoFitMuted}"
+                       Foreground="{StaticResource G04FitMuted}"
                        HorizontalAlignment="Center"
                        TextAlignment="Center"
                        TextWrapping="Wrap"

@@ -3,13 +3,13 @@ import { DurableObject } from 'cloudflare:workers';
 
 const encoder = new TextEncoder();
 const MOTIVATION_MESSAGES = [
-  { title: 'Komm, trainieren! 💪', body: 'Dein Plan wartet auf dich. Öffne GoFit und leg los.' },
+  { title: 'Komm, trainieren! 💪', body: 'Dein Plan wartet auf dich. Öffne G04Fit und leg los.' },
   { title: 'Heute ist ein guter Tag zum Trainieren', body: 'Ein kleiner Anfang reicht – der Rest kommt mit der Bewegung.' },
   { title: 'Zeit für dich und dein Training', body: 'Schenk dir diese Einheit. Danach wirst du froh sein, angefangen zu haben.' },
   { title: 'Nur anfangen', body: 'Du musst nicht perfekt trainieren. Du musst nur den ersten Satz machen.' },
-  { title: 'Dein stärkeres Ich wartet', body: 'Jede Einheit zählt. Öffne GoFit und mach heute deinen nächsten Schritt.' },
+  { title: 'Dein stärkeres Ich wartet', body: 'Jede Einheit zählt. Öffne G04Fit und mach heute deinen nächsten Schritt.' },
   { title: 'Los geht’s! 🔥', body: 'Deine heutige Einheit bringt dich deinem Ziel ein Stück näher.' },
-  { title: 'Mach heute zu deinem Trainingstag', body: 'Motivation kommt beim Machen. Starte jetzt mit GoFit.' },
+  { title: 'Mach heute zu deinem Trainingstag', body: 'Motivation kommt beim Machen. Starte jetzt mit G04Fit.' },
   { title: 'Du kannst das', body: 'Ein Training, ein Schritt, ein Erfolg. Heute zählt.' }
 ];
 
@@ -127,12 +127,12 @@ function motivationMessage(reminder, timestamp = Date.now()) {
 async function sendNotification(env, subscription, reminder, test = false) {
   webpush.setVapidDetails(env.VAPID_SUBJECT, env.VAPID_PUBLIC_KEY, env.VAPID_PRIVATE_KEY);
   const message = test
-    ? { title: 'GoFit · Test erfolgreich', body: 'Hintergrund-Benachrichtigungen funktionieren. GoFit motiviert dich ab jetzt regelmäßig.' }
+    ? { title: 'G04Fit · Test erfolgreich', body: 'Hintergrund-Benachrichtigungen funktionieren. G04Fit motiviert dich ab jetzt regelmäßig.' }
     : motivationMessage(reminder);
   return webpush.sendNotification(subscription, JSON.stringify({
     title: message.title,
     body: message.body,
-    tag: test ? 'gofit-test' : 'gofit-training',
+    tag: test ? 'g04fit-test' : 'g04fit-training',
     url: env.APP_URL
   }), { TTL: 300, urgency: 'high' });
 }

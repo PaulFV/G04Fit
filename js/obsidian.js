@@ -47,7 +47,7 @@
       saetze: session.totalSets || 0,
       volumen_kg: session.volume || 0,
       rekorde: session.newRecords || 0,
-      tags: ['gofit', 'training']
+      tags: ['g04fit', 'training']
     }));
     out.push('');
     out.push('# ' + session.title);
@@ -138,7 +138,7 @@
       level: li.level,
       region: li.region.name,
       einheiten: s.journey.completed,
-      tags: ['gofit', 'uebersicht']
+      tags: ['g04fit', 'uebersicht']
     }));
     out.push('');
     out.push('# G04Fit Übersicht');

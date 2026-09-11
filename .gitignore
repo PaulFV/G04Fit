@@ -17,3 +17,6 @@ push-worker/.wrangler/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Arbeitsordner (Bildentwuerfe, nicht Teil der App)
+Claude outputs/

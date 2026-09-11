@@ -17,6 +17,8 @@
 (function (G) {
   'use strict';
 
+  // Die Schlüssel bleiben trotz der Umbenennung auf "gofit.*". Ein neuer
+  // Name würde bereits gespeicherte Profile unerreichbar machen.
   var KEY = 'gofit.v1';
   var KEY_CONSENT = 'gofit.v1.consent';
 

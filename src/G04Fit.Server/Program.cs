@@ -1,14 +1,14 @@
 // ============================================================
-//  GoFit — lokaler Entwicklungsserver
+//  G04Fit — lokaler Entwicklungsserver
 //
-//  Zweck: die GoFit-Weboberfläche über http(s)://localhost
+//  Zweck: die G04Fit-Weboberfläche über http(s)://localhost
 //  ausliefern. Das ist nötig für Service Worker, Installation
 //  als App (PWA) und Systembenachrichtigungen — all das lässt
 //  der Browser beim Öffnen per file:// nicht zu.
 //
 //  Es werden ausschließlich statische Dateien ausgeliefert.
 //  Es gibt keine Datenbank, keine Benutzerkonten und keine
-//  Speicherung von Trainingsdaten auf dem Server: GoFit hält
+//  Speicherung von Trainingsdaten auf dem Server: G04Fit hält
 //  alle Daten laut Konzept lokal im Browser.
 // ============================================================
 
@@ -22,7 +22,7 @@ var app = builder.Build();
 
 // ------------------------------------------------------------
 // Wurzelverzeichnis der Weboberfläche suchen.
-// Von <Projekt>/src/GoFit.Server aus liegt sie zwei Ebenen höher.
+// Von <Projekt>/src/G04Fit.Server aus liegt sie zwei Ebenen höher.
 // ------------------------------------------------------------
 var webRoot = FindWebRoot(app.Environment.ContentRootPath);
 
@@ -82,7 +82,7 @@ app.Lifetime.ApplicationStarted.Register(() =>
 {
     var urls = app.Urls.Count > 0 ? string.Join("  ", app.Urls) : "(siehe launchSettings.json)";
     Console.WriteLine();
-    Console.WriteLine("  GoFit v1.0.0 — lokaler Server");
+    Console.WriteLine("  G04Fit v2.0.0 — lokaler Server");
     Console.WriteLine("  ------------------------------------------------");
     Console.WriteLine($"  Inhalt   : {webRoot}");
     Console.WriteLine($"  Erreichbar: {urls}");

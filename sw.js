@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'g04fit-v1.0.85';
+var CACHE = 'g04fit-v2.0.0';
 
 var ASSETS = [
   './',
@@ -39,10 +39,10 @@ var ASSETS = [
   './js/view-privacy.js',
   './js/onboarding.js',
   './js/app.js',
-  './icons/icon-v3-180.png',
-  './icons/icon-v3-192.png',
-  './icons/icon-v3-512.png',
-  './icons/icon-v3-maskable-512.png',
+  './icons/icon-v4-180.png',
+  './icons/icon-v4-192.png',
+  './icons/icon-v4-512.png',
+  './icons/icon-v4-maskable-512.png',
   './assets/avatar/anatomy-front-v4.webp',
   './assets/avatar/anatomy-back-v4.webp',
   './assets/exercises/anatomy/pushup-v2.webp',
@@ -217,7 +217,7 @@ self.addEventListener('push', function (e) {
   var data = {
     title: 'Heute ist ein guter Tag zum Trainieren',
     body: 'Dein Plan wartet auf dich. Öffne G04Fit und leg los.',
-    tag: 'gofit-training',
+    tag: 'g04fit-training',
     url: './index.html#workout'
   };
   try { data = e.data ? e.data.json() : {}; } catch (err) {
@@ -225,9 +225,9 @@ self.addEventListener('push', function (e) {
   }
   e.waitUntil(self.registration.showNotification(data.title || 'G04Fit · Erinnerung', {
     body: data.body || 'Zeit für dein Training.',
-    tag: data.tag || 'gofit-push',
-    icon: './icons/icon-v3-192.png',
-    badge: './icons/icon-v3-192.png',
+    tag: data.tag || 'g04fit-push',
+    icon: './icons/icon-v4-192.png',
+    badge: './icons/icon-v4-192.png',
     renotify: true,
     requireInteraction: true,
     data: { url: data.url || './index.html#workout' }

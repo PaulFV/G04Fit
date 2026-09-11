@@ -1,11 +1,11 @@
 /* ============================================================
-   G04Fit v1.0.0 — Hilfsfunktionen
+   G04Fit v2.0.0 — Hilfsfunktionen
    Klassisches Script (kein Modul), damit die App auch per
    Doppelklick über file:// läuft.
    ============================================================ */
 var G04Fit = window.G04Fit || {};
 window.G04Fit = G04Fit;
-G04Fit.VERSION = '1.0.0';
+G04Fit.VERSION = '2.0.0';
 
 (function (G) {
   'use strict';

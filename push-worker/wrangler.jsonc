@@ -1,13 +1,18 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
+  // Der Worker-Name bleibt bewusst "gofit-push": er ist Teil der bereits
+  // veröffentlichten Adresse in push-config.js. Eine Umbenennung würde einen
+  // zweiten Worker anlegen und alle bestehenden Anmeldungen ins Leere laufen
+  // lassen. Umbenennen also nur zusammen mit einem erneuten Deploy und einer
+  // angepassten push-config.js.
   "name": "gofit-push",
   "main": "src/index.js",
   "compatibility_date": "2026-09-05",
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
     "APP_ORIGIN": "https://paulfv.github.io",
-    "APP_URL": "https://paulfv.github.io/GoFit/#workout",
-    "VAPID_SUBJECT": "https://paulfv.github.io/GoFit/"
+    "APP_URL": "https://paulfv.github.io/G04Fit/#workout",
+    "VAPID_SUBJECT": "https://paulfv.github.io/G04Fit/"
   },
   "durable_objects": {
     "bindings": [
