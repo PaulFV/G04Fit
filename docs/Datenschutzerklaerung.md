@@ -3,8 +3,8 @@
 **Entwurf für den Prototyp · Version 2.1.0**
 
 > Dieser Text ist ein Arbeitsentwurf. Vor einer Veröffentlichung muss er mit den tatsächlich
-> eingesetzten Diensten abgeglichen und rechtlich geprüft werden — insbesondere, sobald
-> Backend, Benutzerkonten oder externe Push-Dienste hinzukommen.
+> eingesetzten Diensten abgeglichen und rechtlich geprüft werden — insbesondere bei Änderungen
+> am Push-Dienst, beim Hosting oder sobald Benutzerkonten hinzukommen.
 
 ---
 

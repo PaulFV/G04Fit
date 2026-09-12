@@ -238,6 +238,7 @@
     },
     render: function () {
       var s = G.store.state;
+      var english = G.i18n && G.i18n.locale() === 'en';
       var legalSuffix = G.i18n && G.i18n.locale() === 'en' ? '-en' : '';
       var given = CONSENTS.filter(function (c) { return G.store.hasConsent(c.k); }).length;
 
@@ -250,14 +251,14 @@
         }) +
         '<div style="flex:1;min-width:220px">' +
         '<h2 style="font-size:21px">Privacy First</h2>' +
-        '<p class="muted small" style="margin-top:6px">G04Fit speichert nichts, solange du nicht ' +
-        'ausdrücklich zustimmst. Jede Einwilligung gilt einzeln und ist jederzeit widerrufbar. ' +
-        'Alle Daten bleiben auf diesem Gerät.</p>' +
+        '<p class="muted small" style="margin-top:6px">' + (english
+          ? 'G04Fit stores nothing unless you explicitly consent. Each consent is separate and can be withdrawn at any time. Profile, workout and settings data stay on this device; optional push uses only the technical data described below.'
+          : 'G04Fit speichert nichts, solange du nicht ausdrücklich zustimmst. Jede Einwilligung gilt einzeln und ist jederzeit widerrufbar. Profil-, Trainings- und Einstellungsdaten bleiben auf diesem Gerät; optionaler Push verwendet nur die unten beschriebenen technischen Daten.') + '</p>' +
         '<div class="row row--wrap" style="gap:7px;margin-top:14px">' +
-        '<span class="pill pill--neon">kein Konto</span>' +
-        '<span class="pill pill--neon">kein Server</span>' +
-        '<span class="pill pill--neon">kein Tracking</span>' +
-        '<span class="pill pill--neon">offline nutzbar</span>' +
+        '<span class="pill pill--neon">' + (english ? 'no account' : 'kein Konto') + '</span>' +
+        '<span class="pill pill--neon">' + (english ? 'workout data local' : 'Trainingsdaten lokal') + '</span>' +
+        '<span class="pill pill--neon">' + (english ? 'optional push' : 'Push optional') + '</span>' +
+        '<span class="pill pill--neon">' + (english ? 'no tracking' : 'kein Tracking') + '</span>' +
         '</div></div></div></div>' +
 
         (!G.store.storageOk
