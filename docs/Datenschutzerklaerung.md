@@ -12,7 +12,7 @@
 
 * **Name/Firma:** Paul Fodor
 * **Anschrift:** Buchbergstraße 29/1, 71735 Eberdingen, Deutschland
-* **E-Mail:** [Support-/Datenschutz-E-Mail eintragen]
+* **E-Mail:** [fodorpaul@web.de](mailto:fodorpaul@web.de)
 
 G04Fit verarbeitet die meisten Daten lokal auf dem Gerät. Für optionale Push-Erinnerungen wird
 ein technischer Push-Dienst eingesetzt (siehe Abschnitt 8).
@@ -105,7 +105,7 @@ Rat einzuholen.
 ## 11. Offene Punkte vor einer Veröffentlichung
 
 - [x] Verantwortlichen mit Anschrift eintragen
-- [ ] Kontakt-E-Mail und Datenschutz-Kontakt eintragen
+- [x] Kontakt-E-Mail und Datenschutz-Kontakt eintragen
 - [ ] Auftragsverarbeiter benennen, sobald ein Hosting hinzukommt
 - [ ] Rechtsgrundlage prüfen, falls Benutzerkonten eingeführt werden
 - [ ] Push-Dienst und dessen Datenverarbeitung dokumentieren
@@ -114,4 +114,4 @@ Rat einzuholen.
 
 ---
 
-*Stand: Version 2.1.0 · Entwurf; Kontakt-E-Mail und finale Dienstekonfiguration vor Veröffentlichung ergänzen*
+*Stand: Version 2.1.0 · Entwurf; finale Dienstekonfiguration und rechtliche Prüfung vor Veröffentlichung ergänzen*

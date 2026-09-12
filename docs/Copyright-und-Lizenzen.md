@@ -14,7 +14,7 @@ werden. Der vollständige Hinweis steht in der Datei [LICENSE](../LICENSE).
 Für die Veröffentlichung muss vor dem Upload noch eine Kontaktadresse ergänzt werden:
 
 * Rechteinhaber: **Paul Fodor**
-* Kontakt für Rechteanfragen: **[E-Mail-Adresse eintragen]**
+* Kontakt für Rechteanfragen: **fodorpaul@web.de**
 
 ## Drittanbieter
 

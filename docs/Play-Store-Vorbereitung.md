@@ -7,11 +7,11 @@ und eine echte Datenschutzseite vorhanden sind.
 ## Noch vom Betreiber einzutragen
 
 * Rechteinhaber/Impressum: **Paul Fodor**
-* Kontakt-E-Mail: **[Support-E-Mail]**
+* Kontakt-E-Mail: **fodorpaul@web.de**
 * Postanschrift: **Buchbergstraße 29/1, 71735 Eberdingen, Deutschland**
-* Öffentliche Datenschutz-URL: **[https://…/datenschutz]**
-* Support-URL: **[https://…/support]**
-* Android-Paketname: **`com.g04fit.app`** (einmalig festlegen; danach nicht ändern)
+* Öffentliche Datenschutz-URL (nach Pages-Aktivierung): **https://paulfv.github.io/G04Fit/privacy.html**
+* Support-URL (nach Pages-Aktivierung): **https://paulfv.github.io/G04Fit/support.html**
+* Android-Paketname: **`com.g04fit.app`** (festgelegt; danach nicht ändern)
 
 Ohne diese Angaben darf die App nicht als fertiger Store-Release bezeichnet werden.
 

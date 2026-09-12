@@ -255,15 +255,18 @@ getrennte Einwilligungen, jede einzeln erteilbar und jederzeit widerrufbar:
 4. **Obsidian-Export**
 5. **Erinnerungen & Benachrichtigungen**
 
-Ein Widerruf löscht die betroffenen Daten sofort. Alles liegt im lokalen Speicher des Browsers
-(`localStorage`) — es gibt keinen Server, keine Konten, keine Übertragung an Dritte.
+Ein Widerruf löscht die betroffenen Daten sofort. Die meisten Daten liegen im lokalen Speicher des
+Browsers (`localStorage`). Wenn Push-Erinnerungen aktiviert werden, überträgt G04Fit ausschließlich
+die dafür nötigen technischen Daten an den konfigurierten Push-Dienst; Name, Foto, Profil und
+Trainingsverlauf werden nicht übertragen.
 
 Unter *Datenschutz* lassen sich alle Daten als JSON exportieren, wieder einlesen sowie einzeln
 oder vollständig löschen. Dort stehen außerdem die Copyright- und Lizenzhinweise. Die öffentliche
 Datenschutzseite liegt unter [privacy.html](privacy.html), die Copyright-Seite unter
 [copyright.html](copyright.html); englische Fassungen liegen unter [privacy-en.html](privacy-en.html)
-und [copyright-en.html](copyright-en.html). Beide Texte sind vor einer Veröffentlichung mit den echten
-Betreiberangaben zu ergänzen und rechtlich zu prüfen.
+und [copyright-en.html](copyright-en.html). Zusätzlich gibt es eine [Support-Seite](support.html).
+Alle Texte müssen vor einer Veröffentlichung mit der finalen Hosting-/Push-Konfiguration abgeglichen
+und rechtlich geprüft werden.
 
 **Kennzahlen wie Kraft, Ausdauer, Explosivität, Konstanz und Erholung sind ein spielerisches
 Profil aus deinen Trainingsdaten — ausdrücklich keine medizinischen Werte.**
@@ -289,9 +292,9 @@ veröffentlicht werden.
 
 Die PWA ist für eine Android-Verpackung vorbereitet. Die Store-Texte und die technische sowie
 rechtliche Checkliste liegen unter [play-store/](play-store/) und
-[docs/Play-Store-Vorbereitung.md](docs/Play-Store-Vorbereitung.md). Vor dem Upload fehlen noch
-eine HTTPS-Domain, die echten Betreiber-/Supportdaten, ein Android-App-Bundle mit Signatur,
-Digital Asset Links (bei TWA) sowie die Angaben in der Play Console.
+[docs/Play-Store-Vorbereitung.md](docs/Play-Store-Vorbereitung.md). Vor dem Upload müssen GitHub
+Pages aktiviert und geprüft, ein Android-App-Bundle mit Signatur erstellt, Digital Asset Links (bei
+TWA) veröffentlicht sowie die Angaben in der Play Console ausgefüllt werden.
 
 ---
 

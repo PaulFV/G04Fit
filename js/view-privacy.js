@@ -81,8 +81,8 @@
      ------------------------------------------------------------ */
   var POLICY = [
     ['Verantwortlicher',
-      'Name/Firma: [vor Veröffentlichung eintragen]. Anschrift: [vollständige ladungsfähige Anschrift ' +
-      'eintragen]. E-Mail: [Support-/Datenschutz-E-Mail eintragen]. G04Fit verarbeitet die meisten Daten ' +
+      'Name/Firma: Paul Fodor. Anschrift: Buchbergstraße 29/1, 71735 Eberdingen, Deutschland. ' +
+      'E-Mail: fodorpaul@web.de. G04Fit verarbeitet die meisten Daten ' +
       'lokal auf dem Gerät. Für optionale Push-Erinnerungen wird ein technischer Push-Dienst eingesetzt.'],
     ['Welche Daten verarbeitet werden',
       'Profilangaben (Name oder Spitzname, Alter, Größe, Gewicht, Erfahrungsstufe, Ziele), ein optionales ' +
@@ -144,14 +144,15 @@
       'Copyright- und Lizenzhinweise bleiben erhalten. Die Windows-App verwendet Microsoft WebView2; ' +
       'dessen Nutzungsbedingungen gelten zusätzlich.'],
     ['Veröffentlichung',
-      'Vor einer Veröffentlichung im Google Play Store müssen Rechteinhaber, Kontaktadresse, ' +
-      'Datenschutz-URL und die vollständigen Drittanbieterhinweise ergänzt und rechtlich geprüft werden.']
+      'Vor einer Veröffentlichung im Google Play Store müssen die Datenschutz-URL erreichbar, ' +
+      'die Hosting-/Push-Konfiguration dokumentiert und die vollständigen Drittanbieterhinweise ' +
+      'rechtlich geprüft werden.']
   ];
 
   var POLICY_EN = [
     ['Controller',
-      'Name/company: [enter before release]. Address: [full legal address]. E-mail: [support/privacy ' +
-      'e-mail]. G04Fit processes most data locally on the device. Optional push reminders use a ' +
+      'Name/company: Paul Fodor. Address: Buchbergstraße 29/1, 71735 Eberdingen, Germany. ' +
+      'E-mail: fodorpaul@web.de. G04Fit processes most data locally on the device. Optional push reminders use a ' +
       'technical push service.'],
     ['Data processed',
       'Optional data includes profile details (name or nickname, age, height, weight, experience, goals), ' +
@@ -198,8 +199,8 @@
       'The optional Web Push worker uses web-push and its dependencies. Their copyright and license ' +
       'notices remain applicable. The Windows app additionally uses Microsoft WebView2.'],
     ['Release',
-      'Before a Google Play release, the rights holder, contact address, privacy URL and complete ' +
-      'third-party notices must be added and legally reviewed.']
+      'Before a Google Play release, the privacy URL must be reachable, the hosting/push configuration ' +
+      'documented and the complete third-party notices legally reviewed.']
   ];
 
   function openPolicy() {
