@@ -11,10 +11,9 @@ Trainingsdatenbank sind proprietäre Inhalte. Ohne vorherige schriftliche Zustim
 des Rechteinhabers dürfen sie nicht kopiert, verändert, verkauft oder weiterverbreitet
 werden. Der vollständige Hinweis steht in der Datei [LICENSE](../LICENSE).
 
-Für die Veröffentlichung müssen vor dem Upload noch der konkrete Rechteinhaber und
-eine Kontaktadresse ergänzt werden:
+Für die Veröffentlichung muss vor dem Upload noch eine Kontaktadresse ergänzt werden:
 
-* Rechteinhaber: **[Name oder Firma eintragen]**
+* Rechteinhaber: **Paul Fodor**
 * Kontakt für Rechteanfragen: **[E-Mail-Adresse eintragen]**
 
 ## Drittanbieter

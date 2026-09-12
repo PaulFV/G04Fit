@@ -6,9 +6,9 @@ und eine echte Datenschutzseite vorhanden sind.
 
 ## Noch vom Betreiber einzutragen
 
-* Rechteinhaber/Impressum: **[Name oder Firma]**
+* Rechteinhaber/Impressum: **Paul Fodor**
 * Kontakt-E-Mail: **[Support-E-Mail]**
-* Postanschrift: **[vollständige ladungsfähige Adresse]**
+* Postanschrift: **Buchbergstraße 29/1, 71735 Eberdingen, Deutschland**
 * Öffentliche Datenschutz-URL: **[https://…/datenschutz]**
 * Support-URL: **[https://…/support]**
 * Android-Paketname: **`com.g04fit.app`** (einmalig festlegen; danach nicht ändern)
