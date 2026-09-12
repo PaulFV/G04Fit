@@ -82,7 +82,7 @@ app.Lifetime.ApplicationStarted.Register(() =>
 {
     var urls = app.Urls.Count > 0 ? string.Join("  ", app.Urls) : "(siehe launchSettings.json)";
     Console.WriteLine();
-    Console.WriteLine("  G04Fit v2.0.0 — lokaler Server");
+    Console.WriteLine("  G04Fit v2.1.0 — lokaler Server");
     Console.WriteLine("  ------------------------------------------------");
     Console.WriteLine($"  Inhalt   : {webRoot}");
     Console.WriteLine($"  Erreichbar: {urls}");

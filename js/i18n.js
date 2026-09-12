@@ -93,7 +93,89 @@
     'Drittanbieter': 'Third-party software', 'Veröffentlichung': 'Release', 'Übersicht': 'Overview', 'Kopiert': 'Copied',
     'Urheberrecht, eigene Inhalte und Hinweise zu verwendeten Drittanbieter-Paketen.': 'Copyright, original content and notices for third-party packages.',
     'Öffentliche Datenschutzerklärung': 'Public privacy policy', 'Öffentliche Copyright-Hinweise': 'Public copyright notices',
-    'Füge die Notiz in Obsidian ein.': 'Paste the note into Obsidian.', 'Nicht möglich': 'Not possible', 'Der Download wurde vom Browser blockiert.': 'The browser blocked the download.'
+    'Füge die Notiz in Obsidian ein.': 'Paste the note into Obsidian.', 'Nicht möglich': 'Not possible', 'Der Download wurde vom Browser blockiert.': 'The browser blocked the download.',
+
+    /* App chrome, dashboard and common dynamic phrases */
+    'Guten Morgen': 'Good morning', 'Mahlzeit': 'Good afternoon', 'Guten Tag': 'Good day',
+    'Guten Abend': 'Good evening', 'Noch wach': 'Still awake', 'Frei': 'Free', 'Tonnen': 'tons',
+    'Menü schließen': 'Close menu', 'Menü öffnen': 'Open menu', 'Dunklen Modus aktivieren': 'Enable dark mode',
+    'Hellen Modus aktivieren': 'Enable light mode', 'Trainingsserie:': 'Workout streak:',
+    ' in Folge': ' in a row', 'Noch keine Serie – trainiere diese Woche, um zu starten.': 'No streak yet — train this week to get started.',
+    'Einheit läuft': 'Workout in progress', ' von ': ' of ', ' erledigt': ' completed', 'Heute erledigt': 'Completed today',
+    'Erholung ist Teil des Trainings.': 'Recovery is part of training.', 'Sätze 7 Tage': 'Sets in 7 days',
+    'Rekorde 30 Tage': 'Records in 30 days', 'Benachrichtigungen sind aktiv.': 'Notifications are active.',
+    'Benachrichtigungen sind ausgeschaltet.': 'Notifications are off.', 'Erinnerungen verwalten': 'Manage reminders',
+    'Noch keine Bestleistungen erfasst. Nach der ersten abgeschlossenen Einheit erscheinen sie hier.': 'No personal bests yet. They will appear here after your first completed workout.',
+    'Neueste Rekorde': 'Latest records', 'Trotzdem trainieren': 'Train anyway', 'Journey ansehen': 'View journey',
+
+    /* Reminders */
+    'Für Benachrichtigungen auf dem iPhone': 'For notifications on iPhone',
+    'Öffne in Safari „Teilen“ und wähle „Zum Home-Bildschirm“. Starte G04Fit danach über das App-Symbol und erlaube die Benachrichtigungen.': 'In Safari, open “Share” and choose “Add to Home Screen”. Then start G04Fit from the app icon and allow notifications.',
+    'Dieser Browser unterstützt keine Systembenachrichtigungen. G04Fit zeigt Erinnerungen stattdessen als Hinweis in der App an, solange sie geöffnet ist.': 'This browser does not support system notifications. G04Fit will show reminders inside the app while it is open instead.',
+    'Systembenachrichtigungen sind erlaubt. G04Fit synchronisiert deine Trainingstage mit dem Push-Dienst und kann dich dadurch auch bei vollständig geschlossener App erinnern.': 'System notifications are allowed. G04Fit syncs your training days with the push service and can remind you even when the app is fully closed.',
+    'Benachrichtigungen wurden im Browser blockiert. Du kannst das in den Website-Einstellungen wieder freigeben. Bis dahin erscheinen Erinnerungen nur innerhalb der App.': 'Notifications were blocked by the browser. You can allow them again in the website settings. Until then, reminders only appear inside the app.',
+    'Systembenachrichtigungen erlauben': 'Allow system notifications',
+    'Lege im Profil Trainingstage fest, dann erscheinen hier die nächsten Einheiten.': 'Set training days in your profile to see upcoming workouts here.',
+    'Keine offenen Termine': 'No upcoming dates', 'Gilt für alle Trainingstage. Der Motivationstext wechselt automatisch.': 'Applies to all training days. The motivational message changes automatically.',
+    'Sobald du die erste Einheit abgeschlossen hast, überwacht G04Fit deine Pausen.': 'Once you complete your first workout, G04Fit monitors your breaks.',
+    'Der Wiedereinstiegsmodus greift, sobald der Coach die Auswertung übernehmen darf.': 'Return mode activates once the Coach is allowed to analyse your data.',
+    'Deine Pausen sind im normalen Bereich. Es ist keine Anpassung nötig.': 'Your breaks are in the normal range. No adjustment is needed.',
+    'G04Fit meldet Uhrzeit und Trainingstage verschlüsselt beim Push-Dienst an. Auf dem iPhone muss G04Fit dafür als Home-Bildschirm-App installiert und von dort geöffnet sein. Ohne Push-Unterstützung bleibt die lokale Erinnerung innerhalb der geöffneten App aktiv.': 'G04Fit sends the time and training days to the push service in encrypted form. On iPhone, G04Fit must be installed as a Home Screen app and opened from there. Without push support, local reminders remain active while the app is open.',
+    'Lokale Erinnerung aktiv': 'Local reminder active', 'Hintergrund-Push ist noch nicht verfügbar.': 'Background push is not available yet.',
+    'Hintergrund-Push ist nicht verfügbar.': 'Background push is not available.',
+
+    /* Coach */
+    'Damit G04Fit Vorschläge zu Gewicht und Progression machen kann, muss er deine Trainingsdaten auswerten dürfen. Dafür brauchst du die Einwilligung KI-Analyse.': 'To suggest weights and progression, G04Fit needs permission to analyse your workout data. This requires the AI analysis consent.',
+    'G04Fit rechnet ausschließlich auf diesem Gerät. Es werden keine Daten an einen Server oder an einen KI-Dienst gesendet. Ausgewertet werden letzte Leistungen, Wiederholungsbereiche, Pausenlängen und der Abstand zwischen Einheiten.': 'G04Fit calculates exclusively on this device. No data is sent to a server or AI service. It analyses recent performance, rep ranges, rest periods and the time between workouts.',
+    'Du hast <b>80 kg × 12</b> sauber geschafft. Erhöhe auf <b>82,5 kg</b> und bleib bei 8–12 Wiederholungen.': 'You completed <b>80 kg × 12</b> with good form. Increase to <b>82.5 kg</b> and stay in the 8–12 rep range.',
+    'So sehen die Vorschläge aus, sobald die Auswertung aktiv ist.': 'This is what suggestions look like once analysis is enabled.',
+    'bereit für mehr Gewicht': 'ready for more weight', 'Übung bereit für mehr Gewicht': 'exercise ready for more weight',
+    'Übungen bereit für mehr Gewicht': 'exercises ready for more weight', 'Alle Berechnungen laufen lokal auf diesem Gerät.': 'All calculations run locally on this device.',
+    'Empfehlungen je Übung': 'Recommendations by exercise', 'Absolviere eine Einheit, danach entstehen konkrete Vorschläge.': 'Complete a workout to get concrete suggestions.',
+    'Sie sind ausdrücklich keine medizinischen Werte.': 'They are explicitly not medical values.',
+    'Erreichst du in allen Sätzen die obere Grenze des Wiederholungsbereichs, wird das Gewicht um den kleinsten sinnvollen Schritt erhöht und der Bereich beginnt wieder unten. Bleibst du darunter oder markierst die Sätze als schwer, hält der Coach das Gewicht oder reduziert es. Nach längeren Pausen greift zusätzlich der Wiedereinstiegsmodus.': 'When you reach the upper rep limit in every set, the weight increases by the smallest sensible step and the range starts at the bottom again. If you fall short or mark sets as hard, the Coach keeps or reduces the weight. Return mode also applies after longer breaks.',
+    'Die Auswertung läuft ab sofort – nur auf diesem Gerät.': 'Analysis is now active — on this device only.',
+
+    /* Exercise library */
+    'Für konkrete Vorschläge benötigt der Coach die Einwilligung <b>KI-Analyse</b>.': 'The Coach needs <b>AI analysis</b> consent for specific suggestions.',
+    'Wiederholungen, ': 'reps, ', 'Sätze.': 'sets.', 'G04Fit startet dich dann nicht künstlich leicht.': 'G04Fit will not start you artificially light.',
+    'Noch keine Daten zu dieser Übung. Nach der ersten Einheit erscheinen hier Rekord und Verlauf.': 'No data for this exercise yet. Records and history will appear after your first workout.',
+    'Ändere Suchbegriff oder Filter.': 'Change the search term or filter.',
+    'Tippen für Ausführung, Muskelkarte und Technik': 'Tap for form, muscle map and technique',
+
+    /* Workout */
+    'Wichtig: Wenn du bereits stark bist, startet G04Fit dich nicht künstlich leicht. Deine Stufe steuert die Richtwerte und die Übungsauswahl.': 'Important: if you are already strong, G04Fit will not start you artificially light. Your level controls recommendations and exercise selection.',
+    'Vorgesehene Übungen': 'Planned exercises', 'Vorschläge des Coach': 'Coach suggestions', 'Übung ansehen': 'View exercise',
+    'Plan und Übungsauswahl': 'Plan and exercise selection', 'Keine Auswahl': 'No selection', 'Wähle mindestens eine Übung.': 'Choose at least one exercise.',
+    '0 gewählt': '0 selected', 'gewählt': 'selected', 'Die laufende Einheit wird verworfen. Bereits abgehakte Sätze gehen verloren.': 'The current workout will be discarded. Completed sets will be lost.',
+    'Der Coach erhöht beim nächsten Mal stärker.': 'The Coach will increase more next time.', 'Der Coach geht beim nächsten Mal vorsichtiger vor.': 'The Coach will be more cautious next time.',
+    'Keine Sätze erledigt': 'No sets completed', 'Hake mindestens einen Satz ab.': 'Complete at least one set.',
+    'Einheit abschließen': 'Finish workout', 'Es sind noch <b>': 'There are still <b>', ' Sätze offen. Nicht abgehakte Sätze werden nicht gewertet.': ' sets open. Uncompleted sets do not count.',
+    'Trotzdem abschließen': 'Finish anyway', 'Als Markdown für Obsidian': 'As Markdown for Obsidian',
+
+    /* Progress and Obsidian */
+    'Sekundär beanspruchte Gruppen fließen anteilig ein.': 'Secondary muscle groups count proportionally.',
+    'Es sind ausdrücklich keine medizinischen Werte</b> und keine Diagnose.': 'They are explicitly not medical values</b> and are not a diagnosis.',
+    'Absolviere dieselbe Übung in mindestens zwei Einheiten, dann entsteht hier eine Kurve.': 'Complete the same exercise in at least two workouts to create a trend here.',
+    'Sobald du eine Übung abschließt, merkt sich G04Fit deine beste Leistung.': 'Once you complete an exercise, G04Fit remembers your best performance.',
+    'Abgeschlossene Trainings erscheinen hier mit allen Sätzen.': 'Completed workouts appear here with all sets.', 'Diese Einheit löschen': 'Delete this workout',
+    'Die Einheit wurde entfernt.': 'The workout was removed.', 'Ab jetzt merkt sich G04Fit deine Einheiten – nur auf diesem Gerät.': 'G04Fit will now remember your workouts — on this device only.',
+    'für deinen Vault erzeugen. Das passiert nur, wenn du dem ausdrücklich zustimmst.': 'for your vault. This only happens when you explicitly consent.',
+    'Eine Übersichtsnotiz mit Level, Rekorden und den letzten Einheiten': 'An overview note with level, records and recent workouts',
+    'Auf Wunsch die Empfehlungen des Coach für die nächste Einheit': 'Optionally, the Coach recommendations for the next workout',
+    'Markdown für deinen Vault': 'Markdown for your vault', 'Empfehlungen und Beobachtungen erscheinen in der Notiz. Benötigt die Einwilligung KI-Analyse.': 'Recommendations and observations appear in the note. AI analysis consent is required.',
+    'Ein direkter Schreibzugriff auf deinen Vault ist aus dem Browser heraus nicht möglich – und wäre ohne ausdrückliche Freigabe auch nicht wünschenswert. Für eine automatische Synchronisation braucht es später ein Obsidian-Plugin oder einen lokalen Dienst.': 'Direct write access to your vault is not possible from the browser — and would not be desirable without explicit permission. Automatic synchronisation will require an Obsidian plugin or local service later.',
+    'Die Einwilligung für den Obsidian-Export wird widerrufen. Bereits exportierte Dateien in deinem Vault bleiben unberührt.': 'Obsidian export consent will be revoked. Files already exported to your vault remain untouched.',
+    'Die Sicherung wurde übernommen.': 'The backup was imported.', 'Alle Einwilligungen zurückgesetzt': 'All consents reset',
+    'Profil-Speicherung ergänzt': 'Profile storage enabled', 'Die Historie braucht ein gespeichertes Profil.': 'History needs a saved profile.',
+    'Exportiert': 'Exported', 'Eingelesen': 'Imported', 'Zurückgesetzt': 'Reset', 'Alle Daten wurden gelöscht.': 'All data was deleted.',
+
+    /* Privacy and consent cards */
+    'Gespeicherte Einheiten': 'Stored workouts', 'Belegter Speicher': 'Storage used', 'erteilt': 'granted', 'nicht erteilt': 'not granted',
+    'Löschungen wirken sofort und lassen sich nicht rückgängig machen.': 'Deletions take effect immediately and cannot be undone.',
+    'Trainingsdaten löschen': 'Delete workout data', 'Alles löschen und zurücksetzen': 'Delete everything and reset',
+    'Öffentliche Datenschutzerklärung': 'Public privacy policy', 'Öffentliche Copyright-Hinweise': 'Public copyright notices',
+    'Push-Dienst nur nach Einwilligung': 'Push service only after consent', 'Einwilligung zuletzt geändert:': 'Consent last changed:', 'nie': 'never'
   };
 
   var WORDS = {
@@ -108,7 +190,12 @@
     'Minute': 'minute', 'Minuten': 'minutes', 'Sekunden': 'seconds', 'Sek.': 'sec.', 'Kalorien': 'calories', 'Name': 'Name', 'Jahre': 'years', 'Jahr': 'year',
     'läuft': 'running', 'offen': 'open', 'offene': 'open', 'nächsten': 'next', 'nächste': 'next', 'letzten': 'last', 'Gilt': 'Applies',
     'für': 'for', 'mehr': 'more', 'weniger': 'less', 'anzeigen': 'view', 'suchen': 'search', 'Vorschläge': 'suggestions', 'wählen': 'choose',
-    'gewählt': 'selected', 'Sicherung': 'backup', 'Daten': 'data', 'Datei': 'file', 'bereit': 'ready', 'Keine': 'No', 'Alle': 'All', 'alle': 'all'
+    'gewählt': 'selected', 'Sicherung': 'backup', 'Daten': 'data', 'Datei': 'file', 'bereit': 'ready', 'Keine': 'No', 'Alle': 'All', 'alle': 'all',
+    'Benachrichtigungen': 'notifications', 'Erinnerung': 'reminder', 'Erinnerungen': 'reminders', 'Einwilligung': 'consent',
+    'Einheit': 'workout', 'Einheiten': 'workouts', 'Coach': 'Coach', 'Pausen': 'rests', 'Pause': 'rest', 'lokal': 'local',
+    'Häufige': 'Common', 'Fehler': 'mistakes', 'Vorschlag': 'suggestion', 'Empfehlung': 'recommendation', 'Empfehlungen': 'recommendations',
+    'Profilfoto': 'profile photo', 'Ausrüstung': 'equipment', 'Suche': 'search', 'Filter': 'filter', 'Ändere': 'Change',
+    'Woche': 'week', 'Wochen': 'weeks', 'Tag': 'day', 'Tage': 'days', 'Monat': 'month', 'Monate': 'months'
   };
 
   var DATE_EN = { days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], daysLong: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] };

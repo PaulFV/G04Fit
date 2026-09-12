@@ -66,7 +66,7 @@
     return '<div class="grid grid--3" style="--sp:12px">' +
       statCard('Gespeicherte Einheiten', s.history.length) +
       statCard('Rekorde', Object.keys(s.records).length) +
-      statCard('Belegter Speicher', size ? (size / 1024).toFixed(1).replace('.', ',') + ' KB' : '0 KB') +
+      statCard('Belegter Speicher', size ? u.fmt(size / 1024, 1) + ' KB' : '0 KB') +
       '</div>';
   }
 
@@ -318,7 +318,7 @@
 
         '<p class="tiny dim center" style="padding:10px 0 4px">G04Fit ' + G.VERSION +
         ' · Push-Dienst nur nach Einwilligung · Einwilligung zuletzt geändert: ' +
-        (s.consent.decidedAt ? u.esc(new Date(s.consent.decidedAt).toLocaleString('de-DE')) : 'nie') + '</p>' +
+        (s.consent.decidedAt ? u.esc(new Date(s.consent.decidedAt).toLocaleString(G.i18n && G.i18n.locale() === 'en' ? 'en-US' : 'de-DE')) : 'nie') + '</p>' +
 
         '</div>';
     },

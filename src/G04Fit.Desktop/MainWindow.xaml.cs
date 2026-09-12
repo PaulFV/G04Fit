@@ -85,7 +85,7 @@ public partial class MainWindow : Window
         core.Settings.IsStatusBarEnabled = false;
         core.Settings.IsZoomControlEnabled = true;
         core.Settings.IsSwipeNavigationEnabled = false;
-        core.Settings.UserAgent += " G04FitDesktop/2.0.0";
+        core.Settings.UserAgent += " G04FitDesktop/2.1.0";
 
         // Benachrichtigungen ohne Rückfrage zulassen — es handelt sich um
         // die eigene lokale Anwendung, die Einwilligung wird in G04Fit selbst

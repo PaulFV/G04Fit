@@ -1,5 +1,5 @@
 /* ============================================================
-   G04Fit v2.0.0 — Anwendung, Navigation, Start
+   G04Fit v2.1.0 — Anwendung, Navigation, Start
    ============================================================ */
 (function (G) {
   'use strict';
