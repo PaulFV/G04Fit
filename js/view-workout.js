@@ -156,7 +156,7 @@
     if (show) {
       list = '<div class="card"><div class="card__head">' + u.icon('exercises', 18) +
         '<h3>Vorgesehene Übungen</h3><span class="spacer"></span>' +
-        '<span class="tiny dim">Vorschläge des Coach</span></div><div class="list">' +
+        '<span class="tiny dim">Vorschläge des Coaches</span></div><div class="list">' +
         show.exercises.map(function (id, i) {
           var ex = G.ex.byId(id);
           if (!ex) return '';

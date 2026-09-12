@@ -77,7 +77,7 @@
     'Ausführung ansehen': 'View form', 'Häufige Fehler': 'Common mistakes', 'Zur Einheit hinzufügen': 'Add to workout', 'Hinzugefügt': 'Added',
     'Teil der laufenden Einheit.': 'is part of the current workout.', 'Übung suchen': 'Search exercises', 'Alle Geräte': 'All equipment',
     'Tippen für Ausführung, Muskelkarte und Technik': 'Tap for form, muscle map and technique', 'Ändere Suchbegriff oder Filter.': 'Change the search term or filter.',
-    'Vorgesehene Übungen': 'Planned exercises', 'Vorschläge des Coach': 'Coach suggestions', 'Übungen wählen': 'Choose exercises', 'Übernehmen': 'Apply',
+    'Vorgesehene Übungen': 'Planned exercises', 'Vorschläge des Coaches': 'Coach suggestions', 'Übungen wählen': 'Choose exercises', 'Übernehmen': 'Apply',
     'Keine Auswahl': 'No selection', 'Wähle mindestens eine Übung.': 'Choose at least one exercise.', 'Abschließen': 'Finish', 'Übung ergänzen': 'Add exercise',
     'Überspringen': 'Skip', 'Pause vorbei — antippen für den nächsten Satz': 'Rest over — tap for the next set', 'Heute im Plan': 'Today\'s plan',
     'Nächste geplante Einheit': 'Next planned workout', 'Wähle die Übungen selbst aus.': 'Choose the exercises yourself.', 'Trainingstage ändern': 'Change training days',
@@ -145,7 +145,7 @@
 
     /* Workout */
     'Wichtig: Wenn du bereits stark bist, startet G04Fit dich nicht künstlich leicht. Deine Stufe steuert die Richtwerte und die Übungsauswahl.': 'Important: if you are already strong, G04Fit will not start you artificially light. Your level controls recommendations and exercise selection.',
-    'Vorgesehene Übungen': 'Planned exercises', 'Vorschläge des Coach': 'Coach suggestions', 'Übung ansehen': 'View exercise',
+    'Vorgesehene Übungen': 'Planned exercises', 'Vorschläge des Coaches': 'Coach suggestions', 'Übung ansehen': 'View exercise',
     'Plan und Übungsauswahl': 'Plan and exercise selection', 'Keine Auswahl': 'No selection', 'Wähle mindestens eine Übung.': 'Choose at least one exercise.',
     '0 gewählt': '0 selected', 'gewählt': 'selected', 'Die laufende Einheit wird verworfen. Bereits abgehakte Sätze gehen verloren.': 'The current workout will be discarded. Completed sets will be lost.',
     'Der Coach erhöht beim nächsten Mal stärker.': 'The Coach will increase more next time.', 'Der Coach geht beim nächsten Mal vorsichtiger vor.': 'The Coach will be more cautious next time.',
