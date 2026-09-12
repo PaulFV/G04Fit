@@ -1,4 +1,4 @@
-# G04Fit v2.0.0
+# G04Fit v2.1.0
 
 Trainingsplaner für **Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter** — mit Wochenplan,
 Journey, regelbasiertem Coach, Fortschrittsauswertung, Obsidian-Export und einem
@@ -22,7 +22,7 @@ ohne Backend, ohne Konto, ohne Tracking.
 | **G04Fit Coach** | Vorschläge zu Gewicht, Wiederholungen, Progression und Wiedereinstieg |
 | **Erinnerungen** | Trainingstage, Uhrzeit, Benachrichtigungen, Wiedereinstiegsmodus |
 | **Obsidian** | Trainingsprotokolle und Übersicht als Markdown für deinen Vault |
-| **Datenschutz** | Fünf einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung |
+| **Datenschutz** | Fünf einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung und Copyright-Hinweise |
 
 ---
 
@@ -259,8 +259,11 @@ Ein Widerruf löscht die betroffenen Daten sofort. Alles liegt im lokalen Speich
 (`localStorage`) — es gibt keinen Server, keine Konten, keine Übertragung an Dritte.
 
 Unter *Datenschutz* lassen sich alle Daten als JSON exportieren, wieder einlesen sowie einzeln
-oder vollständig löschen. Die Datenschutzerklärung ist als Entwurf enthalten und vor einer
-Veröffentlichung rechtlich zu prüfen.
+oder vollständig löschen. Dort stehen außerdem die Copyright- und Lizenzhinweise. Die öffentliche
+Datenschutzseite liegt unter [privacy.html](privacy.html), die Copyright-Seite unter
+[copyright.html](copyright.html); englische Fassungen liegen unter [privacy-en.html](privacy-en.html)
+und [copyright-en.html](copyright-en.html). Beide Texte sind vor einer Veröffentlichung mit den echten
+Betreiberangaben zu ergänzen und rechtlich zu prüfen.
 
 **Kennzahlen wie Kraft, Ausdauer, Explosivität, Konstanz und Erholung sind ein spielerisches
 Profil aus deinen Trainingsdaten — ausdrücklich keine medizinischen Werte.**
@@ -281,6 +284,14 @@ mit entfernt.
 
 Weil kein Bild mitgeliefert wird, kann das Projekt bedenkenlos weitergegeben oder
 veröffentlicht werden.
+
+## Google Play Store
+
+Die PWA ist für eine Android-Verpackung vorbereitet. Die Store-Texte und die technische sowie
+rechtliche Checkliste liegen unter [play-store/](play-store/) und
+[docs/Play-Store-Vorbereitung.md](docs/Play-Store-Vorbereitung.md). Vor dem Upload fehlen noch
+eine HTTPS-Domain, die echten Betreiber-/Supportdaten, ein Android-App-Bundle mit Signatur,
+Digital Asset Links (bei TWA) sowie die Angaben in der Play Console.
 
 ---
 

@@ -10,6 +10,10 @@ var CACHE = 'g04fit-v2.1.0';
 var ASSETS = [
   './',
   './index.html',
+  './privacy.html',
+  './privacy-en.html',
+  './copyright.html',
+  './copyright-en.html',
   './push-config.js',
   './manifest.webmanifest',
   './css/theme.css',

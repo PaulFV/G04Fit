@@ -1,6 +1,6 @@
 # G04Fit — Datenschutzerklärung
 
-**Entwurf für den Prototyp · Version 1.0.0**
+**Entwurf für den Prototyp · Version 2.1.0**
 
 > Dieser Text ist ein Arbeitsentwurf. Vor einer Veröffentlichung muss er mit den tatsächlich
 > eingesetzten Diensten abgeglichen und rechtlich geprüft werden — insbesondere, sobald
@@ -10,9 +10,12 @@
 
 ## 1. Verantwortlicher
 
-G04Fit läuft in dieser Fassung vollständig auf dem Gerät der nutzenden Person. Es gibt keinen
-Serverbetrieb und keine Benutzerkonten. Verantwortlich für die Verarbeitung ist damit die
-Person, die die App auf ihrem Gerät nutzt.
+* **Name/Firma:** [vor Veröffentlichung eintragen]
+* **Anschrift:** [vollständige ladungsfähige Anschrift eintragen]
+* **E-Mail:** [Support-/Datenschutz-E-Mail eintragen]
+
+G04Fit verarbeitet die meisten Daten lokal auf dem Gerät. Für optionale Push-Erinnerungen wird
+ein technischer Push-Dienst eingesetzt (siehe Abschnitt 8).
 
 Sobald eine spätere Version ein Backend erhält, ist hier der Betreiber mit Anschrift und
 Kontaktmöglichkeit einzutragen.
@@ -46,9 +49,10 @@ gespeichert**. Er existiert dann nur im Arbeitsspeicher und ist nach dem Schlie�
 
 ## 4. Speicherort und Speicherdauer
 
-Alle Daten liegen im lokalen Speicher des Browsers (`localStorage`) auf dem jeweiligen Gerät.
-Es findet **keine Übertragung an Dritte** statt. Die Daten bleiben erhalten, bis sie gelöscht
-werden, die Einwilligung widerrufen wird oder die Browserdaten entfernt werden.
+Profil, Trainingsdaten und Einstellungen liegen im lokalen Speicher des Browsers (`localStorage`)
+auf dem jeweiligen Gerät. Eine Ausnahme sind die technischen Daten für aktivierte Push-
+Erinnerungen (siehe Abschnitt 8). Die Daten bleiben erhalten, bis sie gelöscht werden, die
+Einwilligung widerrufen wird oder die Browserdaten entfernt werden.
 
 ## 5. Verarbeitung durch den G04Fit Coach
 
@@ -77,8 +81,10 @@ der Verantwortung der nutzenden Person.
 ## 8. Benachrichtigungen
 
 Erinnerungen werden lokal ausgelöst, solange die App geöffnet ist. Für Systembenachrichtigungen
-ist zusätzlich die Erlaubnis des Browsers nötig. Es werden **keine Geräte-Kennungen an einen
-Push-Dienst übermittelt**.
+ist zusätzlich die Erlaubnis des Browsers nötig. Wenn Hintergrund-Push aktiviert wird, werden
+eine zufällige Geräte-ID, die Web-Push-Anmeldung, Trainingstage, Erinnerungszeit, Zeitzone und
+Sprache an den konfigurierten G04Fit-Push-Dienst auf Cloudflare übertragen. Name, Foto, Profil
+und Trainingsverlauf werden nicht übertragen. Beim Widerruf wird der Zeitplan gelöscht.
 
 ## 9. Rechte der betroffenen Person
 
@@ -107,4 +113,4 @@ Rat einzuholen.
 
 ---
 
-*Stand: Version 1.0.0 · Prototyp ohne Backend*
+*Stand: Version 2.1.0 · Entwurf; Betreiberangaben und finale Dienstekonfiguration vor Veröffentlichung ergänzen*

@@ -87,7 +87,12 @@
     'Beste Haltezeit': 'Best hold time', 'Geschätztes 1RM': 'Estimated 1RM', 'Veränderung': 'Change', 'Abgeschlossene Trainings erscheinen hier mit allen Sätzen.': 'Completed workouts appear here with all sets.',
     'Einheit löschen': 'Delete workout', 'Die Einheit wurde entfernt.': 'The workout was removed.', 'Aufzeichnung aktiv': 'Tracking active',
     'G04Fit Coach': 'G04Fit Coach', 'Beispiel für eine Empfehlung': 'Example recommendation', 'Coach aktiv': 'Coach active',
-    'Datenschutz öffnen': 'Open privacy', 'Markdown für deinen Vault': 'Markdown for your vault', 'Übersicht': 'Overview', 'Kopiert': 'Copied',
+    'Datenschutz öffnen': 'Open privacy', 'Datenschutzerklärung': 'Privacy policy', 'Entwurf': 'Draft', 'Vollständig lesen': 'Read in full',
+    'Als Markdown speichern': 'Save as Markdown', 'Copyright & Lizenzen': 'Copyright & Licenses', 'Copyright & Lizenzen lesen': 'Read copyright & licenses',
+    'Urheberrecht': 'Copyright', 'Alle Rechte vorbehalten': 'All rights reserved', 'Eigene Inhalte': 'Original content',
+    'Drittanbieter': 'Third-party software', 'Veröffentlichung': 'Release', 'Übersicht': 'Overview', 'Kopiert': 'Copied',
+    'Urheberrecht, eigene Inhalte und Hinweise zu verwendeten Drittanbieter-Paketen.': 'Copyright, original content and notices for third-party packages.',
+    'Öffentliche Datenschutzerklärung': 'Public privacy policy', 'Öffentliche Copyright-Hinweise': 'Public copyright notices',
     'Füge die Notiz in Obsidian ein.': 'Paste the note into Obsidian.', 'Nicht möglich': 'Not possible', 'Der Download wurde vom Browser blockiert.': 'The browser blocked the download.'
   };
 

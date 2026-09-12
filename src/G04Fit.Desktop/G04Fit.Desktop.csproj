@@ -38,6 +38,10 @@
       <G04FitRootFiles Include="$(G04FitWebRoot)\index.html" />
       <G04FitRootFiles Include="$(G04FitWebRoot)\manifest.webmanifest" />
       <G04FitRootFiles Include="$(G04FitWebRoot)\sw.js" />
+      <G04FitRootFiles Include="$(G04FitWebRoot)\privacy.html" />
+      <G04FitRootFiles Include="$(G04FitWebRoot)\privacy-en.html" />
+      <G04FitRootFiles Include="$(G04FitWebRoot)\copyright.html" />
+      <G04FitRootFiles Include="$(G04FitWebRoot)\copyright-en.html" />
       <G04FitCss    Include="$(G04FitWebRoot)\css\**\*" />
       <G04FitJs     Include="$(G04FitWebRoot)\js\**\*" />
       <G04FitAssets Include="$(G04FitWebRoot)\assets\**\*" />
