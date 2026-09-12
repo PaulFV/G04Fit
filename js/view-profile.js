@@ -310,6 +310,11 @@
         /* Einstellungen */
         '<div class="card">' +
         '<div class="card__head">' + u.icon('refresh', 18) + '<h3>App-Einstellungen</h3></div>' +
+        '<div class="field" style="margin:10px 13px 14px"><label>Sprache / Language</label>' +
+        '<select class="select" id="languageSelect">' +
+        '<option value="en"' + (G.i18n.locale() === 'en' ? ' selected' : '') + '>English</option>' +
+        '<option value="de"' + (G.i18n.locale() === 'de' ? ' selected' : '') + '>Deutsch</option>' +
+        '</select></div>' +
         sw('setLight', 'Heller Modus', 'Wechselt zwischen dem dunklen und hellen G04Fit-Design.', s.settings.theme === 'light') +
         sw('setRest', 'Pausentimer', 'Nach jedem abgehakten Satz startet automatisch eine Pause.', s.settings.restTimer) +
         '<div class="field" style="margin:10px 13px 14px">' +
@@ -484,6 +489,11 @@
       });
 
       /* Einstellungen */
+      var languageSelect = host.querySelector('#languageSelect');
+      if (languageSelect) languageSelect.addEventListener('change', function () {
+        G.i18n.setLocale(languageSelect.value);
+      });
+
       bindSwitch(host, 'setLight', function (v) { G.app.setTheme(v ? 'light' : 'dark'); }, false);
       bindSwitch(host, 'setRest', function (v) { s.settings.restTimer = v; });
       bindSwitch(host, 'setReentry', function (v) { s.settings.reentry = v; });

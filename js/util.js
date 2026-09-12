@@ -5,7 +5,7 @@
    ============================================================ */
 var G04Fit = window.G04Fit || {};
 window.G04Fit = G04Fit;
-G04Fit.VERSION = '2.0.0';
+G04Fit.VERSION = '2.1.0';
 
 (function (G) {
   'use strict';
@@ -51,7 +51,8 @@ G04Fit.VERSION = '2.0.0';
   function fmt(v, dec) {
     if (v == null || !isFinite(v)) return '–';
     dec = dec == null ? (Math.abs(v % 1) > 0.001 ? 1 : 0) : dec;
-    return v.toFixed(dec).replace('.', ',');
+    var separator = G.i18n && G.i18n.locale() === 'en' ? '.' : ',';
+    return v.toFixed(dec).replace('.', separator);
   }
 
   function fmtKg(v) { return fmt(v) + ' kg'; }

@@ -163,6 +163,7 @@
 
     buildNav();
     updateChrome();
+    if (G.i18n) G.i18n.apply(document.body);
     if (afterFn) afterFn();
   }
 

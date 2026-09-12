@@ -34,6 +34,12 @@
       'Bizeps, Trizeps und Schulter — mit Wochenplan, Journey und einem Coach, der mit deinen ' +
       'echten Zahlen arbeitet.</p></div>' +
 
+      '<div class="field" style="max-width:260px;margin-top:14px"><label>Sprache / Language</label>' +
+      '<select class="select" id="obLanguage" data-lang-select>' +
+      '<option value="en"' + (G.i18n.locale() === 'en' ? ' selected' : '') + '>English</option>' +
+      '<option value="de"' + (G.i18n.locale() === 'de' ? ' selected' : '') + '>Deutsch</option>' +
+      '</select></div>' +
+
       '<div class="grid grid--2" style="--sp:10px">' +
       feature('journey', 'Journey', 'Level, Regionen und Modi von Easy bis Beast.') +
       feature('coach', 'G04Fit Coach', 'Vorschläge zu Gewicht, Wiederholungen und Progression.') +
@@ -250,6 +256,7 @@
     if (!host) return;
     var fn = [sWillkommen, sDatenschutz, sPerson, sErfahrung, sPlan, sFertig][step];
     host.innerHTML = fn();
+    if (G.i18n) G.i18n.apply(host);
   }
 
   function readPerson() {
@@ -331,6 +338,10 @@
       render();
     });
 
+    u.on(box, 'change', '[data-lang-select]', function (e, t) {
+      G.i18n.setLocale(t.value);
+    });
+
     u.on(box, 'click', '[data-oexp]', function (e, t) {
       readPerson();
       G.store.state.profile.experience = t.getAttribute('data-oexp');
@@ -370,5 +381,5 @@
     });
   }
 
-  G.onboarding = { start: start };
+  G.onboarding = { start: start, render: render };
 })(G04Fit);

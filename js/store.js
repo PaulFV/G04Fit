@@ -52,6 +52,8 @@
         focus: [],                   // bevorzugte Muskelgruppen
         trainingDays: [1, 3, 5],     // 0=So … 6=Sa
         reminderTime: '18:00',
+        // Neue Installationen starten auf Englisch; die Auswahl ist im Profil änderbar.
+        locale: 'en',
         startWeights: {},            // exId -> kg
         units: 'kg',
 
@@ -156,7 +158,15 @@
       } catch (e) { /* beschädigt – ignorieren */ }
     }
 
-    if (!state.consent.profile) return state;
+    // Die Sprache darf auch ohne Profil-Einwilligung gemerkt werden, damit
+    // die Auswahl im Onboarding beim nächsten Öffnen erhalten bleibt.
+    if (!state.consent.profile) {
+      try {
+        var savedLocale = localStorage.getItem('gofit.locale');
+        if (savedLocale === 'de' || savedLocale === 'en') state.profile.locale = savedLocale;
+      } catch (e) { /* private mode */ }
+      return state;
+    }
 
     var raw = readRaw(KEY);
     if (!raw) return state;
@@ -165,6 +175,12 @@
       state.createdAt = d.createdAt || state.createdAt;
       state.onboarded = !!d.onboarded || state.onboarded;
       Object.assign(state.profile, d.profile || {});
+      if (!d.profile || !Object.prototype.hasOwnProperty.call(d.profile, 'locale')) {
+        try {
+          var storedLocale = localStorage.getItem('gofit.locale');
+          if (storedLocale === 'de' || storedLocale === 'en') state.profile.locale = storedLocale;
+        } catch (e) { /* private mode */ }
+      }
       Object.assign(state.settings, d.settings || {});
       Object.assign(state.journey, d.journey || {});
       if (d.obsidian) Object.assign(state.obsidian, d.obsidian);
