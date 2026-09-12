@@ -158,6 +158,11 @@
       if (G.store.commit) G.store.commit('language');
     }
     try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {}
+    // Falls Hintergrund-Push aktiv ist, soll auch der Worker sofort die neue
+    // Sprache verwenden (Fehler bleiben für die lokale Umschaltung folgenlos).
+    if (G.reminders && G.reminders.allowed && G.reminders.allowed() && G.reminders.syncPushSchedule) {
+      G.reminders.syncPushSchedule().catch(function () {});
+    }
     if (G.app && G.store && G.store.state && G.store.state.onboarded) G.app.rerender();
     else if (G.onboarding && G.onboarding.render) G.onboarding.render();
     else apply(document.body);
