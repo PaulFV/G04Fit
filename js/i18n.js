@@ -263,7 +263,13 @@
     'Beinheben (hängend)': 'Hanging leg raise', 'Hängendes Beinheben': 'Hanging leg raise', 'Unterarmstütz (Plank)': 'Forearm plank',
     'Unterarmstütz (Plank) mit Gewicht': 'Weighted forearm plank', 'Unterarmstütz seitlich ohne Hantel': 'Side plank',
     'Unterarmstütz seitlich mit Kurzhantel': 'Weighted side plank', 'Crunches am Kabelzug': 'Cable crunch',
-    'Freies Training': 'Free workout', 'Eigenes Startgewicht': 'Custom starting weight', 'Gespeichert': 'Saved', 'Startgewicht aktualisiert.': 'Starting weight updated.'
+    'Freies Training': 'Free workout', 'Eigenes Startgewicht': 'Custom starting weight', 'Gespeichert': 'Saved', 'Startgewicht aktualisiert.': 'Starting weight updated.',
+    /* Text nodes around inline <b> tags are translated separately. */
+    'Für konkrete Vorschläge benötigt der Coach die Einwilligung': 'The Coach needs', 'KI-Analyse': 'AI analysis',
+    'Erreicht. Titel auf dieser Stufe: ': 'Reached. Title at this level: ', 'Noch gesperrt. Benötigt insgesamt etwa ': 'Still locked. Requires about ',
+    'Es sind noch': 'There are still', 'Es sind ausdrücklich keine medizinischen Werte': 'They are explicitly not medical values',
+    'Das Bild bleibt vollständig auf diesem Gerät. Es wird nicht hochgeladen, nicht analysiert und nicht an Dritte weitergegeben. Gespeichert wird es nur mit der Einwilligung': 'The picture stays entirely on this device. It is not uploaded, analysed or shared with third parties. It is stored only with',
+    'Profil speichern': 'Save profile', 'Du hast': 'You completed', 'sauber geschafft. Erhöhe auf': 'with good form. Increase to'
   };
 
   var WORDS = {
