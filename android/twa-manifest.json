@@ -1,0 +1,52 @@
+{
+  "packageId": "com.g04fit.app",
+  "host": "paulfv.github.io",
+  "name": "G04Fit",
+  "launcherName": "G04Fit",
+  "display": "standalone",
+  "themeColor": "#07100D",
+  "themeColorDark": "#000000",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#05070A",
+  "enableNotifications": true,
+  "startUrl": "/G04Fit/index.html",
+  "iconUrl": "https://paulfv.github.io/G04Fit/icons/icon-v4-512.png",
+  "maskableIconUrl": "https://paulfv.github.io/G04Fit/icons/icon-v4-maskable-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./g04fit-upload.jks",
+    "alias": "g04fit-upload"
+  },
+  "appVersionName": "1",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://paulfv.github.io/G04Fit/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://paulfv.github.io/G04Fit/",
+  "minSdkVersion": 21,
+  "orientation": "portrait-primary",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "protocolHandlers": [],
+  "fileHandlers": [],
+  "launchHandlerClientMode": "",
+  "displayOverride": [
+    "fullscreen",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "appVersion": "1"
+}
