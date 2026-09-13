@@ -1,5 +1,5 @@
 /* ============================================================
-   G04Fit v2.0.0 — Anwendung, Navigation, Start
+   G04Fit v2.1.0 — Anwendung, Navigation, Start
    ============================================================ */
 (function (G) {
   'use strict';
@@ -163,6 +163,7 @@
 
     buildNav();
     updateChrome();
+    if (G.i18n) G.i18n.apply(document.body);
     if (afterFn) afterFn();
   }
 
@@ -237,14 +238,14 @@
       setTheme(G.store.state.settings.theme === 'light' ? 'dark' : 'light');
     });
     u.$('#privacyBtn').addEventListener('click', function () { go('privacy'); });
-    u.$('#sheetClose').addEventListener('click', u.closeSheet);
+    u.$('#sheetClose').addEventListener('click', function () { u.closeSheet('user'); });
     u.$('#scrim').addEventListener('click', function () {
-      if (!u.$('#sheet').hidden) u.closeSheet();
+      if (!u.$('#sheet').hidden) u.closeSheet('user');
       closeMobileNav();
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
-        if (!u.$('#sheet').hidden) u.closeSheet();
+        if (!u.$('#sheet').hidden) u.closeSheet('user');
         closeMobileNav();
       }
     });

@@ -1,4 +1,4 @@
-# G04Fit v2.0.0
+# G04Fit v2.1.0
 
 Trainingsplaner für **Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter** — mit Wochenplan,
 Journey, regelbasiertem Coach, Fortschrittsauswertung, Obsidian-Export und einem
@@ -22,7 +22,7 @@ ohne Backend, ohne Konto, ohne Tracking.
 | **G04Fit Coach** | Vorschläge zu Gewicht, Wiederholungen, Progression und Wiedereinstieg |
 | **Erinnerungen** | Trainingstage, Uhrzeit, Benachrichtigungen, Wiedereinstiegsmodus |
 | **Obsidian** | Trainingsprotokolle und Übersicht als Markdown für deinen Vault |
-| **Datenschutz** | Fünf einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung |
+| **Datenschutz** | Fünf einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung und Copyright-Hinweise |
 
 ---
 
@@ -255,12 +255,18 @@ getrennte Einwilligungen, jede einzeln erteilbar und jederzeit widerrufbar:
 4. **Obsidian-Export**
 5. **Erinnerungen & Benachrichtigungen**
 
-Ein Widerruf löscht die betroffenen Daten sofort. Alles liegt im lokalen Speicher des Browsers
-(`localStorage`) — es gibt keinen Server, keine Konten, keine Übertragung an Dritte.
+Ein Widerruf löscht die betroffenen Daten sofort. Die meisten Daten liegen im lokalen Speicher des
+Browsers (`localStorage`). Wenn Push-Erinnerungen aktiviert werden, überträgt G04Fit ausschließlich
+die dafür nötigen technischen Daten an den konfigurierten Push-Dienst; Name, Foto, Profil und
+Trainingsverlauf werden nicht übertragen.
 
 Unter *Datenschutz* lassen sich alle Daten als JSON exportieren, wieder einlesen sowie einzeln
-oder vollständig löschen. Die Datenschutzerklärung ist als Entwurf enthalten und vor einer
-Veröffentlichung rechtlich zu prüfen.
+oder vollständig löschen. Dort stehen außerdem die Copyright- und Lizenzhinweise. Die öffentliche
+Datenschutzseite liegt unter [privacy.html](privacy.html), die Copyright-Seite unter
+[copyright.html](copyright.html); englische Fassungen liegen unter [privacy-en.html](privacy-en.html)
+und [copyright-en.html](copyright-en.html). Zusätzlich gibt es eine [Support-Seite](support.html).
+Alle Texte müssen vor einer Veröffentlichung mit der finalen Hosting-/Push-Konfiguration abgeglichen
+und rechtlich geprüft werden.
 
 **Kennzahlen wie Kraft, Ausdauer, Explosivität, Konstanz und Erholung sind ein spielerisches
 Profil aus deinen Trainingsdaten — ausdrücklich keine medizinischen Werte.**
@@ -281,6 +287,14 @@ mit entfernt.
 
 Weil kein Bild mitgeliefert wird, kann das Projekt bedenkenlos weitergegeben oder
 veröffentlicht werden.
+
+## Google Play Store
+
+Die PWA ist für eine Android-Verpackung vorbereitet. Die Store-Texte und die technische sowie
+rechtliche Checkliste liegen unter [play-store/](play-store/) und
+[docs/Play-Store-Vorbereitung.md](docs/Play-Store-Vorbereitung.md). Vor dem Upload müssen GitHub
+Pages aktiviert und geprüft, ein Android-App-Bundle mit Signatur erstellt, Digital Asset Links (bei
+TWA) veröffentlicht sowie die Angaben in der Play Console ausgefüllt werden.
 
 ---
 

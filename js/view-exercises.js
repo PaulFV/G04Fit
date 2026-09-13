@@ -73,7 +73,7 @@
   /* ------------------------------------------------------------
      Detailansicht
      ------------------------------------------------------------ */
-  function openDetail(exId) {
+  function openDetail(exId, onClose) {
     var ex = G.ex.byId(exId);
     if (!ex) return;
     var s = G.store.state;
@@ -189,7 +189,7 @@
           G.app.go('workout');
         }
       };
-    });
+    }, onClose);
   }
 
   function historyBlock(ex, rec, last) {

@@ -1,11 +1,11 @@
 /* ============================================================
-   G04Fit v2.0.0 — Hilfsfunktionen
+   G04Fit v2.1.0 — Hilfsfunktionen
    Klassisches Script (kein Modul), damit die App auch per
    Doppelklick über file:// läuft.
    ============================================================ */
 var G04Fit = window.G04Fit || {};
 window.G04Fit = G04Fit;
-G04Fit.VERSION = '2.0.0';
+G04Fit.VERSION = '2.1.0';
 
 (function (G) {
   'use strict';
@@ -13,6 +13,7 @@ G04Fit.VERSION = '2.0.0';
   /* ---------- DOM ---------- */
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  var sheetOnClose = null;
 
   /** HTML-String -> Element */
   function el(html) {
@@ -51,7 +52,8 @@ G04Fit.VERSION = '2.0.0';
   function fmt(v, dec) {
     if (v == null || !isFinite(v)) return '–';
     dec = dec == null ? (Math.abs(v % 1) > 0.001 ? 1 : 0) : dec;
-    return v.toFixed(dec).replace('.', ',');
+    var separator = G.i18n && G.i18n.locale() === 'en' ? '.' : ',';
+    return v.toFixed(dec).replace('.', separator);
   }
 
   function fmtKg(v) { return fmt(v) + ' kg'; }
@@ -64,8 +66,9 @@ G04Fit.VERSION = '2.0.0';
     var w = num(weight, 0);
     if (!ex || !ex.bw) return fmt(w) + ' kg';
     var bw = G.store && G.store.state && G.store.state.profile && G.store.state.profile.weight;
-    if (w > 0) return bw ? 'Eigengewicht + ' + fmt(w) + ' kg' : '+' + fmt(w) + ' kg';
-    return bw ? fmt(bw) + ' kg Eigengewicht' : 'Eigengewicht';
+    var en = G.i18n && G.i18n.locale() === 'en';
+    if (w > 0) return bw ? (en ? 'Body weight + ' : 'Eigengewicht + ') + fmt(w) + ' kg' : '+' + fmt(w) + ' kg';
+    return bw ? fmt(bw) + ' kg ' + (en ? 'body weight' : 'Eigengewicht') : (en ? 'Body weight' : 'Eigengewicht');
   }
 
   /** Wiederholungsbereich als Text: [8,12] -> "8–12", [12,12] -> "12" */
@@ -114,25 +117,30 @@ G04Fit.VERSION = '2.0.0';
 
   function fmtDate(iso) {
     var d = parseDay(iso);
-    return d.getDate() + '. ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+    return G.i18n && G.i18n.locale() === 'en'
+      ? MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear()
+      : d.getDate() + '. ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
   }
 
   function fmtDateShort(iso) {
     var d = parseDay(iso);
-    return d.getDate() + '. ' + MONTHS[d.getMonth()];
+    return G.i18n && G.i18n.locale() === 'en'
+      ? MONTHS[d.getMonth()] + ' ' + d.getDate()
+      : d.getDate() + '. ' + MONTHS[d.getMonth()];
   }
 
   /** "heute" / "gestern" / "vor 4 Tagen" */
   function relDay(iso) {
     var n = daysBetween(iso, today());
-    if (n === 0) return 'heute';
-    if (n === 1) return 'gestern';
-    if (n === 2) return 'vorgestern';
-    if (n < 0) return 'in ' + (-n) + ' Tagen';
-    if (n < 7) return 'vor ' + n + ' Tagen';
-    if (n < 14) return 'vor 1 Woche';
-    if (n < 60) return 'vor ' + Math.floor(n / 7) + ' Wochen';
-    return 'vor ' + Math.floor(n / 30) + ' Monaten';
+    var en = G.i18n && G.i18n.locale() === 'en';
+    if (n === 0) return en ? 'today' : 'heute';
+    if (n === 1) return en ? 'yesterday' : 'gestern';
+    if (n === 2) return en ? 'the day before yesterday' : 'vorgestern';
+    if (n < 0) return en ? 'in ' + (-n) + ' days' : 'in ' + (-n) + ' Tagen';
+    if (n < 7) return en ? n + ' days ago' : 'vor ' + n + ' Tagen';
+    if (n < 14) return en ? '1 week ago' : 'vor 1 Woche';
+    if (n < 60) return en ? Math.floor(n / 7) + ' weeks ago' : 'vor ' + Math.floor(n / 7) + ' Wochen';
+    return en ? Math.floor(n / 30) + ' months ago' : 'vor ' + Math.floor(n / 30) + ' Monaten';
   }
 
   /** Montag der Woche, in der iso liegt */
@@ -290,6 +298,10 @@ G04Fit.VERSION = '2.0.0';
   function toast(title, msg, kind, ms) {
     var host = $('#toasts');
     if (!host) return;
+    if (G.i18n && G.i18n.locale() === 'en') {
+      title = G.i18n.translate(title);
+      msg = G.i18n.translate(msg);
+    }
     kind = kind || 'ok';
     var ic = kind === 'err' ? 'warn' : (kind === 'warn' ? 'warn' : 'check');
     var node = el(
@@ -305,20 +317,28 @@ G04Fit.VERSION = '2.0.0';
     }, ms || 3600);
   }
 
-  /* ---------- Sheet ---------- */
-  function openSheet(title, bodyHtml, onMount) {
+  /* ---------- Sheet ----------
+     onClose wird nur bei einem bewussten Schließen durch den Nutzer
+     (X, Scrim oder Escape) ausgeführt. Interne Aktionen wie "Übernehmen"
+     können das Sheet weiterhin ohne Rücksprung schließen. */
+  function openSheet(title, bodyHtml, onMount, onClose) {
     var sheet = $('#sheet'), scrim = $('#scrim');
-    $('#sheetTitle').textContent = title;
+    sheetOnClose = typeof onClose === 'function' ? onClose : null;
+    $('#sheetTitle').textContent = G.i18n ? G.i18n.translate(title) : title;
     $('#sheetBody').innerHTML = bodyHtml;
     sheet.hidden = false; scrim.hidden = false;
     document.body.style.overflow = 'hidden';
     if (onMount) onMount($('#sheetBody'));
+    if (G.i18n) G.i18n.apply($('#sheetBody'));
   }
 
-  function closeSheet() {
+  function closeSheet(reason) {
+    var onClose = reason === 'user' ? sheetOnClose : null;
+    sheetOnClose = null;
     $('#sheet').hidden = true;
     $('#scrim').hidden = true;
     document.body.style.overflow = '';
+    if (onClose) onClose();
   }
 
   /** Einfacher Bestätigungsdialog im Sheet */

@@ -29,19 +29,23 @@
       var iso = u.addDays(start, i);
       var done = s.history.some(function (h) { return h.day === iso; });
       var isPlan = !!planDays[iso];
-      var cls = ['week__d'];
+      var cls = ['dashboard-week-cell'];
       if (isPlan) cls.push('is-plan');
       if (done) cls.push('is-done');
       if (iso === today) cls.push('is-today');
       if (isPlan && !done && iso < today) { cls.push('is-miss'); }
+      var marker = done ? '<em class="dashboard-week-cell__marker is-done" aria-label="erledigt"></em>' :
+        (isPlan ? '<em class="dashboard-week-cell__marker is-plan" aria-label="geplant"></em>' :
+          (iso === today ? '<em class="dashboard-week-cell__rest">REST</em>' : ''));
       cells.push(
         '<div class="' + cls.join(' ') + '" title="' + u.esc(isPlan ? planDays[iso].name : 'Frei') + '">' +
         '<b>' + u.DAYS[u.parseDay(iso).getDay()] + '</b>' +
         '<span>' + u.parseDay(iso).getDate() + '</span>' +
+        marker +
         '</div>'
       );
     }
-    return '<div class="week">' + cells.join('') + '</div>';
+    return '<div class="dashboard-week-strip">' + cells.join('') + '</div>';
   }
 
   function quickStats() {
@@ -55,19 +59,24 @@
     }).length;
 
     var items = [
-      { k: 'Einheiten gesamt', v: s.journey.completed, cls: '' },
-      { k: 'Serie', v: s.journey.streak, d: s.journey.streak === 1 ? 'Woche' : 'Wochen', cls: 'stat--gold' },
-      { k: 'Volumen 7 Tage', v: vol >= 1000 ? u.fmt(vol / 1000, 1) : u.fmt(vol), d: vol >= 1000 ? 'Tonnen' : 'kg', cls: 'stat--neon' },
-      { k: 'Sätze 7 Tage', v: sets, cls: '' },
-      { k: 'Rekorde 30 Tage', v: prs, cls: 'stat--cyan' }
+      { k: 'Einheiten gesamt', v: s.journey.completed, icon: 'dumbbell', tone: '', graph: 'bars' },
+      { k: 'Serie', v: s.journey.streak, d: s.journey.streak === 1 ? 'Woche' : 'Wochen', icon: 'flame', tone: 'gold', graph: 'dots' },
+      { k: 'Volumen 7 Tage', v: vol >= 1000 ? u.fmt(vol / 1000, 1) : u.fmt(vol), d: vol >= 1000 ? 'Tonnen' : 'kg', icon: 'plate', tone: 'neon', graph: 'bars' },
+      { k: 'Sätze 7 Tage', v: sets, icon: 'exercises', tone: '', graph: 'bars' },
+      { k: 'Rekorde 30 Tage', v: prs, icon: 'medal', tone: 'cyan', graph: 'dots', wide: true }
     ];
 
-    return '<div class="grid grid--auto" style="--sp:12px">' + items.map(function (i) {
-      return '<div class="card card--pad-sm"><div class="stat ' + i.cls + '">' +
-        '<span class="stat__k">' + u.esc(i.k) + '</span>' +
-        '<span class="stat__v">' + u.esc(String(i.v)) + (i.d ? '<span class="stat__u">' + u.esc(i.d) + '</span>' : '') + '</span>' +
-        '</div></div>';
-    }).join('') + '</div>';
+    return '<section class="dashboard-stats" aria-label="Kennzahlen">' + items.map(function (i) {
+      var graph = '<span class="dashboard-stat__graph dashboard-stat__graph--' + i.graph + '">' +
+        (i.graph === 'dots' ? '<i></i><i></i><i></i><i></i><i></i><i></i>' : '<i></i><i></i><i></i><i></i><i></i><i></i><i></i>') +
+        '</span>';
+      return '<div class="dashboard-stat card ' + (i.tone ? 'dashboard-stat--' + i.tone + ' ' : '') + (i.wide ? 'dashboard-stat--wide' : '') + '">' +
+        '<div class="dashboard-stat__icon">' + u.icon(i.icon, 28) + '</div>' +
+        '<div class="dashboard-stat__copy"><span class="dashboard-stat__k">' + u.esc(i.k) + '</span>' +
+        '<span class="dashboard-stat__v">' + u.esc(String(i.v)) + (i.d ? '<span class="dashboard-stat__u">' + u.esc(i.d) + '</span>' : '') + '</span></div>' +
+        graph +
+        '</div>';
+    }).join('') + '</section>';
   }
 
   function heroCard() {
@@ -145,27 +154,27 @@
       '</div></div>'
     ) : '';
 
-    return '<div class="card card--hero card--hl">' +
-      '<div class="row" style="gap:18px;align-items:flex-start">' +
-      '<div style="padding-top:4px">' +
+    return '<section class="dashboard-hero card card--hero card--hl">' +
+      '<div class="dashboard-hero__content">' +
+      '<div class="dashboard-hero__profile">' +
       G.avatar.render(66, { ring: li.pct, level: li.level, hero: true, action: true }) +
       '</div>' +
-      '<div style="flex:1;min-width:0">' +
-      '<p class="muted small">' + u.esc(greeting() + name) + '</p>' +
+      '<div class="dashboard-hero__copy">' +
+      '<p class="dashboard-hero__greeting muted small">' + u.esc(greeting() + name) + '</p>' +
       head + body +
       '</div></div>' +
-      '<div class="btn-row" style="margin-top:20px">' + cta + '</div>' +
+      '<div class="btn-row dashboard-hero__actions">' + cta + '</div>' +
       restRow +
-      '</div>';
+      '</section>';
   }
 
   function levelCard() {
     var s = G.store.state;
     var li = G.store.levelInfo();
-    return '<div class="card">' +
-      '<div class="card__head">' + u.icon('journey', 18) + '<h3>Journey</h3><span class="spacer"></span>' +
+    return '<section class="dashboard-journey card">' +
+      '<div class="card__head dashboard-card__head">' + u.icon('journey', 18) + '<h3>Journey</h3><span class="spacer"></span>' +
       '<span class="pill pill--muted">' + u.esc(li.region.icon + ' ' + li.region.name) + '</span></div>' +
-      '<div class="row" style="gap:18px">' +
+      '<div class="row dashboard-journey__body" style="gap:18px">' +
       G.charts.ring(li.pct, { size: 104, value: li.level, label: 'Level' }) +
       '<div style="flex:1;min-width:0">' +
       '<b style="font-size:16px">' + u.esc(li.title) + '</b>' +
@@ -173,28 +182,28 @@
       '<div class="bar"><span class="bar__fill" style="width:' + Math.round(li.pct * 100) + '%"></span></div>' +
       '<p class="tiny dim" style="margin-top:10px">' + u.esc(li.region.tag) + '</p>' +
       '</div></div>' +
-      '<button class="btn btn--sm btn--block" style="margin-top:16px" data-go="journey">Weltkarte öffnen</button>' +
-      '</div>';
+      '<button class="btn btn--sm btn--block dashboard-card__action" style="margin-top:16px" data-go="journey">Weltkarte öffnen</button>' +
+      '</section>';
   }
 
   function coachCard() {
     var tip = G.coach.dailyTip();
-    return '<div class="card">' +
-      '<div class="card__head">' + u.icon('coach', 18) + '<h3>G04Fit Coach</h3></div>' +
-      '<div class="coach">' +
+    return '<section class="dashboard-coach card">' +
+      '<div class="card__head dashboard-card__head">' + u.icon('coach', 18) + '<h3>G04Fit Coach</h3></div>' +
+      '<div class="coach dashboard-coach__body">' +
       '<div class="coach__av">' + u.icon(tip.locked ? 'lock' : 'coach', 20) + '</div>' +
       '<div class="coach__msg">' + u.esc(tip.text) + '</div>' +
       '</div>' +
       '<button class="btn btn--sm btn--block" style="margin-top:14px" data-go="coach">' +
       (tip.locked ? 'Einwilligung prüfen' : 'Alle Empfehlungen') + '</button>' +
-      '</div>';
+      '</section>';
   }
 
   function reminderCard() {
     var next = G.reminders.nextReminder();
     var on = G.store.hasConsent('push');
-    return '<div class="card">' +
-      '<div class="card__head">' + u.icon('reminders', 18) + '<h3>Nächste Erinnerung</h3></div>' +
+    return '<section class="dashboard-reminder card">' +
+      '<div class="card__head dashboard-card__head">' + u.icon('reminders', 18) + '<h3>Nächste Erinnerung</h3></div>' +
       (next
         ? '<div class="list__row" style="padding-top:0">' +
         '<div class="list__ic">' + u.icon('clock', 18) + '</div>' +
@@ -204,7 +213,7 @@
       '<p class="tiny ' + (on ? 'neon' : 'dim') + '" style="margin-top:10px">' +
       (on ? 'Benachrichtigungen sind aktiv.' : 'Benachrichtigungen sind ausgeschaltet.') + '</p>' +
       '<button class="btn btn--sm btn--block" style="margin-top:12px" data-go="reminders">Erinnerungen verwalten</button>' +
-      '</div>';
+      '</section>';
   }
 
   function recordsCard() {
@@ -214,11 +223,11 @@
       .slice(0, 4);
 
     if (!ids.length) {
-      return '<div class="card"><div class="card__head">' + u.icon('medal', 18) + '<h3>Rekorde</h3></div>' +
-        '<p class="small muted">Noch keine Bestleistungen erfasst. Nach der ersten abgeschlossenen Einheit erscheinen sie hier.</p></div>';
+      return '<section class="dashboard-records card"><div class="card__head dashboard-card__head">' + u.icon('medal', 18) + '<h3>Rekorde</h3></div>' +
+        '<p class="small muted">Noch keine Bestleistungen erfasst. Nach der ersten abgeschlossenen Einheit erscheinen sie hier.</p></section>';
     }
 
-    return '<div class="card"><div class="card__head">' + u.icon('medal', 18) + '<h3>Neueste Rekorde</h3></div>' +
+    return '<section class="dashboard-records card"><div class="card__head dashboard-card__head">' + u.icon('medal', 18) + '<h3>Neueste Rekorde</h3></div>' +
       '<div class="stack" style="--sp:8px">' + ids.map(function (id) {
         var ex = G.ex.byId(id), r = s.records[id];
         if (!ex) return '';
@@ -227,7 +236,7 @@
           '<div class="pr__main"><b>' + u.esc(ex.name) + '</b><span>' + u.esc(u.relDay(r.date)) + '</span></div>' +
           '<div class="pr__v">' + (ex.time ? r.reps + ' s' : u.fmt(r.weight) + '×' + r.reps) + '</div>' +
           '</div>';
-      }).join('') + '</div></div>';
+      }).join('') + '</div></section>';
   }
 
   G.views.dashboard = {
@@ -237,19 +246,14 @@
       return u.fmtDate(u.today()) + ' · ' + G.journey.mode(s.profile.mode).name + '-Modus';
     },
     render: function () {
-      return '<div class="view stack">' +
-        '<div class="grid grid--dash">' +
-        '<div class="stack">' +
+      return '<div class="view stack dashboard-view">' +
         heroCard() +
-        '<div class="card"><div class="card__head">' + u.icon('dashboard', 18) + '<h3>Diese Woche</h3>' +
+        '<section class="dashboard-week card"><div class="card__head dashboard-card__head">' + u.icon('dashboard', 18) + '<h3>Diese Woche</h3>' +
         '<span class="spacer"></span><span class="tiny dim">geplant · erledigt · verpasst</span></div>' +
-        weekStrip() + '</div>' +
+        weekStrip() + '</section>' +
         quickStats() +
-        '</div>' +
-        '<div class="stack">' +
         levelCard() + coachCard() + reminderCard() + recordsCard() +
-        '</div>' +
-        '</div></div>';
+        '</div>';
     },
     mount: function (host) {
       u.on(host, 'click', '[data-act="start"]', function () {

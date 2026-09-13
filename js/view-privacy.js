@@ -66,7 +66,7 @@
     return '<div class="grid grid--3" style="--sp:12px">' +
       statCard('Gespeicherte Einheiten', s.history.length) +
       statCard('Rekorde', Object.keys(s.records).length) +
-      statCard('Belegter Speicher', size ? (size / 1024).toFixed(1).replace('.', ',') + ' KB' : '0 KB') +
+      statCard('Belegter Speicher', size ? u.fmt(size / 1024, 1) + ' KB' : '0 KB') +
       '</div>';
   }
 
@@ -81,10 +81,9 @@
      ------------------------------------------------------------ */
   var POLICY = [
     ['Verantwortlicher',
-      'G04Fit läuft in dieser Fassung vollständig auf deinem Gerät. Es gibt keinen Serverbetrieb und keine ' +
-      'Benutzerkonten. Verantwortlich für die Verarbeitung ist damit die Person, die die App auf ihrem Gerät ' +
-      'nutzt. Sobald eine spätere Version ein Backend erhält, ist hier der Betreiber mit Anschrift und ' +
-      'Kontaktmöglichkeit einzutragen.'],
+      'Name/Firma: Paul Fodor. Anschrift: Buchbergstraße 29/1, 71735 Eberdingen, Deutschland. ' +
+      'E-Mail: fodorpaul@web.de. G04Fit verarbeitet die meisten Daten ' +
+      'lokal auf dem Gerät. Für optionale Push-Erinnerungen wird ein technischer Push-Dienst eingesetzt.'],
     ['Welche Daten verarbeitet werden',
       'Profilangaben (Name oder Spitzname, Alter, Größe, Gewicht, Erfahrungsstufe, Ziele), ein optionales ' +
       'Profilfoto als Trainings-Avatar, Trainingsdaten (Datum, Übungen, Sätze, Gewichte, Wiederholungen, ' +
@@ -132,16 +131,103 @@
       'Cloudflare Push-Dienstes und möglicher künftiger Benutzerkonten.']
   ];
 
+  var COPYRIGHT = [
+    ['Urheberrecht',
+      '© 2026 G04Fit. Alle Rechte vorbehalten. Die G04Fit-spezifische App-Logik, Oberfläche, Texte und ' +
+      'Trainingsdatenbank dürfen ohne vorherige schriftliche Zustimmung nicht kopiert, verändert oder ' +
+      'weiterverbreitet werden.'],
+    ['Eigene Inhalte',
+      'Marke, Name, Logo, App-Icon, Benutzeroberfläche und redaktionelle Inhalte sind Bestandteile von ' +
+      'G04Fit. Rechteanfragen können über das GitHub-Repository von G04Fit gestellt werden.'],
+    ['Drittanbieter',
+      'Für Web Push werden die Pakete web-push und ihre Abhängigkeiten verwendet. Die jeweiligen ' +
+      'Copyright- und Lizenzhinweise bleiben erhalten. Die Windows-App verwendet Microsoft WebView2; ' +
+      'dessen Nutzungsbedingungen gelten zusätzlich.'],
+    ['Veröffentlichung',
+      'Vor einer Veröffentlichung im Google Play Store müssen die Datenschutz-URL erreichbar, ' +
+      'die Hosting-/Push-Konfiguration dokumentiert und die vollständigen Drittanbieterhinweise ' +
+      'rechtlich geprüft werden.']
+  ];
+
+  var POLICY_EN = [
+    ['Controller',
+      'Name/company: Paul Fodor. Address: Buchbergstraße 29/1, 71735 Eberdingen, Germany. ' +
+      'E-mail: fodorpaul@web.de. G04Fit processes most data locally on the device. Optional push reminders use a ' +
+      'technical push service.'],
+    ['Data processed',
+      'Optional data includes profile details (name or nickname, age, height, weight, experience, goals), ' +
+      'a training avatar, workout data (date, exercises, sets, weights, reps and notes), derived values ' +
+      'and app settings. G04Fit does not create medical diagnoses.'],
+    ['Training avatar (photo)',
+      'The photo is stored only in this browser and used only to display your avatar. There is no facial ' +
+      'recognition, biometric analysis or transfer. You can replace or remove it at any time.'],
+    ['Legal basis',
+      'Processing is based solely on your consent under Art. 6(1)(a) GDPR. Consents are separate by ' +
+      'purpose and can be withdrawn individually.'],
+    ['Storage and retention',
+      'Profile, photo and workout data are stored in this browser on the device. Technical data for ' +
+      'enabled push reminders is the exception. Data remains until you delete it, withdraw consent or ' +
+      'remove browser data.'],
+    ['G04Fit Coach',
+      'The coach is a rules-based process that runs on your device. No data is sent to an AI service.'],
+    ['Obsidian',
+      'The export creates Markdown files that you copy or save yourself. G04Fit does not access your ' +
+      'file system automatically.'],
+    ['Notifications',
+      'When background push is enabled, a random device ID, Web Push subscription, training days, ' +
+      'reminder time, timezone and language are sent to the configured Cloudflare push service. Your ' +
+      'name, photo, profile and workout history are not sent. The schedule is deleted when consent is withdrawn.'],
+    ['Your rights',
+      'You may request access, correction, deletion, restriction, portability and withdraw consent. You ' +
+      'can delete all data directly in G04Fit. Contact the controller listed above for enquiries.'],
+    ['No medical advice',
+      'G04Fit is not a medical device. Metrics are a playful profile derived from workout data and are ' +
+      'not medical values. Seek medical advice if you have symptoms or pre-existing conditions.'],
+    ['Status and open points',
+      'This is a prototype draft. Before release it must be checked against the actual hosting and push ' +
+      'services and reviewed by a qualified person.']
+  ];
+
+  var COPYRIGHT_EN = [
+    ['Copyright',
+      '© 2026 G04Fit. All rights reserved. G04Fit-specific app logic, interface, text and training ' +
+      'content may not be copied, modified or redistributed without prior written permission.'],
+    ['Original content',
+      'The G04Fit name, mark, logo, app icon, interface and editorial content are G04Fit materials. ' +
+      'Rights requests can be sent through the G04Fit GitHub repository.'],
+    ['Third-party software',
+      'The optional Web Push worker uses web-push and its dependencies. Their copyright and license ' +
+      'notices remain applicable. The Windows app additionally uses Microsoft WebView2.'],
+    ['Release',
+      'Before a Google Play release, the privacy URL must be reachable, the hosting/push configuration ' +
+      'documented and the complete third-party notices legally reviewed.']
+  ];
+
   function openPolicy() {
-    u.openSheet('Datenschutzerklärung', '<div class="stack">' +
+    var english = G.i18n && G.i18n.locale() === 'en';
+    var policy = english ? POLICY_EN : POLICY;
+    u.openSheet(english ? 'Privacy policy' : 'Datenschutzerklärung', '<div class="stack">' +
       '<div class="note note--warn">' + u.icon('warn', 17) +
-      '<div>Entwurf für den Prototyp. Vor einer Veröffentlichung rechtlich prüfen lassen.</div></div>' +
-      POLICY.map(function (p, i) {
+      '<div>' + (english ? 'Prototype draft. Have this text legally reviewed before release.' : 'Entwurf für den Prototyp. Vor einer Veröffentlichung rechtlich prüfen lassen.') + '</div></div>' +
+      policy.map(function (p, i) {
         return '<div class="card card--pad-sm">' +
           '<h3 style="font-size:14.5px;margin-bottom:8px" class="neon">' + (i + 1) + '. ' + u.esc(p[0]) + '</h3>' +
           '<p class="small muted">' + u.esc(p[1]) + '</p></div>';
       }).join('') +
-      '<p class="tiny dim center">Stand: ' + u.fmtDate(u.today()) + ' · G04Fit ' + G.VERSION + '</p>' +
+      '<p class="tiny dim center">' + (english ? 'Updated: ' : 'Stand: ') + u.fmtDate(u.today()) + ' · G04Fit ' + G.VERSION + '</p>' +
+      '</div>');
+  }
+
+  function openCopyright() {
+    var english = G.i18n && G.i18n.locale() === 'en';
+    var copyright = english ? COPYRIGHT_EN : COPYRIGHT;
+    u.openSheet(english ? 'Copyright & Licenses' : 'Copyright & Lizenzen', '<div class="stack">' +
+      copyright.map(function (p, i) {
+        return '<div class="card card--pad-sm">' +
+          '<h3 style="font-size:14.5px;margin-bottom:8px" class="neon">' + (i + 1) + '. ' + u.esc(p[0]) + '</h3>' +
+          '<p class="small muted">' + u.esc(p[1]) + '</p></div>';
+      }).join('') +
+      '<p class="tiny dim center">© 2026 G04Fit · ' + (english ? 'All rights reserved' : 'Alle Rechte vorbehalten') + ' · Version ' + G.VERSION + '</p>' +
       '</div>');
   }
 
@@ -153,6 +239,8 @@
     },
     render: function () {
       var s = G.store.state;
+      var english = G.i18n && G.i18n.locale() === 'en';
+      var legalSuffix = G.i18n && G.i18n.locale() === 'en' ? '-en' : '';
       var given = CONSENTS.filter(function (c) { return G.store.hasConsent(c.k); }).length;
 
       return '<div class="view stack">' +
@@ -164,14 +252,14 @@
         }) +
         '<div style="flex:1;min-width:220px">' +
         '<h2 style="font-size:21px">Privacy First</h2>' +
-        '<p class="muted small" style="margin-top:6px">G04Fit speichert nichts, solange du nicht ' +
-        'ausdrücklich zustimmst. Jede Einwilligung gilt einzeln und ist jederzeit widerrufbar. ' +
-        'Alle Daten bleiben auf diesem Gerät.</p>' +
+        '<p class="muted small" style="margin-top:6px">' + (english
+          ? 'G04Fit stores nothing unless you explicitly consent. Each consent is separate and can be withdrawn at any time. Profile, workout and settings data stay on this device; optional push uses only the technical data described below.'
+          : 'G04Fit speichert nichts, solange du nicht ausdrücklich zustimmst. Jede Einwilligung gilt einzeln und ist jederzeit widerrufbar. Profil-, Trainings- und Einstellungsdaten bleiben auf diesem Gerät; optionaler Push verwendet nur die unten beschriebenen technischen Daten.') + '</p>' +
         '<div class="row row--wrap" style="gap:7px;margin-top:14px">' +
-        '<span class="pill pill--neon">kein Konto</span>' +
-        '<span class="pill pill--neon">kein Server</span>' +
-        '<span class="pill pill--neon">kein Tracking</span>' +
-        '<span class="pill pill--neon">offline nutzbar</span>' +
+        '<span class="pill pill--neon">' + (english ? 'no account' : 'kein Konto') + '</span>' +
+        '<span class="pill pill--neon">' + (english ? 'workout data local' : 'Trainingsdaten lokal') + '</span>' +
+        '<span class="pill pill--neon">' + (english ? 'optional push' : 'Push optional') + '</span>' +
+        '<span class="pill pill--neon">' + (english ? 'no tracking' : 'kein Tracking') + '</span>' +
         '</div></div></div></div>' +
 
         (!G.store.storageOk
@@ -218,9 +306,21 @@
         '<button class="btn btn--ghost" data-act="policy-md">Als Markdown speichern</button>' +
         '</div></div>' +
 
+        '<div class="card">' +
+        '<div class="card__head">' + u.icon('info', 18) + '<h3>Copyright &amp; Lizenzen</h3>' +
+        '<span class="spacer"></span><span class="pill pill--muted">© 2026</span></div>' +
+        '<p class="small muted" style="margin-bottom:14px">Urheberrecht, eigene Inhalte und Hinweise zu verwendeten Drittanbieter-Paketen.</p>' +
+        '<button class="btn btn--ghost" data-act="copyright">Copyright &amp; Lizenzen lesen</button>' +
+        '</div>' +
+
+        '<div class="row row--wrap" style="gap:10px;justify-content:center">' +
+        '<a class="btn btn--ghost btn--sm" href="privacy' + legalSuffix + '.html" target="_blank" rel="noopener">Öffentliche Datenschutzerklärung</a>' +
+        '<a class="btn btn--ghost btn--sm" href="copyright' + legalSuffix + '.html" target="_blank" rel="noopener">Öffentliche Copyright-Hinweise</a>' +
+        '</div>' +
+
         '<p class="tiny dim center" style="padding:10px 0 4px">G04Fit ' + G.VERSION +
         ' · Push-Dienst nur nach Einwilligung · Einwilligung zuletzt geändert: ' +
-        (s.consent.decidedAt ? u.esc(new Date(s.consent.decidedAt).toLocaleString('de-DE')) : 'nie') + '</p>' +
+        (s.consent.decidedAt ? u.esc(new Date(s.consent.decidedAt).toLocaleString(G.i18n && G.i18n.locale() === 'en' ? 'en-US' : 'de-DE')) : 'nie') + '</p>' +
 
         '</div>';
     },
@@ -343,6 +443,7 @@
       });
 
       u.on(host, 'click', '[data-act="policy"]', openPolicy);
+      u.on(host, 'click', '[data-act="copyright"]', openCopyright);
 
       u.on(host, 'click', '[data-act="policy-md"]', function () {
         var md = '# G04Fit — Datenschutzerklärung (Entwurf)\n\n' +
@@ -355,6 +456,7 @@
       });
     },
     openPolicy: openPolicy,
+    openCopyright: openCopyright,
     POLICY: POLICY
   };
 })(G04Fit);

@@ -39,6 +39,51 @@
     return 1 + Math.round(((t - week1) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
   }
 
+  /**
+   * Wochenvolumen als ruhiges Linien-Diagramm. Die vorhandenen Chart-Helfer
+   * bleiben für die Detail-Tabs erhalten; die Übersicht bekommt eine eigene
+   * Darstellung, damit der Verlauf auch bei einem leeren Konto verständlich
+   * bleibt (Null-Linie + Hinweis statt einer Wand aus Null-Balken).
+   */
+  function volumeChart(bars) {
+    var W = 820, H = 270, padL = 54, padR = 18, padT = 18, padB = 42;
+    var iw = W - padL - padR, ih = H - padT - padB;
+    var max = Math.max.apply(null, bars.map(function (b) { return +b.value || 0; }));
+    var top = Math.max(1000, Math.ceil(max / 250) * 250);
+    var hasData = max > 0;
+    function px(i) { return padL + (bars.length < 2 ? iw / 2 : i / (bars.length - 1) * iw); }
+    function py(v) { return padT + ih - (v / top) * ih; }
+    var points = bars.map(function (b, i) { return [px(i), py(+b.value || 0)]; });
+    var d = points.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+    var area = d + ' L' + px(bars.length - 1).toFixed(1) + ' ' + (padT + ih) + ' L' + padL + ' ' + (padT + ih) + ' Z';
+    var out = '<div class="progress-chart" role="img" aria-label="Volumen je Woche">' +
+      '<div class="progress-chart__head"><div class="progress-chart__title">' + u.icon('progress', 25) +
+      '<h3>Volumen je Woche</h3></div><span class="progress-chart__mark">' + u.icon('dumbbell', 25) + '</span></div>' +
+      '<div class="progress-chart__plot">' +
+      '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">' +
+      '<defs><linearGradient id="progressChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(61,255,158,.26)"/><stop offset="100%" stop-color="rgba(61,255,158,0)"/></linearGradient></defs>';
+
+    for (var g = 0; g <= 4; g++) {
+      var yy = padT + ih * g / 4;
+      var value = Math.round(top - top * g / 4);
+      out += '<line x1="' + padL + '" y1="' + yy.toFixed(1) + '" x2="' + (W - padR) +
+        '" y2="' + yy.toFixed(1) + '" class="progress-chart__gridline"/>' +
+        '<text x="' + (padL - 11) + '" y="' + (yy + 4).toFixed(1) + '" text-anchor="end" class="progress-chart__axis">' + value + '</text>';
+    }
+    out += '<path d="' + area + '" class="progress-chart__area"/>' +
+      '<path d="' + d + '" class="progress-chart__line"/>';
+    points.forEach(function (p, i) {
+      out += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4.5" class="progress-chart__point"><title>' +
+        u.esc(bars[i].label + ': ' + u.fmt(bars[i].value) + ' kg') + '</title></circle>';
+      out += '<text x="' + p[0].toFixed(1) + '" y="' + (H - 14) + '" text-anchor="middle" class="progress-chart__label">' +
+        u.esc(bars[i].label) + '</text>';
+    });
+    out += '</svg>' + (!hasData ? '<div class="progress-chart__empty"><span>' + u.icon('progress', 25) +
+      '</span><b>Noch keine Trainingsdaten.</b></div>' : '') +
+      '</div><p class="progress-chart__caption">Volumen = Summe aus Gewicht × Wiederholungen aller abgehakten Sätze.</p></div>';
+    return out;
+  }
+
   /** Kraftverlauf einer Übung als geschätztes 1RM */
   function strengthSeries(exId) {
     var s = G.store.state;
@@ -76,22 +121,23 @@
      Sperr-Hinweis ohne Einwilligung
      ------------------------------------------------------------ */
   function lockedView() {
-    return '<div class="view stack">' +
-      '<div class="card card--hero">' +
-      '<div class="row" style="gap:16px;align-items:flex-start">' +
-      '<div class="coach__av">' + u.icon('lock', 20) + '</div>' +
-      '<div style="flex:1">' +
-      '<h2 style="font-size:20px;margin-bottom:6px">Fortschritt wird nicht aufgezeichnet</h2>' +
+    return '<div class="view stack progress-view progress-view--locked">' +
+      '<section class="card card--hero progress-locked-card">' +
+      '<div class="progress-locked-card__icon">' + u.icon('lock', 30) + '</div>' +
+      '<div class="progress-locked-card__copy">' +
+      '<p class="progress-eyebrow">Datenschutz</p>' +
+      '<h2>Fortschritt wird nicht aufgezeichnet</h2>' +
       '<p class="muted small">G04Fit speichert Trainingshistorie und Rekorde nur, wenn du dem ausdrücklich ' +
       'zustimmst. Ohne diese Einwilligung bleiben abgeschlossene Einheiten nicht erhalten und es gibt ' +
       'keine Verlaufsdaten, die ausgewertet werden könnten.</p>' +
-      '<div class="btn-row" style="margin-top:18px">' +
+      '<div class="btn-row progress-locked-card__actions">' +
       '<button class="btn btn--primary" data-act="enable-history">Trainingshistorie erlauben</button>' +
       '<button class="btn btn--ghost" data-go="privacy">Datenschutz öffnen</button>' +
-      '</div></div></div></div>' +
-      '<div class="note">' + u.icon('info', 18) +
+      '</div></div></section>' +
+      '<div class="note progress-privacy-note">' + u.icon('info', 18) +
       '<div>Die Daten bleiben ausschließlich auf diesem Gerät. Es findet keine Übertragung an einen Server statt. ' +
-      'Du kannst die Einwilligung jederzeit widerrufen – die Daten werden dann sofort gelöscht.</div></div>' +
+      'Du kannst die Einwilligung jederzeit widerrufen – die Daten werden dann sofort gelöscht.</div>' +
+      '</div>' +
       '</div>';
   }
 
@@ -100,59 +146,58 @@
      ------------------------------------------------------------ */
   function tabOverview() {
     var s = G.store.state;
-    var today = u.today();
     var vol = weeklyVolume(8);
     var totalVol = u.sum(s.history, function (x) { return x.volume || 0; });
     var totalSets = u.sum(s.history, function (x) { return x.totalSets || 0; });
     var totalReps = u.sum(s.history, function (x) { return x.totalReps || 0; });
 
     var cards = [
-      { k: 'Einheiten', v: s.journey.completed, cls: '' },
-      { k: 'Gesamtvolumen', v: totalVol >= 1000 ? u.fmt(totalVol / 1000, 1) : u.fmt(totalVol), d: totalVol >= 1000 ? 't' : 'kg', cls: 'stat--neon' },
-      { k: 'Sätze gesamt', v: totalSets, cls: '' },
-      { k: 'Wiederholungen gesamt', v: totalReps, cls: '' },
-      { k: 'Serie', v: s.journey.streak, d: 'Wochen', cls: 'stat--gold' },
-      { k: 'Beste Serie', v: s.journey.bestStreak || 0, d: 'Wochen', cls: '' },
-      { k: 'Rekorde', v: Object.keys(s.records).length, cls: 'stat--cyan' }
+      { k: 'Einheiten', v: s.journey.completed, cls: '', ic: 'dumbbell' },
+      { k: 'Gesamtvolumen', v: totalVol >= 1000 ? u.fmt(totalVol / 1000, 1) : u.fmt(totalVol), d: totalVol >= 1000 ? 't' : 'kg', cls: 'stat--neon', ic: 'plate' },
+      { k: 'Sätze gesamt', v: totalSets, cls: '', ic: 'exercises' },
+      { k: 'Wiederholungen gesamt', v: totalReps, cls: '', ic: 'refresh' },
+      { k: 'Serie', v: s.journey.streak, d: 'Wochen', cls: 'stat--gold', ic: 'flame' },
+      { k: 'Beste Serie', v: s.journey.bestStreak || 0, d: 'Wochen', cls: '', ic: 'coach' },
+      { k: 'Rekorde', v: Object.keys(s.records).length, cls: 'stat--cyan', ic: 'medal' }
     ];
 
-    return '<div class="grid grid--auto" style="--sp:12px">' +
+    return '<div class="progress-overview">' +
+      '<div class="progress-stats">' +
       cards.map(function (i) {
-        return '<div class="card card--pad-sm"><div class="stat ' + i.cls + '">' +
+        return '<article class="card progress-stat ' + i.cls + '">' +
+          '<div class="progress-stat__icon">' + u.icon(i.ic, 34) + '</div>' +
+          '<div class="stat progress-stat__body ' + i.cls + '">' +
           '<span class="stat__k">' + u.esc(i.k) + '</span>' +
           '<span class="stat__v">' + u.esc(String(i.v)) +
-          (i.d ? '<span class="stat__u">' + u.esc(i.d) + '</span>' : '') + '</span></div></div>';
+          (i.d ? '<span class="stat__u">' + u.esc(i.d) + '</span>' : '') + '</span></div></article>';
       }).join('') + '</div>' +
-
-      '<div class="card">' +
-      '<div class="card__head">' + u.icon('progress', 18) + '<h3>Volumen je Woche</h3>' +
-      '<span class="spacer"></span><span class="tiny dim">letzte 8 Wochen</span></div>' +
-      G.charts.columns(vol) +
-      '<p class="tiny dim center" style="margin-top:12px">Volumen = Summe aus Gewicht × Wiederholungen aller abgehakten Sätze.</p>' +
-      '</div>' +
-
-      '<div class="grid grid--2">' +
-      '<div class="card">' +
-      '<div class="card__head">' + u.icon('target', 18) + '<h3>Muskelgruppen-Balance</h3>' +
-      '<span class="spacer"></span><span class="tiny dim">8 Wochen</span></div>' +
+      volumeChart(vol) +
+      '<div class="progress-lower-grid">' +
+      '<section class="card progress-balance-card">' +
+      '<div class="progress-card-head"><div>' + u.icon('target', 25) + '<h3>Muskelgruppen-Balance</h3></div>' +
+      '<span class="progress-card-head__mark">' + u.icon('target', 28) + '</span></div>' +
+      '<div class="progress-balance-card__body">' +
+      '<div class="progress-balance-card__copy">' +
       (s.history.length
         ? G.charts.balance(G.coach.balance())
-        : '<p class="small muted">Noch keine Daten.</p>') +
-      '<p class="tiny dim" style="margin-top:14px">Sekundär beanspruchte Gruppen fließen anteilig ein.</p>' +
-      '</div>' +
+        : '<p class="progress-empty-title">Noch keine Daten.</p>') +
+      '<p class="tiny dim progress-balance-card__hint">Sekundär beanspruchte Gruppen fließen anteilig ein.</p>' +
+      '</div><div class="progress-balance-card__visual"><span class="progress-balance-card__halo"></span>' +
+      '<img src="assets/avatar/anatomy-front-v4.webp" alt="" loading="lazy"></div></div>' +
+      '</section>' +
 
-      '<div class="card">' +
-      '<div class="card__head">' + u.icon('coach', 18) + '<h3>Leistungsprofil</h3></div>' +
+      '<section class="card progress-profile-card">' +
+      '<div class="progress-card-head"><div>' + u.icon('coach', 25) + '<h3>Leistungsprofil</h3></div>' +
+      '<span class="progress-card-head__mark">' + u.icon('coach', 28) + '</span></div>' +
       (G.coach.allowed()
-        ? G.charts.radar(G.coach.metrics(), { size: 250 }) +
-        '<div class="note note--warn" style="margin-top:14px">' + u.icon('warn', 17) +
+        ? '<div class="progress-profile-card__radar">' + G.charts.radar(G.coach.metrics(), { size: 250 }) + '</div>' +
+        '<div class="note note--warn progress-profile-card__note">' + u.icon('warn', 17) +
         '<div>Diese Kennzahlen sind ein spielerisches Profil aus deinen Trainingsdaten. ' +
         '<b>Es sind ausdrücklich keine medizinischen Werte</b> und keine Diagnose.</div></div>'
-        : '<div class="note">' + u.icon('lock', 17) +
+        : '<div class="progress-profile-lock"><div class="progress-profile-lock__icon">' + u.icon('lock', 31) + '</div>' +
         '<div>Das Leistungsprofil benötigt die Einwilligung <b>KI-Analyse</b>.</div></div>' +
-        '<button class="btn btn--sm btn--block" style="margin-top:12px" data-go="privacy">Datenschutz öffnen</button>') +
-      '</div>' +
-      '</div>';
+        '<button class="btn btn--sm btn--block progress-profile-card__privacy" data-go="privacy">Datenschutz öffnen</button>') +
+      '</section></div></div>';
   }
 
   /* ------------------------------------------------------------
@@ -373,9 +418,9 @@
           : tab === 'historie' ? tabHistory()
             : tabOverview();
 
-      return '<div class="view stack">' +
-        '<div class="tabs" id="progTabs">' + TABS.map(function (t) {
-          return '<button class="tabs__b' + (tab === t.k ? ' is-on' : '') + '" data-t="' + t.k + '">' +
+      return '<div class="view stack progress-view">' +
+        '<div class="tabs progress-tabs" id="progTabs" role="tablist">' + TABS.map(function (t) {
+          return '<button class="tabs__b progress-tabs__button' + (tab === t.k ? ' is-on' : '') + '" data-t="' + t.k + '" role="tab" aria-selected="' + (tab === t.k ? 'true' : 'false') + '">' +
             u.esc(t.n) + '</button>';
         }).join('') + '</div>' +
         body + '</div>';

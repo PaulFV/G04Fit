@@ -6,6 +6,40 @@
   var u = G.u;
   G.views = G.views || {};
 
+  /* Statische, realistische Übungsbilder für Vorschau und Auswahl. Einige
+     Übungen teilen sich bewusst ein Motiv, damit die Kacheln sofort laden.
+     Die animierte Demonstration im Detailfenster bleibt davon unberührt. */
+  var PHOTO_BY_ID = {
+    'bench-bb': 'bench-bb', 'bench-db': 'bench-db', 'incline-db': 'incline-db',
+    'fly-cable': 'fly-cable', 'fly-machine': 'fly-machine-v2-dark', 'fly-machine-2': 'fly-machine-v2-dark',
+    'pushup': 'pushup', 'pushup-close': 'pushup-v2', 'pushup-decline': 'pushup-v2',
+    'pushup-knee': 'pushup-v2', 'pushup-positive': 'pushup-v2', 'dip-chest': 'dip-chest', 'dip-heavy': 'dip-chest',
+    'pullup': 'pullup', 'pullup-assisted': 'pullup', 'pullup-close-overhand': 'pullup',
+    'pullup-wide-overhand': 'pullup', 'pullup-wide-weighted': 'pullup',
+    'latpull': 'latpull', 'latpull-close-neck': 'latpull', 'latpull-chest': 'latpull',
+    'latpull-wide-chest': 'latpull', 'latpull-wide-neck': 'latpull',
+    'row-bb': 'row-bb', 'row-bb-underhand-incline': 'row-bb', 'row-smith-underhand': 'row-bb',
+    'row-db': 'row-db', 'row-cable': 'row-cable',
+    'pullover': 'pullover', 'pullover-db-hammer': 'pullover', 'pullover-db-ball': 'pullover',
+    'pullover-cable': 'pullover', 'pullover-bb': 'pullover',
+    'ohp-db': 'ohp-db', 'ohp-bb': 'ohp-bb', 'lateral': 'lateral', 'front-raise': 'front-raise',
+    'rear-fly': 'rear-fly', 'rear-fly-db': 'rear-fly', 'rear-fly-db-incline': 'rear-fly',
+    'rear-fly-cable-bent': 'rear-fly', 'rear-fly-cable-standing': 'rear-fly', 'rear-fly-cable-lying': 'rear-fly',
+    'shrug': 'shrug', 'curl-bb': 'curl-bb', 'curl-bb-scott': 'curl-bb', 'curl-db': 'curl-db',
+    'curl-db-incline-bilateral': 'curl-db', 'curl-db-bilateral': 'curl-db', 'curl-preacher': 'curl-preacher',
+    'curl-cable': 'curl-cable', 'triceps-cable-lying': 'pushdown', 'bench-dip-triceps': 'dip-triceps',
+    'bench-db-triceps': 'bench-db', 'bench-bb-triceps': 'bench-bb', 'skullcrusher': 'skullcrusher',
+    'ohext-db': 'ohext-db', 'triceps-cable-overhead-onearm': 'ohext-db', 'kickback': 'kickback',
+    'crunch': 'crunch', 'situp-straight': 'crunch', 'crunch-side': 'crunch', 'abs-side-bench': 'crunch',
+    'legraise': 'legraise', 'legraise-hanging-station': 'legraise', 'plank': 'plank',
+    'plank-weighted': 'plank', 'side-plank': 'plank', 'side-plank-db': 'plank', 'cable-crunch': 'cable-crunch'
+  };
+
+  function exercisePhoto(ex) {
+    var base = PHOTO_BY_ID[ex.id] || ex.id;
+    return 'assets/exercises/anatomy/' + base + '.webp';
+  }
+
   var rest = { left: 0, timer: null, exId: null, endAt: 0, finished: false };
 
   // mount() wird bei jedem Rerender der laufenden Einheit erneut aufgerufen
@@ -126,75 +160,85 @@
     var show = plan || next;
     var isToday = !!plan;
 
-    var head = '<div class="card card--hero">' +
-      '<p class="muted small">' + (isToday ? 'Heute im Plan' : 'Nächste geplante Einheit') + '</p>' +
-      '<h2 class="big" style="margin:4px 0 6px">' + u.esc(show ? show.name : 'Freies Training') + '</h2>' +
-      '<p class="muted small">' + (show
+    var head = '<section class="workout-preview__hero card card--hero">' +
+      '<div class="workout-preview__hero-copy">' +
+      '<p class="workout-preview__eyebrow muted small">' + (isToday ? 'Heute im Plan' : 'Nächste geplante Einheit') + '</p>' +
+      '<h2 class="workout-preview__title">' + u.esc(show ? show.name : 'Freies Training') + '</h2>' +
+      '<p class="workout-preview__meta">' + (show
         ? u.dayName(show.day, true) + ', ' + u.fmtDateShort(show.day) + ' · ' +
         show.muscles.map(function (m) { return G.MUSCLES[m].name; }).join(', ')
         : 'Wähle die Übungen selbst aus.') + '</p>' +
-      '<div class="btn-row btn-row--even" style="margin-top:18px">' +
-      (show ? '<button class="btn btn--primary btn--lg" data-act="start-plan">' + u.icon('play', 16) + ' Einheit starten</button>' : '') +
+      '<div class="workout-preview__actions">' +
+      (show ? '<button class="btn btn--primary btn--lg" data-act="start-plan">' + u.icon('play', 16) + ' Training starten</button>' : '') +
       '<button class="btn btn--lg" data-act="open-free">' + u.icon('plus', 16) + ' Freies Training</button>' +
       '</div>' +
-
-      '<div class="row row--wrap" style="gap:12px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--glass-br)">' +
-      '<label class="switch" style="padding:0;flex:1;min-width:190px">' +
+      '<div class="workout-preview__rest">' +
+      '<label class="switch workout-preview__switch">' +
       '<input type="checkbox" id="restEnablePreset"' + (s.settings.restTimer !== false ? ' checked' : '') + '>' +
       '<span class="switch__track"></span>' +
       '<span class="switch__label"><b>Pause zwischen Sätzen</b>' +
       '<span>Gilt für die nächste gestartete Einheit</span></span>' +
       '</label>' +
-      '<div class="input-suffix" style="max-width:120px">' +
+      '<div class="input-suffix workout-preview__rest-value">' +
       '<input class="input" type="number" id="restSecondsPreset" min="15" max="500" step="5" ' +
       'value="' + (s.settings.restSeconds || 90) + '"' + (s.settings.restTimer === false ? ' disabled' : '') + '>' +
       '<span>s</span>' +
       '</div></div>' +
-      '</div>';
+      '</div>' +
+      '<div class="workout-preview__hero-art" aria-hidden="true">' +
+      '<span class="workout-preview__art-glow"></span>' +
+      '<img src="assets/exercises/anatomy/bench-bb.webp" alt="">' +
+      '</div>' +
+      '</section>';
 
     var list = '';
     if (show) {
-      list = '<div class="card"><div class="card__head">' + u.icon('exercises', 18) +
+      list = '<section class="workout-preview__panel card"><div class="card__head workout-preview__panel-head">' + u.icon('dumbbell', 20) +
         '<h3>Vorgesehene Übungen</h3><span class="spacer"></span>' +
-        '<span class="tiny dim">Vorschläge des Coach</span></div><div class="list">' +
+        '<span class="tiny dim">Vorschläge des Coaches</span></div><div class="workout-preview__exercise-list">' +
         show.exercises.map(function (id, i) {
           var ex = G.ex.byId(id);
           if (!ex) return '';
           var sug = G.coach.suggestNext(id);
-          return '<div class="list__row list__row--click" data-ex="' + id + '">' +
-            '<div class="list__ic list__ic--map">' +
+          return '<div class="workout-preview__exercise list__row--click" data-ex="' + id + '">' +
+            '<div class="workout-preview__exercise-thumb list__ic--map">' +
             G.anim.muscleMap(ex.muscle, ex.sec, { view: 'auto' }) + '</div>' +
-            '<div class="list__main"><b>' + u.esc(ex.name) + '</b>' +
+            '<div class="workout-preview__exercise-main list__main"><b>' + u.esc(ex.name) + '</b>' +
             '<span>' + u.esc(G.MUSCLES[ex.muscle].name) +
             (ex.sec.length ? ' + ' + u.esc(ex.sec.map(function (m) { return G.MUSCLES[m].name; }).join(', ')) : '') +
             ' · ' + sug.sets + ' Sätze</span></div>' +
-            '<div class="list__end"><b class="mono small' + (sug.kind === 'up' ? ' neon' : '') + '">' +
+            '<div class="workout-preview__exercise-value list__end"><b class="mono small' + (sug.kind === 'up' ? ' neon' : '') + '">' +
             (ex.time ? u.fmtReps(sug.reps, 's') : u.fmtSetWeight(ex, sug.weight)) + '</b>' +
-            '<br><span class="tiny dim">' + (ex.time ? 'Haltezeit' : u.fmtReps(sug.reps, 'Wdh.')) + '</span></div>' +
+            '<span class="tiny dim">' + (ex.time ? 'Haltezeit' : u.fmtReps(sug.reps, 'Wdh.')) + '</span></div>' +
+            '<span class="workout-preview__exercise-arrow">' + u.icon('chevron', 19) + '</span>' +
             '</div>';
-        }).join('') + '</div></div>';
+        }).join('') + '</div></section>';
     }
 
-    var week = '<div class="card"><div class="card__head">' + u.icon('dashboard', 18) +
+    var week = '<section class="workout-preview__panel workout-preview__week-panel card"><div class="card__head workout-preview__panel-head">' + u.icon('dashboard', 20) +
       '<h3>Wochenplan</h3><span class="spacer"></span><span class="tiny dim">' +
-      G.planner.weekPlan().length + ' Einheiten</span></div><div class="list">' +
+      G.planner.weekPlan().length + ' Einheiten</span></div><div class="workout-preview__week-list">' +
       G.planner.weekPlan().map(function (p) {
         var done = s.history.some(function (h) { return h.day === p.day; });
         var past = p.day < u.today();
-        return '<div class="list__row">' +
-          '<div class="list__ic" style="' + (done ? 'border-color:var(--neon-line);color:var(--neon)' : '') + '">' +
-          u.icon(done ? 'check' : 'dumbbell', 17) + '</div>' +
-          '<div class="list__main"><b>' + u.esc(p.name) + '</b><span>' +
+        var weekEx = p.exercises && p.exercises.length ? G.ex.byId(p.exercises[0]) : null;
+        var weekMap = weekEx
+          ? G.anim.muscleMap(weekEx.muscle, weekEx.sec, { view: 'auto' })
+          : G.anim.muscleMap('chest', [], { view: 'auto' });
+        return '<div class="workout-preview__week-item">' +
+          '<span class="workout-preview__week-dot ' + (done ? 'is-done' : past ? 'is-past' : '') + '"></span>' +
+          '<div class="workout-preview__week-thumb" aria-hidden="true">' + weekMap + '</div>' +
+          '<div class="workout-preview__week-main"><b>' + u.esc(p.name) + '</b><span>' +
           u.esc(u.dayName(p.day, true) + ', ' + u.fmtDateShort(p.day)) + '</span></div>' +
-          '<div class="list__end"><span class="pill ' + (done ? 'pill--neon' : past ? 'pill--danger' : 'pill--muted') + '">' +
-          (done ? 'erledigt' : past ? 'verpasst' : 'offen') + '</span></div>' +
+          '<span class="pill workout-preview__week-status ' + (done ? 'pill--neon' : past ? 'pill--danger' : 'pill--muted') + '">' +
+          (done ? 'erledigt' : past ? 'verpasst' : 'offen') + '</span>' +
           '</div>';
       }).join('') + '</div>' +
-      '<button class="btn btn--sm btn--block" style="margin-top:12px" data-go="profile">Trainingstage ändern</button>' +
-      '</div>';
+      '<button class="btn btn--sm btn--block workout-preview__week-change" data-go="profile">Trainingstage ändern</button>' +
+      '</section>';
 
-    return '<div class="view stack">' + head +
-      '<div class="grid grid--2">' + list + week + '</div></div>';
+    return '<div class="view stack workout-preview">' + head +
+      '<div class="workout-preview__columns">' + list + week + '</div></div>';
   }
 
   /* ------------------------------------------------------------
@@ -370,13 +414,14 @@
   /* ------------------------------------------------------------
      Übungsauswahl (freies Training / Übung ergänzen)
      ------------------------------------------------------------ */
-  function pickerHtml(selected) {
+  function pickerHtml(selected, activeMuscle) {
     selected = selected || [];
+    activeMuscle = activeMuscle || 'all';
     return '<div class="stack">' +
       '<div class="tabs" id="pickTabs">' +
-      '<button class="tabs__b is-on" data-m="all">Alle</button>' +
+      '<button class="tabs__b' + (activeMuscle === 'all' ? ' is-on' : '') + '" data-m="all">Alle</button>' +
       G.MUSCLE_ORDER.map(function (m) {
-        return '<button class="tabs__b" data-m="' + m + '">' + u.esc(G.MUSCLES[m].name) + '</button>';
+        return '<button class="tabs__b' + (activeMuscle === m ? ' is-on' : '') + '" data-m="' + m + '">' + u.esc(G.MUSCLES[m].name) + '</button>';
       }).join('') + '</div>' +
       '<div class="list" id="pickList"></div>' +
       '<div class="btn-row" style="position:sticky;bottom:0;padding-top:10px;background:linear-gradient(180deg,transparent,rgba(11,17,24,.9) 40%)">' +
@@ -390,28 +435,50 @@
     var list = muscle === 'all' ? G.EXERCISES : G.ex.byMuscle(muscle);
     host.innerHTML = list.map(function (ex) {
       var on = selected.indexOf(ex.id) >= 0;
-      return '<div class="list__row list__row--click" data-pick="' + ex.id + '" style="' +
+      return '<div class="list__row workout-picker__row" style="' +
         (on ? 'background:var(--neon-dim);border-radius:12px' : '') + '">' +
-        '<div class="list__ic"><i class="mdot m-' + ex.muscle + '"></i></div>' +
+        '<div class="workout-picker__exercise-info" data-pick-info="' + ex.id + '" role="button" tabindex="0" aria-label="Übung ansehen: ' + u.esc(ex.name) + '">' +
+        '<div class="list__ic list__ic--map workout-picker__exercise-thumb">' +
+        G.anim.muscleMap(ex.muscle, ex.sec, { view: 'auto' }) + '</div>' +
         '<div class="list__main"><b>' + u.esc(ex.name) + '</b><span>' +
         u.esc(G.MUSCLES[ex.muscle].name + ' · ' + ex.equip) + '</span></div>' +
-        '<div class="list__end">' + (on ? '<span class="neon">' + u.icon('check', 18) + '</span>' : u.icon('plus', 16)) + '</div>' +
+        '</div>' +
+        '<button type="button" class="icon-btn workout-picker__exercise-toggle' + (on ? ' is-on' : '') + '" data-pick="' + ex.id + '" aria-label="' + (on ? 'Übung abwählen' : 'Übung auswählen') + '" aria-pressed="' + (on ? 'true' : 'false') + '">' +
+        u.icon(on ? 'check' : 'plus', 18) + '</button>' +
         '</div>';
     }).join('');
   }
 
-  function openPicker(onDone, preselect) {
+  function openPicker(onDone, preselect, prefilter) {
     var selected = (preselect || []).slice();
-    u.openSheet('Übungen wählen', pickerHtml(selected), function (body) {
+    var initialMuscle = prefilter || 'all';
+    u.openSheet('Übungen wählen', pickerHtml(selected, initialMuscle), function (body) {
       var list = body.querySelector('#pickList');
       var count = body.querySelector('#pickCount');
-      var cur = 'all';
+      var cur = initialMuscle;
 
       function refresh() {
         renderPickList(list, cur, selected);
         count.textContent = selected.length + ' gewählt';
       }
       refresh();
+
+      u.on(body, 'click', '[data-pick-info]', function (e, t) {
+        e.preventDefault();
+        var id = t.getAttribute('data-pick-info');
+        if (G.views.exercises && G.views.exercises.openDetail) {
+          G.views.exercises.openDetail(id, function () { openPicker(onDone, selected, cur); });
+        }
+      });
+
+      u.on(body, 'keydown', '[data-pick-info]', function (e, t) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        var id = t.getAttribute('data-pick-info');
+        if (G.views.exercises && G.views.exercises.openDetail) {
+          G.views.exercises.openDetail(id, function () { openPicker(onDone, selected, cur); });
+        }
+      });
 
       u.on(body, 'click', '[data-m]', function (e, t) {
         body.querySelectorAll('#pickTabs .tabs__b').forEach(function (b) { b.classList.remove('is-on'); });

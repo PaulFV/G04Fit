@@ -1,0 +1,11 @@
+Copyright (c) 2026 G04Fit
+
+All rights reserved.
+
+This repository and the G04Fit software, design, text, icons and training content
+are proprietary. No permission is granted to copy, modify, publish, sublicense or
+redistribute the software or its contents without prior written permission from
+the rights holder.
+
+Third-party dependencies keep their own licenses. See
+docs/Copyright-und-Lizenzen.md and push-worker/package-lock.json.

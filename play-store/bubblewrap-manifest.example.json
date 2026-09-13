@@ -1,0 +1,13 @@
+{
+  "packageId": "com.g04fit.app",
+  "host": "[YOUR_HTTPS_DOMAIN]",
+  "name": "G04Fit",
+  "launcherName": "G04Fit",
+  "display": "standalone",
+  "themeColor": "#07100D",
+  "navigationColor": "#05070A",
+  "orientation": "portrait",
+  "startUrl": "/",
+  "appVersionCode": 1,
+  "appVersionName": "2.1.0"
+}

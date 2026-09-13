@@ -32,6 +32,16 @@
     { title: 'Mach heute zu deinem Trainingstag', body: 'Motivation kommt beim Machen. Starte jetzt mit G04Fit.' },
     { title: 'Du kannst das', body: 'Ein Training, ein Schritt, ein Erfolg. Heute zählt.' }
   ];
+  var MOTIVATION_MESSAGES_EN = [
+    { title: 'Come on, let\'s train! 💪', body: 'Your plan is waiting. Open G04Fit and get started.' },
+    { title: 'Today is a great day to train', body: 'A small start is enough — the rest comes with movement.' },
+    { title: 'Time for you and your training', body: 'Give yourself this workout. You will be glad you started.' },
+    { title: 'Just start', body: 'You do not have to train perfectly. Just do the first set.' },
+    { title: 'Your stronger self is waiting', body: 'Every workout counts. Open G04Fit and take your next step today.' },
+    { title: 'Let\'s go! 🔥', body: 'Today\'s workout brings you a little closer to your goal.' },
+    { title: 'Make today your training day', body: 'Motivation comes from doing. Start with G04Fit now.' },
+    { title: 'You can do this', body: 'One workout, one step, one success. Today counts.' }
+  ];
 
   function st() { return G.store.state; }
   function allowed() { return G.store.hasConsent('push'); }
@@ -42,10 +52,12 @@
     var key = String(day || u.today());
     var hash = 0;
     for (var i = 0; i < key.length; i++) hash = ((hash * 31) + key.charCodeAt(i)) >>> 0;
-    var message = MOTIVATION_MESSAGES[hash % MOTIVATION_MESSAGES.length];
+    var messages = G.i18n && G.i18n.locale() === 'en' ? MOTIVATION_MESSAGES_EN : MOTIVATION_MESSAGES;
+    var message = messages[hash % messages.length];
+    var todayLabel = G.i18n && G.i18n.locale() === 'en' ? 'Today: ' : 'Heute: ';
     return {
       title: message.title,
-      body: planTitle ? message.body + ' Heute: ' + planTitle + '.' : message.body
+      body: planTitle ? message.body + ' ' + todayLabel + planTitle + '.' : message.body
     };
   }
 
@@ -141,7 +153,8 @@
           enabled: true,
           time: st().profile.reminderTime || '18:00',
           days: st().profile.trainingDays || [1, 3, 5],
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Berlin'
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Berlin',
+          locale: G.i18n && G.i18n.locale() === 'de' ? 'de' : 'en'
         }
       })
     });

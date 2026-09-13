@@ -12,6 +12,16 @@ const MOTIVATION_MESSAGES = [
   { title: 'Mach heute zu deinem Trainingstag', body: 'Motivation kommt beim Machen. Starte jetzt mit G04Fit.' },
   { title: 'Du kannst das', body: 'Ein Training, ein Schritt, ein Erfolg. Heute zählt.' }
 ];
+const MOTIVATION_MESSAGES_EN = [
+  { title: 'Come on, let\'s train! 💪', body: 'Your plan is waiting. Open G04Fit and get started.' },
+  { title: 'Today is a great day to train', body: 'A small start is enough — the rest comes with movement.' },
+  { title: 'Time for you and your training', body: 'Give yourself this workout. You will be glad you started.' },
+  { title: 'Just start', body: 'You do not have to train perfectly. Just do the first set.' },
+  { title: 'Your stronger self is waiting', body: 'Every workout counts. Open G04Fit and take your next step today.' },
+  { title: 'Let\'s go! 🔥', body: 'Today\'s workout brings you a little closer to your goal.' },
+  { title: 'Make today your training day', body: 'Motivation comes from doing. Start with G04Fit now.' },
+  { title: 'You can do this', body: 'One workout, one step, one success. Today counts.' }
+];
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -106,6 +116,7 @@ function validSubscription(subscription) {
 
 function validReminder(reminder) {
   if (!reminder || typeof reminder.enabled !== 'boolean') return false;
+  if (reminder.locale != null && reminder.locale !== 'de' && reminder.locale !== 'en') return false;
   if (!reminder.enabled) return true;
   if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(reminder.time || '')) return false;
   if (!Array.isArray(reminder.days) || !reminder.days.length ||
@@ -121,13 +132,17 @@ function validReminder(reminder) {
 function motivationMessage(reminder, timestamp = Date.now()) {
   const local = localParts(timestamp, reminder?.timezone || 'Europe/Berlin');
   const dayKey = (local.year * 10000) + (local.month * 100) + local.day;
-  return MOTIVATION_MESSAGES[dayKey % MOTIVATION_MESSAGES.length];
+  const messages = reminder?.locale === 'en' ? MOTIVATION_MESSAGES_EN : MOTIVATION_MESSAGES;
+  return messages[dayKey % messages.length];
 }
 
 async function sendNotification(env, subscription, reminder, test = false) {
   webpush.setVapidDetails(env.VAPID_SUBJECT, env.VAPID_PUBLIC_KEY, env.VAPID_PRIVATE_KEY);
+  const english = reminder?.locale === 'en';
   const message = test
-    ? { title: 'G04Fit · Test erfolgreich', body: 'Hintergrund-Benachrichtigungen funktionieren. G04Fit motiviert dich ab jetzt regelmäßig.' }
+    ? (english
+      ? { title: 'G04Fit · Test successful', body: 'Background notifications work. G04Fit will motivate you regularly from now on.' }
+      : { title: 'G04Fit · Test erfolgreich', body: 'Hintergrund-Benachrichtigungen funktionieren. G04Fit motiviert dich ab jetzt regelmäßig.' })
     : motivationMessage(reminder);
   return webpush.sendNotification(subscription, JSON.stringify({
     title: message.title,

@@ -1,9 +1,9 @@
 {
   "id": "g04fit-v2",
-  "name": "G04Fit — Trainingsplaner",
+  "name": "G04Fit — Workout Planner",
   "short_name": "G04Fit",
-  "description": "Trainingsplaner für Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter. Wochenplan, Journey, Coach und Fortschritt — alle Daten bleiben auf deinem Gerät.",
-  "lang": "de",
+  "description": "Workout planner for chest, back, abs, biceps, triceps and shoulders. Weekly plans, journey, coaching and progress tracking — your data stays on your device.",
+  "lang": "en",
   "dir": "ltr",
   "start_url": "./index.html",
   "scope": "./",
@@ -20,8 +20,8 @@
     { "src": "icons/icon-v4-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
-    { "name": "Training starten", "short_name": "Workout", "url": "./index.html#workout" },
-    { "name": "Fortschritt", "short_name": "Fortschritt", "url": "./index.html#progress" },
+    { "name": "Start workout", "short_name": "Workout", "url": "./index.html#workout" },
+    { "name": "Progress", "short_name": "Progress", "url": "./index.html#progress" },
     { "name": "Journey", "short_name": "Journey", "url": "./index.html#journey" }
   ]
 }

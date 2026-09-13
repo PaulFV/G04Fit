@@ -5,18 +5,30 @@
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'g04fit-v2.0.0';
+var CACHE = 'g04fit-v2.3.2';
 
 var ASSETS = [
   './',
   './index.html',
+  './privacy.html',
+  './privacy-en.html',
+  './copyright.html',
+  './copyright-en.html',
   './push-config.js',
   './manifest.webmanifest',
   './css/theme.css',
   './css/layout.css',
   './css/components.css',
+  './css/workout-preview.css',
+  './assets/workout-hero-bg.png',
+  './css/progress-overview.css',
+  './css/dashboard-preview.css',
+  './assets/dashboard-hero-bg.png',
+  './assets/dashboard-reminder-bg.png',
+  './assets/dashboard-records-bg.png',
   './css/anim.css',
   './js/util.js',
+  './js/i18n.js',
   './js/data-exercises.js',
   './js/data-journey.js',
   './js/store.js',

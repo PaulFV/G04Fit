@@ -132,7 +132,7 @@
           u.icon('download', 17) + ' Alle Notizen als eine Datei</button>' : '') +
         '</div>' +
         (s.obsidian.lastSync ? '<p class="tiny dim" style="margin-top:12px">Zuletzt ausgegeben: ' +
-          u.esc(new Date(s.obsidian.lastSync).toLocaleString('de-DE')) + '</p>' : '') +
+          u.esc(new Date(s.obsidian.lastSync).toLocaleString(G.i18n && G.i18n.locale() === 'en' ? 'en-US' : 'de-DE')) + '</p>' : '') +
         '</div></div>' +
 
         /* Vorschau */
