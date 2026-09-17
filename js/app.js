@@ -26,13 +26,13 @@
     if (theme === 'light') {
       return '<svg class="ui-icon icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M20.2 15.2A8 8 0 018.8 3.8 8.5 8.5 0 1020.2 15.2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
     }
-    return '<svg class="ui-icon icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+    return '<img class="topbar__button-art" src="assets/header-sun.png?v=2.7.0" alt="" aria-hidden="true">';
   }
 
   function menuIcon(open) {
     return open
       ? '<svg class="ui-icon icon-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
-      : '<svg class="ui-icon icon-menu" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>';
+      : '<img class="topbar__button-art" src="assets/header-menu.png?v=2.7.0" alt="" aria-hidden="true">';
   }
 
   function applyTheme(theme) {
@@ -102,7 +102,7 @@
 
     var chip = u.$('#streakChip');
     var streak = s.journey.streak;
-    chip.innerHTML = u.icon('flame', 15) + ' ' + streak;
+    chip.innerHTML = '<img class="topbar__streak-art" src="assets/progress/stat-streak.png?v=2.7.0" alt="" aria-hidden="true"><span>' + streak + '</span>';
     chip.classList.toggle('is-hot', streak >= 3);
     var streakLabel = streak
       ? 'Trainingsserie: ' + streak + (streak === 1 ? ' Woche' : ' Wochen') + ' in Folge'
