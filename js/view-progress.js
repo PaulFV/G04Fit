@@ -58,7 +58,7 @@
     var area = d + ' L' + px(bars.length - 1).toFixed(1) + ' ' + (padT + ih) + ' L' + padL + ' ' + (padT + ih) + ' Z';
     var out = '<div class="progress-chart" role="img" aria-label="Volumen je Woche">' +
       '<div class="progress-chart__head"><div class="progress-chart__title">' + u.icon('progress', 25) +
-      '<h3>Volumen je Woche</h3></div><span class="progress-chart__mark">' + u.icon('dumbbell', 25) + '</span></div>' +
+      '<h3>Volumen je Woche</h3></div><span class="progress-chart__mark"><img class="progress-chart__art" src="assets/progress/stat-volume.png?v=2.5.0" alt="" aria-hidden="true"></span></div>' +
       '<div class="progress-chart__plot">' +
       '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">' +
       '<defs><linearGradient id="progressChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(61,255,158,.26)"/><stop offset="100%" stop-color="rgba(61,255,158,0)"/></linearGradient></defs>';
@@ -152,20 +152,20 @@
     var totalReps = u.sum(s.history, function (x) { return x.totalReps || 0; });
 
     var cards = [
-      { k: 'Einheiten', v: s.journey.completed, cls: '', ic: 'dumbbell' },
-      { k: 'Gesamtvolumen', v: totalVol >= 1000 ? u.fmt(totalVol / 1000, 1) : u.fmt(totalVol), d: totalVol >= 1000 ? 't' : 'kg', cls: 'stat--neon', ic: 'plate' },
-      { k: 'Sätze gesamt', v: totalSets, cls: '', ic: 'exercises' },
-      { k: 'Wiederholungen gesamt', v: totalReps, cls: '', ic: 'refresh' },
-      { k: 'Serie', v: s.journey.streak, d: 'Wochen', cls: 'stat--gold', ic: 'flame' },
-      { k: 'Beste Serie', v: s.journey.bestStreak || 0, d: 'Wochen', cls: '', ic: 'coach' },
-      { k: 'Rekorde', v: Object.keys(s.records).length, cls: 'stat--cyan', ic: 'medal' }
+      { k: 'Einheiten', v: s.journey.completed, cls: '', art: 'assets/nav/nav-workout.png' },
+      { k: 'Gesamtvolumen', v: totalVol >= 1000 ? u.fmt(totalVol / 1000, 1) : u.fmt(totalVol), d: totalVol >= 1000 ? 't' : 'kg', cls: 'stat--neon', art: 'assets/progress/stat-volume.png' },
+      { k: 'Sätze gesamt', v: totalSets, cls: '', art: 'assets/nav/nav-exercises.png' },
+      { k: 'Wiederholungen gesamt', v: totalReps, cls: '', art: 'assets/progress/stat-reps.png' },
+      { k: 'Serie', v: s.journey.streak, d: 'Wochen', cls: 'stat--gold', art: 'assets/progress/stat-streak.png' },
+      { k: 'Beste Serie', v: s.journey.bestStreak || 0, d: 'Wochen', cls: '', art: 'assets/progress/stat-best-streak.png' },
+      { k: 'Rekorde', v: Object.keys(s.records).length, cls: 'stat--cyan', art: 'assets/progress/stat-records.png' }
     ];
 
     return '<div class="progress-overview">' +
       '<div class="progress-stats">' +
       cards.map(function (i) {
         return '<article class="card progress-stat ' + i.cls + '">' +
-          '<div class="progress-stat__icon">' + u.icon(i.ic, 34) + '</div>' +
+          '<div class="progress-stat__icon"><img class="progress-stat__art" src="' + i.art + '?v=2.5.0" alt="" aria-hidden="true"></div>' +
           '<div class="stat progress-stat__body ' + i.cls + '">' +
           '<span class="stat__k">' + u.esc(i.k) + '</span>' +
           '<span class="stat__v">' + u.esc(String(i.v)) +
@@ -194,7 +194,7 @@
         '<div class="note note--warn progress-profile-card__note">' + u.icon('warn', 17) +
         '<div>Diese Kennzahlen sind ein spielerisches Profil aus deinen Trainingsdaten. ' +
         '<b>Es sind ausdrücklich keine medizinischen Werte</b> und keine Diagnose.</div></div>'
-        : '<div class="progress-profile-lock"><div class="progress-profile-lock__icon">' + u.icon('lock', 31) + '</div>' +
+        : '<div class="progress-profile-lock"><div class="progress-profile-lock__icon"><img class="progress-profile-lock__art" src="assets/progress/profile-lock.png?v=2.5.0" alt="" aria-hidden="true"></div>' +
         '<div>Das Leistungsprofil benötigt die Einwilligung <b>KI-Analyse</b>.</div></div>' +
         '<button class="btn btn--sm btn--block progress-profile-card__privacy" data-go="privacy">Datenschutz öffnen</button>') +
       '</section></div></div>';

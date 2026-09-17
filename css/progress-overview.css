@@ -74,27 +74,21 @@
 }
 .progress-stat:nth-child(7){grid-column:1/-1}
 .progress-stat__icon{
-  width:76px;
-  height:76px;
+  width:82px;
+  height:82px;
   flex:none;
   display:grid;
   place-items:center;
-  border-radius:22px;
-  color:#83BEB0;
-  background:radial-gradient(circle at 34% 27%,rgba(124,220,191,.3),rgba(13,73,59,.35) 54%,rgba(0,0,0,.12));
-  border:1px solid rgba(117,193,177,.25);
-  box-shadow:0 9px 20px rgba(0,0,0,.26),inset 0 0 18px rgba(61,255,158,.06);
+  border:0;
+  background:transparent;
 }
-.progress-stat__icon .ui-icon{width:45px;height:45px;filter:drop-shadow(0 0 9px rgba(61,255,158,.18))}
+.progress-stat__art{width:100%;height:100%;display:block;object-fit:contain;filter:drop-shadow(0 10px 10px rgba(0,0,0,.3))}
 .progress-stat__body{gap:3px}
 .progress-stat__body .stat__k{font-size:14px;letter-spacing:.11em;color:#A4BFBA}
 .progress-stat__body .stat__v{font-size:38px;line-height:1.05;color:#F0F7F3}
 .progress-stat__body .stat__u{font-size:19px;margin-left:6px;color:#A4BFBA}
-.progress-stat.stat--neon .progress-stat__icon{color:var(--neon);border-color:var(--neon-line);box-shadow:0 0 22px rgba(61,255,158,.13),inset 0 0 22px rgba(61,255,158,.1)}
 .progress-stat.stat--neon .progress-stat__body .stat__v{color:var(--neon);text-shadow:0 0 20px rgba(61,255,158,.4)}
-.progress-stat.stat--cyan .progress-stat__icon{color:var(--cyan);border-color:rgba(34,211,238,.34)}
 .progress-stat.stat--cyan .progress-stat__body .stat__v{color:var(--cyan);text-shadow:0 0 20px rgba(34,211,238,.35)}
-.progress-stat.stat--gold .progress-stat__icon{color:var(--gold);border-color:rgba(255,200,87,.35)}
 .progress-stat.stat--gold .progress-stat__body .stat__v{color:var(--gold);text-shadow:0 0 20px rgba(255,200,87,.28)}
 
 /* ---------- Wochenverlauf ---------- */
@@ -125,6 +119,8 @@
 .progress-chart__title h3,.progress-card-head h3{font-size:21px;font-weight:700;letter-spacing:-.02em}
 .progress-chart__mark,.progress-card-head__mark{color:#8EAAA5;opacity:.65}
 .progress-chart__mark .ui-icon,.progress-card-head__mark .ui-icon{width:39px;height:39px}
+.progress-chart__mark{opacity:1;width:66px;height:58px;display:grid;place-items:center;margin:-10px 2px -8px 0}
+.progress-chart__art{width:66px;height:58px;object-fit:contain;filter:drop-shadow(0 8px 8px rgba(0,0,0,.3))}
 .progress-chart__plot{position:relative;height:284px;margin:14px -2px 0}
 .progress-chart__plot svg{display:block;width:100%;height:100%;overflow:visible}
 .progress-chart__gridline{stroke:rgba(139,183,174,.14);stroke-width:1;stroke-dasharray:3 6}
@@ -177,7 +173,8 @@
 .progress-profile-card{display:flex;flex-direction:column}
 .progress-profile-lock{display:flex;align-items:center;gap:20px;min-height:140px;margin-top:28px;padding:24px;border-radius:20px;border:1px solid rgba(146,190,179,.24);background:linear-gradient(135deg,rgba(26,55,50,.6),rgba(12,26,28,.74));color:#A3BBB7;font-size:16px;line-height:1.5}
 .progress-profile-lock b{color:#DFEEEA}
-.progress-profile-lock__icon{width:76px;height:76px;flex:none;display:grid;place-items:center;border-radius:25px;color:var(--neon);border:1px solid var(--neon-line);background:radial-gradient(circle,rgba(61,255,158,.27),rgba(9,80,59,.54));box-shadow:0 0 28px rgba(61,255,158,.22)}
+.progress-profile-lock__icon{width:82px;height:82px;flex:none;display:grid;place-items:center}
+.progress-profile-lock__art{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 12px rgba(0,0,0,.32))}
 .progress-profile-card__privacy{margin-top:18px;min-height:54px;font-size:16px;border-color:rgba(164,202,193,.5);background:rgba(255,255,255,.045)}
 .progress-profile-card__radar{display:grid;place-items:center;min-height:240px;margin-top:4px}
 .progress-profile-card__note{margin-top:4px;font-size:12px}
@@ -209,7 +206,6 @@
 @media (max-width:900px){
   .progress-stat{gap:16px;padding:18px}
   .progress-stat__icon{width:64px;height:64px;border-radius:19px}
-  .progress-stat__icon .ui-icon{width:38px;height:38px}
   .progress-stat__body .stat__v{font-size:32px}
   .progress-balance-card__body{grid-template-columns:minmax(0,1fr) 155px}
   .progress-balance-card__visual img{width:155px;height:220px}
@@ -218,11 +214,14 @@
 @media (max-width:680px){
   .progress-tabs__button{min-height:52px;padding:10px 6px;font-size:12px}
   .progress-tabs__button.is-on::after{bottom:-8px;width:6px;height:6px}
-  .progress-stats{grid-template-columns:1fr;gap:12px}
-  .progress-stat:nth-child(7){grid-column:auto}
-  .progress-stat{min-height:106px}
-  .progress-stat__body .stat__k{font-size:12px}
-  .progress-stat__body .stat__v{font-size:30px}
+  .progress-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .progress-stat:nth-child(7){grid-column:1/-1}
+  .progress-stat{min-height:102px;padding:12px;gap:9px;border-radius:18px}
+  .progress-stat__icon{width:52px;height:52px}
+  .progress-stat__body{min-width:0}
+  .progress-stat__body .stat__k{font-size:9.5px;letter-spacing:.07em;white-space:normal;line-height:1.25}
+  .progress-stat__body .stat__v{font-size:27px}
+  .progress-stat__body .stat__u{font-size:13px;margin-left:3px}
   .progress-chart{min-height:345px;padding:18px 14px 16px}
   .progress-chart__title h3,.progress-card-head h3{font-size:18px}
   .progress-chart__plot{height:235px}
@@ -236,18 +235,18 @@
   .progress-balance-card__visual img{width:140px;height:205px}
   .progress-balance-card__halo{width:132px;height:132px}
   .progress-profile-lock{margin-top:20px;padding:18px;gap:14px;font-size:14px}
-  .progress-profile-lock__icon{width:62px;height:62px;border-radius:20px}
+  .progress-profile-lock__icon{width:66px;height:66px}
   .progress-locked-card{padding:20px;gap:14px}
   .progress-locked-card__icon{width:56px;height:56px;border-radius:17px}
 }
 @media (max-width:430px){
   .progress-tabs{padding:3px}
   .progress-tabs__button{min-height:48px;font-size:11px}
-  .progress-stat{padding:15px;gap:13px}
-  .progress-stat__icon{width:56px;height:56px}
-  .progress-stat__icon .ui-icon{width:33px;height:33px}
-  .progress-stat__body .stat__v{font-size:27px}
-  .progress-stat__body .stat__u{font-size:15px}
+  .progress-tabs__button{font-size:10px}
+  .progress-stat{padding:10px;gap:7px}
+  .progress-stat__icon{width:48px;height:48px}
+  .progress-stat__body .stat__v{font-size:24px}
+  .progress-stat__body .stat__u{font-size:12px}
   .progress-balance-card__body{grid-template-columns:1fr 116px}
   .progress-balance-card__visual img{width:116px;height:190px}
   .progress-balance-card__halo{width:110px;height:110px}

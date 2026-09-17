@@ -56,13 +56,16 @@
     opts = opts || {};
     size = size || 48;
     var img = src();
+    var fallback = opts.fallback || null;
     var ini = initials();
 
     var inner = img
       ? '<img src="' + u.esc(img) + '" alt="Trainings-Avatar">'
+      : (fallback
+        ? '<img class="avatar__fallback" src="' + u.esc(fallback) + '" alt="Profilbild-Platzhalter">'
       : '<span class="avatar__ph">' +
         (ini ? u.esc(ini) : u.icon('profile', Math.round(size * 0.46))) +
-        '</span>';
+        '</span>');
 
     var ring = '';
     if (opts.ring != null) {
@@ -81,6 +84,7 @@
     var cls = 'avatar' +
       (opts.hero ? ' avatar--hero' : '') +
       (img ? '' : ' avatar--empty') +
+      (fallback && !img ? ' avatar--fallback' : '') +
       (opts.action ? ' avatar--action' : '');
 
     var attrs = 'class="' + cls + '" style="width:' + size + 'px;height:' + size + 'px"';

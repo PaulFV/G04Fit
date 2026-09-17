@@ -59,11 +59,11 @@
     }).length;
 
     var items = [
-      { k: 'Einheiten gesamt', v: s.journey.completed, icon: 'dumbbell', tone: '', graph: 'bars' },
-      { k: 'Serie', v: s.journey.streak, d: s.journey.streak === 1 ? 'Woche' : 'Wochen', icon: 'flame', tone: 'gold', graph: 'dots' },
-      { k: 'Volumen 7 Tage', v: vol >= 1000 ? u.fmt(vol / 1000, 1) : u.fmt(vol), d: vol >= 1000 ? 'Tonnen' : 'kg', icon: 'plate', tone: 'neon', graph: 'bars' },
-      { k: 'Sätze 7 Tage', v: sets, icon: 'exercises', tone: '', graph: 'bars' },
-      { k: 'Rekorde 30 Tage', v: prs, icon: 'medal', tone: 'cyan', graph: 'dots', wide: true }
+      { k: 'Einheiten gesamt', v: s.journey.completed, art: 'assets/nav/nav-workout.png', tone: '', graph: 'bars' },
+      { k: 'Serie', v: s.journey.streak, d: s.journey.streak === 1 ? 'Woche' : 'Wochen', art: 'assets/progress/stat-streak.png', tone: 'gold', graph: 'dots' },
+      { k: 'Volumen 7 Tage', v: vol >= 1000 ? u.fmt(vol / 1000, 1) : u.fmt(vol), d: vol >= 1000 ? 'Tonnen' : 'kg', art: 'assets/progress/stat-volume.png', tone: 'neon', graph: 'bars' },
+      { k: 'Sätze 7 Tage', v: sets, art: 'assets/nav/nav-exercises.png', tone: '', graph: 'bars' },
+      { k: 'Rekorde 30 Tage', v: prs, art: 'assets/progress/stat-records.png', tone: 'cyan', graph: 'dots', wide: true }
     ];
 
     return '<section class="dashboard-stats" aria-label="Kennzahlen">' + items.map(function (i) {
@@ -71,7 +71,7 @@
         (i.graph === 'dots' ? '<i></i><i></i><i></i><i></i><i></i><i></i>' : '<i></i><i></i><i></i><i></i><i></i><i></i><i></i>') +
         '</span>';
       return '<div class="dashboard-stat card ' + (i.tone ? 'dashboard-stat--' + i.tone + ' ' : '') + (i.wide ? 'dashboard-stat--wide' : '') + '">' +
-        '<div class="dashboard-stat__icon">' + u.icon(i.icon, 28) + '</div>' +
+        '<div class="dashboard-stat__icon"><img class="dashboard-stat__art" src="' + u.esc(i.art) + '?v=2.5.0" alt=""></div>' +
         '<div class="dashboard-stat__copy"><span class="dashboard-stat__k">' + u.esc(i.k) + '</span>' +
         '<span class="dashboard-stat__v">' + u.esc(String(i.v)) + (i.d ? '<span class="dashboard-stat__u">' + u.esc(i.d) + '</span>' : '') + '</span></div>' +
         graph +
@@ -157,7 +157,7 @@
     return '<section class="dashboard-hero card card--hero card--hl">' +
       '<div class="dashboard-hero__content">' +
       '<div class="dashboard-hero__profile">' +
-      G.avatar.render(66, { ring: li.pct, level: li.level, hero: true, action: true }) +
+      G.avatar.render(78, { ring: li.pct, level: li.level, hero: true, action: true, fallback: 'assets/dashboard-profile.png?v=2.6.0' }) +
       '</div>' +
       '<div class="dashboard-hero__copy">' +
       '<p class="dashboard-hero__greeting muted small">' + u.esc(greeting() + name) + '</p>' +
