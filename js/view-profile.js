@@ -156,16 +156,16 @@
       '<div class="row" style="gap:20px;align-items:flex-start;flex-wrap:wrap">' +
 
       '<div class="row" style="gap:16px;align-items:center">' +
-      G.avatar.render(88, { ring: li.pct, level: li.level, hero: true, action: true }) +
+      G.avatar.render(88, { ring: li.pct, level: li.level, hero: true, action: true, fallback: 'assets/dashboard-profile.png?v=2.8.0' }) +
       (has && G.avatar.fullSrc() ? G.avatar.renderPortrait(130) : '') +
       '</div>' +
 
       '<div style="flex:1;min-width:230px">' +
       '<p class="small muted">' + (has
-        ? 'Dein Bild begleitet dich durch Dashboard, Profil, Journey und die Abschluss-Übersicht ' +
+        ? 'Dein Bild begleitet dich durch Dashboard, Profil und die Abschluss-Übersicht ' +
         'nach jeder Einheit. Ein Antippen des Avatars ändert es jederzeit.'
-        : 'Lade ein eigenes Bild hoch — es erscheint dann im Dashboard, im Profil, in der Journey ' +
-        'und nach jeder abgeschlossenen Einheit. Ohne Bild zeigt G04Fit deine Initialen.') + '</p>' +
+        : 'Lade ein eigenes Bild hoch — es erscheint dann im Dashboard, im Profil ' +
+        'und nach jeder abgeschlossenen Einheit. Ohne eigenes Bild zeigt G04Fit eine Platzhalter-Figur.') + '</p>' +
 
       '<div class="btn-row" style="margin-top:16px">' +
       '<button class="btn btn--primary btn--sm" data-act="av-pick">' +
@@ -238,7 +238,7 @@
         /* Kopf */
         '<div class="card card--hero">' +
         '<div class="row" style="gap:18px;flex-wrap:wrap">' +
-        G.avatar.render(92, { ring: li.pct, level: li.level, hero: true, action: true }) +
+        G.avatar.render(92, { ring: li.pct, level: li.level, hero: true, action: true, fallback: 'assets/dashboard-profile.png?v=2.8.0' }) +
         '<div style="flex:1;min-width:190px">' +
         '<h2 style="font-size:21px">' + u.esc(p.name || 'Dein Profil') + '</h2>' +
         '<p class="muted small" style="margin-top:4px">' + u.esc(li.title) + ' · ' +
