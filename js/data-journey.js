@@ -42,37 +42,37 @@
   /* ---------- Regionen der Weltkarte ---------- */
   var REGIONS = [
     {
-      key: 'starter', name: 'Starter Valley', icon: '🌄', from: 1, to: 5,
+      key: 'starter', name: 'Starter Gym', icon: '🏋️', from: 1, to: 5,
       tag: 'Grundlagen & Technik',
-      desc: 'Hier lernst du die Bewegungen sauber auszuführen. Gewichte sind zweitrangig.',
+      desc: 'Hier lernst du die Bewegungen sauber auszuführen. Technik kommt vor Gewicht.',
       color: '#7DD3A0'
     },
     {
-      key: 'forest', name: 'Strength Forest', icon: '🌲', from: 6, to: 12,
+      key: 'strength-lab', name: 'Strength Lab', icon: '💪', from: 6, to: 12,
       tag: 'Erste Kraftzuwächse',
-      desc: 'Die Grundübungen sitzen. Jetzt wird planmäßig Gewicht aufgebaut.',
+      desc: 'Die Grundübungen sitzen. Jetzt wird planmäßig Kraft aufgebaut.',
       color: '#3DFF9E'
     },
     {
-      key: 'mountains', name: 'Iron Mountains', icon: '⛰️', from: 13, to: 20,
+      key: 'power-rack', name: 'Power Rack', icon: '🏋️‍♂️', from: 13, to: 20,
       tag: 'Volumen & Ausdauer',
-      desc: 'Längere Einheiten, mehr Sätze. Deine Kraftbasis wird breiter.',
+      desc: 'Längere Einheiten, mehr Sätze. Deine Kraftbasis wird stabiler.',
       color: '#22D3EE'
     },
     {
-      key: 'volcano', name: 'Power Volcano', icon: '🌋', from: 21, to: 30,
+      key: 'conditioning', name: 'Conditioning Lab', icon: '⚙️', from: 21, to: 30,
       tag: 'Intensität',
-      desc: 'Kurze Pausen, hohe Lasten. Erholung wird zum entscheidenden Faktor.',
+      desc: 'Kurze Pausen, hohe Lasten und konzentriertes Training.',
       color: '#FFC857'
     },
     {
-      key: 'glacier', name: 'Titan Glacier', icon: '🧊', from: 31, to: 42,
+      key: 'performance', name: 'Performance Center', icon: '🎯', from: 31, to: 42,
       tag: 'Konstanz auf hohem Niveau',
-      desc: 'Fortschritt in kleinen Schritten. Wer dranbleibt, gewinnt.',
+      desc: 'Fortschritt in kleinen Schritten. Präzision und Routine zählen.',
       color: '#A78BFA'
     },
     {
-      key: 'elite', name: 'Elite City', icon: '🏙️', from: 43, to: 999,
+      key: 'elite', name: 'Elite Training', icon: '🏆', from: 43, to: 999,
       tag: 'Spitzenbereich',
       desc: 'Individuelle Feinsteuerung. Der Coach arbeitet mit deinen echten Daten.',
       color: '#FF8FA3'

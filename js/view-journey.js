@@ -36,9 +36,20 @@
       ? (li.level - region.from + li.pct) / (Math.min(region.to, 999) - region.from + 1)
       : (unlocked ? 1 : 0);
 
-    return '<div class="' + cls + '">' +
+    var regionIndex = G.REGIONS.indexOf(region);
+    var row = Math.floor(regionIndex / 3);
+    var col = regionIndex % 3;
+    var atlasPos = (col * 50) + '% ' + (row * 100) + '%';
+
+    return '<article class="journey-region ' + cls + '">' +
+      '<div class="journey-region__media" style="--journey-pos:' + atlasPos + '" role="img" aria-label="' + u.esc(region.name) + '">' +
+      '<span class="journey-region__media-badge" style="--journey-color:' + region.color + '">' +
+      (unlocked ? region.icon : u.icon('lock', 18)) + '</span>' +
+      '<span class="journey-region__media-level">' + (current ? 'LEVEL ' + li.level : 'LEVEL ' + region.from) + '</span>' +
+      '</div>' +
+      '<div class="journey-region__content">' +
       '<div class="region__head">' +
-      '<div class="region__badge" style="' + (unlocked ? 'border-color:' + region.color + '55;box-shadow:0 0 20px ' + region.color + '22' : '') + '">' +
+      '<div class="region__badge" style="' + (unlocked ? 'border-color:' + region.color + '66;box-shadow:0 0 20px ' + region.color + '20' : '') + '">' +
       (unlocked ? region.icon : u.icon('lock', 18)) + '</div>' +
       '<div style="flex:1;min-width:0">' +
       '<b>' + u.esc(region.name) + '</b>' +
@@ -48,11 +59,12 @@
         : unlocked ? '<span class="pill pill--muted">' + u.icon('check', 12) + ' frei</span>'
           : '<span class="pill pill--muted">gesperrt</span>') +
       '</div>' +
-      '<p class="small muted" style="margin-bottom:12px">' + u.esc(region.desc) + '</p>' +
+      '<p class="small muted journey-region__desc">' + u.esc(region.desc) + '</p>' +
       nodes(region, li.level) +
-      (current ? '<div class="bar bar--thin" style="margin-top:14px"><span class="bar__fill" style="width:' +
+      (current ? '<div class="bar bar--thin journey-region__progress"><span class="bar__fill" style="width:' +
         Math.round(u.clamp(pct, 0, 1) * 100) + '%"></span></div>' : '') +
-      '</div>';
+      '</div>' +
+      '</article>';
   }
 
   // Gleiche Pausentimer-Kurzsteuerung wie auf Dashboard und Workout, damit
@@ -77,22 +89,22 @@
 
   function modeCards() {
     var s = G.store.state;
-    return '<div class="grid grid--auto" style="--sp:12px">' + G.MODES.map(function (m) {
+    return '<div class="grid grid--2 journey-mode-grid" style="--sp:12px">' + G.MODES.map(function (m) {
       var on = s.profile.mode === m.key;
-      return '<div class="card card--pad-sm card--click' + (on ? ' card--hl' : '') + '" data-mode="' + m.key + '">' +
-        '<div class="row" style="margin-bottom:8px">' +
-        '<span style="font-size:20px">' + m.icon + '</span>' +
-        '<b style="font-size:15px;color:' + m.color + '">' + u.esc(m.name) + '</b>' +
-        '<span class="spacer"></span>' +
-        (on ? '<span class="pill pill--neon">aktiv</span>' : '') +
-        '</div>' +
-        '<p class="small muted">' + u.esc(m.desc) + '</p>' +
-        '<div class="row row--wrap tiny dim" style="margin-top:10px;gap:6px">' +
+      var modeIndex = G.MODES.indexOf(m);
+      var modePos = (modeIndex * 25) + '% 50%';
+      return '<button class="journey-mode card card--click' + (on ? ' card--hl' : '') + '" data-mode="' + m.key + '" type="button">' +
+        '<span class="journey-mode__visual" style="--mode-pos:' + modePos + '" aria-hidden="true"></span>' +
+        '<span class="journey-mode__body">' +
+        '<span class="journey-mode__title" style="color:' + m.color + '">' + u.esc(m.name) + '</span>' +
+        (on ? '<span class="pill pill--neon journey-mode__active">aktiv</span>' : '') +
+        '<span class="small muted journey-mode__desc">' + u.esc(m.desc) + '</span>' +
+        '<span class="journey-mode__pills">' +
         '<span class="pill">' + m.sets + ' Sätze</span>' +
         '<span class="pill">' + m.restSec + ' s Pause</span>' +
         '<span class="pill">' + m.weekly + '×/Woche</span>' +
         '<span class="pill">XP ×' + m.xpMult + '</span>' +
-        '</div></div>';
+        '</span></span></button>';
     }).join('') + '</div>';
   }
 
@@ -106,33 +118,32 @@
       var s = G.store.state;
       var li = G.store.levelInfo();
 
-      return '<div class="view stack">' +
+      return '<div class="view stack journey-view">' +
 
-        '<div class="card card--hero card--hl">' +
-        '<div class="row" style="gap:20px;align-items:center;flex-wrap:wrap">' +
-        G.avatar.render(76, { hero: true, action: true }) +
-        G.charts.ring(li.pct, { size: 128, stroke: 11, value: li.level, label: 'Level' }) +
-        '<div style="flex:1;min-width:210px">' +
+        '<section class="journey-hero card card--hero card--hl">' +
+        '<div class="journey-hero__scene" style="--journey-pos:0% 0%" aria-hidden="true"></div>' +
+        '<div class="journey-hero__content">' +
+        '<div class="journey-hero__profile">' + G.avatar.render(88, { hero: true, action: true, fallback: 'assets/dashboard-profile.png?v=2.8.0' }) + '</div>' +
+        '<div class="journey-hero__ring">' + G.charts.ring(li.pct, { size: 126, stroke: 11, value: li.level, label: 'Level' }) + '</div>' +
+        '<div class="journey-hero__details">' +
         '<p class="muted small">Aktuelle Region</p>' +
-        '<h2 class="big" style="margin:2px 0 6px">' + li.region.icon + ' ' + u.esc(li.region.name) + '</h2>' +
-        '<p class="muted small">' + u.esc(li.region.desc) + '</p>' +
-        '<div class="row row--wrap" style="margin-top:14px;gap:8px">' +
+        '<h2 class="big"><span class="journey-hero__region-icon">' + li.region.icon + '</span> ' + u.esc(li.region.name) + '</h2>' +
+        '<p class="muted small">Lerne die Bewegungen sauber auszuführen. Gewichte sind zweitrangig.</p>' +
+        '<div class="row row--wrap journey-hero__pills">' +
         '<span class="pill pill--neon">' + s.journey.xp + ' XP gesamt</span>' +
         '<span class="pill pill--gold">' + s.journey.completed + ' Einheiten</span>' +
         '<span class="pill pill--cyan">Serie ' + s.journey.streak + '</span>' +
         '</div></div></div>' +
-        '<div class="bar" style="margin-top:20px"><span class="bar__fill" style="width:' +
-        Math.round(li.pct * 100) + '%"></span></div>' +
-        '<p class="tiny dim" style="margin-top:8px">Noch ' + (li.need - li.into) + ' XP bis Level ' + (li.level + 1) +
-        '. Eine Einheit bringt je nach Umfang etwa 60–200 XP.</p>' +
-        '</div>' +
+        '<div class="journey-hero__progress"><div class="bar"><span class="bar__fill" style="width:' + Math.round(li.pct * 100) + '%"></span></div>' +
+        '<p class="tiny dim">Noch ' + (li.need - li.into) + ' XP bis Level ' + (li.level + 1) + '. Eine Einheit bringt je nach Umfang etwa 60–200 XP.</p></div>' +
+        '</section>' +
 
-        '<div class="sec"><h2>Weltkarte</h2><span class="sec__line"></span></div>' +
+        '<div class="sec journey-section-title"><h2>Weltkarte</h2><span class="sec__line"></span><span class="journey-compass" aria-hidden="true">✦</span></div>' +
         '<div class="journey-map">' +
         G.REGIONS.map(function (r) { return regionRow(r, li); }).join('') +
         '</div>' +
 
-        '<div class="sec"><h2>Schwierigkeit</h2><span class="sec__line"></span>' +
+        '<div class="sec journey-section-title"><h2>Schwierigkeit</h2><span class="sec__line"></span>' +
         '<span class="tiny dim">wirkt auf Sätze, Pausen und Progression</span></div>' +
         modeCards() +
 

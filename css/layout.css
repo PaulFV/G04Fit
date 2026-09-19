@@ -151,6 +151,7 @@
   -webkit-backface-visibility:hidden;
   will-change:transform;
 }
+.tabbar.only-mobile{display:none}
 .tabbar__item{
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
   min-width:0;min-height:54px;padding:5px 3px;border-radius:14px;
@@ -314,6 +315,18 @@
   .tabbar__item{font-size:9.5px}
   .tabbar__item .ui-icon{width:20px;height:20px}
   .tabbar__art{width:36px;height:36px}
+}
+
+/* Geräte mit 390–400 CSS-Pixeln (z. B. iPhone 14/15) melden je nach
+   Browser-Chrome eine leicht gerundete Breite oberhalb von 390px. Die
+   kompakte Kopfzeile greift deshalb bereits bis 420px, damit Seitentitel
+   wie „Journey“ neben den drei Schnellaktionen vollständig sichtbar bleiben. */
+@media (max-width:420px){
+  .topbar{gap:8px}
+  .topbar__actions{gap:5px}
+  .topbar .icon-btn{width:42px;height:42px;border-radius:13px}
+  .streak-chip{min-height:42px;padding-left:8px;padding-right:8px}
+  .topbar__streak-art{width:24px;height:24px}
 }
 
 /* Querformat mit Notch: Inhalte dürfen nicht hinter die seitlichen

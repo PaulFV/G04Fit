@@ -654,3 +654,93 @@
 .consent-state{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:9px 13px;border-radius:99px;border:1px solid var(--glass-br);background:var(--glass-bg)}
 .consent-state.on{border-color:var(--neon-line);color:var(--neon);background:var(--neon-dim)}
 .consent-state.off{color:var(--tx-2)}
+
+/* ---------- Journey reference layout ---------- */
+.journey-view{width:100%;max-width:1120px;margin:0 auto;padding-bottom:22px;gap:16px}
+.journey-hero{
+  min-height:282px;padding:24px 26px 18px;border-radius:28px;overflow:hidden;
+  border-color:rgba(61,255,158,.6);
+  background:linear-gradient(90deg,rgba(2,16,13,.96) 0%,rgba(2,18,14,.9) 31%,rgba(2,18,14,.46) 65%,rgba(2,18,14,.18) 100%),var(--glass-bg);
+  box-shadow:var(--sh-1),0 0 38px rgba(61,255,158,.1)
+}
+.journey-hero__scene{position:absolute;inset:0;z-index:0;pointer-events:none;background-image:url("../assets/journey-workout-avatar-atlas.png");background-size:300% 200%;background-position:var(--journey-pos,0 0);background-repeat:no-repeat;opacity:.9;filter:saturate(.9) contrast(1.05)}
+.journey-hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(2,15,13,.08),rgba(2,15,13,.25) 72%,rgba(2,15,13,.64)),radial-gradient(680px 260px at 7% 8%,rgba(61,255,158,.2),transparent 70%)}
+.journey-hero__content{position:relative;z-index:1;display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:center;gap:22px;min-height:186px}
+.journey-hero__profile{padding:4px 0 0;filter:drop-shadow(0 8px 16px rgba(0,0,0,.45))}
+.journey-hero__ring{filter:drop-shadow(0 0 15px rgba(61,255,158,.28))}
+.journey-hero__details{min-width:0;max-width:560px}
+.journey-hero__details h2{display:flex;align-items:center;gap:8px;margin:4px 0 7px;font-size:clamp(27px,4vw,39px);line-height:1.05;text-shadow:0 4px 18px rgba(0,0,0,.42)}
+.journey-hero__region-icon{font-size:.74em;filter:drop-shadow(0 3px 7px rgba(0,0,0,.44))}
+.journey-hero__details>.small{max-width:450px}
+.journey-hero__pills{gap:8px;margin-top:14px}
+.journey-hero__progress{position:relative;z-index:1;margin-top:12px}
+.journey-hero__progress .bar{background:rgba(10,29,26,.72);border-color:rgba(180,229,215,.24)}
+.journey-section-title{margin:10px 2px 2px}
+.journey-section-title h2{font-size:24px;font-weight:700;letter-spacing:-.025em}
+.journey-section-title .sec__line{background:linear-gradient(90deg,rgba(61,255,158,.35),transparent)}
+.journey-compass{display:grid;place-items:center;width:35px;height:35px;border:1px solid var(--neon-line);border-radius:50%;color:var(--neon);font-size:20px;box-shadow:0 0 16px rgba(61,255,158,.14);transform:rotate(20deg)}
+
+.journey-map{padding:14px 14px 14px 16px;border-color:rgba(61,255,158,.38);background:linear-gradient(180deg,rgba(2,17,15,.72),rgba(2,10,12,.58)),radial-gradient(700px 440px at 8% 50%,rgba(61,255,158,.07),transparent 70%)}
+.journey-map::before{content:"";position:absolute;left:31px;top:42px;bottom:42px;width:2px;background:linear-gradient(180deg,transparent,var(--neon-line) 8%,var(--neon) 50%,var(--neon-line) 92%,transparent);box-shadow:0 0 12px rgba(61,255,158,.3)}
+.journey-region{position:relative;display:grid;grid-template-columns:minmax(210px,40%) minmax(0,1fr);min-height:162px;margin:0 0 12px;padding:0 0 0 42px!important;border:1px solid rgba(180,229,215,.2)!important;border-radius:22px!important;overflow:hidden;background:linear-gradient(100deg,rgba(7,25,23,.88),rgba(4,14,16,.84));box-shadow:0 12px 30px rgba(0,0,0,.24);isolation:isolate}
+.journey-region:last-child{margin-bottom:0}
+.journey-region::before{content:"";position:absolute;z-index:3;left:0;top:50%;width:25px;height:25px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 30%,#eafff6 0 8%,var(--neon) 10% 28%,#063025 31% 100%);border:2px solid var(--neon);box-shadow:0 0 0 6px rgba(61,255,158,.09),0 0 22px rgba(61,255,158,.52)}
+.journey-region.is-locked::before{background:radial-gradient(circle at 35% 30%,#c9dbd4 0 8%,#4b6660 10% 28%,#101a1d 31% 100%);border-color:rgba(180,229,215,.52);box-shadow:0 0 0 6px rgba(180,229,215,.06),0 0 14px rgba(0,0,0,.3)}
+.journey-region.is-current{background:linear-gradient(100deg,rgba(5,37,26,.94),rgba(4,17,17,.84));border-color:rgba(61,255,158,.58)!important;box-shadow:0 0 28px rgba(61,255,158,.13),0 12px 30px rgba(0,0,0,.28)}
+.journey-region.is-locked{opacity:.62}
+.journey-region__media{position:relative;min-height:162px;background-image:url("../assets/journey-workout-avatar-atlas.png");background-size:300% 200%;background-position:var(--journey-pos,0 0);background-repeat:no-repeat;overflow:hidden}
+.journey-region__media::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,13,13,.02),rgba(2,13,13,.22) 64%,rgba(2,13,13,.9)),linear-gradient(180deg,rgba(2,13,13,.08),rgba(2,13,13,.55));pointer-events:none}
+.journey-region__media-badge{position:absolute;z-index:1;left:14px;top:14px;display:grid;place-items:center;width:39px;height:39px;border-radius:13px;background:rgba(2,14,15,.72);border:1px solid var(--journey-color,#3DFF9E);color:var(--journey-color,#3DFF9E);font-size:21px;box-shadow:0 0 18px color-mix(in srgb,var(--journey-color,#3DFF9E) 28%,transparent);backdrop-filter:blur(8px)}
+.journey-region__media-level{position:absolute;z-index:1;left:14px;bottom:12px;padding:4px 8px;border-radius:8px;background:rgba(2,12,13,.72);border:1px solid rgba(180,229,215,.22);color:var(--tx-1);font-size:10px;font-weight:700;letter-spacing:.1em}
+.journey-region__content{min-width:0;padding:18px 20px 16px 18px;display:flex;flex-direction:column;justify-content:center}
+.journey-region .region__head{margin-bottom:9px;gap:11px}
+.journey-region .region__head b{font-size:19px;letter-spacing:-.02em}
+.journey-region .region__head span{font-size:12px}
+.journey-region .region__badge{width:38px;height:38px;border-radius:12px;font-size:18px;background:rgba(4,19,20,.72)}
+.journey-region__desc{margin-bottom:10px!important;line-height:1.38}
+.journey-region .nodes{padding:3px 0;overflow-x:auto}
+.journey-region .node__dot{width:33px;height:33px}
+.journey-region__progress{margin-top:10px!important}
+
+.journey-mode{position:relative;display:flex;align-items:center;gap:14px;width:100%;min-height:128px;padding:15px!important;text-align:left;border:1px solid var(--glass-br);color:inherit;font:inherit}
+.journey-mode.card--hl{border-color:var(--neon-line);box-shadow:var(--sh-1),0 0 25px rgba(61,255,158,.14)}
+.journey-mode__visual{width:78px;height:78px;flex:none;display:block;background-image:url("../assets/journey-difficulty-icons.png");background-size:500% 100%;background-position:var(--mode-pos,0 50%);background-repeat:no-repeat;filter:drop-shadow(0 8px 12px rgba(0,0,0,.5));transition:transform .24s var(--ease),filter .24s var(--ease)}
+.journey-mode:hover .journey-mode__visual{transform:translateY(-3px) scale(1.05);filter:drop-shadow(0 10px 16px rgba(0,0,0,.6)) drop-shadow(0 0 10px rgba(61,255,158,.22))}
+.journey-mode__body{display:flex;flex:1;min-width:0;flex-direction:column;gap:6px}
+.journey-mode__title{font-size:18px;font-weight:700;line-height:1}
+.journey-mode__active{position:absolute;right:13px;top:12px;padding:4px 8px;font-size:10px}
+.journey-mode__desc{line-height:1.35;max-width:280px}
+.journey-mode__pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.journey-mode__pills .pill{font-size:10.5px;padding:4px 8px}
+
+@media (max-width:760px){
+  .journey-hero{min-height:320px;padding:20px 18px 16px}
+  .journey-hero__content{grid-template-columns:auto minmax(0,1fr);gap:13px;align-items:start}
+  .journey-hero__profile{grid-row:1;align-self:start}
+  .journey-hero__ring{grid-row:1;align-self:start;transform:scale(.82);transform-origin:top right;margin-left:-10px}
+  .journey-hero__details{grid-column:1/-1;grid-row:2;margin-top:-8px}
+  .journey-hero__details h2{font-size:30px}
+  .journey-hero__progress{margin-top:8px}
+  .journey-section-title h2{font-size:21px}
+  .journey-map{padding:11px 10px 11px 13px}
+  .journey-map::before{left:25px;top:34px;bottom:34px}
+  .journey-region{grid-template-columns:1fr;min-height:0;padding-left:31px!important;border-radius:18px!important}
+  .journey-region::before{width:21px;height:21px}
+  .journey-region__media{min-height:128px}
+  .journey-region__content{padding:14px 14px 15px}
+  .journey-region .region__head b{font-size:17px}
+  .journey-region__desc{font-size:12px}
+  .journey-mode{min-height:108px;gap:10px;padding:12px!important}
+  .journey-mode__visual{width:62px;height:62px}
+  .journey-mode__title{font-size:16px}
+  .journey-mode__pills .pill{font-size:9.5px;padding:3px 6px}
+}
+@media (max-width:460px){
+  .journey-hero__profile .avatar{width:72px!important;height:72px!important}
+  .journey-hero__ring{transform:scale(.68);transform-origin:top right;margin-left:-30px;margin-right:-18px}
+  .journey-hero__details h2{font-size:27px}
+  .journey-hero__details>.small{font-size:12px}
+  .journey-hero__pills .pill{font-size:10px;padding:4px 7px}
+  .journey-mode__visual{width:53px;height:53px}
+  .journey-mode__desc{font-size:11px}
+}
