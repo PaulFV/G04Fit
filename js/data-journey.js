@@ -42,37 +42,37 @@
   /* ---------- Regionen der Weltkarte ---------- */
   var REGIONS = [
     {
-      key: 'starter', name: 'Starter Gym', icon: '🏋️', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '0% 20%', from: 1, to: 5,
+      key: 'starter', name: 'Starter Gym', icon: '🏋️', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '0% 20%', mobileImagePosition: '0% 20%', from: 1, to: 5,
       tag: 'Fundamentals & technique',
       desc: 'Learn to perform the movements with good form. Weight comes second.',
       color: '#7DD3A0'
     },
     {
-      key: 'strength-lab', name: 'Strength Lab', icon: '🏋️', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '50% 20%', from: 6, to: 12,
+      key: 'strength-lab', name: 'Strength Lab', icon: '🏋️', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '50% 20%', mobileImagePosition: '50% 20%', from: 6, to: 12,
       tag: 'First strength gains',
       desc: 'The basic lifts are solid. Now build weight systematically.',
       color: '#3DFF9E'
     },
     {
-      key: 'power-rack', name: 'Power Rack', icon: '💪', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '100% 20%', from: 13, to: 20,
+      key: 'power-rack', name: 'Power Rack', icon: '💪', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '100% 20%', mobileImagePosition: '100% 12%', from: 13, to: 20,
       tag: 'Volume & endurance',
       desc: 'Build longer workouts and more volume. Your strength base gets stronger.',
       color: '#22D3EE'
     },
     {
-      key: 'conditioning', name: 'Conditioning Lab', icon: '🏋️', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '0% 80%', from: 21, to: 30,
+      key: 'conditioning', name: 'Conditioning Lab', icon: '🏋️', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '0% 80%', mobileImagePosition: '0% 78%', from: 21, to: 30,
       tag: 'Intensity',
       desc: 'Short rests, heavy loads. Recovery becomes the deciding factor.',
       color: '#FFC857'
     },
     {
-      key: 'performance', name: 'Performance Center', icon: '⚡', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '50% 80%', from: 31, to: 42,
+      key: 'performance', name: 'Performance Center', icon: '⚡', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '50% 80%', mobileImagePosition: '50% 78%', from: 31, to: 42,
       tag: 'Consistency at a high level',
       desc: 'Progress in small steps. Consistency wins.',
       color: '#A78BFA'
     },
     {
-      key: 'elite', name: 'Elite Gym', icon: '🏆', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '100% 80%', from: 43, to: 999,
+      key: 'elite', name: 'Elite Gym', icon: '🏆', image: 'assets/journey-workout-avatar-wide-atlas.png', imagePosition: '100% 80%', mobileImagePosition: '100% 78%', from: 43, to: 999,
       tag: 'Elite range',
       desc: 'Fine-tuned individually. The Coach works with your real data.',
       color: '#FF8FA3'

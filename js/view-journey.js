@@ -37,17 +37,16 @@
       : (unlocked ? 1 : 0);
 
     var imagePosition = region.imagePosition || 'center';
-    // On narrow screens the tall card should fit the complete square atlas cell
-    // vertically. Use the exact top/bottom cell anchors instead of the tuned
-    // desktop offsets so the avatar is not cropped by the mobile card height.
-    var mobileImagePosition = imagePosition
-      .replace(/\s20%$/, ' 0%')
-      .replace(/\s80%$/, ' 100%');
+    // On narrow screens keep the upper part of each atlas cell in view so the
+    // avatar's face stays visible instead of being cropped at the card edge.
+    var mobileImagePosition = region.mobileImagePosition || imagePosition
+      .replace(/\s(?:20|80)%$/, ' 12%');
     var imageStyle = "background-image:url('" + region.image + "');--journey-image-position:" + imagePosition + ';--journey-image-position-mobile:' + mobileImagePosition + ';';
-    return '<article class="journey-region ' + cls + '">' +
+    return '<article class="journey-region region--' + region.key + ' ' + cls + '">' +
       '<span class="journey-region__timeline-marker" aria-hidden="true">' +
       (unlocked ? String(region.from) : u.icon('lock', 14)) + '</span>' +
       '<div class="journey-region__media" style="' + imageStyle + '" role="img" aria-label="' + u.esc(region.name) + '">' +
+      '<span class="journey-region__media-bg" aria-hidden="true" style="background-image:url(\'' + region.image + '\')"></span>' +
       '<span class="journey-region__media-badge" style="--journey-color:' + region.color + '">' +
       (unlocked ? region.icon : u.icon('lock', 18)) + '</span>' +
       '<span class="journey-region__media-level">' + (current ? 'LEVEL ' + li.level : 'LEVEL ' + region.from) + '</span>' +
@@ -129,7 +128,7 @@
         '<div class="journey-hero__scene" style="background-image:url(\'' + li.region.image + '\');--journey-image-position:' + (li.region.imagePosition || 'center') + '" aria-hidden="true"></div>' +
         '<div class="journey-hero__content">' +
         '<div class="journey-hero__profile">' + G.avatar.render(88, { hero: true, action: true, fallback: 'assets/dashboard-profile.png?v=2.8.0' }) + '</div>' +
-        '<div class="journey-hero__ring">' + G.charts.ring(li.pct, { size: 126, stroke: 11, value: li.level, label: 'Level' }) + '</div>' +
+        '<div class="journey-hero__ring">' + G.charts.ring(li.pct, { size: 126, stroke: 7, value: li.level, label: 'Level' }) + '</div>' +
         '<div class="journey-hero__details">' +
         '<p class="muted small">Aktuelle Region</p>' +
         '<h2 class="big"><span class="journey-hero__region-icon">' + li.region.icon + '</span> ' + u.esc(li.region.name) + '</h2>' +
