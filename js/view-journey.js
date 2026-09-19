@@ -36,7 +36,14 @@
       ? (li.level - region.from + li.pct) / (Math.min(region.to, 999) - region.from + 1)
       : (unlocked ? 1 : 0);
 
-    var imageStyle = "background-image:url('" + region.image + "');--journey-image-position:" + (region.imagePosition || 'center') + ';';
+    var imagePosition = region.imagePosition || 'center';
+    // On narrow screens the tall card should fit the complete square atlas cell
+    // vertically. Use the exact top/bottom cell anchors instead of the tuned
+    // desktop offsets so the avatar is not cropped by the mobile card height.
+    var mobileImagePosition = imagePosition
+      .replace(/\s20%$/, ' 0%')
+      .replace(/\s80%$/, ' 100%');
+    var imageStyle = "background-image:url('" + region.image + "');--journey-image-position:" + imagePosition + ';--journey-image-position-mobile:' + mobileImagePosition + ';';
     return '<article class="journey-region ' + cls + '">' +
       '<span class="journey-region__timeline-marker" aria-hidden="true">' +
       (unlocked ? String(region.from) : u.icon('lock', 14)) + '</span>' +
