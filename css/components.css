@@ -760,7 +760,7 @@
   .journey-region.region--power-rack .journey-region__media-bg,
   .journey-region.region--conditioning .journey-region__media-bg,
   .journey-region.region--performance .journey-region__media-bg,
-  .journey-region.region--elite .journey-region__media-bg{display:block;position:absolute;z-index:0;inset:0;background-size:300% auto;background-position:var(--journey-image-position-mobile,var(--journey-image-position,center));background-repeat:no-repeat;transform:scale(.9);transform-origin:center;pointer-events:none}
+  .journey-region.region--elite .journey-region__media-bg{display:block;position:absolute;z-index:0;inset:0;background-size:300% auto;background-position:var(--journey-image-position-mobile,var(--journey-image-position,center));background-repeat:no-repeat;transform:scale(1);transform-origin:center;pointer-events:none}
   .journey-region__content{position:relative;z-index:2;top:0;margin-left:0;width:100%;min-height:210px;padding:0 18px 10px;border-radius:16px;background:transparent;text-shadow:0 2px 8px rgba(0,0,0,.9)}
   .journey-region__content .region__head b{color:#f3fff9;text-shadow:0 2px 8px rgba(0,0,0,.95)}
   .journey-region__content .region__head span,.journey-region__content .journey-region__desc{color:rgba(238,255,248,.92)!important;opacity:1;text-shadow:0 2px 7px rgba(0,0,0,.95)}
@@ -770,11 +770,15 @@
   .journey-region__content>.region__head>.pill--neon .pill__dot{animation:journeyHereDotPulse 1.2s ease-in-out infinite}
   .journey-region__content .pill,.journey-region__content .region__badge,.journey-region__content .node__dot{text-shadow:none}
   .journey-region .region__head{position:absolute;left:18px;right:18px;bottom:12px;top:auto;gap:7px;margin:0;align-items:center}
+  .journey-region .region__head>div:nth-child(2){max-width:38%}
   .journey-region .region__head b{font-size:14px}
   .journey-region .region__head span{font-size:10px}
   .journey-region .region__badge{width:27px;height:27px;border-radius:9px;font-size:13px}
-  .journey-region__desc{position:absolute;top:14px;left:18px;right:140px;font-size:10px;line-height:1.2;margin:0!important;display:block;white-space:nowrap;overflow:visible}
-  .journey-region .nodes{position:absolute;left:18px;right:18px;bottom:10px;padding:0;gap:3px;justify-content:flex-end;margin:0}
+  .journey-region__desc{position:absolute;top:14px;left:18px;right:auto;width:min(270px,calc(100% - 176px));font-size:10px;line-height:1.25;margin:0!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;overflow:hidden}
+  .journey-region .nodes{position:absolute;left:auto;right:18px;bottom:8px;width:55%;padding:0;gap:3px;justify-content:flex-end;align-content:flex-end;flex-wrap:wrap;overflow:visible;margin:0}
+  .journey-region.region--conditioning .nodes{width:176px}
+  .journey-region.region--performance .nodes{width:210px}
+  .journey-region.region--elite .nodes{width:245px}
   .journey-region .node__dot{width:22px;height:22px;font-size:10px}
   .journey-region .node__link{width:10px}
   .journey-region__progress{display:none}
@@ -793,6 +797,12 @@
   .journey-hero__details h2{font-size:27px}
   .journey-hero__details>.small{font-size:12px}
   .journey-hero__pills .pill{font-size:10px;padding:4px 7px}
+  .journey-region .nodes{width:62%;gap:2px}
+  .journey-region.region--conditioning .nodes{width:140px}
+  .journey-region.region--performance .nodes{width:170px}
+  .journey-region.region--elite .nodes{width:210px}
+  .journey-region .node__dot{width:20px;height:20px;font-size:9px}
+  .journey-region .node__link{width:6px}
   .journey-mode__visual{width:53px;height:53px}
   .journey-mode__desc{font-size:11px}
 }

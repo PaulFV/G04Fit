@@ -63,7 +63,7 @@
         : unlocked ? '<span class="pill pill--muted">' + u.icon('check', 12) + ' frei</span>'
           : '<span class="pill pill--muted">gesperrt</span>') +
       '</div>' +
-      '<p class="small muted journey-region__desc">' + u.esc(region.desc) + '</p>' +
+      '<p class="small muted journey-region__desc">' + u.esc(region.desc).replace(/\. /g, '.<br>') + '</p>' +
       nodes(region, li.level) +
       (current ? '<div class="bar bar--thin journey-region__progress"><span class="bar__fill" style="width:' +
         Math.round(u.clamp(pct, 0, 1) * 100) + '%"></span></div>' : '') +
