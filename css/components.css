@@ -490,7 +490,10 @@
 .region__head span{font-size:12px;color:var(--tx-2)}
 .nodes{display:flex;align-items:center;gap:0;overflow-x:auto;padding:6px 2px}
 .node{display:flex;align-items:center;flex:none}
+/* Buttons bringen je nach Browser eigenen Innenabstand mit (Safari/iOS
+   deutlich) – der schob Häkchen und Zahlen in kleinen Kreisen aus der Mitte. */
 .node__dot{
+  -webkit-appearance:none;appearance:none;padding:0;margin:0;line-height:1;text-align:center;font-variant-numeric:tabular-nums;
   width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none;
   border:2px solid var(--glass-br);background:rgba(0,0,0,.4);
   font-size:11.5px;font-weight:700;color:var(--tx-2);cursor:pointer;
@@ -685,15 +688,21 @@
 .journey-section-title .sec__line{background:linear-gradient(90deg,rgba(61,255,158,.35),transparent)}
 .journey-compass{display:grid;place-items:center;width:35px;height:35px;border:1px solid var(--neon-line);border-radius:50%;color:var(--neon);font-size:20px;box-shadow:0 0 16px rgba(61,255,158,.14);transform:rotate(20deg)}
 .journey-map-title{position:relative}
-.journey-map-title::before{content:"";position:absolute;z-index:2;left:0;top:calc(100% - 2px);width:42px;height:28px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 100' preserveAspectRatio='none'%3E%3Cpath d='M21 0 C21 30 21 67 21 100' fill='none' stroke='%233dff9e' stroke-width='3' stroke-linecap='round' stroke-dasharray='1 13'/%3E%3C/svg%3E") center/100% 100% no-repeat;filter:drop-shadow(0 0 7px rgba(61,255,158,.65));pointer-events:none}
 
-.journey-map{padding:0 14px 0 16px}
-.journey-map::before{content:"";position:absolute;left:0;top:24px;bottom:24px;width:42px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 1000' preserveAspectRatio='none'%3E%3Cpath d='M21 0 C8 24 8 52 21 76 C34 100 34 128 21 152 C8 176 8 204 21 228 C34 252 34 280 21 304 C8 328 8 356 21 380 C34 404 34 432 21 456 C8 480 8 508 21 532 C34 556 34 584 21 608 C8 632 8 660 21 684 C34 708 34 736 21 760 C8 784 8 812 21 836 C34 860 34 888 21 912 C8 936 8 964 21 1000' fill='none' stroke='%233dff9e' stroke-width='3' stroke-linecap='round' stroke-dasharray='1 13'/%3E%3C/svg%3E") center/100% 100% no-repeat;filter:drop-shadow(0 0 7px rgba(61,255,158,.65))}
-.journey-region{position:relative;display:grid;grid-template-columns:minmax(210px,40%) minmax(0,1fr);min-height:162px;margin:0 0 12px;padding:0 0 0 42px!important;border:1px solid rgba(180,229,215,.2)!important;border-radius:22px!important;overflow:hidden;background:linear-gradient(100deg,rgba(7,25,23,.88),rgba(4,14,16,.84));box-shadow:0 12px 30px rgba(0,0,0,.24);clip-path:polygon(28px 0,100% 0,100% 100%,28px 100%,0 50%);isolation:isolate}
-.journey-region:last-child{margin-bottom:0}
+/* Zeitleiste: eine gerade, gepunktete Linie durch die Mitte aller Kreise.
+   Anfang und Ende (--line-top/--line-bottom) setzt fitMap() in
+   js/view-journey.js, damit sie genau am ersten und letzten Kreis endet. */
+.journey-map{--rail:24px;padding:0 4px 0 0}
+.journey-map::before{content:"";position:absolute;z-index:0;left:calc(var(--rail) - 3px);top:var(--line-top,40px);bottom:var(--line-bottom,40px);width:6px;background:radial-gradient(circle,var(--neon) 0 1.6px,transparent 2.1px) center top/6px 12px repeat-y;filter:drop-shadow(0 0 5px rgba(61,255,158,.6));pointer-events:none}
+.journey-stop{position:relative;padding-left:calc(var(--rail) * 2);margin:0 0 14px}
+.journey-stop:last-child{margin-bottom:0}
+.journey-region{position:relative;display:grid;grid-template-columns:minmax(210px,40%) minmax(0,1fr);min-height:162px;margin:0;padding:0 0 0 16px!important;border:1px solid rgba(180,229,215,.2)!important;border-radius:22px!important;overflow:hidden;background:linear-gradient(100deg,rgba(7,25,23,.88),rgba(4,14,16,.84));box-shadow:0 12px 30px rgba(0,0,0,.24);clip-path:polygon(16px 0,100% 0,100% 100%,16px 100%,0 50%);isolation:isolate}
 .journey-region::before{display:none}
-.journey-region__timeline-marker{position:absolute;z-index:4;left:26px;top:50%;display:grid;place-items:center;width:27px;height:27px;border-radius:50%;transform:translate(-50%,-50%);background-color:#071a17;background:radial-gradient(circle at 35% 28%,#eafff6 0 7%,var(--neon) 9% 24%,#063025 27% 100%);border:2px solid var(--neon);box-shadow:0 0 0 4px rgba(3,15,13,.96),0 0 0 7px rgba(61,255,158,.08),0 0 18px rgba(61,255,158,.48);color:#eafff6;font-size:12px;font-weight:800;line-height:1}
-.journey-region.is-locked .journey-region__timeline-marker{background-color:#0b1517;background:radial-gradient(circle at 35% 28%,#c9dbd4 0 7%,#4b6660 9% 24%,#101a1d 27% 100%);border-color:rgba(180,229,215,.6);box-shadow:0 0 0 4px rgba(3,15,13,.96),0 0 0 7px rgba(180,229,215,.06),0 0 14px rgba(0,0,0,.35);color:#d7e7e1}
+/* Kreise der Zeitleiste: erreicht = grüner Ring, aktuell = grün gefüllt, gesperrt = grau mit Schloss */
+.journey-region__timeline-marker{position:absolute;z-index:2;left:var(--rail);top:50%;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;transform:translate(-50%,-50%);background:#062a20;border:2px solid var(--neon);box-shadow:0 0 0 4px #03100d,0 0 12px rgba(61,255,158,.35);color:var(--neon);font-size:12px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.journey-stop.is-current .journey-region__timeline-marker{background:var(--neon);color:#03140c;box-shadow:0 0 0 4px #03100d,0 0 0 7px rgba(61,255,158,.18),0 0 20px rgba(61,255,158,.6)}
+.journey-stop.is-locked .journey-region__timeline-marker{background:#0d1719;border-color:rgba(180,229,215,.38);box-shadow:0 0 0 4px #03100d;color:rgba(215,231,225,.75)}
+.journey-region__timeline-marker .ui-icon{width:13px;height:13px}
 .journey-region.is-current{background:linear-gradient(100deg,rgba(5,37,26,.94),rgba(4,17,17,.84));border-color:rgba(61,255,158,.58)!important;box-shadow:0 0 28px rgba(61,255,158,.13),0 12px 30px rgba(0,0,0,.28)}
 .journey-region.is-locked{opacity:.62}
   .journey-region__media{position:relative;min-height:162px;background-size:300% auto;background-position:var(--journey-image-position,center);background-repeat:no-repeat;overflow:hidden}
@@ -706,8 +715,9 @@
 .journey-region .region__head span{font-size:12px}
 .journey-region .region__badge{width:38px;height:38px;border-radius:12px;font-size:18px;background:rgba(4,19,20,.72)}
 .journey-region__desc{margin-bottom:10px!important;line-height:1.38}
-.journey-region .nodes{padding:3px 0;overflow-x:auto}
-.journey-region .node__dot{width:33px;height:33px}
+.journey-region .nodes{padding:3px 0;flex-wrap:wrap;row-gap:8px;overflow:visible}
+.journey-region .node__dot{width:31px;height:31px}
+.journey-region .node__link{width:14px}
 .journey-region__progress{margin-top:10px!important}
 .journey-region__status{position:absolute;z-index:2;top:18px;right:20px}
 .journey-region .region__head{padding-right:84px}
@@ -751,7 +761,8 @@
   /* Kacheln der Weltkarte: Das Bild füllt die ganze Kachel, der Text weicht
      je nach Motiv nach oben/unten (bands) oder links/rechts (sides) aus.
      Höhe, Spaltenbreite und Bildausschnitt setzt fitMap(). */
-  .journey-region{display:block;min-height:240px;margin-bottom:10px;padding:0!important;border-color:rgba(180,229,215,.16)!important;border-radius:16px!important;clip-path:none;overflow:hidden;background:#04110f;box-shadow:none}
+  .journey-stop{padding-left:0;margin-bottom:10px}
+  .journey-region{display:block;min-height:240px;margin:0;padding:0!important;border-color:rgba(180,229,215,.16)!important;border-radius:16px!important;clip-path:none;overflow:hidden;background:#04110f;box-shadow:none}
   .journey-region.is-current{border-color:rgba(61,255,158,.72)!important;box-shadow:inset 0 0 0 1px rgba(61,255,158,.18),0 0 22px rgba(61,255,158,.12)}
   .journey-region.is-locked{opacity:.8}
   .journey-region__timeline-marker,.journey-region__media-badge,.journey-region__media-level,.journey-region__progress{display:none}
@@ -774,16 +785,14 @@
   .journey-region--sides .journey-region__desc{margin:8px 0 0!important}
   .journey-region .nodes{grid-area:nodes;flex-wrap:wrap;gap:4px 0;padding:0;margin:0;overflow:visible}
   .journey-region--sides .nodes{justify-content:flex-end}
-  .journey-region .node__dot{width:22px;height:22px;font-size:10px}
+  .journey-region .node__dot{width:22px;height:22px;font-size:10px;letter-spacing:-.02em}
+  .journey-region .node__dot .ui-icon{width:12px;height:12px}
   .journey-region .node__link{width:5px}
   .journey-region__content .pill,.journey-region__content .region__badge,.journey-region__content .node__dot{text-shadow:none}
   .journey-mode{min-height:108px;gap:10px;padding:12px!important}
   .journey-mode__visual{width:62px;height:62px}
   .journey-mode__title{font-size:16px}
   .journey-mode__pills .pill{font-size:9.5px;padding:3px 6px}
-}
-@media (min-width:621px) and (max-width:760px){
-  .journey-map::before{left:-22px}
 }
 @media (max-width:460px){
   .journey-mode__visual{width:53px;height:53px}

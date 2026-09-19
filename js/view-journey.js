@@ -37,10 +37,13 @@
       : (unlocked ? 1 : 0);
 
     var imageStyle = "background-image:url('" + region.image + "');--journey-image-position:" + (region.imagePosition || 'center') + ';';
-    return '<article class="journey-region region--' + region.key + ' journey-region--' + (region.layout || 'bands') + ' ' + cls +
-      '" data-region="' + region.key + '">' +
+    // Der Kreis der Zeitleiste sitzt außerhalb der Kachel: deren Pfeilform
+    // (clip-path) würde ihn sonst anschneiden.
+    return '<div class="journey-stop' + (unlocked ? '' : ' is-locked') + (current ? ' is-current' : '') + '">' +
       '<span class="journey-region__timeline-marker" aria-hidden="true">' +
       (unlocked ? String(region.from) : u.icon('lock', 14)) + '</span>' +
+      '<article class="journey-region region--' + region.key + ' journey-region--' + (region.layout || 'bands') + ' ' + cls +
+      '" data-region="' + region.key + '">' +
       '<div class="journey-region__media" style="' + imageStyle + '" role="img" aria-label="' + u.esc(region.name) + '">' +
       '<span class="journey-region__media-badge" style="--journey-color:' + region.color + '">' +
       (unlocked ? region.icon : u.icon('lock', 18)) + '</span>' +
@@ -67,7 +70,7 @@
       (current ? '<div class="bar bar--thin journey-region__progress"><span class="bar__fill" style="width:' +
         Math.round(u.clamp(pct, 0, 1) * 100) + '%"></span></div>' : '') +
       '</div>' +
-      '</article>';
+      '</article></div>';
   }
 
   // Gleiche Pausentimer-Kurzsteuerung wie auf Dashboard und Workout, damit
@@ -260,6 +263,20 @@
         tile.style.setProperty('--band-bottom', p.bottom + 'px');
       }
     });
+
+    placeRail(host);
+  }
+
+  // Zeitleiste (Tablet/Desktop): genau von der Mitte des ersten bis zur
+  // Mitte des letzten Kreises, egal wie hoch die Kacheln gerade sind.
+  function placeRail(host) {
+    var map = host.querySelector('.journey-map');
+    var tiles = host.querySelectorAll('.journey-region');
+    if (!map || !tiles.length || isPhone()) return;
+    var m = map.getBoundingClientRect();
+    var first = tiles[0].getBoundingClientRect(), last = tiles[tiles.length - 1].getBoundingClientRect();
+    map.style.setProperty('--line-top', (first.top + first.height / 2 - m.top).toFixed(1) + 'px');
+    map.style.setProperty('--line-bottom', (m.bottom - last.top - last.height / 2).toFixed(1) + 'px');
   }
 
   /* Kopfkarte „Aktuelle Region“: Auf dem Handy liegt der Text oben und
@@ -307,7 +324,7 @@
     hero.style.setProperty('--band-bottom', bottom + 'px');
   }
 
-  var resizeWatch = null;
+  var resizeWatch = null, railWatch = null;
   function fitAll(host) {
     if (!host.isConnected) return;
     fitHero(host);
@@ -329,6 +346,16 @@
       run();
     });
     resizeWatch.observe(host);
+
+    // Ändert sich nur die Höhe der Karte (Schrift geladen, Text umgebrochen),
+    // reicht es, die Zeitleiste nachzuführen. Die Linie selbst ändert keine
+    // Höhe, eine Schleife ist damit ausgeschlossen.
+    if (railWatch) railWatch.disconnect();
+    var map = host.querySelector('.journey-map');
+    if (map) {
+      railWatch = new ResizeObserver(function () { placeRail(host); });
+      railWatch.observe(map);
+    }
   }
 
   G.views.journey = {
