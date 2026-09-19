@@ -76,7 +76,12 @@
         u.icon(v.ic, 19) + '<span>' + u.esc(v.n) + '</span>' + badge + '</button>';
     }).join('');
 
-    u.$('#tabbar').innerHTML = NAV.filter(function (v) { return v.tab; }).map(function (v) {
+    var tabKeys = ['dashboard', 'workout', 'exercises', 'journey', 'progress'];
+    var tabNav = tabKeys.map(function (key) {
+      for (var i = 0; i < NAV.length; i++) if (NAV[i].k === key) return NAV[i];
+      return null;
+    }).filter(function (v) { return v && v.tab; });
+    u.$('#tabbar').innerHTML = tabNav.map(function (v) {
       return '<button class="tabbar__item" data-nav="' + v.k + '">' +
         '<img class="tabbar__art" src="assets/nav/nav-' + v.k + '.png?v=2.4.1" alt="" aria-hidden="true">' +
         '<span>' + u.esc(v.n) + '</span></button>';

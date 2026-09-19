@@ -49,24 +49,24 @@
 .dashboard-hero > .row:last-child .input{background:transparent;border:0;min-width:80px;text-align:center}
 
 /* ---------- Week ---------- */
-.dashboard-week{padding:18px 22px 20px;border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(4,22,17,.64))}
-.dashboard-week-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+.dashboard-week{padding:14px 16px 15px;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(4,22,17,.64))}
+.dashboard-week-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
 .dashboard-week-cell{
-  min-height:88px;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  min-height:76px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
   border:1px solid var(--glass-br);background:rgba(5,18,16,.68);color:var(--tx-2);position:relative;overflow:hidden;
   transition:transform .2s var(--ease),border-color .2s var(--ease),box-shadow .2s var(--ease);
 }
-.dashboard-week-cell b{font-size:14px;color:var(--tx-0);font-weight:700}
-.dashboard-week-cell > span{font-size:17px;font-weight:600;color:var(--tx-1);font-variant-numeric:tabular-nums}
+.dashboard-week-cell b{font-size:13px;color:var(--tx-0);font-weight:700}
+.dashboard-week-cell > span{font-size:16px;font-weight:600;color:var(--tx-1);font-variant-numeric:tabular-nums}
 .dashboard-week-cell.is-plan{border-color:rgba(255,92,122,.52)}
 .dashboard-week-cell.is-plan b{color:var(--tx-0)}
 .dashboard-week-cell.is-miss{background:rgba(255,92,122,.06);color:var(--danger)}
 .dashboard-week-cell.is-done{border-color:var(--neon-line);background:rgba(61,255,158,.13)}
 .dashboard-week-cell.is-today{border:2px solid var(--cyan);box-shadow:0 0 0 2px rgba(34,211,238,.13),0 0 22px rgba(34,211,238,.16);transform:translateY(-2px)}
 .dashboard-week-cell.is-today b,.dashboard-week-cell.is-today > span{color:var(--cyan)}
-.dashboard-week-cell__marker{width:8px;height:8px;border-radius:50%;display:block;margin-top:7px;background:var(--danger);box-shadow:0 0 9px currentColor;color:var(--danger)}
+.dashboard-week-cell__marker{width:7px;height:7px;border-radius:50%;display:block;margin-top:5px;background:var(--danger);box-shadow:0 0 9px currentColor;color:var(--danger)}
 .dashboard-week-cell__marker.is-done{background:var(--neon);color:var(--neon)}
-.dashboard-week-cell__rest{display:block;margin-top:5px;padding:2px 9px;border:1px solid var(--cyan);border-radius:99px;color:var(--cyan);font-size:10px;font-weight:700;letter-spacing:.05em}
+.dashboard-week-cell__rest{display:block;margin-top:4px;padding:2px 8px;border:1px solid var(--cyan);border-radius:99px;color:var(--cyan);font-size:9px;font-weight:700;letter-spacing:.05em}
 
 /* ---------- Stats ---------- */
 .dashboard-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -139,11 +139,11 @@
   .dashboard-hero__actions .btn--primary{min-width:0}
   .dashboard-hero > .row:last-child{margin-top:13px!important;padding-top:12px!important}
   .dashboard-hero > .row:last-child .switch{min-width:0;padding-left:7px;padding-right:7px}
-  .dashboard-week{padding:16px 12px 14px}
-  .dashboard-week-strip{gap:5px}
-  .dashboard-week-cell{min-height:78px;border-radius:12px}
+  .dashboard-week{padding:13px 10px 12px}
+  .dashboard-week-strip{gap:4px}
+  .dashboard-week-cell{min-height:68px;border-radius:10px}
   .dashboard-week-cell b{font-size:12px}
-  .dashboard-week-cell > span{font-size:16px}
+  .dashboard-week-cell > span{font-size:15px}
   .dashboard-week-cell__rest{font-size:8px;padding:2px 5px}
   .dashboard-stats{gap:10px}
   .dashboard-stat{min-height:98px;padding:13px 11px;gap:9px;border-radius:18px}
@@ -163,7 +163,7 @@
 
 @media (max-width:390px){
   .dashboard-hero h2.big{font-size:31px}
-  .dashboard-week-cell{min-height:72px}
+  .dashboard-week-cell{min-height:64px}
   .dashboard-stat{min-height:92px}
   .dashboard-stat__icon{width:44px;height:44px;border-radius:11px}
   .dashboard-stat__v{font-size:26px}

@@ -36,13 +36,11 @@
       ? (li.level - region.from + li.pct) / (Math.min(region.to, 999) - region.from + 1)
       : (unlocked ? 1 : 0);
 
-    var regionIndex = G.REGIONS.indexOf(region);
-    var row = Math.floor(regionIndex / 3);
-    var col = regionIndex % 3;
-    var atlasPos = (col * 50) + '% ' + (row * 100) + '%';
-
+    var imageStyle = "background-image:url('" + region.image + "');--journey-image-position:" + (region.imagePosition || 'center') + ';';
     return '<article class="journey-region ' + cls + '">' +
-      '<div class="journey-region__media" style="--journey-pos:' + atlasPos + '" role="img" aria-label="' + u.esc(region.name) + '">' +
+      '<span class="journey-region__timeline-marker" aria-hidden="true">' +
+      (unlocked ? String(region.from) : u.icon('lock', 14)) + '</span>' +
+      '<div class="journey-region__media" style="' + imageStyle + '" role="img" aria-label="' + u.esc(region.name) + '">' +
       '<span class="journey-region__media-badge" style="--journey-color:' + region.color + '">' +
       (unlocked ? region.icon : u.icon('lock', 18)) + '</span>' +
       '<span class="journey-region__media-level">' + (current ? 'LEVEL ' + li.level : 'LEVEL ' + region.from) + '</span>' +
@@ -121,7 +119,7 @@
       return '<div class="view stack journey-view">' +
 
         '<section class="journey-hero card card--hero card--hl">' +
-        '<div class="journey-hero__scene" style="--journey-pos:0% 0%" aria-hidden="true"></div>' +
+        '<div class="journey-hero__scene" style="background-image:url(\'' + li.region.image + '\');--journey-image-position:' + (li.region.imagePosition || 'center') + '" aria-hidden="true"></div>' +
         '<div class="journey-hero__content">' +
         '<div class="journey-hero__profile">' + G.avatar.render(88, { hero: true, action: true, fallback: 'assets/dashboard-profile.png?v=2.8.0' }) + '</div>' +
         '<div class="journey-hero__ring">' + G.charts.ring(li.pct, { size: 126, stroke: 11, value: li.level, label: 'Level' }) + '</div>' +
@@ -138,7 +136,7 @@
         '<p class="tiny dim">Noch ' + (li.need - li.into) + ' XP bis Level ' + (li.level + 1) + '. Eine Einheit bringt je nach Umfang etwa 60–200 XP.</p></div>' +
         '</section>' +
 
-        '<div class="sec journey-section-title"><h2>Weltkarte</h2><span class="sec__line"></span><span class="journey-compass" aria-hidden="true">✦</span></div>' +
+        '<div class="sec journey-section-title journey-map-title"><h2>Weltkarte</h2><span class="sec__line"></span><span class="journey-compass" aria-hidden="true">✦</span></div>' +
         '<div class="journey-map">' +
         G.REGIONS.map(function (r) { return regionRow(r, li); }).join('') +
         '</div>' +
