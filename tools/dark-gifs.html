@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G04Fit — dunkle Übungs-GIFs</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 18px; background: #05070A; color: #dfeee8; font: 14px/1.45 system-ui, sans-serif; }
+  h1 { font-size: 20px; margin: 0 0 6px; }
+  p { margin: 0 0 14px; max-width: 760px; color: #a9bdb5; }
+  button { font: inherit; padding: 8px 14px; border-radius: 10px; border: 1px solid #3dff9e; background: #0c2a1e; color: #eafff6; cursor: pointer; }
+  #log { margin: 12px 0; color: #9fd9bd; }
+  #out { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+  figure { margin: 0; padding: 8px; border: 1px solid #1d2d28; border-radius: 12px; background: #0a1210; }
+  figure img { display: block; width: 100%; border-radius: 8px; background: #07100D; }
+  figcaption { font-size: 12px; color: #a9bdb5; margin-top: 6px; word-break: break-all; }
+  figcaption a { color: #3dff9e; }
+</style>
+</head>
+<body>
+<h1>Dunkle Übungs-GIFs</h1>
+<p>
+  Erzeugt aus jedem weißen Übungs-GIF (<code>*-whiteclean.gif</code>) eine Fassung mit dunklem Hintergrund
+  (<code>*-dark.gif</code>). Öffnen über den lokalen Server, z. B.
+  <code>http://localhost:5181/tools/dark-gifs.html</code>. Mit <code>?save=http://127.0.0.1:5199</code>
+  werden die Dateien per PUT an einen lokalen Empfänger geschickt, sonst stehen sie unten zum Herunterladen bereit.
+  Mit <code>&amp;transparent=1</code> bleibt der Hintergrund durchsichtig, damit die App ein Bild dahinterlegen kann.
+</p>
+<button id="go">Alle umwandeln</button>
+<div id="log"></div>
+<div id="out"></div>
+
+<script src="../js/util.js"></script>
+<script src="../js/data-exercises.js"></script>
+<script>
+/* ============================================================
+   So funktioniert die Umwandlung
+
+   Die GIFs bestehen aus Posen (alle 6 Bilder eine) und dazwischen
+   Überblendungen, die im Original auf Weiß gemischt sind. Solche
+   Mischungen lassen sich nicht einfach umfärben – auf Dunkel ergäben
+   sie helle Schlieren. Deshalb:
+     1. Nur die Posen freistellen: reines Weiß, das mit dem Rand
+        verbunden ist, sowie eingeschlossene weiße Löcher ab HOLE Pixeln
+        werden Hintergrund. Kleinere weiße Flecken sind Glanzlichter
+        auf der Figur und bleiben.
+     2. Kantenpixel (Mischung aus dunklem Umriss und Weiß) auf den dunklen
+        Grund umrechnen, damit kein heller Saum entsteht. Helle Randpixel
+        bleiben: sie gehören zu Flächen ohne Umriss und würden sonst ausfransen.
+        Sehr helle Flächen werden sanft abgedunkelt (Farbton bleibt), weil
+        weiße Geräte auf dunklem Grund sonst blenden.
+     3. Dünne dunkle Linien mit Hintergrund auf beiden Seiten (Kabel,
+        Rohrkonturen) werden hell gezeichnet – dunkel wären sie unsichtbar.
+     4. Jedes Zwischenbild als Mischung der beiden benachbarten Posen neu
+        berechnen – mit demselben Anteil wie im Original (kleinste
+        Quadrate).
+   Bildgröße und Anzeigedauer je Bild bleiben unverändert.
+   ============================================================ */
+'use strict';
+
+var BG = [7, 16, 13];       // --exercise-canvas im dunklen Design (#07100D)
+var OUTLINE = 10;           // Farbe der Umrisslinien in den Vorlagen
+var HOLE = 30;              // eingeschlossene weiße Flächen ab dieser Größe sind Hintergrund
+var POSE_EVERY = 6;         // Abstand der Posen in der Bildfolge
+var EDGE_MAX = 200;         // hellere Randpixel sind Füllung (z. B. Geräte ohne Umriss), keine Kante
+var KNEE = 205, SLOPE = 0.5; // sehr helle Flächen sanft abdunkeln, damit weiße Geräte nicht blenden
+var LINE = [178, 192, 186];  // Farbe dünner Linien (Kabel) auf dunklem Grund
+
+function readFrames(buf) {
+  var dec = new ImageDecoder({ data: buf, type: 'image/gif' });
+  return dec.tracks.ready.then(async function () {
+    var n = dec.tracks.selectedTrack.frameCount, frames = [], W, H;
+    for (var i = 0; i < n; i++) {
+      var r = await dec.decode({ frameIndex: i }), img = r.image;
+      W = img.displayWidth; H = img.displayHeight;
+      var c = new OffscreenCanvas(W, H), x = c.getContext('2d');
+      x.drawImage(img, 0, 0);
+      frames.push({ px: x.getImageData(0, 0, W, H).data, delay: img.duration / 1000 });
+      img.close();
+    }
+    dec.close();
+    return { frames: frames, W: W, H: H };
+  });
+}
+
+// Dünne Linien (Kabel, Stangen, Rohrkonturen): alles, was bei einer
+// Öffnung mit 3×3 Pixeln verschwindet, also höchstens 2 px breit ist –
+// aber nur zusammenhängend ab LINE_MIN Pixeln. So zählen spitze Ecken
+// des Figurenumrisses nicht als Linie.
+var LINE_MIN = 15;
+function thinLines(bg, W, H) {
+  var N = W * H, x, y, p, dx, dy, ok;
+  var er = new Uint8Array(N), open = new Uint8Array(N), thin = new Uint8Array(N);
+  for (y = 1; y < H - 1; y++) for (x = 1; x < W - 1; x++) {
+    ok = 1;
+    for (dy = -1; dy <= 1 && ok; dy++) for (dx = -1; dx <= 1; dx++) if (bg[(y + dy) * W + x + dx]) { ok = 0; break; }
+    er[y * W + x] = ok;
+  }
+  for (y = 1; y < H - 1; y++) for (x = 1; x < W - 1; x++) {
+    if (!er[y * W + x]) continue;
+    for (dy = -1; dy <= 1; dy++) for (dx = -1; dx <= 1; dx++) open[(y + dy) * W + x + dx] = 1;
+  }
+  var cand = new Uint8Array(N);
+  for (p = 0; p < N; p++) cand[p] = !bg[p] && !open[p] ? 1 : 0;
+  var seen = new Uint8Array(N);
+  for (p = 0; p < N; p++) {
+    if (!cand[p] || seen[p]) continue;
+    var stack = [p], list = [];
+    seen[p] = 1;
+    while (stack.length) {
+      var q = stack.pop(); list.push(q);
+      var qx = q % W, qy = (q / W) | 0;
+      for (dy = -1; dy <= 1; dy++) for (dx = -1; dx <= 1; dx++) {
+        var nx = qx + dx, ny = qy + dy;
+        if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+        var r = ny * W + nx;
+        if (cand[r] && !seen[r]) { seen[r] = 1; stack.push(r); }
+      }
+    }
+    if (list.length >= LINE_MIN) list.forEach(function (v) { thin[v] = 1; });
+  }
+  return thin;
+}
+
+function cleanPose(src, W, H) {
+  var N = W * H, white = new Uint8Array(N), p, i;
+  for (p = 0; p < N; p++) {
+    i = p * 4;
+    var lo = Math.min(src[i], src[i + 1], src[i + 2]), hi = Math.max(src[i], src[i + 1], src[i + 2]);
+    white[p] = lo >= 253 && hi - lo < 6 ? 1 : 0;
+  }
+  var comp = new Int32Array(N).fill(-1), info = [];
+  for (p = 0; p < N; p++) {
+    if (!white[p] || comp[p] >= 0) continue;
+    var id = info.length, stack = [p], area = 0, edge = false;
+    comp[p] = id;
+    while (stack.length) {
+      var q = stack.pop(), x = q % W, y = (q / W) | 0;
+      area++;
+      if (x === 0 || y === 0 || x === W - 1 || y === H - 1) edge = true;
+      var nbs = [x > 0 ? q - 1 : -1, x < W - 1 ? q + 1 : -1, y > 0 ? q - W : -1, y < H - 1 ? q + W : -1];
+      for (var k = 0; k < 4; k++) {
+        var r = nbs[k];
+        if (r >= 0 && white[r] && comp[r] < 0) { comp[r] = id; stack.push(r); }
+      }
+    }
+    info.push({ area: area, edge: edge });
+  }
+  var bg = new Uint8Array(N);
+  for (p = 0; p < N; p++) {
+    if (comp[p] < 0) continue;
+    var c = info[comp[p]];
+    if (c.edge || c.area >= HOLE) bg[p] = 1;
+  }
+  // Heller Saum am Umriss: heller Randpixel direkt neben dem Hintergrund, der
+  // selbst an eine dunkle Umrisslinie grenzt. Er ist Mischfarbe aus Umriss und
+  // Weiß und wäre auf dunklem Grund als helle Pünktchen sichtbar – er wird
+  // Hintergrund. Helle Randpixel ohne dunklen Nachbarn sind Gerätefüllung
+  // ohne Umriss und bleiben.
+  var fringe = [];
+  for (p = 0; p < N; p++) {
+    if (bg[p]) continue;
+    i = p * 4;
+    if (Math.max(src[i], src[i + 1], src[i + 2]) < EDGE_MAX) continue;
+    var fx = p % W, fy = (p / W) | 0;
+    var nearBg = (fx > 0 && bg[p - 1]) || (fx < W - 1 && bg[p + 1]) || (fy > 0 && bg[p - W]) || (fy < H - 1 && bg[p + W]);
+    if (!nearBg) continue;
+    var dark = false;
+    for (var ny = Math.max(0, fy - 1); ny <= Math.min(H - 1, fy + 1) && !dark; ny++) {
+      for (var nx = Math.max(0, fx - 1); nx <= Math.min(W - 1, fx + 1); nx++) {
+        var j4 = (ny * W + nx) * 4;
+        if (Math.max(src[j4], src[j4 + 1], src[j4 + 2]) < 110) { dark = true; break; }
+      }
+    }
+    if (dark) fringe.push(p);
+  }
+  fringe.forEach(function (v) { bg[v] = 1; });
+  var thin = thinLines(bg, W, H);
+  var out = new Float32Array(N * 3);
+  for (p = 0; p < N; p++) {
+    i = p * 4;
+    var o = p * 3;
+    if (bg[p]) { out[o] = BG[0]; out[o + 1] = BG[1]; out[o + 2] = BG[2]; continue; }
+    var px = p % W, py = (p / W) | 0;
+    var nb = (px > 0 && bg[p - 1]) || (px < W - 1 && bg[p + 1]) || (py > 0 && bg[p - W]) || (py < H - 1 && bg[p + W]);
+    var top = Math.max(src[i], src[i + 1], src[i + 2]);
+    if (top < EDGE_MAX && thin[p]) {
+      // Dünne dunkle Linie mit Hintergrund auf beiden Seiten (Kabel, Rohrkontur):
+      // auf Dunkel unsichtbar, deshalb hell in derselben Stärke zeichnen.
+      var s = Math.min(1, Math.max(0, (255 - (src[i] + src[i + 1] + src[i + 2]) / 3) / (255 - OUTLINE)));
+      for (var lc = 0; lc < 3; lc++) out[o + lc] = BG[lc] + s * (LINE[lc] - BG[lc]);
+      continue;
+    }
+    if (nb && top < EDGE_MAX) {
+      for (var ch = 0; ch < 3; ch++) {
+        var a = Math.min(1, Math.max(0, (255 - src[i + ch]) / (255 - OUTLINE)));
+        out[o + ch] = a * OUTLINE + (1 - a) * BG[ch];
+      }
+      continue;
+    }
+    var scale = top > KNEE ? (KNEE + (top - KNEE) * SLOPE) / top : 1;
+    for (var cc = 0; cc < 3; cc++) out[o + cc] = src[i + cc] * scale;
+  }
+  return { px: out, bg: bg };
+}
+
+// Anteil t, mit dem ein Bild f als (1-t)·A + t·B entstanden ist.
+function blendShare(f, A, B) {
+  var num = 0, den = 0;
+  for (var k = 0; k < f.length; k += 4) {
+    for (var c = 0; c < 3; c++) {
+      var d = B[k + c] - A[k + c];
+      num += (f[k + c] - A[k + c]) * d;
+      den += d * d;
+    }
+  }
+  return den ? Math.min(1, Math.max(0, num / den)) : 0;
+}
+
+function quantize(px) {
+  var counts = new Map(), i, clear = false;
+  for (i = 0; i < px.length; i += 4) {
+    if (px[i + 3] === 0) { clear = true; continue; }
+    var key = (px[i] << 16) | (px[i + 1] << 8) | px[i + 2];
+    counts.set(key, (counts.get(key) || 0) + 1);
+  }
+  var cols = [];
+  counts.forEach(function (n, key) { cols.push([key >> 16, (key >> 8) & 255, key & 255, n]); });
+  var pal;
+  var limit = clear ? 255 : 256;
+  if (cols.length <= limit) {
+    pal = cols.map(function (c) { return [c[0], c[1], c[2]]; });
+  } else {
+    // Median Cut: immer die Box teilen, deren längste Farbachse am stärksten besetzt ist
+    var boxes = [cols];
+    while (boxes.length < limit) {
+      var bi = -1, best = -1, axis = 0;
+      boxes.forEach(function (b, j) {
+        if (b.length < 2) return;
+        for (var c = 0; c < 3; c++) {
+          var lo = 255, hi = 0;
+          for (var v = 0; v < b.length; v++) { if (b[v][c] < lo) lo = b[v][c]; if (b[v][c] > hi) hi = b[v][c]; }
+          var score = (hi - lo) * Math.sqrt(b.length);
+          if (score > best) { best = score; bi = j; axis = c; }
+        }
+      });
+      if (bi < 0) break;
+      var box = boxes[bi].sort(function (u, v) { return u[axis] - v[axis]; });
+      var total = 0, acc = 0, cut = 1;
+      box.forEach(function (v) { total += v[3]; });
+      for (var j = 0; j < box.length; j++) {
+        acc += box[j][3];
+        if (acc >= total / 2) { cut = Math.max(1, Math.min(box.length - 1, j + 1)); break; }
+      }
+      boxes.splice(bi, 1, box.slice(0, cut), box.slice(cut));
+    }
+    pal = boxes.map(function (b) {
+      var t = 0; b.forEach(function (v) { t += v[3]; });
+      return [0, 1, 2].map(function (c) {
+        var s = 0; b.forEach(function (v) { s += v[c] * v[3]; });
+        return Math.round(s / t);
+      });
+    });
+  }
+  var shift = clear ? 1 : 0;
+  var cache = new Map(), idx = new Uint8Array(px.length / 4);
+  for (i = 0; i < px.length; i += 4) {
+    if (px[i + 3] === 0) { idx[i / 4] = 0; continue; }
+    var k2 = (px[i] << 16) | (px[i + 1] << 8) | px[i + 2], hit = cache.get(k2);
+    if (hit === undefined) {
+      var bd = Infinity;
+      for (var q = 0; q < pal.length; q++) {
+        var dd = (pal[q][0] - px[i]) * (pal[q][0] - px[i]) + (pal[q][1] - px[i + 1]) * (pal[q][1] - px[i + 1]) + (pal[q][2] - px[i + 2]) * (pal[q][2] - px[i + 2]);
+        if (dd < bd) { bd = dd; hit = q; }
+      }
+      cache.set(k2, hit);
+    }
+    idx[i / 4] = hit + shift;
+  }
+  if (clear) pal.unshift(BG.slice());
+  return { pal: pal, idx: idx, clear: clear };
+}
+
+// GIF89a mit Endlosschleife; LZW nach dem Vorbild von omggif.
+function encodeGif(frames, W, H) {
+  var b = [];
+  function w16(v) { b.push(v & 255, (v >> 8) & 255); }
+  function str(s) { for (var i = 0; i < s.length; i++) b.push(s.charCodeAt(i)); }
+  str('GIF89a'); w16(W); w16(H); b.push(0x70, 0, 0);
+  b.push(0x21, 0xFF, 0x0B); str('NETSCAPE2.0'); b.push(3, 1, 0, 0, 0);
+  frames.forEach(function (f) {
+    // Mit Durchsichtigkeit: Bild vor dem nächsten löschen (Disposal 2), sonst
+    // schimmert das vorige Bild durch die durchsichtigen Stellen.
+    b.push(0x21, 0xF9, 4, f.clear ? 0x09 : 0x04); w16(Math.round(f.delay / 10)); b.push(0, 0);
+    var size = 1;
+    while ((1 << size) < f.pal.length) size++;
+    b.push(0x2C); w16(0); w16(0); w16(W); w16(H); b.push(0x80 | (size - 1));
+    for (var i = 0; i < (1 << size); i++) { var c = f.pal[i] || [0, 0, 0]; b.push(c[0], c[1], c[2]); }
+    var min = Math.max(2, size);
+    b.push(min);
+    var data = [], cur = 0, shift = 0, codeSize = min + 1;
+    var clear = 1 << min, eoi = clear + 1, next = eoi + 1, table = new Map();
+    function emit(code) {
+      cur |= code << shift; shift += codeSize;
+      while (shift >= 8) { data.push(cur & 255); cur >>>= 8; shift -= 8; }
+    }
+    emit(clear);
+    var ib = f.idx[0];
+    for (i = 1; i < f.idx.length; i++) {
+      var k = f.idx[i], key = (ib << 8) | k, code = table.get(key);
+      if (code === undefined) {
+        emit(ib);
+        if (next === 4096) { emit(clear); next = eoi + 1; codeSize = min + 1; table = new Map(); }
+        else { if (next >= (1 << codeSize)) codeSize++; table.set(key, next++); }
+        ib = k;
+      } else {
+        ib = code;
+      }
+    }
+    emit(ib); emit(eoi);
+    if (shift > 0) data.push(cur & 255);
+    for (i = 0; i < data.length; i += 255) {
+      var n = Math.min(255, data.length - i);
+      b.push(n);
+      for (var j = 0; j < n; j++) b.push(data[i + j]);
+    }
+    b.push(0);
+  });
+  b.push(0x3B);
+  return new Uint8Array(b);
+}
+
+async function convert(url, transparent) {
+  var buf = await (await fetch(url)).arrayBuffer();
+  var src = await readFrames(buf), W = src.W, H = src.H, F = src.frames, n = F.length;
+  var poses = {};
+  function pose(i) { i = i % n; if (!poses[i]) poses[i] = cleanPose(F[i].px, W, H); return poses[i]; }
+  var out = [];
+  for (var i = 0; i < n; i++) {
+    var a = Math.floor(i / POSE_EVERY) * POSE_EVERY, b2 = (a + POSE_EVERY) % n;
+    var t = i === a ? 0 : blendShare(F[i].px, F[a].px, F[b2].px);
+    var A = pose(a), B = t > 0 ? pose(b2) : A, N = W * H, rgba = new Uint8ClampedArray(N * 4);
+    for (var p = 0; p < N; p++) {
+      for (var c = 0; c < 3; c++) rgba[p * 4 + c] = Math.round((1 - t) * A.px[p * 3 + c] + t * B.px[p * 3 + c]);
+      // Nur wo beide Posen Hintergrund zeigen, darf das Bild durchsichtig sein.
+      rgba[p * 4 + 3] = transparent && A.bg[p] && B.bg[p] ? 0 : 255;
+    }
+    var q = quantize(rgba);
+    out.push({ pal: q.pal, idx: q.idx, clear: q.clear, delay: F[i].delay });
+  }
+  return encodeGif(out, W, H);
+}
+
+document.getElementById('go').addEventListener('click', async function () {
+  var params = new URLSearchParams(location.search);
+  var save = params.get('save'), transparent = params.get('transparent') === '1';
+  var log = document.getElementById('log'), box = document.getElementById('out');
+  var files = [];
+  G04Fit.EXERCISES.forEach(function (e) {
+    var f = (e.demoLight || e.demo || '').split('?')[0];
+    if (/-whiteclean\.gif$/.test(f) && files.indexOf(f) < 0) files.push(f);
+  });
+  var t0 = performance.now(), bytes = 0;
+  for (var i = 0; i < files.length; i++) {
+    var srcUrl = '../' + files[i], name = files[i].split('/').pop().replace('-whiteclean.gif', '-dark.gif');
+    log.textContent = (i + 1) + ' / ' + files.length + ' · ' + name;
+    var gif = await convert(srcUrl, transparent);
+    bytes += gif.length;
+    var blobUrl = URL.createObjectURL(new Blob([gif], { type: 'image/gif' }));
+    if (save) await fetch(save.replace(/\/$/, '') + '/' + name, { method: 'PUT', body: gif });
+    var fig = document.createElement('figure');
+    fig.innerHTML = '<img src="' + blobUrl + '" alt=""><figcaption><a download="' + name + '" href="' + blobUrl + '">' + name + '</a> · ' + Math.round(gif.length / 1024) + ' kB</figcaption>';
+    box.appendChild(fig);
+  }
+  log.textContent = 'Fertig: ' + files.length + ' GIFs, ' + (bytes / 1048576).toFixed(1) + ' MB, ' + ((performance.now() - t0) / 1000).toFixed(0) + ' s' + (save ? ' · gespeichert über ' + save : '');
+  window.__done = { files: files.length, mb: +(bytes / 1048576).toFixed(1) };
+});
+</script>
+</body>
+</html>
