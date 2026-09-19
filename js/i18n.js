@@ -272,7 +272,109 @@
     'Erreicht. Titel auf dieser Stufe: ': 'Reached. Title at this level: ', 'Noch gesperrt. Benötigt insgesamt etwa ': 'Still locked. Requires about ',
     'Es sind noch': 'There are still', 'Es sind ausdrücklich keine medizinischen Werte': 'They are explicitly not medical values',
     'Das Bild bleibt vollständig auf diesem Gerät. Es wird nicht hochgeladen, nicht analysiert und nicht an Dritte weitergegeben. Gespeichert wird es nur mit der Einwilligung': 'The picture stays entirely on this device. It is not uploaded, analysed or shared with third parties. It is stored only with',
-    'Profil speichern': 'Save profile', 'Du hast': 'You completed', 'sauber geschafft. Erhöhe auf': 'with good form. Increase to'
+    'Profil speichern': 'Save profile', 'Du hast': 'You completed', 'sauber geschafft. Erhöhe auf': 'with good form. Increase to',
+
+    /* Nachgetragen 2.1.1 — Texte, die bisher nur Wort für Wort übersetzt wurden */
+    'Hauptnavigation': 'Main navigation', 'Zum Inhalt springen': 'Skip to content', 'Trainingsserie': 'Workout streak',
+    'Wochenplan': 'Weekly plan', 'geplant': 'planned', 'erledigt': 'completed', 'verpasst': 'missed', 'offen': 'open',
+    'aktiv': 'active', 'automatisch aktiv': 'active automatically', 'nur temporär': 'temporary only', '… bis 999': '… up to 999',
+    'wird gespeichert': 'is saved', 'Datum': 'Date', 'Jahre': 'years', 'Eigengewicht': 'Body weight', 'Empfehlung': 'Recommendation',
+    'Speichern': 'Save', 'Schließen': 'Close', 'Abbrechen': 'Cancel', 'Fertig': 'Done', 'Vorschau': 'Preview', 'Alles': 'Everything',
+    'kein Konto': 'no account', 'kein Tracking': 'no tracking', 'läuft': 'in progress', 'Laufende Einheit': 'Current workout',
+
+    // Rangtitel aus js/data-journey.js (Einsteiger und Fortgeschritten stehen oben)
+    'Neuling': 'Newcomer', 'Trainierender': 'Trainee', 'Aufsteiger': 'Climber', 'Athlet': 'Athlete',
+    'Kraftpaket': 'Powerhouse', 'Veteran': 'Veteran', 'Titan': 'Titan', 'Meister': 'Master', 'Elite': 'Elite', 'Legende': 'Legend',
+    'Profi': 'Pro',
+    'Lerne die Bewegungen sauber auszuführen. Gewichte sind zweitrangig.': 'Learn to perform the movements with good form. Weight comes second.',
+    'Erreicht. Titel auf dieser Stufe:': 'Reached. Title at this level:',
+    'Noch gesperrt. Benötigt insgesamt etwa': 'Still locked. Requires about',
+
+    // Dashboard, Profil und Einstellungen
+    'Heute steht nichts im Plan. Erholung ist Teil des Trainings.': 'Nothing is planned for today. Recovery is part of training.',
+    'noch kein Training': 'no workout yet', 'Dein Profil': 'Your profile', 'Angaben speichern': 'Save details',
+    'Ein bis drei Jahre, Grundübungen sitzen.': 'One to three years; the basic lifts are familiar.',
+    'Der Split richtet sich nach der Anzahl der Tage: 2 Tage Ganzkörper, 3 Tage Push/Pull/Schulter-Bauch, ab 4 Tagen einzelne Muskelgruppen.':
+      'The split depends on the number of days: 2 days full body, 3 days push/pull/shoulders-abs, 4 or more days individual muscle groups.',
+    'Signal': 'Signal', 'Puls': 'Pulse', 'Glockenspiel': 'Chime', 'Trainingserfahrung': 'Training experience',
+    'Trainings-Avatar hochladen': 'Upload workout avatar', 'Beste Serie': 'Best streak',
+    'Trage hier ein, womit du realistisch arbeitest. G04Fit startet dich dann nicht künstlich leicht.':
+      'Enter the weight you realistically work with. G04Fit will then not start you artificially light.',
+
+    // Coach
+    'Der Coach ist ausgeschaltet': 'The Coach is switched off', 'Auswertung ist ausgeschaltet': 'Analysis is switched off',
+    'Auswertung erlauben': 'Allow analysis', 'Was passiert bei der Auswertung?': 'What happens during analysis?',
+    'Damit G04Fit Vorschläge zu Gewicht und Progression machen kann, muss er deine Trainingsdaten auswerten dürfen. Dafür brauchst du die Einwilligung':
+      'To suggest weights and progression, G04Fit needs permission to analyse your workout data. This requires the consent',
+    'G04Fit rechnet ausschließlich auf diesem Gerät. Es werden keine Daten an einen Server oder an einen externen Dienst gesendet. Die Regeln sind nachvollziehbar: Wiederholungen, Gewichte, Pausenlängen und der Abstand zwischen Einheiten.':
+      'G04Fit calculates on this device only. No data is sent to a server or an external service. The rules are transparent: reps, weights, rest times and the time between workouts.',
+    'Der G04Fit Coach wertet erst aus, wenn du die Einwilligung "KI-Analyse" erteilst.': 'The G04Fit Coach only analyses once you grant the "AI analysis" consent.',
+    'Fortschritt sichtbar': 'Visible progress', 'Frequenz unter Plan': 'Frequency below plan', 'Sehr konstant': 'Very consistent',
+    'Ungleichgewicht': 'Imbalance', 'Noch keine Daten': 'No data yet', 'Noch keine Trainingsdaten': 'No workout data yet',
+    'Kennzahlen': 'Metrics', 'Ausdauer': 'Endurance', 'Konstanz': 'Consistency', 'Erholung': 'Recovery', 'Beobachtungen': 'Observations',
+    'Diese Kennzahlen sind ein spielerisches Profil aus deinen Trainingsdaten.': 'These metrics are a playful profile based on your workout data.',
+    'Die Kennzahlen beschreiben nur dein Trainingsverhalten in G04Fit.': 'The metrics only describe your training behaviour in G04Fit.',
+    'und keine Diagnose.': 'and are not a diagnosis.', 'Wie der Coach rechnet': 'How the Coach calculates',
+    'Haltezeit steigern: pro Einheit etwa 5 Sekunden mehr anstreben.': 'Increase hold time: aim for about 5 seconds more per workout.',
+    'Haltezeit': 'Hold time', 'steigern': 'increase', 'halten': 'hold', 'reduzieren': 'reduce',
+    'Dein eingetragenes Startgewicht. Beginne mit sauberer Technik.': 'Your entered starting weight. Start with clean technique.',
+    'Sehr lange Pause. Behandle die ersten Wochen wie einen Neustart – Technik vor Gewicht.': 'Very long break. Treat the first weeks like a fresh start — technique before weight.',
+    'Schlaf ist der wirksamste Regenerationsfaktor, den du selbst steuern kannst.': 'Sleep is the most effective recovery factor you can control yourself.',
+
+    // Fortschritt und Datenschutz
+    'Aufzeichnung ist ausgeschaltet': 'Tracking is switched off',
+    'G04Fit speichert Trainingshistorie und Rekorde nur, wenn du dem ausdrücklich zustimmst. Ohne diese Einwilligung bleiben abgeschlossene Einheiten nicht erhalten und es gibt keine Verlaufsdaten, die ausgewertet werden könnten.':
+      'G04Fit only stores workout history and records if you explicitly agree. Without this consent, completed workouts are not kept and there is no history data to analyse.',
+    'Die Daten bleiben ausschließlich auf diesem Gerät. Es findet keine Übertragung an einen Server statt. Du kannst die Einwilligung jederzeit widerrufen – die Daten werden dann sofort gelöscht.':
+      'The data stays on this device only. Nothing is sent to a server. You can revoke consent at any time — the data is then deleted immediately.',
+    'G04Fit speichert nichts, solange du nicht ausdrücklich zustimmst. Jede Einwilligung gilt einzeln und ist jederzeit widerrufbar. Profil-, Trainings- und Einstellungsdaten bleiben auf diesem Gerät; optionaler Push verwendet nur die unten beschriebenen technischen Daten.':
+      'G04Fit stores nothing unless you explicitly agree. Each consent applies separately and can be revoked at any time. Profile, workout and settings data stay on this device; optional push only uses the technical data described below.',
+    'Profil, Foto & Einstellungen speichern': 'Save profile, photo & settings',
+    'Name, Alter, Größe, Gewicht, Erfahrungsstufe, Ziele, Trainingstage, Startgewichte und dein Trainings-Avatar bleiben auf diesem Gerät erhalten. Ohne diese Einwilligung sind alle Angaben nach dem Schließen weg.':
+      'Name, age, height, weight, experience level, goals, training days, starting weights and your workout avatar are kept on this device. Without this consent, all details are gone when you close the app.',
+    'Profildaten, Foto, App-Einstellungen, Level und XP': 'Profile data, photo, app settings, level and XP',
+    'Abgeschlossene Einheiten mit Sätzen, Gewichten und Wiederholungen werden gespeichert. Nur damit gibt es Fortschritt, Bestleistungen und Verlaufskurven.':
+      'Completed workouts are stored with sets, weights and reps. Progress, personal bests and history charts are only possible with this.',
+    'Datum, Übungen, Sätze, Gewicht, Wiederholungen, Notizen': 'Date, exercises, sets, weight, reps, notes',
+    'Trainingshistorie, Rekorde, Pausen zwischen Einheiten': 'Workout history, records, breaks between workouts',
+    'Der Coach analysiert deine gespeicherten Trainingsdaten und leitet daraus Vorschläge für Gewicht, Wiederholungen, Progression und Wiedereinstieg ab. Die Berechnung läuft ausschließlich auf diesem Gerät.':
+      'The Coach analyses your stored workout data and derives suggestions for weight, reps, progression and return mode. The calculation runs on this device only.',
+    'Analyse deiner Trainingsdaten': 'Analysis of your workout data',
+    'G04Fit erzeugt Markdown-Notizen für deinen Vault. Der Export erfolgt nur, wenn du ihn selbst auslöst.':
+      'G04Fit creates Markdown notes for your vault. Export only happens when you trigger it yourself.',
+    'Trainingsprotokolle, optional Coach-Auswertungen': 'Workout logs, optionally Coach analyses',
+    'G04Fit erinnert an geplante Einheiten und meldet sich nach längeren Pausen. Systembenachrichtigungen benötigen zusätzlich die Erlaubnis des Browsers.':
+      'G04Fit reminds you of planned workouts and checks in after longer breaks. System notifications also require the browser’s permission.',
+    'Zufällige Geräte-ID, Push-Anmeldung, Trainingstage, Uhrzeit und Zeitzone': 'Random device ID, push registration, training days, time and time zone',
+    'Erinnerungen & Benachrichtigungen': 'Reminders & notifications', 'Trainingsdaten lokal': 'Workout data stays local',
+    'Exportiere alles als JSON-Datei – zur Sicherung oder zum Umzug auf ein anderes Gerät.': 'Export everything as a JSON file — as a backup or to move to another device.',
+    'Verantwortlicher, Datenarten, Rechtsgrundlage, Speicherdauer, KI-Verarbeitung, Obsidian, Benachrichtigungen, Löschung, Widerruf und Betroffenenrechte.':
+      'Controller, data types, legal basis, storage period, AI processing, Obsidian, notifications, deletion, revocation and data subject rights.',
+
+    // Erinnerungen
+    'Ohne die Einwilligung „Benachrichtigungen“ erinnert G04Fit dich nicht.': 'Without the “Notifications” consent, G04Fit will not remind you.',
+    'Motivation auch bei geschlossener App': 'Motivation even when the app is closed',
+    'Testerinnerung': 'Test reminder', 'Abschalten': 'Turn off',
+
+    // Obsidian
+    'Obsidian-Verbindung ist aus': 'Obsidian connection is off', 'Obsidian-Synchronisation': 'Obsidian sync',
+    'G04Fit kann Trainingsprotokolle und Auswertungen als Markdown-Dateien für deinen Vault erzeugen. Das passiert nur, wenn du dem ausdrücklich zustimmst.':
+      'G04Fit can create workout logs and analyses as Markdown files for your vault. This only happens if you explicitly agree.',
+    'Was erzeugt wird': 'What gets created', 'Je Einheit eine Notiz mit Frontmatter, Satztabelle und Volumen': 'One note per workout with frontmatter, set table and volume',
+    'Bereit zum Export': 'Ready to export', 'Verbindung trennen': 'Disconnect', 'Vault-Pfad': 'Vault path', 'Unterordner': 'Subfolder',
+    'G04Fit erzeugt fertige Notizen. Kopiere sie in deinen Vault oder speichere sie direkt in den unten angegebenen Ordner.':
+      'G04Fit creates ready-made notes. Copy them into your vault or save them directly to the folder below.',
+    'Ziel im Vault': 'Destination in vault', 'Nur zur Anzeige – G04Fit schreibt nicht selbst in den Ordner.': 'For display only — G04Fit does not write to the folder itself.',
+    'Coach-Auswertung mitschreiben': 'Include Coach analysis', 'Zielpfad der aktuellen Notiz:': 'Target path of the current note:',
+    'In die Zwischenablage': 'Copy to clipboard', 'Alle Notizen als eine Datei': 'All notes as one file', 'Als .md speichern': 'Save as .md',
+    'Einzelne Einheit': 'Single workout', 'Was ausgeben?': 'What to export?',
+
+    // Übungen und laufende Einheit
+    'Bewegungsablauf': 'Movement', 'Vorderseite': 'Front view', 'Technikhinweise': 'Technique tips', 'Beanspruchte Muskeln': 'Muscles worked',
+    'Übung auswählen': 'Choose exercise', 'Übung suchen …': 'Search exercises …', 'Countdown in der Mitte nach jedem Satz': 'Countdown in the centre after each set',
+    'Wdh.': 'reps', 'Satz': 'Set', 'Satz abhaken': 'Tick off set', 'Notiz zur Einheit': 'Workout note',
+    'Wie lief das Training? Was ist aufgefallen?': 'How did the workout go? Anything you noticed?',
+    'Volumen': 'Volume', 'War leicht': 'Felt easy', 'War schwer': 'Felt hard', 'Einheit abgeschlossen': 'Workout completed'
   };
 
   var WORDS = {
@@ -307,17 +409,125 @@
     return value === 'de' ? 'de' : 'en';
   }
 
+  /* Texte mit Zahlen oder Namen darin. Sie laufen vor der Tabelle, damit
+     der ganze Satz in einem Stück übersetzt wird und nicht Wort für Wort. */
+  var PATTERNS = [
+    [/^(\d+) Sätze$/, '$1 sets'],
+    [/^(\d+) Einheiten$/, '$1 workouts'],
+    [/^(\d+) Einheiten ausgewertet$/, '$1 workouts analysed'],
+    [/^(\d+) Einheiten · Serie (\d+) Wochen$/, '$1 workouts · streak $2 weeks'],
+    [/^(\d+) Einträge$/, '$1 entries'],
+    [/^(\d+) Übungen · (\d+) Muskelgruppen$/, '$1 exercises · $2 muscle groups'],
+    [/^(\d+) Übungen · /, '$1 exercises · '],
+    [/^(\d+) Üb\.$/, '$1 ex.'],
+    [/^(\d+) von (\d+) empfohlen$/, '$1 of $2 recommended'],
+    [/^(\d+) von (\d+) Einwilligungen erteilt$/, '$1 of $2 consents granted'],
+    [/^(\d+)×\/Woche$/, '$1×/week'],
+    [/^(\d+) s Pause$/, '$1 s rest'],
+    [/^(\d+) Tage Pause$/, '$1 days off'],
+    [/^([\d.,]+) kg Volumen$/, '$1 kg volume'],
+    [/^([\d.,]+) kg Eigengewicht$/, '$1 kg body weight'],
+    [/^(\d+) XP gesamt$/, '$1 XP total'],
+    [/^(\d+) \/ (\d+) XP bis Level (\d+)$/, '$1 / $2 XP to level $3'],
+    [/^(\d+) Jahre$/, '$1 years'],
+    [/(\d+) Wdh\. · Pause (\d+) s/g, '$1 reps · $2 s rest'],
+    [/(\d+(?:–\d+)?) Wdh\./g, '$1 reps'],
+    [/^Richtwert ([\d.,]+) kg$/, 'Suggested $1 kg'],
+    [/Eigengewicht \+ /g, 'Body weight + '],
+    [/^Serie (\d+)$/, 'Streak $1'],
+    [/^Trainingsserie: (\d+) Wochen? in Folge$/, 'Workout streak: $1 weeks in a row'],
+    [/^Zuletzt trainiert: vor (\d+) Tagen$/, 'Last trained: $1 days ago'],
+    [/^Zuletzt trainiert: vor (\d+) Wochen?$/, function (m, n) { return 'Last trained: ' + n + (n === '1' ? ' week' : ' weeks') + ' ago'; }],
+    [/^letzte Einheit vor (\d+) Tagen$/, 'last workout $1 days ago'],
+    [/^Beanspruchte Muskelgruppen: /, 'Muscle groups worked: '],
+    [/^Noch (\d+) XP bis Level (\d+)\. Eine Einheit bringt je nach Umfang etwa (\d+)–(\d+) XP\.$/,
+      '$1 XP to go until level $2. A workout earns about $3–$4 XP, depending on volume.'],
+    [/^– das entspricht ungefähr (\d+) weiteren Einheiten\.$/, '— that is about $1 more workouts.'],
+    // Coach-Sätze stehen im Dashboard mit "Titel: " davor, deshalb ohne ^-Anker.
+    [/Bleib bei (.+?) und steigere auf ([\d–]+) Wiederholungen\. Danach geht es mit dem Gewicht weiter\./g,
+      'Stay at $1 and work up to $2 reps. Then the weight goes up.'],
+    [/Bleib bei (.+?) und schaffe (\d+) Wiederholungen in jedem Satz\. Sobald das steht, erhöht G04Fit das Gewicht\./g,
+      'Stay at $1 and hit $2 reps in every set. Once that is solid, G04Fit increases the weight.'],
+    [/Du hast (.+?) sauber geschafft\. Erhöhe auf (.+?) und arbeite dich wieder in Richtung (\d+) Wiederholungen\./g,
+      'You completed $1 with good form. Increase to $2 and work back up towards $3 reps.'],
+    [/^und arbeite dich wieder in Richtung (\d+) Wiederholungen\.$/, 'and work back up towards $1 reps.'],
+    [/Zuletzt nur (\d+) Wiederholungen bei hoher Anstrengung\. Nimm (.+?) herunter und baue die Technik wieder auf\./g,
+      'Last time only $1 reps with high effort. Drop $2 and rebuild your technique.'],
+    [/In den letzten drei Wochen hast du dich bei (\d+) Übungen? verbessert – am deutlichsten bei (.+) \(\+([\d.,]+) kg geschätztes Maximum\)\./g,
+      function (m, n, name, kg) {
+        return 'Over the last three weeks you improved on ' + n + (n === '1' ? ' exercise' : ' exercises') +
+          ' — most of all on ' + name + ' (+' + kg + ' kg estimated max).';
+      }],
+    [/Im Modus (\S+) sind (\d+) Einheiten pro Woche vorgesehen, erreicht hast du zuletzt etwa ([\d.,]+)\. Ein Wechsel in einen ruhigeren Modus ist oft nachhaltiger als ein Plan, der liegen bleibt\./g,
+      '$1 mode plans $2 workouts per week; recently you managed about $3. Switching to a calmer mode is often more sustainable than a plan that gets dropped.'],
+    [/Du hältst dein Pensum von (\d+) Einheiten pro Woche\. Genau das erzeugt langfristig den Fortschritt\./g,
+      'You are keeping up your $1 workouts per week. That is exactly what drives long-term progress.'],
+    [/(.+?) bekommt deutlich mehr Volumen als (.+?)\. Plane in den nächsten zwei Wochen eine zusätzliche Übung für (.+?) ein\./g,
+      '$1 gets much more volume than $2. Plan one extra exercise for $3 over the next two weeks.'],
+    [/ — und (\d+) weitere Übung(?:en)? sind bereit\./g,
+      function (m, n) { return ' — and ' + n + (n === '1' ? ' more exercise is' : ' more exercises are') + ' ready.'; }],
+    [/Rund (\d+) Tage Pause\. Starte mit etwa 10 % weniger Gewicht\./g, 'About $1 days off. Start with about 10% less weight.'],
+    [/^vor (\d+) Tagen$/, '$1 days ago'],
+    [/^vor (\d+) Wochen?$/, function (m, n) { return n + (n === '1' ? ' week' : ' weeks') + ' ago'; }],
+    [/G04Fit passt die Vorschläge in den nächsten (\d+) Wochen automatisch an\./g,
+      'G04Fit adjusts its suggestions automatically over the next $1 weeks.'],
+    [/^Gewichte? auf (\d+) %$/, 'Weight at $1%'],
+    [/^Einheit läuft · /, 'Workout in progress · '],
+    [/^(.+) abgeschlossen$/, '$1 completed'],
+    [/^G04Fit motiviert dich an deinen Trainingstagen um ([\d:]+) Uhr mit wechselnden Nachrichten\.$/,
+      'G04Fit motivates you on your training days at $1 with changing messages.'],
+    [/^Nach mehr als (\d+) Tagen ohne Training erinnert G04Fit gesondert und reduziert die Gewichte\.$/,
+      'After more than $1 days without training, G04Fit sends a separate reminder and reduces the weights.'],
+    [/^Auswertung vom (.+)$/, 'Analysis from $1'],
+    [/^Stand: (.+) · G04Fit (.+)$/, 'As of $1 · G04Fit $2'],
+    [/^© (\d+) G04Fit · Alle Rechte vorbehalten · Version (.+)$/, '© $1 G04Fit · All rights reserved · Version $2'],
+    [/^G04Fit (.+) · Push-Dienst nur nach Einwilligung · Einwilligung zuletzt geändert: nie$/,
+      'G04Fit $1 · Push service only after consent · Consent last changed: never'],
+    [/^G04Fit (.+) · Push-Dienst nur nach Einwilligung · Einwilligung zuletzt geändert: (.+)$/,
+      'G04Fit $1 · Push service only after consent · Consent last changed: $2'],
+    [/(\S+)-Modus$/, '$1 mode'],
+    [/ am ((?:Sun|Mon|Tues|Wednes|Thurs|Fri|Satur)day)/g, ' on $1']
+  ];
+
+  var LETTER = /[A-Za-zÄÖÜäöüß]/;
+  var lookup = null, matcher = null;
+
+  // Eine gemeinsame Tabelle und ein einziger regulärer Ausdruck, längster
+  // Eintrag zuerst. Wird erst beim ersten Übersetzen und nach extend() gebaut.
+  function build() {
+    lookup = {};
+    Object.keys(WORDS).forEach(function (k) { lookup[k] = WORDS[k]; });
+    Object.keys(EN).forEach(function (k) { lookup[k] = EN[k]; });
+    var keys = Object.keys(lookup).filter(Boolean).sort(function (a, b) { return b.length - a.length; });
+    matcher = new RegExp(keys.map(function (k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join('|'), 'g');
+  }
+
+  // Ersetzt Bausteine nur an Wortgrenzen. Früher wurde auch innerhalb von
+  // Wörtern ersetzt – daraus wurden dann Formen wie „Weighte“ oder „daysn“.
+  function replaceParts(text) {
+    return text.replace(matcher, function (hit, offset, all) {
+      var before = all.charAt(offset - 1), after = all.charAt(offset + hit.length);
+      if (LETTER.test(hit.charAt(0)) && before && LETTER.test(before)) return hit;
+      if (LETTER.test(hit.charAt(hit.length - 1)) && after && LETTER.test(after)) return hit;
+      return lookup[hit];
+    });
+  }
+
   function translateText(text) {
     if (locale() !== 'en' || !text || !text.trim()) return text;
+    if (!lookup) build();
     var lead = text.match(/^\s*/)[0], tail = text.match(/\s*$/)[0], core = text.slice(lead.length, text.length - tail.length);
-    if (EN[core]) return lead + EN[core] + tail;
+    if (lookup[core]) return lead + lookup[core] + tail;
     var out = core;
-    Object.keys(EN).sort(function (a, b) { return b.length - a.length; }).forEach(function (key) { if (out.indexOf(key) >= 0) out = out.split(key).join(EN[key]); });
-    Object.keys(WORDS).sort(function (a, b) { return b.length - a.length; }).forEach(function (key) {
-      var escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      out = out.replace(new RegExp('(^|[^A-Za-zÄÖÜäöüß])' + escaped + '(?=$|[^A-Za-zÄÖÜäöüß])', 'g'), '$1' + WORDS[key]);
-    });
-    return lead + out + tail;
+    PATTERNS.forEach(function (p) { out = out.replace(p[0], p[1]); });
+    if (lookup[out]) return lead + lookup[out] + tail;
+    return lead + replaceParts(out) + tail;
+  }
+
+  // Weitere Übersetzungen, z. B. aus js/i18n-exercises-en.js.
+  function extend(map) {
+    Object.keys(map).forEach(function (k) { EN[k] = map[k]; });
+    lookup = null;
   }
 
   function setDateNames() {
@@ -328,20 +538,70 @@
     G.u.MONTHS.splice.apply(G.u.MONTHS, [0, G.u.MONTHS.length].concat(names.months));
   }
 
+  var ATTRS = ['placeholder', 'title', 'aria-label'];
+
+  // PRE und CODE zeigen den Obsidian-Export. Der bleibt unverändert,
+  // damit die Vorschau genau der Datei entspricht, die gespeichert wird.
+  function skipped(node) {
+    var p = node.parentNode;
+    return !p || /^(SCRIPT|STYLE|TEXTAREA|PRE|CODE)$/i.test(p.nodeName);
+  }
+
+  function translateNode(node) {
+    if (skipped(node)) return;
+    var next = translateText(node.nodeValue);
+    if (next !== node.nodeValue) node.nodeValue = next;
+  }
+
+  function translateAttrs(el) {
+    ATTRS.forEach(function (attr) {
+      if (!el.hasAttribute(attr)) return;
+      var value = el.getAttribute(attr), next = translateText(value);
+      if (next !== value) el.setAttribute(attr, next);
+    });
+  }
+
+  function translateTree(root) {
+    if (root.nodeType === 3) { translateNode(root); return; }
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (node) {
+      return skipped(node) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+    }}), nodes = [], n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(translateNode);
+    if (root.nodeType === 1) translateAttrs(root);
+    if (root.querySelectorAll) root.querySelectorAll('[placeholder], [title], [aria-label]').forEach(translateAttrs);
+  }
+
   function apply(root) {
     setDateNames();
     if (document && document.documentElement) document.documentElement.lang = locale();
     if (!root || locale() !== 'en') return;
-    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (node) {
-      var p = node.parentNode;
-      return !p || /^(SCRIPT|STYLE|TEXTAREA)$/i.test(p.nodeName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
-    }}), nodes = [], n;
-    while ((n = walker.nextNode())) nodes.push(n);
-    nodes.forEach(function (node) { node.nodeValue = translateText(node.nodeValue); });
-    if (root.querySelectorAll) root.querySelectorAll('input[placeholder], [title], [aria-label]').forEach(function (el) {
-      ['placeholder', 'title', 'aria-label'].forEach(function (attr) { if (el.hasAttribute(attr)) el.setAttribute(attr, translateText(el.getAttribute(attr))); });
+    translateTree(root);
+  }
+
+  /* Viele Anzeigen ändern sich nach dem Rendern (Satzzähler, Pausentimer,
+     Übungsauswahl, Toasts). Der Beobachter übersetzt auch diese Texte, ohne
+     dass jede Stelle im Code selbst an die Übersetzung denken muss. */
+  var observer = null;
+  function watch() {
+    if (observer || typeof MutationObserver === 'undefined' || !document.body) return;
+    observer = new MutationObserver(function (records) {
+      if (locale() !== 'en') return;
+      records.forEach(function (r) {
+        if (r.type === 'characterData') translateNode(r.target);
+        else if (r.type === 'attributes') translateAttrs(r.target);
+        else r.addedNodes.forEach(function (node) { if (node.nodeType === 1 || node.nodeType === 3) translateTree(node); });
+      });
+      // Die eigenen Änderungen erzeugen neue Einträge – die werden verworfen,
+      // sonst würde sich der Beobachter endlos selbst auslösen.
+      observer.takeRecords();
+    });
+    observer.observe(document.body, {
+      childList: true, subtree: true, characterData: true,
+      attributes: true, attributeFilter: ATTRS
     });
   }
+  watch();
 
   function setLocale(next) {
     next = next === 'de' ? 'de' : 'en';
@@ -350,6 +610,9 @@
       if (G.store.commit) G.store.commit('language');
     }
     try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {}
+    // Tages- und Monatsnamen vor dem Neuzeichnen umstellen, sonst rendert
+    // die Ansicht noch mit den Namen der vorherigen Sprache.
+    setDateNames();
     // Falls Hintergrund-Push aktiv ist, soll auch der Worker sofort die neue
     // Sprache verwenden (Fehler bleiben für die lokale Umschaltung folgenlos).
     if (G.reminders && G.reminders.allowed && G.reminders.allowed() && G.reminders.syncPushSchedule) {
@@ -360,5 +623,5 @@
     else apply(document.body);
   }
 
-  G.i18n = { locale: locale, setLocale: setLocale, translate: translateText, apply: apply };
+  G.i18n = { locale: locale, setLocale: setLocale, translate: translateText, apply: apply, extend: extend };
 })(G04Fit);

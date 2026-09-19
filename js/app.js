@@ -26,13 +26,13 @@
     if (theme === 'light') {
       return '<svg class="ui-icon icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M20.2 15.2A8 8 0 018.8 3.8 8.5 8.5 0 1020.2 15.2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
     }
-    return '<img class="topbar__button-art" src="assets/header-sun.png?v=2.7.0" alt="" aria-hidden="true">';
+    return '<img class="topbar__button-art" src="assets/header-sun.webp?v=2.7.0" alt="" aria-hidden="true">';
   }
 
   function menuIcon(open) {
     return open
       ? '<svg class="ui-icon icon-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
-      : '<img class="topbar__button-art" src="assets/header-menu.png?v=2.7.0" alt="" aria-hidden="true">';
+      : '<img class="topbar__button-art" src="assets/header-menu.webp?v=2.7.0" alt="" aria-hidden="true">';
   }
 
   function applyTheme(theme) {
@@ -138,7 +138,8 @@
     u.$('#viewTitle').textContent = typeof view.title === 'function' ? view.title() : view.title;
     var sub = typeof view.sub === 'function' ? view.sub() : (view.sub || '');
     u.$('#viewSub').textContent = sub;
-    document.title = 'G04Fit — ' + (typeof view.title === 'function' ? view.title() : view.title);
+    var title = typeof view.title === 'function' ? view.title() : view.title;
+    document.title = 'G04Fit — ' + (G.i18n ? G.i18n.translate(title) : title);
 
     // #viewHost wird bei jedem render() durch einen frischen, leeren Klon
     // ersetzt (statt nur sein innerHTML zu ersetzen). Grund: mount() einer

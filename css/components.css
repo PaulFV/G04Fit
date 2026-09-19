@@ -708,7 +708,7 @@
 
 .journey-mode{position:relative;display:flex;align-items:center;gap:14px;width:100%;min-height:128px;padding:15px!important;text-align:left;border:1px solid var(--glass-br);color:inherit;font:inherit}
 .journey-mode.card--hl{border-color:var(--neon-line);box-shadow:var(--sh-1),0 0 25px rgba(61,255,158,.14)}
-.journey-mode__visual{width:78px;height:78px;flex:none;display:block;background-image:url("../assets/journey-difficulty-icons.png");background-size:500% 100%;background-position:var(--mode-pos,0 50%);background-repeat:no-repeat;filter:drop-shadow(0 8px 12px rgba(0,0,0,.5));transition:transform .24s var(--ease),filter .24s var(--ease)}
+.journey-mode__visual{width:78px;height:78px;flex:none;display:block;background-image:url("../assets/journey-difficulty-icons.webp");background-size:500% 100%;background-position:var(--mode-pos,0 50%);background-repeat:no-repeat;filter:drop-shadow(0 8px 12px rgba(0,0,0,.5));transition:transform .24s var(--ease),filter .24s var(--ease)}
 .journey-mode:hover .journey-mode__visual{transform:translateY(-3px) scale(1.05);filter:drop-shadow(0 10px 16px rgba(0,0,0,.6)) drop-shadow(0 0 10px rgba(61,255,158,.22))}
 .journey-mode__body{display:flex;flex:1;min-width:0;flex-direction:column;gap:6px}
 .journey-mode__title{font-size:18px;font-weight:700;line-height:1}

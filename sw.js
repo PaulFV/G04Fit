@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'g04fit-v2.8.113';
+var CACHE = 'g04fit-v2.8.114';
 
 var ASSETS = [
   './',
@@ -20,10 +20,10 @@ var ASSETS = [
   './css/layout.css',
   './css/components.css',
   './css/workout-preview.css',
-  './assets/workout-hero-bg.png',
+  './assets/workout-hero-bg.webp',
   './css/progress-overview.css',
   './css/dashboard-preview.css',
-  './assets/dashboard-hero-bg.png',
+  './assets/dashboard-hero-bg.webp',
   './assets/dashboard-reminder-bg.png',
   './assets/dashboard-records-bg.png',
   './assets/dashboard-profile.png',
@@ -38,14 +38,15 @@ var ASSETS = [
   './assets/progress/stat-best-streak.png',
   './assets/progress/stat-records.png',
   './assets/progress/profile-lock.png',
-  './assets/header-menu.png',
-  './assets/header-sun.png',
-  './assets/header-shield.png',
-  './assets/journey-workout-avatar-wide-atlas.png',
-  './assets/journey-difficulty-icons.png',
+  './assets/header-menu.webp',
+  './assets/header-sun.webp',
+  './assets/header-shield.webp',
+  './assets/journey-workout-avatar-wide-atlas.webp',
+  './assets/journey-difficulty-icons.webp',
   './css/anim.css',
   './js/util.js',
   './js/i18n.js',
+  './js/i18n-exercises-en.js',
   './js/data-exercises.js',
   './js/data-journey.js',
   './js/store.js',
