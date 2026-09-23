@@ -278,9 +278,9 @@
               '<div class="pr__main"><b>' + u.esc(ex.name) + '</b>' +
               '<span>' + u.esc(u.fmtDate(r.date)) + ' · ' + u.esc(u.relDay(r.date)) +
               (gain ? ' · <span style="color:var(--neon)">+' + u.fmt(gain, 1) + ' kg</span>' : '') + '</span></div>' +
-              '<div class="pr__v">' + (ex.time ? r.reps + ' s'
-                : (ex.bw ? u.fmtSetWeight(ex, r.weight) + ' × ' + r.reps : u.fmt(r.weight) + '×' + r.reps) +
-                '<br><span class="tiny dim">≈' + u.fmt(r.e1rm, 1) + ' kg</span>') + '</div>' +
+              '<div class="pr__v">' + (ex.time ? '<span class="pr__w">' + r.reps + ' s</span>'
+                : '<span class="pr__w">' + (ex.bw ? u.fmtSetWeight(ex, r.weight) + ' × ' + r.reps : u.fmt(r.weight) + ' kg × ' + r.reps) + '</span>' +
+                (r.e1rm > 0 ? '<span class="pr__e tiny dim">≈ ' + u.fmt(r.e1rm, 1) + ' kg 1RM</span>' : '')) + '</div>' +
               '</div>';
           }).join('') +
         '</div></div>';
