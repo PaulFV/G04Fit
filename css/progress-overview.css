@@ -251,3 +251,29 @@
   .progress-balance-card__visual img{width:116px;height:190px}
   .progress-balance-card__halo{width:110px;height:110px}
 }
+
+/* ---------- Rekorde-Kacheln ---------- */
+.progress-view .pr__v{display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:right;flex:none;max-width:48%}
+.progress-view .pr__w{white-space:nowrap}
+.progress-view .pr__e{font-family:var(--mono);font-weight:500;white-space:nowrap}
+
+/* ---------- Handy (iPhone): Tabs 2×2, Rekorde zweizeilig ---------- */
+@media (max-width:680px){
+  .progress-tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:6px}
+  .progress-tabs__button,
+  .progress-tabs__button + .progress-tabs__button,
+  .progress-tabs__button:first-child{min-height:44px;padding:10px 8px;font-size:13px;border-radius:16px;border-left:0}
+  .progress-tabs__button.is-on::after{display:none}
+
+  .progress-view .pr{display:grid;grid-template-columns:34px minmax(0,1fr);column-gap:12px;row-gap:6px;align-items:start}
+  .progress-view .pr__medal{grid-row:1 / span 2}
+  .progress-view .pr__main b{white-space:normal;line-height:1.3}
+  .progress-view .pr__v{grid-column:2;max-width:none;flex-direction:row;flex-wrap:wrap;align-items:baseline;justify-content:space-between;column-gap:10px;text-align:left;font-size:14px;padding-top:6px;border-top:1px solid var(--glass-br)}
+  .progress-view .pr__w{white-space:normal}
+}
+@media (max-width:430px){
+  .progress-tabs__button,
+  .progress-tabs__button + .progress-tabs__button,
+  .progress-tabs__button:first-child{min-height:42px;font-size:12.5px}
+  .progress-stat__body .stat__k{font-size:9px;letter-spacing:.03em;hyphens:auto;-webkit-hyphens:auto}
+}
