@@ -256,3 +256,11 @@
   .dashboard-hero__copy > :not(.row):not(.dashboard-hero__greeting){grid-column:1 / -1}
   .dashboard-hero h2.big{margin-top:12px}
 }
+/* Profilbild auf dem Handy etwas größer (23.09.2026) */
+@media (max-width:650px){
+  .dashboard-hero__content{column-gap:13px}
+  .dashboard-hero__profile{margin:-2px 0 0 -2px}
+  .dashboard-hero__profile .avatar{width:68px!important;height:68px!important}
+  .dashboard-hero__greeting{align-self:end}
+  .dashboard-hero__copy > .row{align-self:start}
+}
