@@ -264,18 +264,36 @@
       return G.ex.byId(id).muscle;
     });
 
+    // Neuester Rekord insgesamt (nach Datum, bei Gleichstand der mit dem
+    // höheren Zuwachs) — wird farbig hervorgehoben.
+    var latestId = null;
+    ids.forEach(function (id) {
+      if (!G.ex.byId(id)) return;
+      var r = s.records[id], cur = latestId && s.records[latestId];
+      if (!cur || r.date > cur.date ||
+        (r.date === cur.date && (r.e1rm - (r.prev ? r.prev.e1rm : 0)) > (cur.e1rm - (cur.prev ? cur.prev.e1rm : 0)))) latestId = id;
+    });
+
     return G.MUSCLE_ORDER.filter(function (m) { return groups[m]; }).map(function (m) {
       return '<div class="card">' +
         '<div class="card__head"><i class="mdot m-' + m + '"></i><h3>' + u.esc(G.MUSCLES[m].name) + '</h3>' +
         '<span class="spacer"></span><span class="tiny dim">' + groups[m].length + '</span></div>' +
         '<div class="stack" style="--sp:8px">' +
         groups[m].sort(function (a, b) { return s.records[b].e1rm - s.records[a].e1rm; })
-          .map(function (id) {
+          .map(function (id, idx) {
             var ex = G.ex.byId(id), r = s.records[id];
             var gain = r.prev ? r.e1rm - r.prev.e1rm : null;
-            return '<div class="pr" data-ex="' + id + '" style="cursor:pointer">' +
+            // Bester Rekord der Gruppe = höchstes geschätztes 1RM (bzw. längste
+            // Haltezeit / meiste Wdh.); nur markieren, wenn es mehr als einen gibt.
+            var best = idx === 0 && groups[m].length > 1 && r.e1rm > 0;
+            var latest = id === latestId;
+            var cls = 'pr' + (best ? ' pr--best' : '') + (latest ? ' pr--latest' : '');
+            var badges = (latest ? '<span class="pr__badge pr__badge--latest">Neuester Rekord</span>' : '') +
+              (best ? '<span class="pr__badge pr__badge--best">Bestwert ' + u.esc(G.MUSCLES[m].name) + '</span>' : '');
+            return '<div class="' + cls + '" data-ex="' + id + '" style="cursor:pointer">' +
               '<div class="pr__medal">' + u.icon('medal', 16) + '</div>' +
-              '<div class="pr__main"><b>' + u.esc(ex.name) + '</b>' +
+              '<div class="pr__main">' + (badges ? '<div class="pr__badges">' + badges + '</div>' : '') +
+              '<b>' + u.esc(ex.name) + '</b>' +
               '<span>' + u.esc(u.fmtDate(r.date)) + ' · ' + u.esc(u.relDay(r.date)) +
               (gain ? ' · <span style="color:var(--neon)">+' + u.fmt(gain, 1) + ' kg</span>' : '') + '</span></div>' +
               '<div class="pr__v">' + (ex.time ? '<span class="pr__w">' + r.reps + ' s</span>'
@@ -301,16 +319,23 @@
       return u.parseDay(x.day).getFullYear() + '-' + u.MONTHS[u.parseDay(x.day).getMonth()];
     });
 
+    var latestSess = s.history.slice().sort(function (a, b) {
+      var ka = (a.day || '') + (a.finishedAt || ''), kb = (b.day || '') + (b.finishedAt || '');
+      return ka < kb ? 1 : ka > kb ? -1 : 0;
+    })[0];
+
     return Object.keys(byMonth).map(function (mk) {
       var parts = mk.split('-');
       return '<div class="sec"><h2>' + parts[1] + ' ' + parts[0] + '</h2><span class="sec__line"></span>' +
         '<span class="tiny dim">' + byMonth[mk].length + ' Einheiten</span></div>' +
         '<div class="card"><div class="list">' +
         byMonth[mk].map(function (x) {
-          return '<div class="list__row list__row--click" data-sess="' + x.id + '">' +
+          var isLatest = latestSess && x.id === latestSess.id;
+          return '<div class="list__row list__row--click' + (isLatest ? ' hist-row--latest' : '') + '" data-sess="' + x.id + '">' +
             '<div class="list__ic" style="border-color:var(--neon-line);color:var(--neon)">' +
             u.icon('check', 17) + '</div>' +
-            '<div class="list__main"><b>' + u.esc(x.title) + '</b>' +
+            '<div class="list__main">' + (isLatest ? '<span class="hist-row__badge">Letzte Einheit</span>' : '') +
+            '<b>' + u.esc(x.title) + '</b>' +
             '<span>' + u.esc(u.dayName(x.day) + ', ' + u.fmtDate(x.day)) + ' · ' + x.totalSets + ' Sätze · ' +
             (x.totalReps || 0) + ' Wdh.' + (u.sessionDuration(x) ? ' · ' + u.fmtDuration(u.sessionDuration(x)) : '') + '</span></div>' +
             '<div class="list__end"><b class="mono small">' + u.fmt(x.volume) + ' kg</b>' +

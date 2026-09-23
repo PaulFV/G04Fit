@@ -631,6 +631,7 @@
     'Trainingszeit': 'Workout time',
     ' Trainingszeit': ' workout time',
     ' wird wiederholt.': ' is being repeated.',
-    'Erledigt': 'Done', 'Geplant': 'Planned', 'Verpasst': 'Missed', ', heute': ', today'
+    'Erledigt': 'Done', 'Geplant': 'Planned', 'Verpasst': 'Missed', ', heute': ', today',
+    'Letzte Einheit': 'Latest workout', 'Neuester Rekord': 'Latest record', 'Bestwert': 'Best'
   });
 })(G04Fit);
