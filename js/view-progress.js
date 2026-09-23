@@ -312,7 +312,7 @@
             u.icon('check', 17) + '</div>' +
             '<div class="list__main"><b>' + u.esc(x.title) + '</b>' +
             '<span>' + u.esc(u.dayName(x.day) + ', ' + u.fmtDate(x.day)) + ' · ' + x.totalSets + ' Sätze · ' +
-            (x.totalReps || 0) + ' Wdh.</span></div>' +
+            (x.totalReps || 0) + ' Wdh.' + (u.sessionDuration(x) ? ' · ' + u.fmtDuration(u.sessionDuration(x)) : '') + '</span></div>' +
             '<div class="list__end"><b class="mono small">' + u.fmt(x.volume) + ' kg</b>' +
             (x.newRecords ? '<br><span class="pill pill--gold tiny">' + x.newRecords + '× PR</span>' : '') + '</div>' +
             '</div>';
@@ -331,6 +331,7 @@
       '<span class="pill">' + sess.totalSets + ' Sätze</span>',
       '<span class="pill">' + (sess.totalReps || 0) + ' Wdh.</span>',
       '<span class="pill">' + u.fmt(sess.volume) + ' kg</span>',
+      u.sessionDuration(sess) ? '<span class="pill pill--cyan">' + u.fmtDuration(u.sessionDuration(sess)) + ' Trainingszeit</span>' : '',
       sess.newRecords ? '<span class="pill pill--gold">' + sess.newRecords + ' Rekorde</span>' : '',
       sess.reentry ? '<span class="pill pill--gold">Wiedereinstieg</span>' : '',
       '</div>'

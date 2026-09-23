@@ -42,6 +42,46 @@
 
   var rest = { left: 0, timer: null, exId: null, endAt: 0, finished: false };
 
+  /* Trainingszeit: läuft ab "Training starten" (session.startedAt) bis
+     "Abschließen". Gerechnet wird immer aus dem Startzeitpunkt, damit die
+     Uhr auch nach Tab-Wechsel, Neuladen oder gesperrtem Bildschirm stimmt. */
+  var clockTimer = null;
+  function sessionElapsed(sess) {
+    var t = Date.parse(sess && sess.startedAt);
+    return isFinite(t) ? Math.max(0, (Date.now() - t) / 1000) : 0;
+  }
+  function tickClock() {
+    var sess = G.store.state.session;
+    var el = document.getElementById('sessTimeV');
+    if (!sess || !el) { if (clockTimer) { clearInterval(clockTimer); clockTimer = null; } return; }
+    el.textContent = u.fmtDuration(sessionElapsed(sess));
+  }
+  function startClock() {
+    if (clockTimer) clearInterval(clockTimer);
+    clockTimer = setInterval(tickClock, 1000);
+    tickClock();
+  }
+
+  /** Nach der letzten erledigten Serie einer Übung: zur nächsten Übung mit
+      offenen Sätzen scrollen und sie kurz hervorheben. */
+  function focusNextBlock(host, bi) {
+    var sess = G.store.state.session;
+    if (!sess) return;
+    var n = sess.exercises.length, target = -1;
+    for (var k = 1; k < n; k++) {
+      var j = (bi + k) % n;
+      if (sess.exercises[j].sets.some(function (x) { return !x.done; })) { target = j; break; }
+    }
+    if (target < 0) return;
+    var card = host.querySelector('[data-block="' + target + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    card.classList.remove('is-next');
+    void card.offsetWidth;
+    card.classList.add('is-next');
+    setTimeout(function () { card.classList.remove('is-next'); }, 2600);
+  }
+
   // mount() wird bei jedem Rerender der laufenden Einheit erneut aufgerufen
   // (Tab verlassen & zurück, "+ Satz", "Übung ergänzen" …). unmount() bleibt
   // absichtlich leer, damit der Pausentimer weiterläuft — deshalb müssen die
@@ -160,6 +200,17 @@
     var show = plan || next;
     var isToday = !!plan;
 
+    var lastSess = G.store.hasConsent('history') ? G.planner.lastFinished() : null;
+    var repeatBtn = '';
+    if (lastSess) {
+      var nEx = (lastSess.exercises || []).filter(function (b) { return G.ex.byId(b.exId); }).length;
+      var dur = u.sessionDuration(lastSess);
+      repeatBtn = '<button class="btn btn--block workout-preview__repeat" data-act="repeat-last">' +
+        u.icon('refresh', 17) + '<span class="workout-preview__repeat-copy"><b>Letztes Training wiederholen</b>' +
+        '<span>' + u.esc(lastSess.title) + ' · ' + u.esc(u.fmtDateShort(lastSess.day)) + ' · ' + nEx + ' Übungen' +
+        (dur ? ' · ' + u.fmtDuration(dur) : '') + '</span></span></button>';
+    }
+
     var head = '<section class="workout-preview__hero card card--hero">' +
       '<div class="workout-preview__hero-copy">' +
       '<p class="workout-preview__eyebrow muted small">' + (isToday ? 'Heute im Plan' : 'Nächste geplante Einheit') + '</p>' +
@@ -171,7 +222,7 @@
       '<div class="workout-preview__actions">' +
       (show ? '<button class="btn btn--primary btn--lg" data-act="start-plan">' + u.icon('play', 16) + ' Training starten</button>' : '') +
       '<button class="btn btn--lg" data-act="open-free">' + u.icon('plus', 16) + ' Freies Training</button>' +
-      '</div>' +
+      '</div>' + repeatBtn +
       '<div class="workout-preview__rest">' +
       '<label class="switch workout-preview__switch">' +
       '<input type="checkbox" id="restEnablePreset"' + (s.settings.restTimer !== false ? ' checked' : '') + '>' +
@@ -372,6 +423,8 @@
       '<p class="muted small">Laufende Einheit</p>' +
       '<h2 style="font-size:22px;margin:2px 0 6px">' + u.esc(sess.title) + '</h2>' +
       '<div class="row row--wrap" style="gap:7px">' +
+      '<span class="pill pill--cyan sess-time" title="Trainingszeit">' + u.icon('clock', 14) +
+      '<b id="sessTimeV">' + u.fmtDuration(sessionElapsed(sess)) + '</b></span>' +
       '<span class="pill pill--neon" id="sessVol">' + u.fmt(vol) + ' kg Volumen</span>' +
       '<span class="pill pill--muted">' + sess.exercises.length + ' Übungen</span>' +
       (sess.reentry ? '<span class="pill pill--gold">Wiedereinstieg ' + Math.round(sess.reentry.factor * 100) + ' %</span>' : '') +
@@ -519,6 +572,8 @@
         : ''),
       '<h2 class="big" style="margin:8px 0 4px">+' + res.xp + ' XP</h2>',
       '<p class="muted small">' + u.esc(sess.title) + ' abgeschlossen</p>',
+      (res.duration ? '<p class="sum-time">' + u.icon('clock', 16) + '<span>Trainingszeit</span> <b>' +
+        u.fmtDuration(res.duration) + '</b></p>' : ''),
       '</div>',
       '<div class="grid grid--4" style="--sp:10px">',
       stat('Sätze', res.totalSets),
@@ -648,7 +703,17 @@
         }
       }, signal);
 
-      if (!s.session) return;
+      u.on(host, 'click', '[data-act="repeat-last"]', function () {
+        var prev = G.planner.lastFinished();
+        if (!prev) return;
+        s.session = G.planner.buildRepeatSession(prev);
+        G.store.commit('session-start');
+        u.toast('Los geht’s', prev.title + ' wird wiederholt.', 'ok');
+        G.app.rerender();
+      }, signal);
+
+      if (!s.session) { if (clockTimer) { clearInterval(clockTimer); clockTimer = null; } return; }
+      startClock();
 
       /* --- Satzpause: an/aus + Sekunden --- */
       u.on(host, 'change', '#restToggle', function (e, t) {
@@ -684,6 +749,7 @@
         var row = t.closest('.set-row');
         var bi = +row.getAttribute('data-b'), si = +row.getAttribute('data-s');
         var set = s.session.exercises[bi].sets[si];
+        var wasComplete = s.session.exercises[bi].sets.every(function (x) { return x.done; });
         set.done = !set.done;
         row.classList.toggle('is-done', set.done);
 
@@ -700,6 +766,9 @@
           var r = t.getBoundingClientRect();
           u.xpPop(Math.round(7 * G.journey.mode(s.profile.mode).xpMult), r.left, r.top);
           startRest(s.session.restSeconds, s.session.exercises[bi].exId);
+          if (!wasComplete && s.session.exercises[bi].sets.every(function (x) { return x.done; })) {
+            setTimeout(function () { focusNextBlock(host, bi); }, 350);
+          }
         } else {
           stopRest();
         }
@@ -758,6 +827,7 @@
         });
         if (!ok) return;
         stopRest();
+        if (clockTimer) { clearInterval(clockTimer); clockTimer = null; }
         s.session = null;
         G.store.commit('session-abort');
         G.app.rerender();
@@ -781,6 +851,7 @@
           if (!ok) return;
         }
         stopRest();
+        if (clockTimer) { clearInterval(clockTimer); clockTimer = null; }
         var res = G.planner.finishSession(sess);
         showSummary(res, sess);
       }, signal);

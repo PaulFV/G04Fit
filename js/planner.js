@@ -215,6 +215,42 @@
     });
   }
 
+  /** Zuletzt abgeschlossene Einheit (für "Letztes Training wiederholen") */
+  function lastFinished() {
+    var h = st().history || [];
+    var best = null;
+    h.forEach(function (x) {
+      if (!x || !(x.exercises || []).some(function (b) { return G.ex.byId(b.exId); })) return;
+      var key = (x.finishedAt || x.day || '');
+      if (!best || key >= (best.finishedAt || best.day || '')) best = x;
+    });
+    return best;
+  }
+
+  /** Neue Einheit mit denselben Übungen und derselben Satzzahl wie `prev`.
+      Gewichte/Wiederholungen kommen wie immer vom Coach (Progression). */
+  function buildRepeatSession(prev) {
+    var seen = {}, ids = [], counts = {};
+    (prev.exercises || []).forEach(function (b) {
+      if (!G.ex.byId(b.exId) || seen[b.exId]) return;
+      seen[b.exId] = 1;
+      ids.push(b.exId);
+      counts[b.exId] = Math.max(1, (b.sets || []).filter(function (x) { return x.done; }).length || (b.sets || []).length);
+    });
+    var sess = buildCustomSession(ids, prev.title || 'Freies Training');
+    sess.exercises.forEach(function (b) {
+      var want = counts[b.exId];
+      if (!want || !b.sets.length) return;
+      while (b.sets.length > want) b.sets.pop();
+      while (b.sets.length < want) {
+        var last = b.sets[b.sets.length - 1];
+        b.sets.push({ weight: last.weight, reps: last.reps, targetReps: last.targetReps.slice(), done: false, rpe: null });
+      }
+    });
+    sess.repeatOf = prev.id;
+    return sess;
+  }
+
   /* ------------------------------------------------------------
      Einheit abschließen
      ------------------------------------------------------------ */
@@ -233,6 +269,8 @@
     });
 
     session.finishedAt = new Date().toISOString();
+    // Trainingszeit von "Training starten" bis "Abschließen" (Sekunden)
+    session.duration = u.sessionDuration({ startedAt: session.startedAt, finishedAt: session.finishedAt });
     session.totalSets = totalSets;
     session.totalReps = totalReps;
     session.volume = Math.round(vol);
@@ -253,7 +291,7 @@
     s.session = null;
     G.store.commit('session-finished');
 
-    return { xp: xp, level: lvl, records: records, totalSets: totalSets, totalReps: totalReps, volume: Math.round(vol) };
+    return { xp: xp, level: lvl, records: records, totalSets: totalSets, totalReps: totalReps, volume: Math.round(vol), duration: session.duration };
   }
 
   G.planner = {
@@ -265,6 +303,8 @@
     pickExercises: pickExercises,
     buildSession: buildSession,
     buildCustomSession: buildCustomSession,
+    lastFinished: lastFinished,
+    buildRepeatSession: buildRepeatSession,
     finishSession: finishSession
   };
 })(G04Fit);

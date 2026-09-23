@@ -151,6 +151,22 @@ G04Fit.VERSION = '2.1.0';
     return isoDay(d);
   }
 
+  /** Trainingsdauer als Uhr: 42:10 bzw. 1:05:12 */
+  function fmtDuration(sec) {
+    sec = Math.max(0, Math.round(+sec || 0));
+    var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+    return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(s).padStart(2, '0');
+  }
+
+  /** Dauer einer abgeschlossenen Einheit aus Start/Ende (Sekunden) */
+  function sessionDuration(sess) {
+    if (!sess) return 0;
+    if (sess.duration != null) return +sess.duration || 0;
+    if (!sess.startedAt || !sess.finishedAt) return 0;
+    var d = (Date.parse(sess.finishedAt) - Date.parse(sess.startedAt)) / 1000;
+    return isFinite(d) && d > 0 ? Math.round(d) : 0;
+  }
+
   function mmss(sec) {
     sec = Math.max(0, Math.round(sec));
     var m = Math.floor(sec / 60), s = sec % 60;
@@ -387,7 +403,7 @@ G04Fit.VERSION = '2.1.0';
     DAYS: DAYS, DAYS_LONG: DAYS_LONG, MONTHS: MONTHS,
     isoDay: isoDay, today: today, parseDay: parseDay, daysBetween: daysBetween, addDays: addDays,
     dayName: dayName, fmtDate: fmtDate, fmtDateShort: fmtDateShort, relDay: relDay,
-    weekStart: weekStart, mmss: mmss,
+    weekStart: weekStart, mmss: mmss, fmtDuration: fmtDuration, sessionDuration: sessionDuration,
     e1rm: e1rm, volume: volume,
     uid: uid, debounce: debounce, pick: pick, sum: sum, groupBy: groupBy,
     download: download, copy: copy,

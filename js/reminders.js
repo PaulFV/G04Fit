@@ -305,6 +305,9 @@
     try {
       var AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (!AudioCtx) return;
+      // iOS 17+: als Medienwiedergabe markieren, damit der Ton auch bei
+      // eingeschaltetem Lautlos-Schalter zu hören ist (wie ein Timer).
+      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
       if (!audioContext) audioContext = new AudioCtx();
       if (audioContext.state === 'suspended') audioContext.resume().catch(function () {});
     } catch (e) { /* Systemton der Benachrichtigung bleibt als Fallback */ }
@@ -379,7 +382,15 @@
   function ringAlarm(ms) {
     stopRingAlarm();
     ms = ms || 10000;
-    var elapsed = 0, step = 1200;
+    var elapsed = 0, step = 1100;
+    // Android: 10 s Vibrationsmuster (iPhone unterstützt keine Web-Vibration)
+    if (!st().settings.soundless && navigator.vibrate) {
+      try {
+        var pat = [];
+        for (var t = 0; t < ms; t += 1100) pat.push(600, 500);
+        navigator.vibrate(pat);
+      } catch (e) {}
+    }
     ringTimer = setInterval(function () {
       elapsed += step;
       if (elapsed >= ms) { stopRingAlarm(); return; }
@@ -388,6 +399,7 @@
   }
 
   function stopRingAlarm() {
+    if (ringTimer && navigator.vibrate) { try { navigator.vibrate(0); } catch (e) {} }
     if (ringTimer) clearInterval(ringTimer);
     ringTimer = null;
   }

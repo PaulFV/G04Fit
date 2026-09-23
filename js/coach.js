@@ -119,6 +119,34 @@
 
     out.weight = topWeight;
 
+    // Körpergewichtsübungen (Liegestütze, Dips, Klimmzüge, Crunches …):
+    // Das Gewicht bleibt, wie es zuletzt war (meist ohne Zusatzgewicht) —
+    // gesteigert werden nur die Wiederholungen, auch über den üblichen
+    // Bereich hinaus. Ausnahme: Varianten, die ausdrücklich mit
+    // Zusatzgewicht gedacht sind (id enthält "weighted").
+    if (ex.bw && !/weighted/.test(ex.id)) {
+      var en = G.i18n && G.i18n.locale() === 'en';
+      var bestTop = Math.max.apply(null, repsAtTop);
+      var target;
+      if (hardCount >= Math.ceil(sets.length * 0.7)) {
+        target = Math.max(1, minTop);
+        out.kind = 'hold';
+        out.reason = en
+          ? 'Last time felt hard. Repeat ' + target + ' reps per set with clean form.'
+          : 'Zuletzt war es schwer. Wiederhole ' + target + ' Wiederholungen pro Satz mit sauberer Technik.';
+      } else {
+        target = Math.max(range[0], Math.ceil(avgTop) + (easyCount >= repsAtTop.length ? 2 : 1));
+        target = Math.min(target, Math.max(bestTop + 2, range[0]), 90);
+        out.kind = 'up';
+        out.reason = en
+          ? 'Body weight: no extra weight — aim for ' + target + ' reps per set (last time up to ' + bestTop + ').'
+          : 'Eigengewicht: kein Zusatzgewicht — steigere auf ' + target + ' Wiederholungen pro Satz (zuletzt bis ' + bestTop + ').';
+      }
+      out.reps = [target, target];
+      out.change = 0;
+      return out;
+    }
+
     // 1) Obergrenze in allen Sätzen erreicht -> Gewicht erhöhen
     if (minTop >= range[1] && hardCount === 0) {
       var step = inc * (easyCount >= repsAtTop.length ? 2 : 1);

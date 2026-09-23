@@ -624,4 +624,12 @@
   }
 
   G.i18n = { locale: locale, setLocale: setLocale, translate: translateText, apply: apply, extend: extend };
+
+  // Freies Training: Trainingszeit, Wiederholen (23.09.2026)
+  extend({
+    'Letztes Training wiederholen': 'Repeat last workout',
+    'Trainingszeit': 'Workout time',
+    ' Trainingszeit': ' workout time',
+    ' wird wiederholt.': ' is being repeated.'
+  });
 })(G04Fit);

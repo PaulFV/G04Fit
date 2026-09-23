@@ -54,6 +54,7 @@
     out.push('');
     out.push('**Datum:** ' + u.fmtDate(d) + ' (' + u.dayName(d, true) + ')  ');
     out.push('**Gesamtvolumen:** ' + u.fmt(session.volume) + ' kg  ');
+    if (u.sessionDuration(session)) out.push('**Trainingszeit:** ' + u.fmtDuration(u.sessionDuration(session)) + '  ');
     out.push('**Sätze:** ' + (session.totalSets || 0) +
       (session.newRecords ? '  \n**Neue Rekorde:** ' + session.newRecords : ''));
     if (session.reentry) {
