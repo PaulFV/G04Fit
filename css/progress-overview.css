@@ -277,3 +277,29 @@
   .progress-tabs__button:first-child{min-height:42px;font-size:12.5px}
   .progress-stat__body .stat__k{font-size:9px;letter-spacing:.03em;hyphens:auto;-webkit-hyphens:auto}
 }
+
+/* ---------- Hervorhebung: letzte Einheit, bester & neuester Rekord ---------- */
+.pr__badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:5px}
+.pr__badge,.hist-row__badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10.5px;font-weight:700;letter-spacing:.02em;line-height:1.5}
+.pr__badge--best{background:rgba(255,200,87,.16);color:var(--gold);border:1px solid rgba(255,200,87,.45)}
+.pr__badge--latest{background:rgba(34,211,238,.14);color:var(--cyan);border:1px solid rgba(34,211,238,.45)}
+.progress-view .pr--best{border-color:rgba(255,200,87,.55);background:linear-gradient(120deg,rgba(255,200,87,.14),rgba(255,200,87,.03) 70%),var(--glass-bg);box-shadow:0 0 18px rgba(255,200,87,.1)}
+.progress-view .pr--latest{border-color:rgba(34,211,238,.6);background:linear-gradient(120deg,rgba(34,211,238,.15),rgba(34,211,238,.03) 70%),var(--glass-bg);box-shadow:0 0 18px rgba(34,211,238,.12)}
+.progress-view .pr--best.pr--latest{border-color:rgba(255,200,87,.6);background:linear-gradient(120deg,rgba(34,211,238,.14),rgba(255,200,87,.12) 80%),var(--glass-bg)}
+.progress-view .pr--latest .pr__medal{background:rgba(34,211,238,.14);border-color:rgba(34,211,238,.45);color:var(--cyan)}
+.progress-view .pr--best .pr__medal{background:rgba(255,200,87,.22);border-color:rgba(255,200,87,.6);box-shadow:0 0 10px rgba(255,200,87,.3)}
+
+.list__row.hist-row--latest{
+  margin:0 -6px 6px;padding:12px 10px;border-radius:var(--r-sm);
+  border:1px solid var(--neon-line);
+  background:linear-gradient(120deg,rgba(61,255,158,.16),rgba(61,255,158,.03) 75%);
+  box-shadow:0 0 18px rgba(61,255,158,.1)
+}
+.list__row.hist-row--latest .list__ic{background:var(--neon);color:#04130d!important;border-color:var(--neon)!important}
+.hist-row__badge{background:rgba(61,255,158,.16);color:var(--neon);border:1px solid var(--neon-line);margin-bottom:4px}
+.list__main .hist-row__badge{display:inline-block;width:auto}
+:root[data-theme="light"] .list__row.hist-row--latest{background:linear-gradient(120deg,rgba(6,118,71,.12),rgba(6,118,71,.02) 75%)}
+.pr__main .pr__badge,.list__main .hist-row__badge{font-size:10.5px;font-weight:700;display:inline-block}
+.pr__main .pr__badge--best{color:var(--gold)}
+.pr__main .pr__badge--latest{color:var(--cyan)}
+.list__main .hist-row__badge{color:var(--neon)}
