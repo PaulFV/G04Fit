@@ -53,43 +53,43 @@
     {
       key: 'starter', name: 'Starter Gym', icon: '🏋️', image: 'assets/journey-workout-avatar-wide-atlas.webp', imagePosition: '0% 20%', from: 1, to: 5,
       cell: [0, 0], focus: [0.21, 0.34, 0.70, 0.80], layout: 'bands',
-      tag: 'Fundamentals & technique',
-      desc: 'Learn to perform the movements with good form. Weight comes second.',
+      tag: 'Grundlagen & Technik',
+      desc: 'Hier lernst du die Bewegungen sauber auszuführen. Gewichte sind zweitrangig.',
       color: '#7DD3A0'
     },
     {
       key: 'strength-lab', name: 'Strength Lab', icon: '🏋️', image: 'assets/journey-workout-avatar-wide-atlas.webp', imagePosition: '50% 20%', from: 6, to: 12,
       cell: [1, 0], focus: [0.24, 0.31, 0.81, 0.78], layout: 'bands',
-      tag: 'First strength gains',
-      desc: 'The basic lifts are solid. Now build weight systematically.',
+      tag: 'Erste Kraftzuwächse',
+      desc: 'Die Grundübungen sitzen. Jetzt wird planmäßig Gewicht aufgebaut.',
       color: '#3DFF9E'
     },
     {
       key: 'power-rack', name: 'Power Rack', icon: '💪', image: 'assets/journey-workout-avatar-wide-atlas.webp', imagePosition: '100% 20%', from: 13, to: 20,
       cell: [2, 0], focus: [0.40, 0.21, 0.67, 0.81], layout: 'sides',
-      tag: 'Volume & endurance',
-      desc: 'Build longer workouts and more volume. Your strength base gets stronger.',
+      tag: 'Volumen & Ausdauer',
+      desc: 'Längere Einheiten, mehr Sätze. Deine Kraftbasis wird breiter.',
       color: '#22D3EE'
     },
     {
       key: 'conditioning', name: 'Conditioning Lab', icon: '🏋️', image: 'assets/journey-workout-avatar-wide-atlas.webp', imagePosition: '0% 80%', from: 21, to: 30,
       cell: [0, 1], focus: [0.18, 0.28, 0.74, 0.67], layout: 'bands',
-      tag: 'Intensity',
-      desc: 'Short rests, heavy loads. Recovery becomes the deciding factor.',
+      tag: 'Intensität',
+      desc: 'Kurze Pausen, hohe Lasten. Erholung wird zum entscheidenden Faktor.',
       color: '#FFC857'
     },
     {
       key: 'performance', name: 'Performance Center', icon: '⚡', image: 'assets/journey-workout-avatar-wide-atlas.webp', imagePosition: '50% 80%', from: 31, to: 42,
       cell: [1, 1], focus: [0.22, 0.30, 0.68, 0.67], layout: 'bands',
-      tag: 'Consistency at a high level',
-      desc: 'Progress in small steps. Consistency wins.',
+      tag: 'Konstanz auf hohem Niveau',
+      desc: 'Fortschritt in kleinen Schritten. Wer dranbleibt, gewinnt.',
       color: '#A78BFA'
     },
     {
       key: 'elite', name: 'Elite Gym', icon: '🏆', image: 'assets/journey-workout-avatar-wide-atlas.webp', imagePosition: '100% 80%', from: 43, to: 999,
       cell: [2, 1], focus: [0.23, 0.29, 0.62, 0.73], layout: 'bands',
-      tag: 'Elite range',
-      desc: 'Fine-tuned individually. The Coach works with your real data.',
+      tag: 'Spitzenbereich',
+      desc: 'Individuelle Feinsteuerung. Der Coach arbeitet mit deinen echten Daten.',
       color: '#FF8FA3'
     }
   ];

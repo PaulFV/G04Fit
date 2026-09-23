@@ -35,7 +35,7 @@
       if (iso === today) cls.push('is-today');
       if (isPlan && !done && iso < today) { cls.push('is-miss'); }
       var miss = isPlan && !done && iso < today;
-      var state = done ? 'erledigt' : miss ? 'verpasst' : isPlan ? 'geplant' : 'frei';
+      var state = done ? 'erledigt' : miss ? 'verpasst' : isPlan ? 'geplant' : 'Ruhetag';
       var marker = '<em class="dashboard-week-cell__marker is-' + (done ? 'done' : miss ? 'miss' : isPlan ? 'plan' : 'free') + '" aria-hidden="true"></em>';
       cells.push(
         '<div class="' + cls.join(' ') + '" title="' + u.esc((isPlan ? planDays[iso].name + ' · ' : '') + state) + '"' +

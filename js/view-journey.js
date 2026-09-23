@@ -285,6 +285,8 @@
     var hero = host.querySelector('.journey-hero');
     var scene = hero && hero.querySelector('.journey-hero__scene');
     if (!scene) return;
+    // Eingeklappt: nur die kompakte Zeile, keine Bildberechnung
+    if (hero.classList.contains('is-collapsed')) { hero.style.minHeight = ''; return; }
     var region = regionByKey(hero.getAttribute('data-region'));
     hero.style.minHeight = '';
     scene.style.height = '';
@@ -358,6 +360,29 @@
     }
   }
 
+  /* Hauptkachel ein-/ausklappen. Standard: eingeklappt; die Wahl bleibt
+     auf diesem Gerät gespeichert. */
+  var HERO_KEY = 'g04fit.journeyHeroOpen';
+  function heroOpen() {
+    try { return localStorage.getItem(HERO_KEY) === '1'; } catch (e) { return false; }
+  }
+  function setHeroOpen(v) {
+    try { localStorage.setItem(HERO_KEY, v ? '1' : '0'); } catch (e) {}
+  }
+
+  function heroSummary(li) {
+    return '<button class="journey-hero__summary" type="button" data-act="hero-toggle" aria-expanded="false">' +
+      '<span class="journey-hero__sum-ring">' + G.charts.ring(li.pct, { size: 58, stroke: 5, value: li.level, label: 'Level' }) + '</span>' +
+      '<span class="journey-hero__sum-copy">' +
+      '<span class="journey-hero__sum-eyebrow">Aktuelle Region</span>' +
+      '<b><span class="journey-hero__region-icon">' + li.region.icon + '</span> ' + u.esc(li.region.name) + '</b>' +
+      '<span class="journey-hero__sum-bar"><span style="width:' + Math.round(li.pct * 100) + '%"></span></span>' +
+      '<span class="journey-hero__sum-meta">Noch ' + (li.need - li.into) + ' XP bis Level ' + (li.level + 1) + '</span>' +
+      '</span>' +
+      '<span class="journey-hero__sum-more"><span>Details</span>' + u.icon('chevron', 18) + '</span>' +
+      '</button>';
+  }
+
   G.views.journey = {
     title: 'Journey',
     sub: function () {
@@ -370,7 +395,9 @@
 
       return '<div class="view stack journey-view">' +
 
-        '<section class="journey-hero card card--hero card--hl" data-region="' + li.region.key + '">' +
+        '<section class="journey-hero card card--hero card--hl' + (heroOpen() ? '' : ' is-collapsed') + '" data-region="' + li.region.key + '"' +
+        ' style="--journey-sum-image:url(\'' + li.region.image + '\');--journey-image-position:' + (li.region.imagePosition || 'center') + '">' +
+        heroSummary(li) +
         '<div class="journey-hero__scene" style="background-image:url(\'' + li.region.image + '\');--journey-image-position:' + (li.region.imagePosition || 'center') + '" aria-hidden="true"></div>' +
         // Kopf: Ring und Titel. Fuß: Beschreibung, Werte und Fortschritt.
         // Dazwischen bleibt die Person im Bild frei (siehe fitHero()).
@@ -388,6 +415,8 @@
         '</div>' +
         '<div class="journey-hero__progress"><div class="bar"><span class="bar__fill" style="width:' + Math.round(li.pct * 100) + '%"></span></div>' +
         '<p class="tiny dim">Noch ' + (li.need - li.into) + ' XP bis Level ' + (li.level + 1) + '. Eine Einheit bringt je nach Umfang etwa 60–200 XP.</p></div>' +
+        '<button class="btn btn--sm btn--ghost journey-hero__less" type="button" data-act="hero-toggle" aria-expanded="true">' +
+        u.icon('chevron', 16) + ' Weniger anzeigen</button>' +
         '</div>' +
         '</section>' +
 
@@ -410,6 +439,20 @@
     },
     mount: function (host) {
       watchSize(host);
+
+      // Direkt an die (bei jedem Rendern neue) Kachel gebunden, damit sich
+      // bei erneutem mount() keine doppelten Klick-Handler ansammeln.
+      var hero = host.querySelector('.journey-hero');
+      if (hero) hero.addEventListener('click', function (e) {
+        if (!e.target.closest('[data-act="hero-toggle"]')) return;
+        var open = hero.classList.toggle('is-collapsed') === false;
+        setHeroOpen(open);
+        hero.querySelectorAll('[data-act="hero-toggle"]').forEach(function (b) {
+          b.setAttribute('aria-expanded', b.classList.contains('journey-hero__summary') ? 'false' : 'true');
+        });
+        fitAll(host);
+        if (!open) hero.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      });
 
       u.on(host, 'click', '[data-mode]', function (e, t) {
         var key = t.getAttribute('data-mode');

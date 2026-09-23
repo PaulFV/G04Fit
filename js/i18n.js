@@ -631,6 +631,6 @@
     'Trainingszeit': 'Workout time',
     ' Trainingszeit': ' workout time',
     ' wird wiederholt.': ' is being repeated.',
-    'Erledigt': 'Done', 'Geplant': 'Planned', 'Verpasst': 'Missed', 'frei': 'rest day', ', heute': ', today'
+    'Erledigt': 'Done', 'Geplant': 'Planned', 'Verpasst': 'Missed', ', heute': ', today'
   });
 })(G04Fit);
