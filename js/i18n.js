@@ -630,6 +630,7 @@
     'Letztes Training wiederholen': 'Repeat last workout',
     'Trainingszeit': 'Workout time',
     ' Trainingszeit': ' workout time',
-    ' wird wiederholt.': ' is being repeated.'
+    ' wird wiederholt.': ' is being repeated.',
+    'Erledigt': 'Done', 'Geplant': 'Planned', 'Verpasst': 'Missed', 'frei': 'rest day', ', heute': ', today'
   });
 })(G04Fit);

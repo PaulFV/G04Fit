@@ -34,18 +34,25 @@
       if (done) cls.push('is-done');
       if (iso === today) cls.push('is-today');
       if (isPlan && !done && iso < today) { cls.push('is-miss'); }
-      var marker = done ? '<em class="dashboard-week-cell__marker is-done" aria-label="erledigt"></em>' :
-        (isPlan ? '<em class="dashboard-week-cell__marker is-plan" aria-label="geplant"></em>' :
-          (iso === today ? '<em class="dashboard-week-cell__rest">REST</em>' : ''));
+      var miss = isPlan && !done && iso < today;
+      var state = done ? 'erledigt' : miss ? 'verpasst' : isPlan ? 'geplant' : 'frei';
+      var marker = '<em class="dashboard-week-cell__marker is-' + (done ? 'done' : miss ? 'miss' : isPlan ? 'plan' : 'free') + '" aria-hidden="true"></em>';
       cells.push(
-        '<div class="' + cls.join(' ') + '" title="' + u.esc(isPlan ? planDays[iso].name : 'Frei') + '">' +
+        '<div class="' + cls.join(' ') + '" title="' + u.esc((isPlan ? planDays[iso].name + ' · ' : '') + state) + '"' +
+        ' aria-label="' + u.esc(u.dayName(iso, true) + ': ' + state + (iso === today ? ', heute' : '')) + '">' +
         '<b>' + u.DAYS[u.parseDay(iso).getDay()] + '</b>' +
         '<span>' + u.parseDay(iso).getDate() + '</span>' +
         marker +
         '</div>'
       );
     }
-    return '<div class="dashboard-week-strip">' + cells.join('') + '</div>';
+    return '<div class="dashboard-week-strip">' + cells.join('') + '</div>' +
+      '<div class="dashboard-week-legend">' +
+      '<span><i class="lg lg--done"></i>Erledigt</span>' +
+      '<span><i class="lg lg--plan"></i>Geplant</span>' +
+      '<span><i class="lg lg--miss"></i>Verpasst</span>' +
+      '<span><i class="lg lg--today"></i>Heute</span>' +
+      '</div>';
   }
 
   function quickStats() {
@@ -77,6 +84,16 @@
         graph +
         '</div>';
     }).join('') + '</section>';
+  }
+
+  /** "2 von 3 erledigt" für die Kopfzeile der Wochenkarte */
+  function weekCount() {
+    var s = G.store.state;
+    var plan = G.planner.weekPlan();
+    var start = u.weekStart(), end = u.addDays(start, 6);
+    var done = {};
+    s.history.forEach(function (h) { if (h.day >= start && h.day <= end) done[h.day] = 1; });
+    return Object.keys(done).length + ' von ' + plan.length + ' erledigt';
   }
 
   function heroCard() {
@@ -112,7 +129,7 @@
       body = '<h2 class="big">' + u.esc(plan.name) + '</h2>' +
         '<p class="muted">' + plan.exercises.length + ' Übungen · ' +
         u.esc(plan.muscles.map(function (m) { return G.MUSCLES[m].name; }).join(', ')) + '</p>' +
-        '<p class="small dim" style="margin-top:8px">' + u.esc(exNames.join(' · ')) +
+        '<p class="small dim dashboard-hero__exlist">' + u.esc(exNames.join(' · ')) +
         (plan.exercises.length > 3 ? ' …' : '') + '</p>';
       cta = '<button class="btn btn--primary btn--lg" data-act="start">' + u.icon('play', 18) + ' Training starten</button>' +
         '<button class="btn btn--lg" data-go="workout">Plan ansehen</button>';
@@ -140,7 +157,7 @@
     // Einheit gestartet werden kann (also nicht während running), damit
     // die Einstellung nicht nur über den Workout-Reiter erreichbar ist.
     var restRow = !running ? (
-      '<div class="row row--wrap" style="gap:10px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--glass-br)">' +
+      '<div class="row row--wrap dashboard-hero__rest" style="gap:10px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--glass-br)">' +
       '<label class="switch" style="padding:0;flex:1;min-width:170px">' +
       '<input type="checkbox" id="restEnableDash"' + (s.settings.restTimer !== false ? ' checked' : '') + '>' +
       '<span class="switch__track"></span>' +
@@ -249,7 +266,7 @@
       return '<div class="view stack dashboard-view">' +
         heroCard() +
         '<section class="dashboard-week card"><div class="card__head dashboard-card__head">' + u.icon('dashboard', 18) + '<h3>Diese Woche</h3>' +
-        '<span class="spacer"></span><span class="tiny dim">geplant · erledigt · verpasst</span></div>' +
+        '<span class="spacer"></span><span class="pill pill--muted dashboard-week__count">' + weekCount() + '</span></div>' +
         weekStrip() + '</section>' +
         quickStats() +
         levelCard() + coachCard() + reminderCard() + recordsCard() +
