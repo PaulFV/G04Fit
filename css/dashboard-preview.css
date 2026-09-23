@@ -243,3 +243,16 @@
   .dashboard-hero__actions .btn .ui-icon{width:14px;height:14px}
   .dashboard-hero__actions .btn{white-space:nowrap;font-size:13px;padding:9px 8px}
 }
+
+/* Handy: Profilbild oben links in der Ecke, Begrüßung + Tag daneben,
+   Titel und Details darunter über die volle Breite (23.09.2026) */
+@media (max-width:650px){
+  .dashboard-hero__content{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:11px;row-gap:0;align-items:center}
+  .dashboard-hero__copy{display:contents}
+  .dashboard-hero__profile{grid-column:1;grid-row:1 / span 2;align-self:start;margin:-4px 0 0 -4px}
+  .dashboard-hero__profile .avatar{width:52px!important;height:52px!important}
+  .dashboard-hero__greeting{grid-column:2;grid-row:1;margin:0 0 4px}
+  .dashboard-hero__copy > .row{grid-column:2;grid-row:2;margin-bottom:0!important}
+  .dashboard-hero__copy > :not(.row):not(.dashboard-hero__greeting){grid-column:1 / -1}
+  .dashboard-hero h2.big{margin-top:12px}
+}
