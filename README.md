@@ -120,10 +120,18 @@ braucht es `https://`. Am einfachsten über einen kostenlosen Hoster für statis
 GitHub Pages, Netlify oder Cloudflare Pages. Hochgeladen werden nur:
 
 ```
-index.html   manifest.webmanifest   sw.js   css/   js/   icons/
+index.html   manifest.webmanifest   sw.js   push-config.js
+privacy.html   privacy-en.html   support.html   support-en.html
+copyright.html   copyright-en.html
+css/   js/   icons/   assets/
 ```
 
-Die Ordner `src/`, `docs/` und `G04Fit.sln` werden **nicht** gebraucht.
+`assets/` enthält Übungs-GIFs, Muskelkarten, Navigations- und Journey-Grafiken und wird zur
+Laufzeit gebraucht. Die Rechtsseiten sind aus der App und aus dem Play-Store-Eintrag verlinkt.
+
+Die Ordner `src/`, `docs/`, `android/`, `play-store/`, `tools/`, `push-worker/` und
+`G04Fit.sln` werden für das Web-Hosting **nicht** gebraucht. Bei GitHub Pages ist das egal —
+dort liegt einfach das ganze Repository.
 
 Es liegen keine persönlichen Inhalte im Projekt — der Avatar wird erst in der App hochgeladen
 und bleibt auf dem jeweiligen Gerät. Auf dem Server liegt ausschließlich das Programm selbst;
