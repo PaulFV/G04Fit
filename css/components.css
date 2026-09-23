@@ -798,3 +798,39 @@
   .journey-mode__visual{width:53px;height:53px}
   .journey-mode__desc{font-size:11px}
 }
+
+/* ---------- Journey: Hauptkachel ein-/ausklappbar (23.09.2026) ---------- */
+.journey-hero__summary{display:none}
+.journey-hero.is-collapsed{display:block;min-height:0!important;padding:0}
+.journey-hero.is-collapsed > :not(.journey-hero__summary){display:none}
+.journey-hero.is-collapsed::after{display:none}
+.journey-hero.is-collapsed .journey-hero__summary{
+  display:flex;align-items:center;gap:14px;width:100%;padding:14px 16px;text-align:left;color:inherit;
+  background:
+    linear-gradient(90deg,rgba(2,16,13,.97) 0%,rgba(2,18,14,.9) 52%,rgba(2,18,14,.45) 100%),
+    var(--journey-sum-image) var(--journey-image-position,center)/300% auto no-repeat,
+    var(--glass-bg);
+  border:0;border-radius:inherit;cursor:pointer;font:inherit;position:relative;z-index:1
+}
+.journey-hero__summary:focus-visible{outline:2px solid var(--neon);outline-offset:-3px}
+.journey-hero__sum-ring{flex:none;filter:drop-shadow(0 0 10px rgba(61,255,158,.3))}
+.journey-hero__sum-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.journey-hero__sum-eyebrow{font-size:11.5px;color:var(--tx-2)}
+.journey-hero__sum-copy > b{font-size:19px;line-height:1.15;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.journey-hero__sum-bar{display:block;height:5px;border-radius:99px;background:rgba(180,229,215,.16);overflow:hidden;margin-top:4px;max-width:340px}
+.journey-hero__sum-bar > span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--neon),var(--cyan));box-shadow:0 0 8px rgba(61,255,158,.5)}
+.journey-hero__sum-meta{font-size:11.5px;color:var(--tx-1)}
+.journey-hero__sum-more{flex:none;display:inline-flex;align-items:center;gap:4px;padding:7px 10px;border-radius:99px;
+  border:1px solid var(--neon-line);background:rgba(4,20,16,.7);color:var(--neon);font-size:12px;font-weight:700}
+.journey-hero__sum-more .ui-icon{transform:rotate(90deg)}
+.journey-hero__less{margin-top:12px}
+.journey-hero__less .ui-icon{transform:rotate(-90deg)}
+:root[data-theme="light"] .journey-hero.is-collapsed .journey-hero__summary{
+  background:linear-gradient(90deg,rgba(243,247,245,.97) 0%,rgba(243,247,245,.9) 52%,rgba(243,247,245,.4) 100%),var(--journey-sum-image) var(--journey-image-position,center)/300% auto no-repeat,var(--bg-1)}
+:root[data-theme="light"] .journey-hero__sum-more{background:rgba(255,255,255,.8)}
+@media (max-width:760px){
+  .journey-hero.is-collapsed .journey-hero__summary{padding:12px 12px;gap:11px}
+  .journey-hero__sum-copy > b{font-size:17px}
+  .journey-hero__sum-more span{display:none}
+  .journey-hero__sum-more{padding:8px}
+}
