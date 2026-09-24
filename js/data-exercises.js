@@ -94,8 +94,8 @@
     {
       id: 'fly-machine', name: 'Butterfly (Maschine)', muscle: 'chest',
       sec: [], equip: 'Maschine', pattern: 'fly',
-      demo: 'assets/exercises/gifs/butterfly-avatar-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/butterfly-avatar-dark.gif?v=1', demoLight: 'assets/exercises/gifs/butterfly-avatar-whiteclean.gif?v=1',
+      demo: 'assets/exercises/gifs/butterfly-avatar-whiteclean.gif?v=2', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/butterfly-avatar-dark.gif?v=2', demoLight: 'assets/exercises/gifs/butterfly-avatar-whiteclean.gif?v=2',
       level: 1, inc: 5, f: 0.30, reps: [10, 15],
       cues: [
         'Sitzhöhe so wählen, dass die Griffe auf Brusthöhe liegen',

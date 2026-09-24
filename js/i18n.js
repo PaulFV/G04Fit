@@ -185,6 +185,10 @@
     'Trainings-Avatar': 'Workout avatar', 'Dein Bild begleitet dich durch Dashboard, Profil und die Abschluss-Übersicht nach jeder Einheit. Ein Antippen des Avatars ändert es jederzeit.': 'Your picture follows you through the dashboard, profile and completion screen after every workout. Tap the avatar to change it anytime.',
     'Lade ein eigenes Bild hoch — es erscheint dann im Dashboard, im Profil und nach jeder abgeschlossenen Einheit. Ohne eigenes Bild zeigt G04Fit eine Platzhalter-Figur.': 'Upload your own picture — it will appear on the dashboard, profile and after every completed workout. Without a picture, G04Fit shows a placeholder figure.',
 
+    'Ohne Einwilligung wird nichts gespeichert – du kannst das im Datenschutz ändern.':
+      'Nothing is saved without consent — you can change that under Privacy.',
+    'Dein Profil wird auf diesem Gerät gespeichert.': 'Your profile is stored on this device.',
+
     /* Übungsdetails: Hinweise, wenn eine Einwilligung fehlt. Die Texte stehen
        um <b>-Auszeichnungen herum und werden deshalb stückweise übersetzt. */
     '. Ohne sie zeigt G04Fit nur den allgemeinen Bereich: ': '. Without it, G04Fit only shows the general range: ',

@@ -67,6 +67,14 @@ var EDGE_MAX = 200;         // hellere Randpixel sind Füllung (z. B. Geräte oh
 var KNEE = 205, SLOPE = 0.5; // sehr helle Flächen sanft abdunkeln, damit weiße Geräte nicht blenden
 var LINE = [178, 192, 186];  // Farbe dünner Linien (Kabel) auf dunklem Grund
 
+/* Manche Vorlagen tragen unten einen Herkunftshinweis des Rechteinhabers.
+   Er ist hellgrau auf Weiß und würde beim Freistellen als Hintergrund
+   verschwinden. Der Hinweis muss erhalten bleiben, deshalb wird der
+   angegebene Streifen ausgespart und auf dunklem Grund hell gezeichnet. */
+var NOTICE = {
+  'butterfly-avatar': { y: 322, color: [150, 166, 160] }
+};
+
 function readFrames(buf) {
   var dec = new ImageDecoder({ data: buf, type: 'image/gif' });
   return dec.tracks.ready.then(async function () {
@@ -123,7 +131,7 @@ function thinLines(bg, W, H) {
   return thin;
 }
 
-function cleanPose(src, W, H) {
+function cleanPose(src, W, H, notice) {
   var N = W * H, white = new Uint8Array(N), p, i;
   for (p = 0; p < N; p++) {
     i = p * 4;
@@ -201,6 +209,17 @@ function cleanPose(src, W, H) {
     }
     var scale = top > KNEE ? (KNEE + (top - KNEE) * SLOPE) / top : 1;
     for (var cc = 0; cc < 3; cc++) out[o + cc] = src[i + cc] * scale;
+  }
+  // Herkunftshinweis erhalten: hellgraue Schrift auf Weiß wird hell auf Dunkel.
+  if (notice) {
+    for (p = notice.y * W; p < N; p++) {
+      i = p * 4;
+      var v = Math.min(src[i], src[i + 1], src[i + 2]);
+      if (v > 250) continue;                       // reines Weiß bleibt Hintergrund
+      bg[p] = 0;
+      var strength = Math.min(1, (255 - v) / 90);  // Deckkraft der Schrift
+      for (var nc = 0; nc < 3; nc++) out[p * 3 + nc] = BG[nc] + strength * (notice.color[nc] - BG[nc]);
+    }
   }
   return { px: out, bg: bg };
 }
@@ -335,7 +354,8 @@ async function convert(url, transparent) {
   var buf = await (await fetch(url)).arrayBuffer();
   var src = await readFrames(buf), W = src.W, H = src.H, F = src.frames, n = F.length;
   var poses = {};
-  function pose(i) { i = i % n; if (!poses[i]) poses[i] = cleanPose(F[i].px, W, H); return poses[i]; }
+  var notice = NOTICE[name];
+  function pose(i) { i = i % n; if (!poses[i]) poses[i] = cleanPose(F[i].px, W, H, notice); return poses[i]; }
   var out = [];
   for (var i = 0; i < n; i++) {
     var a = Math.floor(i / POSE_EVERY) * POSE_EVERY, b2 = (a + POSE_EVERY) % n;
