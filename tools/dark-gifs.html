@@ -97,6 +97,8 @@ function readFrames(buf) {
 // aber nur zusammenhängend ab LINE_MIN Pixeln. So zählen spitze Ecken
 // des Figurenumrisses nicht als Linie.
 var LINE_MIN = 15;
+var ISLAND_MAX = 24;   // winzige, fast weiße Inseln sind Bildrauschen der Vorlage
+var ISLAND_LIGHT = 240; // ... erkennbar daran, dass kein Pixel darin dunkler ist
 function thinLines(bg, W, H) {
   var N = W * H, x, y, p, dx, dy, ok;
   var er = new Uint8Array(N), open = new Uint8Array(N), thin = new Uint8Array(N);
@@ -161,6 +163,28 @@ function cleanPose(src, W, H, notice) {
     var c = info[comp[p]];
     if (c.edge || c.area >= HOLE) bg[p] = 1;
   }
+  // Bildrauschen: winzige, fast weiße Inseln neben der Figur. Auf Weiß fallen
+  // sie nicht auf, auf dunklem Grund wären es helle Sprenkel und Streifen.
+  var seenIsl = new Uint8Array(N);
+  for (p = 0; p < N; p++) {
+    if (bg[p] || seenIsl[p]) continue;
+    var st2 = [p], list2 = [], dark2 = false;
+    seenIsl[p] = 1;
+    while (st2.length && list2.length <= ISLAND_MAX) {
+      var q2 = st2.pop(); list2.push(q2);
+      var i2 = q2 * 4;
+      if (Math.min(src[i2], src[i2 + 1], src[i2 + 2]) < ISLAND_LIGHT) dark2 = true;
+      var x2 = q2 % W, y2 = (q2 / W) | 0;
+      for (var dy2 = -1; dy2 <= 1; dy2++) for (var dx2 = -1; dx2 <= 1; dx2++) {
+        var nx2 = x2 + dx2, ny2 = y2 + dy2;
+        if (nx2 < 0 || ny2 < 0 || nx2 >= W || ny2 >= H) continue;
+        var r2 = ny2 * W + nx2;
+        if (!bg[r2] && !seenIsl[r2]) { seenIsl[r2] = 1; st2.push(r2); }
+      }
+    }
+    if (!dark2 && list2.length <= ISLAND_MAX && !st2.length) list2.forEach(function (v) { bg[v] = 1; });
+  }
+
   // Heller Saum am Umriss: heller Randpixel direkt neben dem Hintergrund, der
   // selbst an eine dunkle Umrisslinie grenzt. Er ist Mischfarbe aus Umriss und
   // Weiß und wäre auf dunklem Grund als helle Pünktchen sichtbar – er wird
