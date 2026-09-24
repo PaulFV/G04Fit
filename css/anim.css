@@ -15,13 +15,13 @@
 :root[data-theme="light"] .fig--theme-dark,
 :root:not([data-theme="light"]) .fig--theme-light{display:none}
 /* Übungs-GIFs: im hellen Design das weiße Original auf Weiß, im dunklen
-   Design die durchsichtige Fassung vor einem Studio-Foto. Das Foto ist
-   weichgezeichnet und abgedunkelt, ein Lichtkegel hebt die Figur hervor –
-   sonst konkurrieren Matte, Flasche und Hanteln im Foto mit der Übung. */
+   Design die durchsichtige Fassung vor einem Studio-Hintergrund: Ausschnitt
+   ohne Matte, Flasche, Hantel und Pflanzen (assets/exercise-backdrop.webp, nur Wand und Boden), leicht
+   weichgezeichnet; ein grüner Lichtkegel hebt die Figur hervor. */
 :root[data-theme="light"] .fig--theme-pair{background:#fff}
 :root:not([data-theme="light"]) .fig--theme-pair{background:#07100D;isolation:isolate}
-:root:not([data-theme="light"]) .fig--theme-pair::before{content:"";position:absolute;inset:-12px;z-index:0;background:url("../assets/dashboard-hero-bg.webp") 30% center/cover no-repeat;filter:blur(5px) brightness(.5) saturate(.9);pointer-events:none}
-:root:not([data-theme="light"]) .fig--theme-pair::after{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 70% at 50% 52%,rgba(61,255,158,.08),rgba(4,12,10,.15) 45%,rgba(4,12,10,.72) 100%);pointer-events:none}
+:root:not([data-theme="light"]) .fig--theme-pair::before{content:"";position:absolute;inset:-12px;z-index:0;background:url("../assets/exercise-backdrop.webp?v=2") center 62%/cover no-repeat;filter:blur(3px) brightness(.9) saturate(1.2);pointer-events:none}
+:root:not([data-theme="light"]) .fig--theme-pair::after{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 62% 72% at 50% 50%,rgba(61,255,158,.16),rgba(61,255,158,.05) 45%,rgba(4,12,10,.45) 100%);pointer-events:none}
 .fig--theme-pair > img{position:relative;z-index:1}
 .fig--video{pointer-events:none}
 .fig-box{position:relative;width:100%;overflow:hidden}

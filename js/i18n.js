@@ -184,6 +184,29 @@
     'Trage ein, womit du tatsächlich arbeitest. G04Fit übernimmt diese Werte statt eines pauschalen Einsteigergewichts – der Coach baut die Progression darauf auf.': 'Enter the weights you actually use. G04Fit uses these instead of generic beginner weights — the Coach builds progression from them.',
     'Trainings-Avatar': 'Workout avatar', 'Dein Bild begleitet dich durch Dashboard, Profil und die Abschluss-Übersicht nach jeder Einheit. Ein Antippen des Avatars ändert es jederzeit.': 'Your picture follows you through the dashboard, profile and completion screen after every workout. Tap the avatar to change it anytime.',
     'Lade ein eigenes Bild hoch — es erscheint dann im Dashboard, im Profil und nach jeder abgeschlossenen Einheit. Ohne eigenes Bild zeigt G04Fit eine Platzhalter-Figur.': 'Upload your own picture — it will appear on the dashboard, profile and after every completed workout. Without a picture, G04Fit shows a placeholder figure.',
+
+    /* Übungsdetails: Hinweise, wenn eine Einwilligung fehlt. Die Texte stehen
+       um <b>-Auszeichnungen herum und werden deshalb stückweise übersetzt. */
+    '. Ohne sie zeigt G04Fit nur den allgemeinen Bereich: ': '. Without it, G04Fit only shows the general range: ',
+    'Ohne die Einwilligung': 'Without the consent',
+    'Trainingshistorie': 'Workout history',
+    'speichert G04Fit keine vergangenen Sätze – deshalb gibt es hier keinen Verlauf.':
+      'G04Fit does not store past sets — so there is no history here.',
+
+    /* Regionsbeschreibungen der Weltkarte. Die Kacheln brechen nach dem ersten
+       Satz um, deshalb steht jeder Satz auch einzeln in der Tabelle. */
+    'Hier lernst du die Bewegungen sauber auszuführen.': 'Learn to perform the movements with good form.',
+    'Gewichte sind zweitrangig.': 'Weight comes second.',
+    'Die Grundübungen sitzen.': 'The basic lifts are solid.',
+    'Jetzt wird planmäßig Gewicht aufgebaut.': 'Now build weight systematically.',
+    'Längere Einheiten, mehr Sätze.': 'Longer workouts, more sets.',
+    'Deine Kraftbasis wird breiter.': 'Your strength base is growing.',
+    'Kurze Pausen, hohe Lasten.': 'Short rests, heavy loads.',
+    'Erholung wird zum entscheidenden Faktor.': 'Recovery becomes the deciding factor.',
+    'Fortschritt in kleinen Schritten.': 'Progress in small steps.',
+    'Wer dranbleibt, gewinnt.': 'Consistency wins.',
+    'Individuelle Feinsteuerung.': 'Fine-tuned individually.',
+    'Der Coach arbeitet mit deinen echten Daten.': 'The Coach works with your real data.',
     'Beliebiges Bildformat. G04Fit verkleinert es automatisch auf 512 Pixel und schneidet für den runden Avatar mittig zu.': 'Any image format works. G04Fit automatically scales it to 512 pixels and crops the round avatar from the centre.',
     'Nur für die Begrüßung. Ein Fantasiename genügt.': 'Only used for greetings. A nickname is enough.', 'Fließt in die Vorsicht bei der Progression ein.': 'Used to make progression more cautious.',
     'Basis für Richtwerte bei Startgewichten. Wird beim Speichern zusätzlich in den Verlauf unten übernommen.': 'Basis for suggested starting weights. When saved, it is also added to the history below.',
@@ -453,7 +476,7 @@
     [/^und arbeite dich wieder in Richtung (\d+) Wiederholungen\.$/, 'and work back up towards $1 reps.'],
     [/Zuletzt nur (\d+) Wiederholungen bei hoher Anstrengung\. Nimm (.+?) herunter und baue die Technik wieder auf\./g,
       'Last time only $1 reps with high effort. Drop $2 and rebuild your technique.'],
-    [/In den letzten drei Wochen hast du dich bei (\d+) Übungen? verbessert – am deutlichsten bei (.+) \(\+([\d.,]+) kg geschätztes Maximum\)\./g,
+    [/In den letzten drei Wochen hast du dich bei (\d+) Übung(?:en)? verbessert – am deutlichsten bei (.+) \(\+([\d.,]+) kg geschätztes Maximum\)\./g,
       function (m, n, name, kg) {
         return 'Over the last three weeks you improved on ' + n + (n === '1' ? ' exercise' : ' exercises') +
           ' — most of all on ' + name + ' (+' + kg + ' kg estimated max).';
@@ -467,9 +490,10 @@
     [/ — und (\d+) weitere Übung(?:en)? sind bereit\./g,
       function (m, n) { return ' — and ' + n + (n === '1' ? ' more exercise is' : ' more exercises are') + ' ready.'; }],
     [/Rund (\d+) Tage Pause\. Starte mit etwa 10 % weniger Gewicht\./g, 'About $1 days off. Start with about 10% less weight.'],
+    [/^Noch (\d+) XP bis Level (\d+)$/, '$1 XP to go until level $2'],
     [/^vor (\d+) Tagen$/, '$1 days ago'],
     [/^vor (\d+) Wochen?$/, function (m, n) { return n + (n === '1' ? ' week' : ' weeks') + ' ago'; }],
-    [/G04Fit passt die Vorschläge in den nächsten (\d+) Wochen automatisch an\./g,
+    [/G04Fit passt die Vorschläge in den nächsten (\d+) Woche(?:n)? automatisch an\./g,
       'G04Fit adjusts its suggestions automatically over the next $1 weeks.'],
     [/^Gewichte? auf (\d+) %$/, 'Weight at $1%'],
     [/^Einheit läuft · /, 'Workout in progress · '],
@@ -547,17 +571,29 @@
     return !p || /^(SCRIPT|STYLE|TEXTAREA|PRE|CODE)$/i.test(p.nodeName);
   }
 
+  /* Schon übersetzte Texte nicht erneut übersetzen: Der Beobachter sieht auch
+     die eigenen Änderungen. Aus "Sprache / Language" wurde sonst im zweiten
+     Durchlauf "Language / Language". Gemerkt wird je Knoten das zuletzt
+     geschriebene Ergebnis; neuer Text wird wieder übersetzt. */
+  var written = typeof WeakMap === 'function' ? new WeakMap() : null;
+
   function translateNode(node) {
     if (skipped(node)) return;
+    if (written && written.get(node) === node.nodeValue) return;
     var next = translateText(node.nodeValue);
     if (next !== node.nodeValue) node.nodeValue = next;
+    if (written) written.set(node, next);
   }
 
   function translateAttrs(el) {
     ATTRS.forEach(function (attr) {
       if (!el.hasAttribute(attr)) return;
-      var value = el.getAttribute(attr), next = translateText(value);
+      var value = el.getAttribute(attr);
+      var mark = written && written.get(el);
+      if (mark && mark[attr] === value) return;
+      var next = translateText(value);
       if (next !== value) el.setAttribute(attr, next);
+      if (written) { mark = mark || {}; mark[attr] = next; written.set(el, mark); }
     });
   }
 

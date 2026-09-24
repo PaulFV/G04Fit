@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'g04fit-v2.8.128';
+var CACHE = 'g04fit-v2.8.129';
 
 var ASSETS = [
   './',
@@ -24,6 +24,7 @@ var ASSETS = [
   './css/progress-overview.css',
   './css/dashboard-preview.css',
   './assets/dashboard-hero-bg.webp',
+  './assets/exercise-backdrop.webp',
   './assets/dashboard-reminder-bg.png',
   './assets/dashboard-records-bg.png',
   './assets/dashboard-profile.png',
