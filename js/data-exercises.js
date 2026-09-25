@@ -82,8 +82,8 @@
     {
       id: 'incline-db', name: 'Schrägbankdrücken (Kurzhantel)', muscle: 'chest',
       sec: ['shoulders', 'triceps'], equip: 'Kurzhanteln', pattern: 'pressflat',
-      demo: 'assets/exercises/gifs/incline-db-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/incline-db-dark.gif?v=8', demoLight: 'assets/exercises/gifs/incline-db-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/incline-db-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/incline-db-dark.gif?v=9', demoLight: 'assets/exercises/gifs/incline-db-whiteclean.gif?v=9',
       level: 2, inc: 2, f: 0.20, reps: [8, 12],
       cues: [
         'Bank auf 30–40° einstellen – mehr belastet vor allem die Schulter',

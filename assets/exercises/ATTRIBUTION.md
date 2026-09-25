@@ -64,3 +64,9 @@
 - "Kabel-Curl" (`curl-cable`, englisch "Cable curl") nutzt eine neue, vom Projektinhaber gelieferte Animation
   (`curl-cable-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären. Die frühere
   Fassung liegt in der Git-Historie.
+
+## Schrägbankdrücken (Kurzhantel): neue Animation (25.09.2026)
+
+- "Schrägbankdrücken (Kurzhantel)" (`incline-db`, englisch "Incline dumbbell press") nutzt eine neue, vom
+  Projektinhaber gelieferte Animation (`incline-db-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der
+  Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.

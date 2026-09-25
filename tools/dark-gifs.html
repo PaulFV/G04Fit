@@ -139,8 +139,8 @@ function thinLines(bg, W, H) {
    dunklem Grund als helle Umrandung sichtbar ist. Hier steht je Datei, ab welcher Helligkeit (kleinster
    Farbkanal) ein Randpixel neben dem Hintergrund selbst Hintergrund wird; passes = wie oft; hole = ab welcher
    Größe eingeschlossene weiße Flächen Hintergrund sind (größer wählen, wenn helle Glanzlichter auf der Figur
-   sonst als Löcher erscheinen). */
-var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 } };
+   sonst als Löcher erscheinen); keepHoles = kleinere, vom Rand getrennte Hintergrundflecken in der Figur wieder füllen. */
+var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 } };
 
 function cleanPose(src, W, H, notice, lightEdge) {
   var N = W * H, white = new Uint8Array(N), p, i;
@@ -230,6 +230,23 @@ function cleanPose(src, W, H, notice, lightEdge) {
             (lx > 0 && ly < H - 1 && bg[p + W - 1]) || (lx < W - 1 && ly < H - 1 && bg[p + W + 1])) lightPx.push(p);
       }
       lightPx.forEach(function (v) { bg[v] = 1; });
+    }
+  }
+  if (lightEdge && lightEdge.keepHoles) {
+    // Kleine, vom Rand getrennte Hintergrundflecken innerhalb der Figur (helle Glanzlichter) sind keine Lücken.
+    var seenBg = new Uint8Array(N);
+    for (p = 0; p < N; p++) {
+      if (!bg[p] || seenBg[p]) continue;
+      var st3 = [p], list3 = [], edge3 = false;
+      seenBg[p] = 1;
+      while (st3.length) {
+        var q3 = st3.pop(); list3.push(q3);
+        var x3 = q3 % W, y3 = (q3 / W) | 0;
+        if (x3 === 0 || y3 === 0 || x3 === W - 1 || y3 === H - 1) edge3 = true;
+        var nb3 = [x3 > 0 ? q3 - 1 : -1, x3 < W - 1 ? q3 + 1 : -1, y3 > 0 ? q3 - W : -1, y3 < H - 1 ? q3 + W : -1];
+        for (var k3 = 0; k3 < 4; k3++) { var r3 = nb3[k3]; if (r3 >= 0 && bg[r3] && !seenBg[r3]) { seenBg[r3] = 1; st3.push(r3); } }
+      }
+      if (!edge3 && list3.length < lightEdge.keepHoles) list3.forEach(function (v) { bg[v] = 0; });
     }
   }
   var thin = thinLines(bg, W, H);
