@@ -227,8 +227,8 @@
     {
       id: 'pullup', name: 'Klimmzüge', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange', pattern: 'pulldown',
-      demo: 'assets/exercises/gifs/pullup-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullup-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pullup-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pullup-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pullup-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pullup-whiteclean.gif?v=9',
       level: 3, bw: true, inc: 2.5, f: 0, reps: [5, 10],
       cues: [
         'Aus dem Hang aktiv die Schulterblätter nach unten ziehen',
@@ -357,8 +357,8 @@
     {
       id: 'row-bb', name: 'Langhantelrudern', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Langhantel', pattern: 'row',
-      demo: 'assets/exercises/gifs/row-bb-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-bb-dark.gif?v=8', demoLight: 'assets/exercises/gifs/row-bb-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/row-bb-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/row-bb-dark.gif?v=9', demoLight: 'assets/exercises/gifs/row-bb-whiteclean.gif?v=9',
       level: 3, inc: 2.5, f: 0.50, reps: [6, 10],
       cues: [
         'Hüfte nach hinten schieben, Oberkörper etwa 45° geneigt',
@@ -396,8 +396,8 @@
     {
       id: 'row-db', name: 'Kurzhantelrudern (einarmig)', muscle: 'back',
       sec: ['biceps'], equip: 'Kurzhantel', pattern: 'row',
-      demo: 'assets/exercises/gifs/row-db-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-db-dark.gif?v=8', demoLight: 'assets/exercises/gifs/row-db-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/row-db-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/row-db-dark.gif?v=9', demoLight: 'assets/exercises/gifs/row-db-whiteclean.gif?v=9',
       level: 1, inc: 2, f: 0.28, reps: [8, 12], uni: true,
       cues: [
         'Eine Hand und ein Knie stützen auf der Bank',
@@ -787,6 +787,20 @@
         'Schulterblätter bleiben fest auf der Bank'
       ],
       err: ['Griff zu eng', 'Ellenbogen spreizen ab', 'Stange wird auf der Brust abgefedert']
+    },
+    {
+      id: 'triceps-bb-overhead', name: 'Trizepsdrücken Langhantel', muscle: 'triceps',
+      sec: ['shoulders'], equip: 'Langhantel', pattern: 'extension',
+      demo: 'assets/exercises/gifs/triceps-bb-overhead-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/triceps-bb-overhead-dark.gif?v=1', demoLight: 'assets/exercises/gifs/triceps-bb-overhead-whiteclean.gif?v=1',
+      level: 2, inc: 2.5, f: 0.20, reps: [8, 12],
+      cues: [
+        'Oberarme bleiben senkrecht',
+        'Stange kontrolliert hinter dem Kopf absenken und wieder strecken',
+        'Ellenbogen bleiben eng',
+        'Bauch anspannen, kein Hohlkreuz'
+      ],
+      err: ['Ellenbogen weichen nach außen', 'Rippenbogen kippt nach vorne', 'Zu schnelles Absenken']
     },
     {
       id: 'skullcrusher', name: 'Stirndrücken (French Press)', muscle: 'triceps',

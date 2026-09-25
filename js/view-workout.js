@@ -28,7 +28,7 @@
     'shrug': 'shrug', 'curl-bb': 'curl-bb', 'curl-bb-scott': 'curl-bb', 'curl-db': 'curl-db',
     'curl-db-incline-bilateral': 'curl-db', 'curl-db-bilateral': 'curl-db', 'curl-preacher': 'curl-preacher',
     'curl-cable': 'curl-cable', 'triceps-cable-lying': 'pushdown', 'triceps-pushdown': 'pushdown', 'bench-dip-triceps': 'dip-triceps',
-    'bench-db-triceps': 'bench-db', 'bench-bb-triceps': 'bench-bb', 'skullcrusher': 'skullcrusher',
+    'bench-db-triceps': 'bench-db', 'bench-bb-triceps': 'bench-bb', 'skullcrusher': 'skullcrusher', 'triceps-bb-overhead': 'ohext-db',
     'ohext-db': 'ohext-db', 'triceps-cable-overhead-onearm': 'ohext-db', 'kickback': 'kickback',
     'crunch': 'crunch', 'situp-straight': 'crunch', 'crunch-side': 'crunch', 'abs-side-bench': 'crunch',
     'legraise': 'legraise', 'legraise-hanging-station': 'legraise', 'plank': 'plank',

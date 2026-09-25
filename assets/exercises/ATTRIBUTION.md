@@ -76,3 +76,28 @@
 - "Latzug breit zur Brust" (`latpull-wide-chest`, englisch "Wide-grip lat pulldown") nutzt eine neue, vom
   Projektinhaber gelieferte Animation (`latpull-wide-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der
   Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.
+
+## Langhantelrudern: neue Animation (25.09.2026)
+
+- "Langhantelrudern" (`row-bb`, englisch "Barbell row") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`row-bb-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären. Die frühere Fassung
+  liegt in der Git-Historie.
+
+## Kurzhantelrudern (einarmig): neue Animation (25.09.2026)
+
+- "Kurzhantelrudern (einarmig)" (`row-db`, englisch "Single-arm dumbbell row") nutzt eine neue, vom Projektinhaber
+  gelieferte Animation (`row-db-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären.
+  Die frühere Fassung liegt in der Git-Historie.
+
+## Trizepsdrücken Langhantel: neue Übung (25.09.2026)
+
+- "Trizepsdrücken Langhantel" (`triceps-bb-overhead`, englisch "Barbell triceps extension") nutzt eine vom
+  Projektinhaber gelieferte Animation (`triceps-bb-overhead-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der
+  Veröffentlichung zu klären.
+
+## Klimmzüge: neue Animation (25.09.2026)
+
+- "Klimmzüge" (`pullup`, englisch "Pull-up") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`pullup-whiteclean.gif`, `-dark.gif`). Am unteren Bildrand der Vorlage standen einzelne Pixel einer abgeschnittenen
+  Textzeile; sie sind in `tools/dark-gifs.html` (`CLEAR_RECT`) entfernt. Die Herkunft ist vor der Veröffentlichung zu
+  klären. Die frühere Fassung liegt in der Git-Historie.

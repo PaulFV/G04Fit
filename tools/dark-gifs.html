@@ -140,7 +140,7 @@ function thinLines(bg, W, H) {
    Farbkanal) ein Randpixel neben dem Hintergrund selbst Hintergrund wird; passes = wie oft; hole = ab welcher
    Größe eingeschlossene weiße Flächen Hintergrund sind (größer wählen, wenn helle Glanzlichter auf der Figur
    sonst als Löcher erscheinen); keepHoles = kleinere, vom Rand getrennte Hintergrundflecken in der Figur wieder füllen. */
-var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'latpull-wide': { min: 205, passes: 2, hole: 400, keepHoles: 150 } };
+var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'latpull-wide': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'triceps-bb-overhead': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup': { min: 205, passes: 2, hole: 400, keepHoles: 150 } };
 
 function cleanPose(src, W, H, notice, lightEdge) {
   var N = W * H, white = new Uint8Array(N), p, i;
@@ -419,6 +419,20 @@ function encodeGif(frames, W, H) {
 
 /* Vorlagen mit schwarzem statt weißem Hintergrund: Der mit dem Rand verbundene, fast schwarze Bereich wird in
    jedem Bild zu Weiß. Danach läuft alles wie bei weißen Vorlagen. */
+/* Reste am unteren Bildrand, die in der Vorlage von einer abgeschnittenen Zeile übrig sind (einzelne Pixel):
+   je Datei Rechtecke [x0, y0, x1, y1], die in allen Bildern weiß gesetzt werden. Die Wandstangen bleiben ausgespart. */
+var CLEAR_RECT = { 'pullup': [[200, 326, 246, 359], [252, 326, 359, 359]] };
+function clearRects(F, W, name) {
+  (CLEAR_RECT[name] || []).forEach(function (r) {
+    F.forEach(function (f) {
+      for (var y = r[1]; y <= r[3]; y++) for (var x = r[0]; x <= r[2]; x++) {
+        var i = (y * W + x) * 4;
+        f.px[i] = 255; f.px[i + 1] = 255; f.px[i + 2] = 255; f.px[i + 3] = 255;
+      }
+    });
+  });
+}
+
 var BLACK_BG = { 'bench-db': true };
 var BLACK_MAX = 9;   // Hintergrund ist exakt schwarz (0); Hantelscheiben und Bank haben Wert 10 und müssen erhalten bleiben
 function blackToWhite(F, W, H) {
@@ -439,10 +453,11 @@ function blackToWhite(F, W, H) {
 }
 
 /* Helle Fassung einer Vorlage mit schwarzem Hintergrund: Bilder mit weißem Grund, Zeiten unverändert. */
-async function convertLight(url) {
+async function convertLight(url, name) {
   var buf = await (await fetch(url)).arrayBuffer();
   var src = await readFrames(buf), W = src.W, H = src.H;
-  blackToWhite(src.frames, W, H);
+  if (BLACK_BG[name]) blackToWhite(src.frames, W, H);
+  clearRects(src.frames, W, name);
   var out = src.frames.map(function (f) {
     var q = quantize(new Uint8ClampedArray(f.px));
     return { pal: q.pal, idx: q.idx, clear: q.clear, delay: f.delay };
@@ -454,6 +469,7 @@ async function convert(url, transparent, name) {
   var buf = await (await fetch(url)).arrayBuffer();
   var src = await readFrames(buf), W = src.W, H = src.H, F = src.frames, n = F.length;
   if (BLACK_BG[name]) blackToWhite(F, W, H);
+  clearRects(F, W, name);
   var poses = {};
   var notice = NOTICE[name];
   function pose(i) { i = i % n; if (!poses[i]) poses[i] = cleanPose(F[i].px, W, H, notice, LIGHT_EDGE[name]); return poses[i]; }

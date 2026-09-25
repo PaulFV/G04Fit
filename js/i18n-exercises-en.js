@@ -289,6 +289,7 @@
     'Mittig auf der Bank liegen und Oberarme ruhig halten': 'Lie centred on the bench and keep the upper arms still',
     'Griff kontrolliert über die Ellenbogen strecken': 'Extend the handle over the elbows under control',
     'Kabelspannung während des gesamten Satzes halten': 'Keep tension on the cable for the whole set',
+    'Stange kontrolliert hinter dem Kopf absenken und wieder strecken': 'Lower the bar under control behind the head and extend again',
     'Oberarme eng am Körper halten, nur die Unterarme bewegen': 'Keep the upper arms close to the body and move only the forearms',
     'Unten die Arme ganz strecken und den Trizeps kurz anspannen': 'Fully extend the arms at the bottom and squeeze the triceps briefly',
     'Oberarme bewegen sich stark': 'Upper arms move a lot',
