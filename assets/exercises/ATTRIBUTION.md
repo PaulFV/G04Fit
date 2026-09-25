@@ -86,7 +86,8 @@
 ## Kurzhantelrudern (einarmig): neue Animation (25.09.2026)
 
 - "Kurzhantelrudern (einarmig)" (`row-db`, englisch "Single-arm dumbbell row") nutzt eine neue, vom Projektinhaber
-  gelieferte Animation (`row-db-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären.
+  gelieferte Animation (`row-db-whiteclean.gif`, `-dark.gif`). Eine blasse V-Linie unter der Bank aus der Vorlage ist in
+  beiden Fassungen entfernt (`MASK_CLEAR` in `tools/dark-gifs.html`). Die Herkunft ist vor der Veröffentlichung zu klären.
   Die frühere Fassung liegt in der Git-Historie.
 
 ## Trizepsdrücken Langhantel: neue Übung (25.09.2026)
@@ -146,7 +147,9 @@
 
 - "Kabel-Fliegende (mittlere Brust)" (`fly-cable-mid`, englisch "Cable fly (mid chest)") nutzt eine vom Projektinhaber
   gelieferte Animation (`fly-cable-mid-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu
-  klären. In `tools/dark-gifs.html` gibt es dafür `lineGrow` (Kabel wirken sonst gestrichelt).
+  klären. In `tools/dark-gifs.html` gibt es dafür `lineGrow` (Kabel wirken sonst gestrichelt). In der Stellung mit den
+  Armen vorne stand in der Vorlage hinter Hinterkopf und Nacken eine zweite Kopfkontur; sie ist in beiden Fassungen
+  entfernt (`GHOST_FIX`), die Zwischenbilder sind daraus neu überblendet.
 
 ## Liegestütze: neue Animation (25.09.2026)
 

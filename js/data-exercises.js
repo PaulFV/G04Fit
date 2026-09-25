@@ -109,8 +109,8 @@
     {
       id: 'fly-cable-mid', name: 'Kabel-Fliegende (mittlere Brust)', muscle: 'chest',
       sec: ['shoulders'], equip: 'Kabelzug', pattern: 'fly',
-      demo: 'assets/exercises/gifs/fly-cable-mid-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/fly-cable-mid-dark.gif?v=1', demoLight: 'assets/exercises/gifs/fly-cable-mid-whiteclean.gif?v=1',
+      demo: 'assets/exercises/gifs/fly-cable-mid-whiteclean.gif?v=2', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/fly-cable-mid-dark.gif?v=2', demoLight: 'assets/exercises/gifs/fly-cable-mid-whiteclean.gif?v=2',
       level: 1, inc: 2.5, f: 0.14, reps: [10, 15],
       cues: [
         'Kabel auf Brusthöhe einstellen und leicht versetzt stehen',
@@ -397,8 +397,8 @@
     {
       id: 'row-db', name: 'Kurzhantelrudern (einarmig)', muscle: 'back',
       sec: ['biceps'], equip: 'Kurzhantel', pattern: 'row',
-      demo: 'assets/exercises/gifs/row-db-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-db-dark.gif?v=9', demoLight: 'assets/exercises/gifs/row-db-whiteclean.gif?v=9',
+      demo: 'assets/exercises/gifs/row-db-whiteclean.gif?v=10', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/row-db-dark.gif?v=10', demoLight: 'assets/exercises/gifs/row-db-whiteclean.gif?v=10',
       level: 1, inc: 2, f: 0.28, reps: [8, 12], uni: true,
       cues: [
         'Eine Hand und ein Knie stützen auf der Bank',
