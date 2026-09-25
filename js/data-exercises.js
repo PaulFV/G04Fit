@@ -293,8 +293,8 @@
     {
       id: 'pullup-wide-weighted', name: 'Klimmzüge Obergriff breit Zusatzgewicht', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange + Gewicht', pattern: 'pulldown',
-      demo: 'assets/exercises/gifs/pullup-wide-weighted-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullup-wide-weighted-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pullup-wide-weighted-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pullup-wide-weighted-whiteclean.gif?v=12', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pullup-wide-weighted-dark.gif?v=12', demoLight: 'assets/exercises/gifs/pullup-wide-weighted-whiteclean.gif?v=12',
       level: 3, bw: true, inc: 2.5, f: 0, reps: [3, 8],
       cues: [
         'Zusatzgewicht sicher am Gürtel befestigen',
@@ -315,19 +315,6 @@
         'Stange zur oberen Brust ziehen, Ellenbogen nach unten denken'
       ],
       err: ['Ziehen in den Nacken', 'Rumpf pendelt stark', 'Nur mit den Armen ziehen']
-    },
-    {
-      id: 'latpull-chest', name: 'Latzug zur Brust', muscle: 'back',
-      sec: ['biceps', 'shoulders'], equip: 'Kabelzug', pattern: 'pulldown',
-      demo: 'assets/exercises/gifs/latpull-chest-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/latpull-chest-dark.gif?v=8', demoLight: 'assets/exercises/gifs/latpull-chest-whiteclean.gif?v=8',
-      level: 1, inc: 5, f: 0.55, reps: [8, 12],
-      cues: [
-        'Obergriff etwa schulterbreit wählen',
-        'Brust anheben und Stange kontrolliert zur Brust ziehen',
-        'Ellenbogen nach unten führen und langsam zurücklassen'
-      ],
-      err: ['Stange hinter den Kopf ziehen', 'Rumpf pendelt stark', 'Schultern hochziehen']
     },
     {
       id: 'latpull-close-neck', name: 'Latzug eng zum Nacken', muscle: 'back',

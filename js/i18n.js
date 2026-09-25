@@ -273,7 +273,7 @@
     'Liegestütze schwer': 'Decline push-up', 'Liegestütze leicht am Boden': 'Knee push-up', 'Positive Liegestütze': 'Incline push-up',
     'Dips (brustbetont)': 'Chest-focused dip', 'Dips schwer': 'Weighted dip', 'Klimmzüge': 'Pull-up', 'Klimmzüge Anfänger': 'Assisted pull-up',
     'Klimmzüge Obergriff eng': 'Close-grip overhand pull-up', 'Klimmzüge Obergriff breit': 'Wide-grip overhand pull-up',
-    'Klimmzüge Obergriff breit Zusatzgewicht': 'Weighted wide-grip pull-up', 'Latziehen': 'Lat pulldown', 'Latzug zur Brust': 'Lat pulldown to chest',
+    'Klimmzüge Obergriff breit Zusatzgewicht': 'Weighted wide-grip pull-up', 'Latziehen': 'Lat pulldown',
     'Latzug eng zum Nacken': 'Close-grip pulldown behind neck', 'Latzug breit zur Brust': 'Wide-grip lat pulldown',
     'Latzug breit zum Nacken': 'Wide-grip pulldown behind neck', 'Langhantelrudern': 'Barbell row',
     'Langhantelrudern Untergriff Schrägbank': 'Underhand incline barbell row', 'Langhantelrudern Untergriff Multipresse': 'Smith-machine underhand row',

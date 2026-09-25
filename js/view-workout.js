@@ -16,7 +16,7 @@
     'pushup-knee': 'pushup-v2', 'pushup-positive': 'pushup-v2', 'dip-chest': 'dip-chest', 'dip-heavy': 'dip-chest',
     'pullup': 'pullup', 'pullup-assisted': 'pullup', 'pullup-close-overhand': 'pullup',
     'pullup-wide-overhand': 'pullup', 'pullup-wide-weighted': 'pullup',
-    'latpull': 'latpull', 'latpull-close-neck': 'latpull', 'latpull-chest': 'latpull',
+    'latpull': 'latpull', 'latpull-close-neck': 'latpull',
     'latpull-wide-chest': 'latpull', 'latpull-wide-neck': 'latpull',
     'row-bb': 'row-bb', 'row-bb-underhand-incline': 'row-bb', 'row-smith-underhand': 'row-bb',
     'row-db': 'row-db', 'row-cable': 'row-cable', 'row-cable-upper': 'row-cable',

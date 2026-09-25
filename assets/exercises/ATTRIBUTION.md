@@ -181,3 +181,15 @@
   Projektinhaber gelieferte Animation (`bench-bb-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der
   Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie. Die Übung "Bankdrücken Langhantel"
   (`bench-bb-flat`) hat eine eigene Animation.
+
+## Klimmzüge Obergriff breit mit Zusatzgewicht: neue Animation (25.09.2026)
+
+- "Klimmzüge Obergriff breit Zusatzgewicht" (`pullup-wide-weighted`, englisch "Weighted wide-grip pull-up") nutzt eine
+  neue, vom Projektinhaber gelieferte Animation (`pullup-wide-weighted-whiteclean.gif`, `-dark.gif`). Die dunkle
+  Fassung ist mit `tools/dark-gifs.html` erzeugt (Eintrag `pullup-wide-weighted` in `LIGHT_EDGE`). Die Herkunft ist
+  vor der Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.
+
+## Latzug zur Brust entfernt (25.09.2026)
+
+- Die Übung "Latzug zur Brust" (`latpull-chest`) war ein Duplikat von "Latziehen" (`latpull`) und ist samt
+  `latpull-chest-*.gif` entfernt.
