@@ -17,9 +17,10 @@
   nur das Logo. Es ist nicht in die GIF-Dateien eingebrannt.
 - Butterfly (Maschine, `butterfly-avatar`): Die Vorlage trug unten in der Bildmitte die Schrift
   "© fitundattraktiv.de". Sie ist aus beiden GIFs entfernt (hell: Bereich weiß gefüllt, dunkel: neu erzeugt
-  mit `tools/dark-gifs.html`) und wird stattdessen als Beschriftung direkt über dem Wasserzeichen in der
-  Ecke gezeigt (`credit` in `js/data-exercises.js`). Der Hinweis bleibt damit sichtbar. Die
-  unveränderte Vorlage liegt lokal in `assets/exercises/sources/orig/` und in der Git-Historie.
-- Die Animationen stammen ursprünglich von fitundattraktiv.de. Ob Wasserzeichen, Copyright-Zeile und die
-  Verlegung des Hinweises erlaubt sind, muss der Projektinhaber mit dem Rechteinhaber klären, bevor die App
+  mit `tools/dark-gifs.html`). Zunächst wurde sie als Beschriftung in der Ecke des Bildfelds weitergezeigt
+  (`credit` in `js/data-exercises.js`, `watermark()` in `js/anim.js`); auf Wunsch des Projektinhabers am
+  25.09.2026 wird sie nicht mehr angezeigt (`credit` auskommentiert). Die unveränderte Vorlage liegt lokal
+  in `assets/exercises/sources/orig/` und in der Git-Historie.
+- Die Animationen stammen ursprünglich von fitundattraktiv.de. Ob Wasserzeichen, Copyright-Zeile und der
+  Wegfall des Herkunftshinweises erlaubt sind, muss der Projektinhaber mit dem Rechteinhaber klären, bevor die App
   veröffentlicht wird.
