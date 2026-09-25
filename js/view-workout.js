@@ -722,7 +722,7 @@
         if (secInput) secInput.disabled = !t.checked;
         if (!t.checked) stopRest();
         refreshAllRepsTotals(host);
-        G.store.save();
+        G.store.saveSoon();
       }, signal);
 
       u.on(host, 'change', '#restSecondsInput', function (e, t) {
@@ -730,7 +730,7 @@
         t.value = v;
         s.session.restSeconds = v;
         refreshAllRepsTotals(host);
-        G.store.save();
+        G.store.saveSoon();
       }, signal);
 
       /* --- Werte ändern --- */
@@ -738,10 +738,11 @@
         var row = t.closest('.set-row');
         var bi = +row.getAttribute('data-b'), si = +row.getAttribute('data-s');
         var f = t.getAttribute('data-f');
-        s.session.exercises[bi].sets[si][f] = u.num(t.value, 0);
+        // Gewicht und Wiederholungen begrenzen: negative oder absurde Werte würden Volumen und XP verfälschen.
+        s.session.exercises[bi].sets[si][f] = u.clamp(u.num(t.value, 0), 0, 1000);
         refreshHero();
         if (f === 'reps') refreshRepsTotal(host, bi);
-        G.store.save();
+        G.store.saveSoon();
       }, signal);
 
       /* --- Satz abhaken --- */
@@ -773,7 +774,7 @@
           stopRest();
         }
         refreshHero();
-        G.store.save();
+        G.store.saveSoon();
       }, signal);
 
       /* --- Satz ergänzen --- */
@@ -795,7 +796,7 @@
       u.on(host, 'click', '[data-act="rpe"]', function (e, t) {
         var bi = +t.getAttribute('data-b'), v = t.getAttribute('data-v');
         s.session.exercises[bi].sets.forEach(function (x) { if (x.done) x.rpe = v; });
-        G.store.save();
+        G.store.saveSoon();
         u.toast('Notiert', v === 'easy'
           ? 'Der Coach erhöht beim nächsten Mal stärker.'
           : 'Der Coach geht beim nächsten Mal vorsichtiger vor.', 'ok', 2600);
@@ -836,6 +837,7 @@
       /* --- Abschließen --- */
       u.on(host, 'click', '[data-act="finish"]', async function () {
         var sess = s.session;
+        if (!sess) return; // bereits abgeschlossen (Doppelklick)
         var done = u.sum(sess.exercises, function (b) { return b.sets.filter(function (x) { return x.done; }).length; });
         if (!done) {
           u.toast('Keine Sätze erledigt', 'Hake mindestens einen Satz ab.', 'warn');

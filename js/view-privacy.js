@@ -392,15 +392,30 @@
       if (f) f.addEventListener('change', function () {
         var file = f.files && f.files[0];
         if (!file) return;
+        if (file.size > 12 * 1024 * 1024) {
+          u.toast('Datei zu groß', 'Eine G04Fit-Sicherung ist normalerweise deutlich kleiner als 12 MB.', 'err', 6000);
+          f.value = '';
+          return;
+        }
         var r = new FileReader();
         r.onload = function () {
           try {
-            G.store.importAll(String(r.result));
-            u.toast('Eingelesen', 'Die Sicherung wurde übernommen.', 'ok');
+            var res = G.store.importAll(String(r.result));
+            var msg = res.sessions + (res.sessions === 1 ? ' Einheit' : ' Einheiten') + ' übernommen';
+            if (res.skipped) msg += ', ' + res.skipped + ' beschädigte ausgelassen';
+            msg += '.';
+            u.toast('Eingelesen', msg, res.skipped ? 'warn' : 'ok', res.skipped ? 6500 : 3600);
+            // Ohne Einwilligung bleibt das Eingelesene nur bis zum Schließen erhalten – das nicht verschweigen.
+            if (!res.keptOnDevice) {
+              u.toast('Nur vorübergehend', 'Für dauerhaftes Speichern brauchen Profil und Trainingshistorie eine Einwilligung.', 'warn', 8000);
+            }
             G.app.rerender();
           } catch (err) {
-            u.toast('Fehler beim Einlesen', String(err.message || err), 'err', 6000);
+            u.toast('Fehler beim Einlesen', String(err.message || err) + ' Deine bisherigen Daten sind unverändert.', 'err', 7000);
           }
+        };
+        r.onerror = function () {
+          u.toast('Fehler beim Einlesen', 'Die Datei konnte nicht gelesen werden.', 'err', 6000);
         };
         r.readAsText(file);
         f.value = '';
@@ -432,14 +447,22 @@
         // Push-Dienst ein — sonst bliebe die Erinnerung serverseitig aktiv,
         // obwohl lokal alles gelöscht wurde (siehe "Deine Rechte" in der
         // Datenschutzerklärung: ein Widerruf/Löschen wirkt sofort und überall).
+        var pushFailed = false;
         if (G.store.hasConsent('push')) {
-          try { await G.reminders.disableBackgroundPush(); } catch (e) { /* lokal trotzdem zurücksetzen */ }
+          try { await G.reminders.disableBackgroundPush(); } catch (e) { pushFailed = true; /* lokal trotzdem zurücksetzen */ }
         }
 
         G.store.wipe();
         G.reminders.stop();
-        u.toast('Zurückgesetzt', 'Alle Daten wurden gelöscht.', 'ok');
-        setTimeout(function () { location.reload(); }, 900);
+        if (pushFailed) {
+          // Die Geräte-Kennung ist jetzt gelöscht, die Abmeldung beim Dienst nicht bestätigt (z. B. offline).
+          // Die Push-Anmeldung des Browsers wurde beendet; der Dienst verwirft den Eintrag beim nächsten Versand.
+          u.toast('Zurückgesetzt', 'Lokal ist alles gelöscht. Die Abmeldung beim Push-Dienst konnte nicht bestätigt werden; der Eintrag dort verfällt beim nächsten Versand.', 'warn', 9000);
+          setTimeout(function () { location.reload(); }, 3500);
+        } else {
+          u.toast('Zurückgesetzt', 'Alle Daten wurden gelöscht.', 'ok');
+          setTimeout(function () { location.reload(); }, 900);
+        }
       });
 
       u.on(host, 'click', '[data-act="policy"]', openPolicy);

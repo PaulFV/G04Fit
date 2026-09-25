@@ -121,7 +121,7 @@
   .workout-preview__rest{gap:10px;margin-top:17px;padding-top:15px;border-top:1px solid var(--glass-br)}
   .workout-preview__switch{padding-top:5px;padding-bottom:5px;gap:9px}
   .workout-preview__switch .switch__label > b{font-size:13px}
-  .workout-preview__switch .switch__label > span{font-size:11px}
+  .workout-preview__switch .switch__label > span{font-size:12px}
   .workout-preview__rest-value{width:82px}
   .workout-preview__rest-value .input{min-height:49px;font-size:17px;padding-right:27px}
   .workout-preview__rest-value span{right:9px}

@@ -109,15 +109,19 @@
   function pushIdentity() {
     // Wie in store.js: der Schlüsselname bleibt unverändert, sonst würde
     // sich jedes Gerät nach dem Update neu beim Push-Dienst anmelden.
-    var deviceId = localStorage.getItem('gofit.push.deviceId');
-    var deviceSecret = localStorage.getItem('gofit.push.deviceSecret');
+    // Der Speicher kann gesperrt sein (privater Modus): dann gilt die Kennung nur für diese Sitzung.
+    var deviceId = null, deviceSecret = null;
+    try {
+      deviceId = localStorage.getItem('gofit.push.deviceId');
+      deviceSecret = localStorage.getItem('gofit.push.deviceSecret');
+    } catch (e) { /* weiter mit neuer Kennung */ }
     if (!deviceId) {
       deviceId = crypto.randomUUID ? crypto.randomUUID() : randomBase64Url(18);
-      localStorage.setItem('gofit.push.deviceId', deviceId);
+      try { localStorage.setItem('gofit.push.deviceId', deviceId); } catch (e) { /* nur diese Sitzung */ }
     }
     if (!deviceSecret) {
       deviceSecret = randomBase64Url(32);
-      localStorage.setItem('gofit.push.deviceSecret', deviceSecret);
+      try { localStorage.setItem('gofit.push.deviceSecret', deviceSecret); } catch (e) { /* nur diese Sitzung */ }
     }
     return { deviceId: deviceId, deviceSecret: deviceSecret };
   }
@@ -194,7 +198,8 @@
     if (!backgroundSupported()) return;
     var registration = await navigator.serviceWorker.ready;
     var subscription = await registration.pushManager.getSubscription();
-    var deviceId = localStorage.getItem('gofit.push.deviceId');
+    var deviceId = null;
+    try { deviceId = localStorage.getItem('gofit.push.deviceId'); } catch (e) { /* Speicher gesperrt */ }
     var serverError = null;
     try {
       if (PUSH_API && deviceId) {
