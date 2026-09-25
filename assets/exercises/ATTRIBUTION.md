@@ -114,3 +114,35 @@
 - "Kabel-Fliegende" (`fly-cable`, englisch "Cable fly") nutzt eine neue, vom Projektinhaber gelieferte Animation
   (`fly-cable-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären. Die frühere Fassung
   liegt in der Git-Historie.
+
+## Hängendes Beinheben: neue Animation (25.09.2026)
+
+- "Hängendes Beinheben" (`legraise-hanging-station`, Klimmzugstation, englisch "Hanging leg raise") nutzt eine neue,
+  vom Projektinhaber gelieferte Animation (`legraise-hanging-station-whiteclean.gif`, `-dark.gif`). Die Herkunft ist
+  vor der Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie. "Beinheben (hängend)"
+  (`legraise`, Klimmzugstange) behält seine bisherige Animation.
+
+## Crunches am Kabelzug stehend: neue Übung (25.09.2026)
+
+- "Crunches am Kabelzug stehend" (`cable-crunch-standing`, englisch "Standing cable crunch") nutzt eine vom
+  Projektinhaber gelieferte Animation (`crunch-cable-standing-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der
+  Veröffentlichung zu klären. Die kniende Variante "Crunches am Kabelzug" (`cable-crunch`) bleibt unverändert.
+
+## Rudern am Kabelzug (oberer Rücken): neue Übung (25.09.2026)
+
+- "Rudern am Kabelzug (oberer Rücken)" (`row-cable-upper`, englisch "Cable row (upper back)") nutzt eine vom
+  Projektinhaber gelieferte Animation (`row-cable-upper-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der
+  Veröffentlichung zu klären. "Kabelrudern (sitzend)" (`row-cable`) bleibt unverändert.
+
+## Stirndrücken am Kabelzug: neue Übung (25.09.2026)
+
+- "Stirndrücken am Kabelzug" (`skullcrusher-cable`, englisch "Cable skull crusher") nutzt eine vom Projektinhaber
+  gelieferte Animation (`skullcrusher-cable-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung
+  zu klären. "Stirndrücken (French Press)" (`skullcrusher`) und "Trizepsdrücken am Kabelzug liegend" bleiben
+  unverändert.
+
+## Kabel-Fliegende liegend: neue Übung (25.09.2026)
+
+- "Kabel-Fliegende liegend" (`fly-cable-lying`, englisch "Lying cable fly") nutzt eine vom Projektinhaber gelieferte
+  Animation (`fly-cable-lying-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären.
+  "Kabel-Fliegende" (`fly-cable`) bleibt unverändert.

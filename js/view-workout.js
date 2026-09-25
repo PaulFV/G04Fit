@@ -11,7 +11,7 @@
      Die animierte Demonstration im Detailfenster bleibt davon unberührt. */
   var PHOTO_BY_ID = {
     'bench-bb': 'bench-bb', 'bench-bb-flat': 'bench-bb', 'bench-db': 'bench-db', 'incline-db': 'incline-db',
-    'fly-cable': 'fly-cable', 'fly-machine': 'fly-machine-v2-dark', 'fly-machine-2': 'fly-machine-v2-dark',
+    'fly-cable': 'fly-cable', 'fly-cable-lying': 'fly-cable', 'fly-machine': 'fly-machine-v2-dark', 'fly-machine-2': 'fly-machine-v2-dark',
     'pushup': 'pushup', 'pushup-close': 'pushup-v2', 'pushup-decline': 'pushup-v2',
     'pushup-knee': 'pushup-v2', 'pushup-positive': 'pushup-v2', 'dip-chest': 'dip-chest', 'dip-heavy': 'dip-chest',
     'pullup': 'pullup', 'pullup-assisted': 'pullup', 'pullup-close-overhand': 'pullup',
@@ -19,7 +19,7 @@
     'latpull': 'latpull', 'latpull-close-neck': 'latpull', 'latpull-chest': 'latpull',
     'latpull-wide-chest': 'latpull', 'latpull-wide-neck': 'latpull',
     'row-bb': 'row-bb', 'row-bb-underhand-incline': 'row-bb', 'row-smith-underhand': 'row-bb',
-    'row-db': 'row-db', 'row-cable': 'row-cable',
+    'row-db': 'row-db', 'row-cable': 'row-cable', 'row-cable-upper': 'row-cable',
     'pullover': 'pullover', 'pullover-db-hammer': 'pullover', 'pullover-db-ball': 'pullover',
     'pullover-cable': 'pullover', 'pullover-bb': 'pullover',
     'ohp-db': 'ohp-db', 'ohp-bb': 'ohp-bb', 'lateral': 'lateral', 'front-raise': 'front-raise',
@@ -28,11 +28,11 @@
     'shrug': 'shrug', 'curl-bb': 'curl-bb', 'curl-bb-scott': 'curl-bb', 'curl-db': 'curl-db',
     'curl-db-incline-bilateral': 'curl-db', 'curl-db-bilateral': 'curl-db', 'curl-preacher': 'curl-preacher',
     'curl-cable': 'curl-cable', 'triceps-cable-lying': 'pushdown', 'triceps-pushdown': 'pushdown', 'bench-dip-triceps': 'dip-triceps',
-    'bench-db-triceps': 'bench-db', 'bench-bb-triceps': 'bench-bb', 'skullcrusher': 'skullcrusher', 'triceps-bb-overhead': 'ohext-db',
+    'bench-db-triceps': 'bench-db', 'bench-bb-triceps': 'bench-bb', 'skullcrusher': 'skullcrusher', 'skullcrusher-cable': 'skullcrusher', 'triceps-bb-overhead': 'ohext-db',
     'ohext-db': 'ohext-db', 'triceps-cable-overhead-onearm': 'ohext-db', 'kickback': 'kickback',
     'crunch': 'crunch', 'situp-straight': 'crunch', 'crunch-side': 'crunch', 'abs-side-bench': 'crunch',
     'legraise': 'legraise', 'legraise-hanging-station': 'legraise', 'plank': 'plank',
-    'plank-weighted': 'plank', 'side-plank': 'plank', 'side-plank-db': 'plank', 'cable-crunch': 'cable-crunch'
+    'plank-weighted': 'plank', 'side-plank': 'plank', 'side-plank-db': 'plank', 'cable-crunch': 'cable-crunch', 'cable-crunch-standing': 'cable-crunch'
   };
 
   function exercisePhoto(ex) {

@@ -107,6 +107,19 @@
       err: ['Bewegung wird zur Drückbewegung', 'Zu viel Gewicht, Schwung aus dem Rumpf']
     },
     {
+      id: 'fly-cable-lying', name: 'Kabel-Fliegende liegend', muscle: 'chest',
+      sec: ['shoulders'], equip: 'Kabelzug + Bank', pattern: 'fly',
+      demo: 'assets/exercises/gifs/fly-cable-lying-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/fly-cable-lying-dark.gif?v=1', demoLight: 'assets/exercises/gifs/fly-cable-lying-whiteclean.gif?v=1',
+      level: 2, inc: 2.5, f: 0.12, reps: [10, 15],
+      cues: [
+        'Bank mittig zwischen die Kabeltürme stellen und Schulterblätter fixieren',
+        'Ellenbogen leicht gebeugt und den ganzen Satz über konstant halten',
+        'Am Endpunkt die Brust bewusst 1 Sekunde anspannen'
+      ],
+      err: ['Bewegung wird zur Drückbewegung', 'Zu viel Gewicht, Schwung aus dem Rumpf']
+    },
+    {
       id: 'fly-machine', name: 'Butterfly (Maschine)', muscle: 'chest',
       sec: [], equip: 'Maschine', pattern: 'fly',
       demo: 'assets/exercises/gifs/butterfly-machine-whiteclean.gif?v=1', demoStyle: 'reference-gif',
@@ -416,6 +429,19 @@
       cues: [
         'Aufrecht sitzen, Brust raus, Knie leicht gebeugt',
         'Griff zum Bauchnabel ziehen',
+        'Schulterblätter am Endpunkt zusammenführen'
+      ],
+      err: ['Starkes Zurücklehnen', 'Schultern werden hochgezogen']
+    },
+    {
+      id: 'row-cable-upper', name: 'Rudern am Kabelzug (oberer Rücken)', muscle: 'back',
+      sec: ['biceps', 'shoulders'], equip: 'Kabelzug', pattern: 'row',
+      demo: 'assets/exercises/gifs/row-cable-upper-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/row-cable-upper-dark.gif?v=1', demoLight: 'assets/exercises/gifs/row-cable-upper-whiteclean.gif?v=1',
+      level: 1, inc: 5, f: 0.45, reps: [10, 14],
+      cues: [
+        'Aufrecht sitzen, Brust raus, Knie leicht gebeugt',
+        'Ellenbogen auf Schulterhöhe nach hinten führen',
         'Schulterblätter am Endpunkt zusammenführen'
       ],
       err: ['Starkes Zurücklehnen', 'Schultern werden hochgezogen']
@@ -804,6 +830,19 @@
       err: ['Ellenbogen weichen nach außen', 'Rippenbogen kippt nach vorne', 'Zu schnelles Absenken']
     },
     {
+      id: 'skullcrusher-cable', name: 'Stirndrücken am Kabelzug', muscle: 'triceps',
+      sec: [], equip: 'Kabelzug + Bank', pattern: 'extension',
+      demo: 'assets/exercises/gifs/skullcrusher-cable-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/skullcrusher-cable-dark.gif?v=1', demoLight: 'assets/exercises/gifs/skullcrusher-cable-whiteclean.gif?v=1',
+      level: 2, inc: 2.5, f: 0.20, reps: [10, 15],
+      cues: [
+        'Oberarme senkrecht oder leicht nach hinten geneigt',
+        'Griff kontrolliert zur Stirn oder dahinter absenken',
+        'Ellenbogen bleiben eng'
+      ],
+      err: ['Ellenbogen öffnen nach außen', 'Zu schnelles Absenken']
+    },
+    {
       id: 'skullcrusher', name: 'Stirndrücken (French Press)', muscle: 'triceps',
       sec: [], equip: 'SZ-Stange', pattern: 'extension',
       demo: 'assets/exercises/gifs/skullcrusher-bb-whiteclean.gif?v=8', demoStyle: 'reference-gif',
@@ -925,8 +964,8 @@
     {
       id: 'legraise-hanging-station', name: 'Hängendes Beinheben', muscle: 'abs',
       sec: ['back', 'shoulders'], equip: 'Klimmzugstation', pattern: 'legraise',
-      demo: 'assets/exercises/gifs/legraise-hanging-station-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/legraise-hanging-station-dark.gif?v=8', demoLight: 'assets/exercises/gifs/legraise-hanging-station-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/legraise-hanging-station-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/legraise-hanging-station-dark.gif?v=9', demoLight: 'assets/exercises/gifs/legraise-hanging-station-whiteclean.gif?v=9',
       level: 2, bw: true, inc: 2.5, f: 0, reps: [8, 15],
       cues: [
         'Schultern aktiv nach unten ziehen und ruhig hängen',
@@ -997,6 +1036,19 @@
         'Kniend, Seil neben dem Kopf halten',
         'Wirbelsäule von oben nach unten einrollen',
         'Hüftwinkel bleibt weitgehend konstant'
+      ],
+      err: ['Bewegung aus der Hüfte statt aus dem Bauch', 'Arme ziehen mit']
+    },
+    {
+      id: 'cable-crunch-standing', name: 'Crunches am Kabelzug stehend', muscle: 'abs',
+      sec: [], equip: 'Kabelzug', pattern: 'crunch',
+      demo: 'assets/exercises/gifs/crunch-cable-standing-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/crunch-cable-standing-dark.gif?v=1', demoLight: 'assets/exercises/gifs/crunch-cable-standing-whiteclean.gif?v=1',
+      level: 1, inc: 2.5, f: 0.30, reps: [12, 18],
+      cues: [
+        'Aufrecht stehen und das Seil neben dem Kopf halten',
+        'Wirbelsäule von oben nach unten einrollen',
+        'Hüfte bleibt ruhig, die Bewegung kommt aus dem Bauch'
       ],
       err: ['Bewegung aus der Hüfte statt aus dem Bauch', 'Arme ziehen mit']
     },

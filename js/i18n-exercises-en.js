@@ -296,6 +296,8 @@
     'Knie fallen nach innen': 'Knees cave inwards',
     'Gesäß hebt vom Sitz ab': 'Hips lift off the seat',
     'Knie werden oben durchgestreckt': 'Locking the knees out at the top',
+    'Griff kontrolliert zur Stirn oder dahinter absenken': 'Lower the handle under control to the forehead or just behind it',
+    'Bank mittig zwischen die Kabeltürme stellen und Schulterblätter fixieren': 'Place the bench centred between the cable towers and set the shoulder blades',
     'Oberarme eng am Körper halten, nur die Unterarme bewegen': 'Keep the upper arms close to the body and move only the forearms',
     'Unten die Arme ganz strecken und den Trizeps kurz anspannen': 'Fully extend the arms at the bottom and squeeze the triceps briefly',
     'Oberarme bewegen sich stark': 'Upper arms move a lot',
@@ -389,6 +391,9 @@
     'Oberkörper dreht nach vorn': 'Upper body rotates forward',
     'Kniend, Seil neben dem Kopf halten': 'Kneeling, hold the rope beside the head',
     'Wirbelsäule von oben nach unten einrollen': 'Curl the spine from top to bottom',
+    'Ellenbogen auf Schulterhöhe nach hinten führen': 'Drive the elbows back at shoulder height',
+    'Aufrecht stehen und das Seil neben dem Kopf halten': 'Stand upright and hold the rope beside your head',
+    'Hüfte bleibt ruhig, die Bewegung kommt aus dem Bauch': 'Keep the hips still and let the abs drive the movement',
     'Hüftwinkel bleibt weitgehend konstant': 'Hip angle stays mostly constant',
     'Bewegung aus der Hüfte statt aus dem Bauch': 'Moving from the hips instead of the abs',
     'Arme ziehen mit': 'Arms pull along'
