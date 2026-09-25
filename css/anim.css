@@ -254,3 +254,24 @@
    ============================================================ */
 .skel{background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.1),rgba(255,255,255,.05));background-size:200% 100%;animation:skel 1.4s linear infinite;border-radius:8px}
 @keyframes skel{to{background-position:-200% 0}}
+
+/* --- Wasserzeichen in der Ecke des Bildfelds ---------------------------------
+   Sitzt unten rechts im Feld selbst, nicht im GIF: das GIF steht zentriert im Feld und hat je nach
+   Bildschirm (Desktop, iPhone, Android) unterschiedlich breite Ränder. Maße folgen der Feldbreite
+   (Container-Einheiten cqi); in kleinen Kacheln (Übungsliste) bleibt nur das Logo. */
+.fig--theme-pair{container-type:inline-size}
+.fig__mark{position:absolute;right:max(8px,2.4cqi);bottom:max(7px,2.4cqi);z-index:3;display:flex;align-items:center;gap:.45em;
+  pointer-events:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+  font:700 clamp(10px,2.6cqi,12px)/1 var(--font);color:rgba(222,224,230,.92);white-space:nowrap;
+  text-shadow:0 0 2px rgba(0,0,0,.9),0 1px 3px rgba(0,0,0,.65)}
+.fig__mark img{display:block;height:clamp(15px,4.6cqi,22px);width:auto;filter:drop-shadow(0 0 1.5px rgba(0,0,0,.75))}
+.fig__mark i{font-style:normal}
+.fig__mark--lift{bottom:calc(max(7px,2.4cqi) + min(9cqi,28px))}
+:root[data-theme="light"] .fig__mark{color:rgba(58,62,70,.95);text-shadow:0 0 2px rgba(255,255,255,.95)}
+:root[data-theme="light"] .fig__mark img{filter:drop-shadow(0 0 1.5px rgba(20,22,26,.6))}
+@container (max-width:240px){
+  .fig__mark i{display:none}
+  .fig__mark{right:max(5px,2cqi);bottom:max(5px,2cqi)}
+  .fig__mark img{height:clamp(11px,9cqi,16px)}
+  .fig__mark--lift{bottom:calc(max(5px,2cqi) + min(9cqi,20px))}
+}

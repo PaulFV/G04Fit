@@ -250,6 +250,15 @@
     shrug: function (p) { return poseShrug(p); }
   };
 
+  /* Wasserzeichen: PF-Logo mit Copyright-Zeile, unten rechts in der Ecke des Bildfelds (nicht des GIFs, das
+     im Feld zentriert und je nach Gerät mit Rändern angezeigt wird). Größe und Schrift folgen der Breite des
+     Feldes (siehe .fig__mark in css/anim.css); in kleinen Kacheln bleibt nur das Logo. */
+  function watermark(ex) {
+    var lift = ex && /butterfly-avatar/.test(ex.demoLight || '') ? ' fig__mark--lift' : ''; // Herkunftshinweis im GIF unten rechts
+    return '<span class="fig__mark' + lift + '" aria-hidden="true">' +
+      '<img src="assets/exercises/watermark-logo.png?v=1" alt="" decoding="async"><i>© 2026 G04Fit</i></span>';
+  }
+
   /** SVG-Markup einer Übungsanimation */
   function figure(ex) {
     var referenceTone = ex && ex.demoStyle === 'reference-gif' ? ' fig--reference' : '';
@@ -259,14 +268,14 @@
         '<span class="fig--crop-frame">' +
         '<img class="fig--theme-dark" src="' + ex.demoDark + '" alt="" loading="lazy" decoding="async">' +
         '<img class="fig--theme-light" src="' + ex.demoLight + '" alt="" loading="lazy" decoding="async">' +
-        '</span></span>';
+        '</span>' + watermark(ex) + '</span>';
     }
     if (ex && ex.demoDark && ex.demoLight) {
       return '<span class="fig fig--real fig--anatomy fig--theme-pair" role="img"' +
         ' aria-label="Animierte Ausführung: ' + G.u.esc(ex.name) + '">' +
         '<img class="fig--theme-dark" src="' + ex.demoDark + '" alt="" loading="lazy" decoding="async">' +
         '<img class="fig--theme-light" src="' + ex.demoLight + '" alt="" loading="lazy" decoding="async">' +
-        '</span>';
+        watermark(ex) + '</span>';
     }
     var demo = ex && (ex.demo || ('assets/exercises/anatomy/' + ex.id + '.webp'));
     if (demo) {
