@@ -72,7 +72,9 @@ var LINE = [178, 192, 186];  // Farbe dünner Linien (Kabel) auf dunklem Grund
    verschwinden. Der Hinweis muss erhalten bleiben, deshalb wird der
    angegebene Streifen ausgespart und auf dunklem Grund hell gezeichnet. */
 var NOTICE = {
-  'butterfly-avatar': { y: 322, color: [150, 166, 160] }
+  // Rechteck der Schrift (x0..x1, y0..y1). Vorher galt alles unterhalb von y=322 als Schrift; dann wurden auch
+  // die Zehen der Füße links davon als Schriftreste gezeichnet ("komische Zeichen unter den Füßen").
+  'butterfly-avatar': { x0: 205, y0: 328, x1: 345, y1: 341, color: [150, 166, 160] }
 };
 
 function readFrames(buf) {
@@ -236,12 +238,14 @@ function cleanPose(src, W, H, notice) {
   }
   // Herkunftshinweis erhalten: hellgraue Schrift auf Weiß wird hell auf Dunkel.
   if (notice) {
-    for (p = notice.y * W; p < N; p++) {
+    for (p = notice.y0 * W; p < notice.y1 * W; p++) {
+      var nx = p % W;
+      if (nx < notice.x0 || nx > notice.x1) continue;
       i = p * 4;
       var v = Math.min(src[i], src[i + 1], src[i + 2]);
       if (v > 250) continue;                       // reines Weiß bleibt Hintergrund
       bg[p] = 0;
-      var strength = Math.min(1, (255 - v) / 90);  // Deckkraft der Schrift
+      var strength = Math.min(1, (255 - v) / 60);  // Deckkraft der Schrift (hellgraue Schrift wird voll deckend)
       for (var nc = 0; nc < 3; nc++) out[p * 3 + nc] = BG[nc] + strength * (notice.color[nc] - BG[nc]);
     }
   }
@@ -374,7 +378,7 @@ function encodeGif(frames, W, H) {
   return new Uint8Array(b);
 }
 
-async function convert(url, transparent) {
+async function convert(url, transparent, name) {
   var buf = await (await fetch(url)).arrayBuffer();
   var src = await readFrames(buf), W = src.W, H = src.H, F = src.frames, n = F.length;
   var poses = {};
@@ -409,7 +413,7 @@ document.getElementById('go').addEventListener('click', async function () {
   for (var i = 0; i < files.length; i++) {
     var srcUrl = '../' + files[i], name = files[i].split('/').pop().replace('-whiteclean.gif', '-dark.gif');
     log.textContent = (i + 1) + ' / ' + files.length + ' · ' + name;
-    var gif = await convert(srcUrl, transparent);
+    var gif = await convert(srcUrl, transparent, files[i].split('/').pop().replace('-whiteclean.gif', ''));
     bytes += gif.length;
     var blobUrl = URL.createObjectURL(new Blob([gif], { type: 'image/gif' }));
     if (save) await fetch(save.replace(/\/$/, '') + '/' + name, { method: 'PUT', body: gif });
