@@ -58,3 +58,9 @@
 - "Liegestütze eng" (`pushup-close`, englisch "Close-grip push-up") nutzt eine neue, vom Projektinhaber gelieferte
   Animation (`pushup-close-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären.
   Die frühere Fassung liegt in der Git-Historie.
+
+## Kabel-Curl: neue Animation (25.09.2026)
+
+- "Kabel-Curl" (`curl-cable`, englisch "Cable curl") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`curl-cable-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären. Die frühere
+  Fassung liegt in der Git-Historie.

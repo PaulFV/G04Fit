@@ -140,7 +140,7 @@ function thinLines(bg, W, H) {
    Farbkanal) ein Randpixel neben dem Hintergrund selbst Hintergrund wird; passes = wie oft; hole = ab welcher
    Größe eingeschlossene weiße Flächen Hintergrund sind (größer wählen, wenn helle Glanzlichter auf der Figur
    sonst als Löcher erscheinen). */
-var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 } };
+var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 } };
 
 function cleanPose(src, W, H, notice, lightEdge) {
   var N = W * H, white = new Uint8Array(N), p, i;

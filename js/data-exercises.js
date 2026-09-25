@@ -711,8 +711,8 @@
     {
       id: 'curl-cable', name: 'Kabel-Curl', muscle: 'biceps',
       sec: [], equip: 'Kabelzug', pattern: 'curl',
-      demo: 'assets/exercises/gifs/curl-cable-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/curl-cable-dark.gif?v=8', demoLight: 'assets/exercises/gifs/curl-cable-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/curl-cable-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/curl-cable-dark.gif?v=9', demoLight: 'assets/exercises/gifs/curl-cable-whiteclean.gif?v=9',
       level: 1, inc: 2.5, f: 0.24, reps: [12, 16],
       cues: [
         'Konstante Spannung über die gesamte Bewegung',
