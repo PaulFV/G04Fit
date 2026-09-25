@@ -80,6 +80,24 @@ var NOTICE = {
 /* Vorlagen, die kleiner als 360 × 360 geliefert werden, werden beim Einlesen auf die Größe der anderen hochgerechnet
    (Faktor je Datei), damit alle Schwellenwerte in Pixeln passen. */
 var UPSCALE = { 'pushup-decline': 2 };
+/* Vorlagen, die nur aus den beiden Endstellungen bestehen: daraus die übliche Bildfolge mit 12 Bildern erzeugen
+   (Stellung A halten, in 5 Schritten zu B überblenden, B halten, zurück), wie bei den anderen Übungen. */
+var SYNTH_BLEND = { 'pushup-decline': true };
+function synthBlend(frames) {
+  var A = frames[0], B = frames[1], out = [];
+  function mix(t) {
+    var px = new Uint8ClampedArray(A.px.length);
+    for (var k = 0; k < px.length; k++) px[k] = Math.round(A.px[k] * (1 - t) + B.px[k] * t);
+    return px;
+  }
+  for (var i = 0; i < 12; i++) {
+    var t = i < 6 ? i / 6 : 1 - (i - 6) / 6;
+    if (i === 0) out.push({ px: A.px, delay: 1000 });
+    else if (i === 6) out.push({ px: B.px, delay: 1000 });
+    else out.push({ px: mix(t), delay: 100 });
+  }
+  return out;
+}
 function readFrames(buf, name) {
   var dec = new ImageDecoder({ data: buf, type: 'image/gif' });
   var scale = UPSCALE[name] || 1;
@@ -95,6 +113,7 @@ function readFrames(buf, name) {
       img.close();
     }
     dec.close();
+    if (SYNTH_BLEND[name] && frames.length === 2) frames = synthBlend(frames);
     return { frames: frames, W: W, H: H };
   });
 }
@@ -146,7 +165,7 @@ function thinLines(bg, W, H) {
    Größe eingeschlossene weiße Flächen Hintergrund sind (größer wählen, wenn helle Glanzlichter auf der Figur
    sonst als Löcher erscheinen); keepHoles = kleinere, vom Rand getrennte Hintergrundflecken in der Figur wieder füllen;
    lineGrow = wie oft dünne Linien (Kabel) um dunkle Nachbarpixel verbreitert werden. */
-var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'latpull-wide': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'triceps-bb-overhead': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'leg-press': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'legraise-hanging-station': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'crunch-cable-standing': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-cable-upper': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'skullcrusher-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable-mid': { min: 205, passes: 2, hole: 400, keepHoles: 150, lineGrow: 1 }, 'pushup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-chest': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-heavy': { min: 252, passes: 1, hole: 1, keepHoles: 150 }, 'pushup-decline': { min: 205, passes: 2, hole: 400, keepHoles: 150 } };
+var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'latpull-wide': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'triceps-bb-overhead': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'leg-press': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'legraise-hanging-station': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'crunch-cable-standing': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-cable-upper': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'skullcrusher-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable-mid': { min: 205, passes: 2, hole: 400, keepHoles: 150, lineGrow: 1 }, 'pushup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-chest': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-heavy': { min: 252, passes: 1, hole: 1, keepHoles: 150 }, 'pushup-decline': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'bench-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 } };
 
 function cleanPose(src, W, H, notice, lightEdge) {
   var N = W * H, white = new Uint8Array(N), p, i;

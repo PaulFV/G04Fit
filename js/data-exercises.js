@@ -41,8 +41,8 @@
     {
       id: 'bench-bb', name: 'Negativ-Bankdrücken (Langhantel)', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Langhantel', pattern: 'pressflat',
-      demo: 'assets/exercises/gifs/bench-bb-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/bench-bb-dark.gif?v=8', demoLight: 'assets/exercises/gifs/bench-bb-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/bench-bb-whiteclean.gif?v=10', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/bench-bb-dark.gif?v=10', demoLight: 'assets/exercises/gifs/bench-bb-whiteclean.gif?v=10',
       level: 2, inc: 2.5, f: 0.60, reps: [6, 10],
       cues: [
         'Schulterblätter fest zusammenziehen und nach unten fixieren',
@@ -174,8 +174,8 @@
     {
       id: 'pushup-decline', name: 'Liegestütze schwer', muscle: 'chest',
       sec: ['triceps', 'shoulders', 'abs'], equip: 'Körpergewicht', pattern: 'dip',
-      demo: 'assets/exercises/gifs/pushup-decline-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pushup-decline-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pushup-decline-whiteclean.gif?v=9',
+      demo: 'assets/exercises/gifs/pushup-decline-whiteclean.gif?v=10', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pushup-decline-dark.gif?v=10', demoLight: 'assets/exercises/gifs/pushup-decline-whiteclean.gif?v=10',
       level: 2, bw: true, inc: 2.5, f: 0, reps: [6, 12],
       cues: [
         'Füße erhöht und Hände stabil unter den Schultern platzieren',

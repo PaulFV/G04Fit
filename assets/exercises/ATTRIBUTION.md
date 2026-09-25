@@ -170,6 +170,14 @@
 ## Liegestütze schwer: neue Animation (25.09.2026)
 
 - "Liegestütze schwer" (`pushup-decline`, englisch "Decline push-up") nutzt eine neue, vom Projektinhaber gelieferte
-  Animation (`pushup-decline-whiteclean.gif`, `-dark.gif`). Die Vorlage war nur 180 × 180 Pixel groß und ist in
-  `tools/dark-gifs.html` (`UPSCALE`) auf 360 × 360 hochgerechnet; sie wirkt dadurch etwas weicher als die anderen. Die
+  Animation (`pushup-decline-whiteclean.gif`, `-dark.gif`). Die Vorlage (nur 180 × 180 Pixel, nur die beiden
+  Endstellungen) ist in `tools/dark-gifs.html` auf 360 × 360 hochgerechnet (`UPSCALE`) und mit selbst erzeugten
+  Überblendungen zu den üblichen 12 Bildern ergänzt (`SYNTH_BLEND`); sie wirkt etwas weicher als die anderen. Die
   Herkunft ist vor der Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.
+
+## Negativ-Bankdrücken (Langhantel): neue Animation (25.09.2026)
+
+- "Negativ-Bankdrücken (Langhantel)" (`bench-bb`, englisch "Decline barbell bench press") nutzt eine neue, vom
+  Projektinhaber gelieferte Animation (`bench-bb-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der
+  Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie. Die Übung "Bankdrücken Langhantel"
+  (`bench-bb-flat`) hat eine eigene Animation.
