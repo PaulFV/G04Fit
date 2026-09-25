@@ -72,9 +72,9 @@ var LINE = [178, 192, 186];  // Farbe dünner Linien (Kabel) auf dunklem Grund
    verschwinden. Der Hinweis muss erhalten bleiben, deshalb wird der
    angegebene Streifen ausgespart und auf dunklem Grund hell gezeichnet. */
 var NOTICE = {
-  // Rechteck der Schrift (x0..x1, y0..y1). Vorher galt alles unterhalb von y=322 als Schrift; dann wurden auch
-  // die Zehen der Füße links davon als Schriftreste gezeichnet ("komische Zeichen unter den Füßen").
-  'butterfly-avatar': { x0: 205, y0: 328, x1: 345, y1: 341, color: [150, 166, 160] }
+  // Leer: Der Herkunftshinweis des Butterfly-GIFs ("© fitundattraktiv.de") ist aus dem Bild entfernt und wird in der
+  // App als Beschriftung in der Ecke des Bildfelds gezeigt (credit in js/data-exercises.js). Der Mechanismus bleibt für
+  // Vorlagen mit eingebranntem Hinweis: Name -> { x0, y0, x1, y1, color } (Rechteck der Schrift).
 };
 
 function readFrames(buf) {

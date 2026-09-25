@@ -258,20 +258,24 @@
 /* --- Wasserzeichen in der Ecke des Bildfelds ---------------------------------
    Sitzt unten rechts im Feld selbst, nicht im GIF: das GIF steht zentriert im Feld und hat je nach
    Bildschirm (Desktop, iPhone, Android) unterschiedlich breite Ränder. Maße folgen der Feldbreite
-   (Container-Einheiten cqi); in kleinen Kacheln (Übungsliste) bleibt nur das Logo. */
+   (Container-Einheiten cqi); in kleinen Kacheln (Übungsliste) bleibt nur das Logo. Über dem Wasserzeichen
+   steht, wo nötig, der Herkunftshinweis der Vorlage (<b>). */
 .fig--theme-pair{container-type:inline-size}
-.fig__mark{position:absolute;right:max(7px,2cqi);bottom:max(6px,2cqi);z-index:3;display:flex;align-items:center;gap:.45em;
+.fig__mark{position:absolute;right:max(4px,1.2cqi);bottom:max(3px,1cqi);z-index:3;display:flex;flex-direction:column;align-items:flex-end;gap:.35em;
   pointer-events:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
-  font:700 clamp(8px,1.9cqi,10px)/1 var(--font);color:rgba(222,224,230,.92);white-space:nowrap;
+  font:700 clamp(7px,1.6cqi,9px)/1 var(--font);color:rgba(222,224,230,.92);white-space:nowrap;
   text-shadow:0 0 2px rgba(0,0,0,.9),0 1px 3px rgba(0,0,0,.65)}
-.fig__mark img{display:block;height:clamp(11px,3.3cqi,16px);width:auto;filter:drop-shadow(0 0 1.5px rgba(0,0,0,.75))}
+.fig__own{display:flex;align-items:center;gap:.4em}
+.fig__mark img{display:block;height:clamp(8px,2.4cqi,12px);width:auto;filter:drop-shadow(0 0 1.5px rgba(0,0,0,.75))}
 .fig__mark i{font-style:normal}
-.fig__mark--lift{bottom:calc(max(6px,2cqi) + min(9cqi,28px))}
+.fig__mark b{font-weight:600;opacity:.9}
 :root[data-theme="light"] .fig__mark{color:rgba(58,62,70,.95);text-shadow:0 0 2px rgba(255,255,255,.95)}
 :root[data-theme="light"] .fig__mark img{filter:drop-shadow(0 0 1.5px rgba(20,22,26,.6))}
 @container (max-width:240px){
-  .fig__mark i{display:none}
-  .fig__mark{right:max(4px,1.8cqi);bottom:max(4px,1.8cqi)}
-  .fig__mark img{height:clamp(9px,7cqi,13px)}
-  .fig__mark--lift{bottom:calc(max(5px,2cqi) + min(9cqi,20px))}
+  .fig__own i{display:none}
+  .fig__mark{right:max(3px,1.4cqi);bottom:max(3px,1.2cqi);font-size:7px}
+  .fig__mark img{height:clamp(8px,6cqi,11px)}
+}
+@container (max-width:170px){
+  .fig__mark b{display:none}
 }

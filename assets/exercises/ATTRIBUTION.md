@@ -7,13 +7,19 @@
   `tools/dark-gifs.html` has a `NOTICE` entry for this file so the light grey text is
   redrawn on the dark background instead of being dropped with the white background.
 
-## Wasserzeichen (25.09.2026)
+## Wasserzeichen und Herkunftshinweis (25.09.2026)
 
-- Die Übungs-GIFs sind unverändert. Das Wasserzeichen (PF-Logo, `assets/exercises/watermark-logo.png`,
-  von der Avatar-Hose nachgezeichnet, mit der Zeile "© 2026 G04Fit") liegt in der App als Ebene unten rechts
-  in der Ecke des Bildfelds (`figure()` in `js/anim.js`, `.fig__mark` in `css/anim.css`). Größe und
-  Schrift folgen der Feldbreite, deshalb passt es auf Desktop, iPhone und Android; in kleinen Kacheln
-  der Übungsliste bleibt nur das Logo. Es ist nicht in die GIF-Dateien eingebrannt.
-- Die Animationen stammen ursprünglich von fitundattraktiv.de. Ob das Wasserzeichen mit eigenem
-  Logo und Copyright darauf erlaubt ist, muss der Projektinhaber mit dem Rechteinhaber klären, bevor
-  die App veröffentlicht wird.
+- Die Übungs-GIFs sind unverändert, mit einer Ausnahme (siehe unten). Das Wasserzeichen (PF-Logo,
+  `assets/exercises/watermark-logo.png`, von der Avatar-Hose nachgezeichnet, mit der Zeile
+  "© 2026 G04Fit") liegt in der App als Ebene unten rechts in der Ecke des Bildfelds
+  (`figure()` in `js/anim.js`, `.fig__mark` in `css/anim.css`). Größe und Schrift folgen der
+  Feldbreite, deshalb passt es auf Desktop, iPhone und Android; in kleinen Kacheln der Übungsliste bleibt
+  nur das Logo. Es ist nicht in die GIF-Dateien eingebrannt.
+- Butterfly (Maschine, `butterfly-avatar`): Die Vorlage trug unten in der Bildmitte die Schrift
+  "© fitundattraktiv.de". Sie ist aus beiden GIFs entfernt (hell: Bereich weiß gefüllt, dunkel: neu erzeugt
+  mit `tools/dark-gifs.html`) und wird stattdessen als Beschriftung direkt über dem Wasserzeichen in der
+  Ecke gezeigt (`credit` in `js/data-exercises.js`). Der Hinweis bleibt damit sichtbar. Die
+  unveränderte Vorlage liegt lokal in `assets/exercises/sources/orig/` und in der Git-Historie.
+- Die Animationen stammen ursprünglich von fitundattraktiv.de. Ob Wasserzeichen, Copyright-Zeile und die
+  Verlegung des Hinweises erlaubt sind, muss der Projektinhaber mit dem Rechteinhaber klären, bevor die App
+  veröffentlicht wird.

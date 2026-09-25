@@ -254,9 +254,10 @@
      im Feld zentriert und je nach Gerät mit Rändern angezeigt wird). Größe und Schrift folgen der Breite des
      Feldes (siehe .fig__mark in css/anim.css); in kleinen Kacheln bleibt nur das Logo. */
   function watermark(ex) {
-    var lift = ex && /butterfly-avatar/.test(ex.demoLight || '') ? ' fig__mark--lift' : ''; // Herkunftshinweis im GIF unten rechts
-    return '<span class="fig__mark' + lift + '" aria-hidden="true">' +
-      '<img src="assets/exercises/watermark-logo.png?v=1" alt="" decoding="async"><i>© 2026 G04Fit</i></span>';
+    // Herkunftshinweis der Vorlage (ex.credit): steht nicht mehr im GIF, sondern hier über dem Wasserzeichen.
+    var credit = ex && ex.credit ? '<b>© ' + G.u.esc(ex.credit) + '</b>' : '';
+    return '<span class="fig__mark" aria-hidden="true">' + credit +
+      '<span class="fig__own"><img src="assets/exercises/watermark-logo.png?v=1" alt="" decoding="async"><i>© 2026 G04Fit</i></span></span>';
   }
 
   /** SVG-Markup einer Übungsanimation */
