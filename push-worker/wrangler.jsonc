@@ -19,6 +19,12 @@
       { "name": "REMINDER_DEVICE", "class_name": "ReminderDevice" }
     ]
   },
+  // Begrenzung je IP-Adresse: höchstens 30 Anfragen pro Minute an /api/devices.
+  // Genügt für Anmeldung, Zeitplan-Abgleich und Test, bremst aber das
+  // massenhafte Anlegen von Geräten.
+  "ratelimits": [
+    { "name": "DEVICE_LIMITER", "namespace_id": "1001", "simple": { "limit": 30, "period": 60 } }
+  ],
   "exports": {
     "ReminderDevice": { "type": "durable-object", "storage": "sqlite" }
   },

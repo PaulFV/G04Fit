@@ -2,6 +2,8 @@ import webpush from 'web-push';
 import { DurableObject } from 'cloudflare:workers';
 
 const encoder = new TextEncoder();
+const MAX_BODY_BYTES = 4096;
+const MAX_SEND_ATTEMPTS = 5;
 const MOTIVATION_MESSAGES = [
   { title: 'Komm, trainieren! 💪', body: 'Dein Plan wartet auf dich. Öffne G04Fit und leg los.' },
   { title: 'Heute ist ein guter Tag zum Trainieren', body: 'Ein kleiner Anfang reicht – der Rest kommt mit der Bewegung.' },
@@ -108,10 +110,27 @@ function nextReminderTimestamp(reminder, after = Date.now() + 30000) {
   return null;
 }
 
+// Nur die Push-Dienste der Browser-Hersteller sind als Ziel erlaubt. Sonst
+// könnte jeder den Worker dazu bringen, Anfragen an beliebige Adressen zu senden.
+const PUSH_HOSTS = [
+  /^fcm\.googleapis\.com$/,
+  /(^|\.)push\.services\.mozilla\.com$/,
+  /(^|\.)notify\.windows\.com$/,
+  /(^|\.)push\.apple\.com$/
+];
+
+function allowedEndpoint(endpoint) {
+  if (typeof endpoint !== 'string' || endpoint.length > 1024) return false;
+  let url;
+  try { url = new URL(endpoint); } catch (error) { return false; }
+  return url.protocol === 'https:' && !url.username && !url.password && !url.port &&
+    PUSH_HOSTS.some(pattern => pattern.test(url.hostname));
+}
+
 function validSubscription(subscription) {
-  return Boolean(subscription && typeof subscription.endpoint === 'string' &&
-    subscription.endpoint.startsWith('https://') && typeof subscription.keys?.p256dh === 'string' &&
-    typeof subscription.keys?.auth === 'string');
+  return Boolean(subscription && allowedEndpoint(subscription.endpoint) &&
+    typeof subscription.keys?.p256dh === 'string' && subscription.keys.p256dh.length <= 200 &&
+    typeof subscription.keys?.auth === 'string' && subscription.keys.auth.length <= 100);
 }
 
 function validReminder(reminder) {
@@ -170,9 +189,12 @@ export class ReminderDevice extends DurableObject {
     const url = new URL(request.url);
     const isTest = url.pathname.endsWith('/test');
 
-    if (request.method === 'PUT') {
+    if (request.method === 'PUT' && !isTest) {
       if (!await this.authorize(request, true)) return json({ error: 'Nicht autorisiert.' }, 401);
-      const body = await request.json().catch(() => null);
+      const text = await request.text();
+      if (text.length > MAX_BODY_BYTES) return json({ error: 'Anfrage zu groß.' }, 413);
+      let body = null;
+      try { body = JSON.parse(text); } catch (error) { /* bleibt null */ }
       if (!validSubscription(body?.subscription) || !validReminder(body?.reminder)) {
         return json({ error: 'Ungültige Push- oder Erinnerungsdaten.' }, 400);
       }
@@ -183,7 +205,7 @@ export class ReminderDevice extends DurableObject {
       return json({ ok: true, nextReminder });
     }
 
-    if (request.method === 'DELETE') {
+    if (request.method === 'DELETE' && !isTest) {
       if (!await this.authorize(request)) return json({ error: 'Nicht autorisiert.' }, 401);
       await this.ctx.storage.deleteAlarm();
       await this.ctx.storage.deleteAll();
@@ -207,21 +229,33 @@ export class ReminderDevice extends DurableObject {
       }
     }
 
+    // Den Anfragekörper verwerfen, sonst bricht die Verbindung beim Antworten ab.
+    await request.body?.cancel().catch(() => {});
     return json({ error: 'Methode nicht erlaubt.' }, 405);
   }
 
   async alarm() {
-    const data = await this.ctx.storage.get(['subscription', 'reminder']);
+    const data = await this.ctx.storage.get(['subscription', 'reminder', 'attempts']);
     if (!data.subscription || !data.reminder?.enabled) return;
     try {
       await sendNotification(this.env, data.subscription, data.reminder, false);
+      await this.ctx.storage.delete('attempts');
     } catch (error) {
       if (error?.statusCode === 404 || error?.statusCode === 410) {
         await this.ctx.storage.deleteAll();
         return;
       }
-      await this.ctx.storage.setAlarm(Date.now() + 60000);
-      throw error;
+      // Bei anderen Fehlern (Netz, 429, falsche Schlüssel) mit wachsendem
+      // Abstand erneut versuchen, danach diesen Termin auslassen. Ohne
+      // Grenze würde ein dauerhafter Fehler jede Minute neu ausgelöst.
+      const attempts = (data.attempts || 0) + 1;
+      if (attempts < MAX_SEND_ATTEMPTS) {
+        await this.ctx.storage.put('attempts', attempts);
+        await this.ctx.storage.setAlarm(Date.now() + 60000 * 2 ** (attempts - 1));
+        return;
+      }
+      await this.ctx.storage.delete('attempts');
+      console.error('Erinnerung nach mehreren Versuchen verworfen', error?.statusCode || error?.message);
     }
     const nextReminder = nextReminderTimestamp(data.reminder, Date.now() + 30000);
     await this.ctx.storage.put('nextReminder', nextReminder);
@@ -244,6 +278,14 @@ export default {
     }
     const match = url.pathname.match(/^\/api\/devices\/([A-Za-z0-9_-]{16,128})(?:\/test)?$/);
     if (!match) return withCors(json({ error: 'Nicht gefunden.' }, 404), origin, env);
+
+    // Begrenzung je Absender-IP. Die Bindung steht in wrangler.jsonc; fehlt sie
+    // (z. B. bei einem lokalen Test), läuft der Worker ohne Begrenzung weiter.
+    if (env.DEVICE_LIMITER) {
+      const client = request.headers.get('CF-Connecting-IP') || 'unknown';
+      const { success } = await env.DEVICE_LIMITER.limit({ key: client });
+      if (!success) return withCors(json({ error: 'Zu viele Anfragen.' }, 429), origin, env);
+    }
 
     const id = env.REMINDER_DEVICE.idFromName(match[1]);
     const response = await env.REMINDER_DEVICE.get(id).fetch(request);
