@@ -33,3 +33,16 @@
 - Die früheren Dateien `butterfly-avatar*.gif` (Vorlage mit "© fitundattraktiv.de") sind aus dem Repository entfernt;
   sie bleiben in der Git-Historie.
 - Die Herkunft der neuen Animation ist vom Projektinhaber vor der Veröffentlichung zu klären.
+
+## Kurzhantel-Bankdrücken: neue Animation (25.09.2026)
+
+- "Kurzhantel-Bankdrücken" (`bench-db`) nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`bench-db-whiteclean.gif`, `bench-db-dark.gif`). Die Vorlage hatte einen schwarzen Hintergrund; er ist in
+  `tools/dark-gifs.html` freigestellt (`BLACK_BG`, `convertLight`), die helle Fassung hat weißen Grund.
+- Die Herkunft der Animation ist vom Projektinhaber vor der Veröffentlichung zu klären. Die frühere Fassung liegt
+  in der Git-Historie.
+
+## Bankdrücken Langhantel: neue Übung (25.09.2026)
+
+- "Bankdrücken Langhantel" (`bench-bb-flat`) nutzt eine vom Projektinhaber gelieferte Animation
+  (`bench-bb-flat-whiteclean.gif`, `bench-bb-flat-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären.

@@ -267,7 +267,7 @@
 
     /* Exercise names (the database keeps stable German source labels so old
        plans remain compatible; the visible label is translated at render time) */
-    'Negativ-Bankdrücken (Langhantel)': 'Decline barbell bench press', 'Kurzhantel-Bankdrücken': 'Dumbbell bench press',
+    'Negativ-Bankdrücken (Langhantel)': 'Decline barbell bench press', 'Bankdrücken Langhantel': 'Barbell bench press', 'Kurzhantel-Bankdrücken': 'Dumbbell bench press',
     'Schrägbankdrücken (Kurzhantel)': 'Incline dumbbell press', 'Kabel-Fliegende': 'Cable fly', 'Butterfly (Maschine)': 'Machine chest fly',
     'Butterfly 2 (Maschine)': 'Machine chest fly 2', 'Liegestütze': 'Push-up', 'Liegestütze eng': 'Close-grip push-up',
     'Liegestütze schwer': 'Decline push-up', 'Liegestütze leicht am Boden': 'Knee push-up', 'Positive Liegestütze': 'Incline push-up',

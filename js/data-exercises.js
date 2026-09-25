@@ -52,10 +52,24 @@
       err: ['Stange abfedern lassen', 'Gesäß hebt ab', 'Ellenbogen komplett 90° nach außen']
     },
     {
+      id: 'bench-bb-flat', name: 'Bankdrücken Langhantel', muscle: 'chest',
+      sec: ['triceps', 'shoulders'], equip: 'Langhantel', pattern: 'pressflat',
+      demo: 'assets/exercises/gifs/bench-bb-flat-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/bench-bb-flat-dark.gif?v=1', demoLight: 'assets/exercises/gifs/bench-bb-flat-whiteclean.gif?v=1',
+      level: 2, inc: 2.5, f: 0.60, reps: [6, 10],
+      cues: [
+        'Schulterblätter fest zusammenziehen und nach unten fixieren',
+        'Leichtes Hohlkreuz, Gesäß bleibt auf der Bank',
+        'Stange kontrolliert zur unteren Brust führen, kurz berühren',
+        'Ellenbogen etwa 45–60° zum Rumpf, nicht seitlich abspreizen'
+      ],
+      err: ['Stange abfedern lassen', 'Gesäß hebt ab', 'Ellenbogen komplett 90° nach außen']
+    },
+    {
       id: 'bench-db', name: 'Kurzhantel-Bankdrücken', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Kurzhanteln', pattern: 'pressflat',
-      demo: 'assets/exercises/gifs/bench-db-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/bench-db-dark.gif?v=8', demoLight: 'assets/exercises/gifs/bench-db-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/bench-db-whiteclean.gif?v=11', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/bench-db-dark.gif?v=11', demoLight: 'assets/exercises/gifs/bench-db-whiteclean.gif?v=11',
       level: 1, inc: 2, f: 0.24, reps: [8, 12],
       cues: [
         'Hanteln auf Höhe der unteren Brust starten',

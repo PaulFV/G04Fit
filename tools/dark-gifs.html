@@ -140,7 +140,7 @@ function thinLines(bg, W, H) {
    Farbkanal) ein Randpixel neben dem Hintergrund selbst Hintergrund wird; passes = wie oft; hole = ab welcher
    Größe eingeschlossene weiße Flächen Hintergrund sind (größer wählen, wenn helle Glanzlichter auf der Figur
    sonst als Löcher erscheinen). */
-var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 } };
+var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 } };
 
 function cleanPose(src, W, H, notice, lightEdge) {
   var N = W * H, white = new Uint8Array(N), p, i;
@@ -400,9 +400,43 @@ function encodeGif(frames, W, H) {
   return new Uint8Array(b);
 }
 
+/* Vorlagen mit schwarzem statt weißem Hintergrund: Der mit dem Rand verbundene, fast schwarze Bereich wird in
+   jedem Bild zu Weiß. Danach läuft alles wie bei weißen Vorlagen. */
+var BLACK_BG = { 'bench-db': true };
+var BLACK_MAX = 9;   // Hintergrund ist exakt schwarz (0); Hantelscheiben und Bank haben Wert 10 und müssen erhalten bleiben
+function blackToWhite(F, W, H) {
+  F.forEach(function (f) {
+    var px = f.px, N = W * H, seen = new Uint8Array(N), stack = [], p, q;
+    function dark(v) { return px[v * 4] <= BLACK_MAX && px[v * 4 + 1] <= BLACK_MAX && px[v * 4 + 2] <= BLACK_MAX; }
+    for (p = 0; p < N; p++) {
+      var x = p % W, y = (p / W) | 0;
+      if ((x === 0 || y === 0 || x === W - 1 || y === H - 1) && dark(p)) { seen[p] = 1; stack.push(p); }
+    }
+    while (stack.length) {
+      q = stack.pop();
+      px[q * 4] = 255; px[q * 4 + 1] = 255; px[q * 4 + 2] = 255; px[q * 4 + 3] = 255;
+      var qx = q % W, qy = (q / W) | 0, nb = [qx > 0 ? q - 1 : -1, qx < W - 1 ? q + 1 : -1, qy > 0 ? q - W : -1, qy < H - 1 ? q + W : -1];
+      for (var k = 0; k < 4; k++) { var r = nb[k]; if (r >= 0 && !seen[r] && dark(r)) { seen[r] = 1; stack.push(r); } }
+    }
+  });
+}
+
+/* Helle Fassung einer Vorlage mit schwarzem Hintergrund: Bilder mit weißem Grund, Zeiten unverändert. */
+async function convertLight(url) {
+  var buf = await (await fetch(url)).arrayBuffer();
+  var src = await readFrames(buf), W = src.W, H = src.H;
+  blackToWhite(src.frames, W, H);
+  var out = src.frames.map(function (f) {
+    var q = quantize(new Uint8ClampedArray(f.px));
+    return { pal: q.pal, idx: q.idx, clear: q.clear, delay: f.delay };
+  });
+  return encodeGif(out, W, H);
+}
+
 async function convert(url, transparent, name) {
   var buf = await (await fetch(url)).arrayBuffer();
   var src = await readFrames(buf), W = src.W, H = src.H, F = src.frames, n = F.length;
+  if (BLACK_BG[name]) blackToWhite(F, W, H);
   var poses = {};
   var notice = NOTICE[name];
   function pose(i) { i = i % n; if (!poses[i]) poses[i] = cleanPose(F[i].px, W, H, notice, LIGHT_EDGE[name]); return poses[i]; }

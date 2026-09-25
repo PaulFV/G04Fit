@@ -10,7 +10,7 @@
      Übungen teilen sich bewusst ein Motiv, damit die Kacheln sofort laden.
      Die animierte Demonstration im Detailfenster bleibt davon unberührt. */
   var PHOTO_BY_ID = {
-    'bench-bb': 'bench-bb', 'bench-db': 'bench-db', 'incline-db': 'incline-db',
+    'bench-bb': 'bench-bb', 'bench-bb-flat': 'bench-bb', 'bench-db': 'bench-db', 'incline-db': 'incline-db',
     'fly-cable': 'fly-cable', 'fly-machine': 'fly-machine-v2-dark', 'fly-machine-2': 'fly-machine-v2-dark',
     'pushup': 'pushup', 'pushup-close': 'pushup-v2', 'pushup-decline': 'pushup-v2',
     'pushup-knee': 'pushup-v2', 'pushup-positive': 'pushup-v2', 'dip-chest': 'dip-chest', 'dip-heavy': 'dip-chest',
