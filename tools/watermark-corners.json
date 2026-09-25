@@ -1,0 +1,282 @@
+{
+ "abs-side-bench": {
+  "corner": "br",
+  "lift": 0
+ },
+ "bench-bb-triceps": {
+  "corner": "br",
+  "lift": 0
+ },
+ "bench-bb": {
+  "corner": "br",
+  "lift": 0
+ },
+ "bench-db-triceps": {
+  "corner": "br",
+  "lift": 0
+ },
+ "bench-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "butterfly-avatar": {
+  "corner": "br",
+  "lift": 30
+ },
+ "butterfly2": {
+  "corner": "br",
+  "lift": 0
+ },
+ "crunch-cable-kneeling": {
+  "corner": "br",
+  "lift": 0
+ },
+ "crunch-side": {
+  "corner": "br",
+  "lift": 0
+ },
+ "crunch": {
+  "corner": "br",
+  "lift": 0
+ },
+ "curl-bb-scott": {
+  "corner": "br",
+  "lift": 0
+ },
+ "curl-bb": {
+  "corner": "br",
+  "lift": 0
+ },
+ "curl-cable": {
+  "corner": "br",
+  "lift": 0
+ },
+ "curl-db-bilateral": {
+  "corner": "br",
+  "lift": 0
+ },
+ "curl-db-incline-bilateral": {
+  "corner": "br",
+  "lift": 0
+ },
+ "curl-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "curl-preacher": {
+  "corner": "br",
+  "lift": 0
+ },
+ "dip-chest": {
+  "corner": "br",
+  "lift": 0
+ },
+ "dip-heavy": {
+  "corner": "br",
+  "lift": 0
+ },
+ "fly-cable": {
+  "corner": "br",
+  "lift": 0
+ },
+ "front-raise-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "incline-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "kickback-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "lateral-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "latpull-chest": {
+  "corner": "br",
+  "lift": 0
+ },
+ "latpull-close": {
+  "corner": "br",
+  "lift": 0
+ },
+ "latpull-neck-close": {
+  "corner": "br",
+  "lift": 0
+ },
+ "latpull-wide-neck": {
+  "corner": "br",
+  "lift": 0
+ },
+ "latpull-wide": {
+  "corner": "br",
+  "lift": 0
+ },
+ "legraise-hanging-station": {
+  "corner": "br",
+  "lift": 0
+ },
+ "legraise-hanging": {
+  "corner": "br",
+  "lift": 0
+ },
+ "ohp-bb": {
+  "corner": "br",
+  "lift": 0
+ },
+ "ohp-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "plank-weighted": {
+  "corner": "br",
+  "lift": 0
+ },
+ "plank": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pullover-bb": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pullover-cable": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pullover-db-ball": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pullover-db-hammer": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pullover": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pullup-assisted": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pullup-close-overhand": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pullup": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pullup-wide-overhand": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pullup-wide-weighted": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pushup-close": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pushup-decline": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pushup-knee": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pushup-positive": {
+  "corner": "br",
+  "lift": 0
+ },
+ "pushup": {
+  "corner": "br",
+  "lift": 0
+ },
+ "reverse-fly-cable-bent": {
+  "corner": "br",
+  "lift": 0
+ },
+ "reverse-fly-cable-lying": {
+  "corner": "br",
+  "lift": 0
+ },
+ "reverse-fly-cable-standing": {
+  "corner": "br",
+  "lift": 0
+ },
+ "reverse-fly-db-incline": {
+  "corner": "br",
+  "lift": 0
+ },
+ "reverse-fly-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "reverse-fly-machine": {
+  "corner": "br",
+  "lift": 0
+ },
+ "row-bb-underhand-incline": {
+  "corner": "br",
+  "lift": 0
+ },
+ "row-bb": {
+  "corner": "br",
+  "lift": 0
+ },
+ "row-cable": {
+  "corner": "br",
+  "lift": 0
+ },
+ "row-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "row-smith-underhand": {
+  "corner": "br",
+  "lift": 0
+ },
+ "shrug-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "side-plank-db": {
+  "corner": "br",
+  "lift": 0
+ },
+ "side-plank": {
+  "corner": "br",
+  "lift": 0
+ },
+ "situp-straight": {
+  "corner": "br",
+  "lift": 0
+ },
+ "skullcrusher-bb": {
+  "corner": "br",
+  "lift": 0
+ },
+ "triceps-bench": {
+  "corner": "br",
+  "lift": 0
+ },
+ "triceps-cable-lying": {
+  "corner": "br",
+  "lift": 0
+ },
+ "triceps-cable-overhead-onearm": {
+  "corner": "br",
+  "lift": 0
+ },
+ "triceps-overhead": {
+  "corner": "br",
+  "lift": 0
+ }
+}

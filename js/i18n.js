@@ -523,7 +523,9 @@
   // Eine gemeinsame Tabelle und ein einziger regulärer Ausdruck, längster
   // Eintrag zuerst. Wird erst beim ersten Übersetzen und nach extend() gebaut.
   function build() {
-    lookup = {};
+    // Ohne Prototyp, sonst liefert lookup['constructor'] oder lookup['toString']
+    // eine Funktion und ein Text wie "constructor" wird als Funktionscode ausgegeben.
+    lookup = Object.create(null);
     Object.keys(WORDS).forEach(function (k) { lookup[k] = WORDS[k]; });
     Object.keys(EN).forEach(function (k) { lookup[k] = EN[k]; });
     var keys = Object.keys(lookup).filter(Boolean).sort(function (a, b) { return b.length - a.length; });
