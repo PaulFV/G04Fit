@@ -159,3 +159,17 @@
 - "Dips (brustbetont)" (`dip-chest`, englisch "Chest-focused dip") nutzt eine neue, vom Projektinhaber gelieferte
   Animation (`dip-chest-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären. Die
   frühere Fassung liegt in der Git-Historie.
+
+## Dips schwer: neue Animation (25.09.2026)
+
+- "Dips schwer" (`dip-heavy`, englisch "Weighted dip") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`dip-heavy-whiteclean.gif`, `-dark.gif`). Die Station ist in der Vorlage nur als sehr blasse Umrisse auf Weiß
+  gezeichnet; die dunkle Fassung zeigt sie deshalb als helles Linienbild (`tools/dark-gifs.html`, Eintrag
+  `dip-heavy`). Die Herkunft ist vor der Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.
+
+## Liegestütze schwer: neue Animation (25.09.2026)
+
+- "Liegestütze schwer" (`pushup-decline`, englisch "Decline push-up") nutzt eine neue, vom Projektinhaber gelieferte
+  Animation (`pushup-decline-whiteclean.gif`, `-dark.gif`). Die Vorlage war nur 180 × 180 Pixel groß und ist in
+  `tools/dark-gifs.html` (`UPSCALE`) auf 360 × 360 hochgerechnet; sie wirkt dadurch etwas weicher als die anderen. Die
+  Herkunft ist vor der Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.

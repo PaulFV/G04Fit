@@ -77,15 +77,20 @@ var NOTICE = {
   // Vorlagen mit eingebranntem Hinweis: Name -> { x0, y0, x1, y1, color } (Rechteck der Schrift).
 };
 
-function readFrames(buf) {
+/* Vorlagen, die kleiner als 360 × 360 geliefert werden, werden beim Einlesen auf die Größe der anderen hochgerechnet
+   (Faktor je Datei), damit alle Schwellenwerte in Pixeln passen. */
+var UPSCALE = { 'pushup-decline': 2 };
+function readFrames(buf, name) {
   var dec = new ImageDecoder({ data: buf, type: 'image/gif' });
+  var scale = UPSCALE[name] || 1;
   return dec.tracks.ready.then(async function () {
     var n = dec.tracks.selectedTrack.frameCount, frames = [], W, H;
     for (var i = 0; i < n; i++) {
       var r = await dec.decode({ frameIndex: i }), img = r.image;
-      W = img.displayWidth; H = img.displayHeight;
+      W = img.displayWidth * scale; H = img.displayHeight * scale;
       var c = new OffscreenCanvas(W, H), x = c.getContext('2d');
-      x.drawImage(img, 0, 0);
+      x.imageSmoothingEnabled = true; x.imageSmoothingQuality = 'high';
+      x.drawImage(img, 0, 0, W, H);
       frames.push({ px: x.getImageData(0, 0, W, H).data, delay: img.duration / 1000 });
       img.close();
     }
@@ -141,7 +146,7 @@ function thinLines(bg, W, H) {
    Größe eingeschlossene weiße Flächen Hintergrund sind (größer wählen, wenn helle Glanzlichter auf der Figur
    sonst als Löcher erscheinen); keepHoles = kleinere, vom Rand getrennte Hintergrundflecken in der Figur wieder füllen;
    lineGrow = wie oft dünne Linien (Kabel) um dunkle Nachbarpixel verbreitert werden. */
-var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'latpull-wide': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'triceps-bb-overhead': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'leg-press': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'legraise-hanging-station': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'crunch-cable-standing': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-cable-upper': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'skullcrusher-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable-mid': { min: 205, passes: 2, hole: 400, keepHoles: 150, lineGrow: 1 }, 'pushup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-chest': { min: 205, passes: 2, hole: 400, keepHoles: 150 } };
+var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'latpull-wide': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'triceps-bb-overhead': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'leg-press': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'legraise-hanging-station': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'crunch-cable-standing': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-cable-upper': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'skullcrusher-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable-mid': { min: 205, passes: 2, hole: 400, keepHoles: 150, lineGrow: 1 }, 'pushup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-chest': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-heavy': { min: 252, passes: 1, hole: 1, keepHoles: 150 }, 'pushup-decline': { min: 205, passes: 2, hole: 400, keepHoles: 150 } };
 
 function cleanPose(src, W, H, notice, lightEdge) {
   var N = W * H, white = new Uint8Array(N), p, i;
@@ -470,7 +475,7 @@ function blackToWhite(F, W, H) {
 /* Helle Fassung einer Vorlage mit schwarzem Hintergrund: Bilder mit weißem Grund, Zeiten unverändert. */
 async function convertLight(url, name) {
   var buf = await (await fetch(url)).arrayBuffer();
-  var src = await readFrames(buf), W = src.W, H = src.H;
+  var src = await readFrames(buf, name), W = src.W, H = src.H;
   if (BLACK_BG[name]) blackToWhite(src.frames, W, H);
   clearRects(src.frames, W, name);
   var out = src.frames.map(function (f) {
@@ -482,7 +487,7 @@ async function convertLight(url, name) {
 
 async function convert(url, transparent, name) {
   var buf = await (await fetch(url)).arrayBuffer();
-  var src = await readFrames(buf), W = src.W, H = src.H, F = src.frames, n = F.length;
+  var src = await readFrames(buf, name), W = src.W, H = src.H, F = src.frames, n = F.length;
   if (BLACK_BG[name]) blackToWhite(F, W, H);
   clearRects(F, W, name);
   var poses = {};

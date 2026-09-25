@@ -174,8 +174,8 @@
     {
       id: 'pushup-decline', name: 'Liegestütze schwer', muscle: 'chest',
       sec: ['triceps', 'shoulders', 'abs'], equip: 'Körpergewicht', pattern: 'dip',
-      demo: 'assets/exercises/gifs/pushup-decline-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pushup-decline-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pushup-decline-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pushup-decline-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pushup-decline-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pushup-decline-whiteclean.gif?v=9',
       level: 2, bw: true, inc: 2.5, f: 0, reps: [6, 12],
       cues: [
         'Füße erhöht und Hände stabil unter den Schultern platzieren',
@@ -226,8 +226,8 @@
     {
       id: 'dip-heavy', name: 'Dips schwer', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Barren', pattern: 'dip',
-      demo: 'assets/exercises/gifs/dip-heavy-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/dip-heavy-dark.gif?v=8', demoLight: 'assets/exercises/gifs/dip-heavy-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/dip-heavy-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/dip-heavy-dark.gif?v=9', demoLight: 'assets/exercises/gifs/dip-heavy-whiteclean.gif?v=9',
       level: 3, bw: true, inc: 2.5, f: 0, reps: [5, 10],
       cues: [
         'Zusatzgewicht sicher am Gürtel befestigen',
