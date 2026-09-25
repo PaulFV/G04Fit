@@ -193,3 +193,16 @@
 
 - Die Übung "Latzug zur Brust" (`latpull-chest`) war ein Duplikat von "Latziehen" (`latpull`) und ist samt
   `latpull-chest-*.gif` entfernt.
+
+## Klimmzüge Obergriff breit: neue Animation (25.09.2026)
+
+- "Klimmzüge Obergriff breit" (`pullup-wide-overhand`, englisch "Wide-grip overhand pull-up") nutzt eine neue, vom
+  Projektinhaber gelieferte Animation (`pullup-wide-overhand-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der
+  Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.
+
+## Kabelrudern (sitzend): neue Animation (25.09.2026)
+
+- "Kabelrudern (sitzend)" (`row-cable`, englisch "Seated cable row") nutzt eine neue, vom Projektinhaber gelieferte
+  Animation (`row-cable-whiteclean.gif`, `-dark.gif`). Die Vorlage bestand nur aus den beiden Endstellungen; die
+  Überblendungen zu 12 Bildern sind in `tools/dark-gifs.html` (`SYNTH_BLEND`) erzeugt. Die Herkunft ist vor der
+  Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.

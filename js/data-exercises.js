@@ -280,8 +280,8 @@
     {
       id: 'pullup-wide-overhand', name: 'Klimmzüge Obergriff breit', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange', pattern: 'pulldown',
-      demo: 'assets/exercises/gifs/pullup-wide-overhand-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullup-wide-overhand-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pullup-wide-overhand-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pullup-wide-overhand-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pullup-wide-overhand-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pullup-wide-overhand-whiteclean.gif?v=9',
       level: 3, bw: true, inc: 2.5, f: 0, reps: [4, 8],
       cues: [
         'Stange deutlich breiter als schulterbreit im Obergriff greifen',
@@ -410,8 +410,8 @@
     {
       id: 'row-cable', name: 'Kabelrudern (sitzend)', muscle: 'back',
       sec: ['biceps'], equip: 'Kabelzug', pattern: 'row',
-      demo: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-cable-dark.gif?v=8', demoLight: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/row-cable-dark.gif?v=9', demoLight: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=9',
       level: 1, inc: 5, f: 0.50, reps: [10, 14],
       cues: [
         'Aufrecht sitzen, Brust raus, Knie leicht gebeugt',
