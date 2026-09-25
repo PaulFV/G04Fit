@@ -70,3 +70,9 @@
 - "Schrägbankdrücken (Kurzhantel)" (`incline-db`, englisch "Incline dumbbell press") nutzt eine neue, vom
   Projektinhaber gelieferte Animation (`incline-db-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der
   Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.
+
+## Latzug breit zur Brust: neue Animation (25.09.2026)
+
+- "Latzug breit zur Brust" (`latpull-wide-chest`, englisch "Wide-grip lat pulldown") nutzt eine neue, vom
+  Projektinhaber gelieferte Animation (`latpull-wide-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der
+  Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.

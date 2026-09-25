@@ -331,8 +331,8 @@
     {
       id: 'latpull-wide-chest', name: 'Latzug breit zur Brust', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Kabelzug', pattern: 'pulldown',
-      demo: 'assets/exercises/gifs/latpull-wide-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/latpull-wide-dark.gif?v=8', demoLight: 'assets/exercises/gifs/latpull-wide-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/latpull-wide-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/latpull-wide-dark.gif?v=9', demoLight: 'assets/exercises/gifs/latpull-wide-whiteclean.gif?v=9',
       level: 1, inc: 5, f: 0.55, reps: [8, 12],
       cues: [
         'Breiten Obergriff etwas außerhalb der Schultern greifen',
