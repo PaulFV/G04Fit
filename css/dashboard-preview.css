@@ -66,7 +66,7 @@
 .dashboard-week-cell.is-today b,.dashboard-week-cell.is-today > span{color:var(--cyan)}
 .dashboard-week-cell__marker{width:7px;height:7px;border-radius:50%;display:block;margin-top:5px;background:var(--danger);box-shadow:0 0 9px currentColor;color:var(--danger)}
 .dashboard-week-cell__marker.is-done{background:var(--neon);color:var(--neon)}
-.dashboard-week-cell__rest{display:block;margin-top:4px;padding:2px 8px;border:1px solid var(--cyan);border-radius:99px;color:var(--cyan);font-size:11px;font-weight:700;letter-spacing:.03em}
+.dashboard-week-cell__rest{display:block;margin-top:4px;padding:2px 8px;border:1px solid var(--cyan);border-radius:99px;color:var(--cyan);font-size:9px;font-weight:700;letter-spacing:.05em}
 
 /* ---------- Stats ---------- */
 .dashboard-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -218,7 +218,7 @@
   .dashboard-hero__profile .avatar{width:58px!important;height:58px!important}
   .dashboard-hero__greeting{font-size:12.5px;margin:0 0 5px}
   .dashboard-hero__copy > .row{margin-bottom:6px!important;gap:6px}
-  .dashboard-hero__copy > .row .pill{font-size:12px;padding:3px 9px}
+  .dashboard-hero__copy > .row .pill{font-size:11px;padding:3px 9px}
   .dashboard-hero h2.big{font-size:25px;line-height:1.08;margin-top:0}
   .dashboard-hero .muted{font-size:13px;margin-top:3px}
   .dashboard-hero .small.dim{font-size:12px}
@@ -231,13 +231,13 @@
   .dashboard-hero > .dashboard-hero__rest .input-suffix{max-width:88px!important}
   .dashboard-hero > .dashboard-hero__rest .input{min-height:40px;min-width:0;font-size:15px}
   .dashboard-week-cell{min-height:62px}
-  .dashboard-week-legend{gap:5px 12px;font-size:12px}
+  .dashboard-week-legend{gap:5px 12px;font-size:11px}
 }
 @media (max-width:390px){
   .dashboard-hero h2.big{font-size:23px}
   .dashboard-week-cell{min-height:58px}
 }
-.dashboard-week__count{font-size:12px;padding:3px 9px}
+.dashboard-week__count{font-size:11px;padding:3px 9px}
 .dashboard-hero__actions .btn{white-space:nowrap}
 @media (max-width:650px){
   .dashboard-hero__actions .btn .ui-icon{width:14px;height:14px}

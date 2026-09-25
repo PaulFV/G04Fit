@@ -337,46 +337,15 @@ G04Fit.VERSION = '2.1.0';
      onClose wird nur bei einem bewussten Schließen durch den Nutzer
      (X, Scrim oder Escape) ausgeführt. Interne Aktionen wie "Übernehmen"
      können das Sheet weiterhin ohne Rücksprung schließen. */
-  var sheetOpener = null;
-  var FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]):not([type="hidden"]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
-
-  /** Bereiche hinter dem Dialog für Tastatur und Screenreader sperren. */
-  function setBackgroundInert(on) {
-    ['#app', '#onboarding'].forEach(function (sel) {
-      var el = $(sel);
-      if (el) el.inert = !!on;
-    });
-  }
-
-  function sheetFocusables() {
-    return $$(FOCUSABLE, $('#sheet')).filter(function (el) { return el.offsetParent !== null; });
-  }
-
-  /* Tab bleibt im Dialog: vom letzten Element zurück zum ersten und umgekehrt. */
-  document.addEventListener('keydown', function (e) {
-    var sheet = $('#sheet');
-    if (e.key !== 'Tab' || !sheet || sheet.hidden) return;
-    var items = sheetFocusables();
-    if (!items.length) { e.preventDefault(); sheet.focus(); return; }
-    var first = items[0], last = items[items.length - 1], active = document.activeElement;
-    if (e.shiftKey && (active === first || active === sheet)) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
-  });
-
   function openSheet(title, bodyHtml, onMount, onClose) {
     var sheet = $('#sheet'), scrim = $('#scrim');
-    // Woher der Fokus kam, merken – nur beim ersten Öffnen, nicht wenn ein Dialog den nächsten ersetzt.
-    if (sheet.hidden) sheetOpener = document.activeElement;
     sheetOnClose = typeof onClose === 'function' ? onClose : null;
     $('#sheetTitle').textContent = G.i18n ? G.i18n.translate(title) : title;
     $('#sheetBody').innerHTML = bodyHtml;
     sheet.hidden = false; scrim.hidden = false;
     document.body.style.overflow = 'hidden';
-    setBackgroundInert(true);
     if (onMount) onMount($('#sheetBody'));
     if (G.i18n) G.i18n.apply($('#sheetBody'));
-    // Fokus in den Dialog, damit Tastatur und Screenreader dort weitermachen.
-    try { sheet.focus({ preventScroll: true }); } catch (e) { sheet.focus(); }
   }
 
   function closeSheet(reason) {
@@ -385,13 +354,6 @@ G04Fit.VERSION = '2.1.0';
     $('#sheet').hidden = true;
     $('#scrim').hidden = true;
     document.body.style.overflow = '';
-    setBackgroundInert(false);
-    // Fokus dorthin zurück, wo der Dialog geöffnet wurde (falls das Element noch da ist).
-    var back = sheetOpener;
-    sheetOpener = null;
-    if (back && back !== document.body && document.contains(back) && typeof back.focus === 'function') {
-      try { back.focus({ preventScroll: true }); } catch (e) { back.focus(); }
-    }
     if (onClose) onClose();
   }
 

@@ -72,7 +72,7 @@
   --bg-2:#DDE8E2;
   --tx-0:#13231C;
   --tx-1:#425C50;
-  --tx-2:#546A5F;   /* mind. 4,5:1 auch auf --bg-2 (vorher #71877D mit 3,1:1) */
+  --tx-2:#71877D;
   --glass-bg:rgba(255,255,255,.62);
   --glass-bg-2:rgba(255,255,255,.82);
   --glass-br:rgba(18,65,44,.14);
@@ -179,7 +179,6 @@ a{color:var(--neon);text-decoration:none}
 /* --- Auswahl / Fokus --- */
 ::selection{background:var(--neon-dim);color:var(--neon)}
 :focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:6px}
-.sheet:focus{outline:none}
 .skip-link{position:fixed;z-index:200;left:12px;top:10px;transform:translateY(-160%);padding:10px 14px;border-radius:var(--r-sm);background:var(--neon);color:#04120A;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.3);transition:transform .2s var(--ease)}
 .skip-link:focus{transform:none}
 
