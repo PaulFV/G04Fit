@@ -711,6 +711,19 @@
 
     /* ================= TRIZEPS ================= */
     {
+      id: 'triceps-pushdown', name: 'Trizepsdrücken am Kabelzug', muscle: 'triceps',
+      sec: [], equip: 'Kabelzug', pattern: 'extension',
+      demo: 'assets/exercises/gifs/triceps-pushdown-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/triceps-pushdown-dark.gif?v=3', demoLight: 'assets/exercises/gifs/triceps-pushdown-whiteclean.gif?v=1',
+      level: 1, inc: 2.5, f: 0.25, reps: [10, 15],
+      cues: [
+        'Aufrecht und stabil vor dem Kabelzug stehen',
+        'Oberarme eng am Körper halten, nur die Unterarme bewegen',
+        'Unten die Arme ganz strecken und den Trizeps kurz anspannen'
+      ],
+      err: ['Oberarme bewegen sich stark', 'Ellenbogen spreizen ab', 'Schwung aus dem Oberkörper']
+    },
+    {
       id: 'triceps-cable-lying', name: 'Trizepsdrücken am Kabelzug liegend', muscle: 'triceps',
       sec: ['shoulders'], equip: 'Kabelzug + Bank', pattern: 'extension',
       demo: 'assets/exercises/gifs/triceps-cable-lying-whiteclean.gif?v=8', demoStyle: 'reference-gif',

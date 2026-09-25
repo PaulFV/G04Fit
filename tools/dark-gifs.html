@@ -135,7 +135,12 @@ function thinLines(bg, W, H) {
   return thin;
 }
 
-function cleanPose(src, W, H, notice) {
+/* Manche Vorlagen haben um helle Geräte einen Saum aus fast weißen Randpixeln (ohne dunklen Umriss), der auf
+   dunklem Grund als helle Umrandung sichtbar ist. Hier steht je Datei, ab welcher Helligkeit (kleinster
+   Farbkanal) ein Randpixel neben dem Hintergrund selbst Hintergrund wird; EDGE_PASSES = wie oft. */
+var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 } };
+
+function cleanPose(src, W, H, notice, lightEdge) {
   var N = W * H, white = new Uint8Array(N), p, i;
   for (p = 0; p < N; p++) {
     i = p * 4;
@@ -210,6 +215,21 @@ function cleanPose(src, W, H, notice) {
     if (dark) fringe.push(p);
   }
   fringe.forEach(function (v) { bg[v] = 1; });
+  if (lightEdge) {
+    for (var pass = 0; pass < lightEdge.passes; pass++) {
+      var lightPx = [];
+      for (p = 0; p < N; p++) {
+        if (bg[p]) continue;
+        i = p * 4;
+        if (Math.min(src[i], src[i + 1], src[i + 2]) < lightEdge.min) continue;
+        var lx = p % W, ly = (p / W) | 0;
+        if ((lx > 0 && bg[p - 1]) || (lx < W - 1 && bg[p + 1]) || (ly > 0 && bg[p - W]) || (ly < H - 1 && bg[p + W]) ||
+            (lx > 0 && ly > 0 && bg[p - W - 1]) || (lx < W - 1 && ly > 0 && bg[p - W + 1]) ||
+            (lx > 0 && ly < H - 1 && bg[p + W - 1]) || (lx < W - 1 && ly < H - 1 && bg[p + W + 1])) lightPx.push(p);
+      }
+      lightPx.forEach(function (v) { bg[v] = 1; });
+    }
+  }
   var thin = thinLines(bg, W, H);
   var out = new Float32Array(N * 3);
   for (p = 0; p < N; p++) {
@@ -383,7 +403,7 @@ async function convert(url, transparent, name) {
   var src = await readFrames(buf), W = src.W, H = src.H, F = src.frames, n = F.length;
   var poses = {};
   var notice = NOTICE[name];
-  function pose(i) { i = i % n; if (!poses[i]) poses[i] = cleanPose(F[i].px, W, H, notice); return poses[i]; }
+  function pose(i) { i = i % n; if (!poses[i]) poses[i] = cleanPose(F[i].px, W, H, notice, LIGHT_EDGE[name]); return poses[i]; }
   var out = [];
   for (var i = 0; i < n; i++) {
     var a = Math.floor(i / POSE_EVERY) * POSE_EVERY, b2 = (a + POSE_EVERY) % n;

@@ -160,13 +160,14 @@
     }
 
     // 2) Untergrenze deutlich verfehlt -> Gewicht reduzieren
-    if (minTop < range[0] - 1 || hardCount >= Math.ceil(sets.length * 0.7)) {
+    var mostlyHard = hardCount >= Math.ceil(sets.length * 0.7);
+    if (minTop < range[0] - 1 || (mostlyHard && minTop < range[1])) {
       out.weight = u.roundWeight(topWeight * 0.92, ex.inc || 2.5);
       if (out.weight >= topWeight) out.weight = Math.max(0, topWeight - (ex.inc || 2.5));
       out.change = out.weight - topWeight;
       out.kind = 'down';
       out.reps = range;
-      out.reason = 'Zuletzt nur ' + minTop + ' Wiederholungen bei hoher Anstrengung. ' +
+      out.reason = 'Zuletzt nur ' + minTop + ' Wiederholungen' + (mostlyHard ? ' bei hoher Anstrengung' : '') + '. ' +
         'Nimm ' + u.fmtKg(Math.abs(out.change)) + ' herunter und baue die Technik wieder auf.';
       return out;
     }

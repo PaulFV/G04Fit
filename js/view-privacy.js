@@ -395,8 +395,11 @@
         var r = new FileReader();
         r.onload = function () {
           try {
-            G.store.importAll(String(r.result));
-            u.toast('Eingelesen', 'Die Sicherung wurde übernommen.', 'ok');
+            var res = G.store.importAll(String(r.result));
+            var msg = 'Die Sicherung wurde übernommen (' + res.sessions + ' Einheiten).';
+            if (res.skipped) msg += ' ' + res.skipped + ' beschädigte Einheiten wurden ausgelassen.';
+            if (res.sessions && !res.persisted) msg += ' Ohne Einwilligung für die Trainingshistorie bleiben sie nur bis zum Schließen der App erhalten.';
+            u.toast('Eingelesen', msg, res.skipped || !res.persisted ? 'warn' : 'ok', 7000);
             G.app.rerender();
           } catch (err) {
             u.toast('Fehler beim Einlesen', String(err.message || err), 'err', 6000);
@@ -432,13 +435,15 @@
         // Push-Dienst ein — sonst bliebe die Erinnerung serverseitig aktiv,
         // obwohl lokal alles gelöscht wurde (siehe "Deine Rechte" in der
         // Datenschutzerklärung: ein Widerruf/Löschen wirkt sofort und überall).
+        var pushFailed = false;
         if (G.store.hasConsent('push')) {
-          try { await G.reminders.disableBackgroundPush(); } catch (e) { /* lokal trotzdem zurücksetzen */ }
+          try { await G.reminders.disableBackgroundPush(); } catch (e) { pushFailed = true; /* lokal trotzdem zurücksetzen */ }
         }
 
         G.store.wipe();
         G.reminders.stop();
-        u.toast('Zurückgesetzt', 'Alle Daten wurden gelöscht.', 'ok');
+        if (pushFailed) u.toast('Zurückgesetzt', 'Lokal gelöscht. Die Abmeldung beim Push-Dienst konnte nicht bestätigt werden.', 'warn', 6000);
+        else u.toast('Zurückgesetzt', 'Alle Daten wurden gelöscht.', 'ok');
         setTimeout(function () { location.reload(); }, 900);
       });
 

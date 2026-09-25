@@ -27,7 +27,7 @@
     'rear-fly-cable-bent': 'rear-fly', 'rear-fly-cable-standing': 'rear-fly', 'rear-fly-cable-lying': 'rear-fly',
     'shrug': 'shrug', 'curl-bb': 'curl-bb', 'curl-bb-scott': 'curl-bb', 'curl-db': 'curl-db',
     'curl-db-incline-bilateral': 'curl-db', 'curl-db-bilateral': 'curl-db', 'curl-preacher': 'curl-preacher',
-    'curl-cable': 'curl-cable', 'triceps-cable-lying': 'pushdown', 'bench-dip-triceps': 'dip-triceps',
+    'curl-cable': 'curl-cable', 'triceps-cable-lying': 'pushdown', 'triceps-pushdown': 'pushdown', 'bench-dip-triceps': 'dip-triceps',
     'bench-db-triceps': 'bench-db', 'bench-bb-triceps': 'bench-bb', 'skullcrusher': 'skullcrusher',
     'ohext-db': 'ohext-db', 'triceps-cable-overhead-onearm': 'ohext-db', 'kickback': 'kickback',
     'crunch': 'crunch', 'situp-straight': 'crunch', 'crunch-side': 'crunch', 'abs-side-bench': 'crunch',
@@ -89,6 +89,13 @@
   // zusätzliche Handler am immer gleichen #viewHost und jeder Klick (z. B.
   // "Satz abhaken") feuert mehrfach, wodurch sich Häkchen wieder aufheben.
   var mountAbort = null;
+
+  // Eingaben nicht bei jedem Tastendruck speichern; beim Verlassen der Seite sofort.
+  var saveSoon = u.debounce(function () { G.store.save(); }, 400);
+  window.addEventListener('pagehide', function () { if (G.store.state.session) G.store.save(); });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden' && G.store.state.session) G.store.save();
+  });
 
   function stopRest() {
     if (rest.timer) clearInterval(rest.timer);
@@ -738,10 +745,10 @@
         var row = t.closest('.set-row');
         var bi = +row.getAttribute('data-b'), si = +row.getAttribute('data-s');
         var f = t.getAttribute('data-f');
-        s.session.exercises[bi].sets[si][f] = u.num(t.value, 0);
+        s.session.exercises[bi].sets[si][f] = u.clamp(u.num(t.value, 0), 0, 1000);
         refreshHero();
         if (f === 'reps') refreshRepsTotal(host, bi);
-        G.store.save();
+        saveSoon();
       }, signal);
 
       /* --- Satz abhaken --- */
@@ -836,6 +843,7 @@
       /* --- Abschließen --- */
       u.on(host, 'click', '[data-act="finish"]', async function () {
         var sess = s.session;
+        if (!sess) return;
         var done = u.sum(sess.exercises, function (b) { return b.sets.filter(function (x) { return x.done; }).length; });
         if (!done) {
           u.toast('Keine Sätze erledigt', 'Hake mindestens einen Satz ab.', 'warn');
@@ -848,7 +856,7 @@
             body: 'Es sind noch <b>' + open + '</b> Sätze offen. Nicht abgehakte Sätze werden nicht gewertet.',
             ok: 'Trotzdem abschließen', danger: false
           });
-          if (!ok) return;
+          if (!ok || s.session !== sess) return;
         }
         stopRest();
         if (clockTimer) { clearInterval(clockTimer); clockTimer = null; }

@@ -78,7 +78,7 @@
 
       var n = perMuscle + (focus.indexOf(m) >= 0 ? 1 : 0);
       // Rotationsversatz, damit nicht jede Woche identisch trainiert wird
-      var off = (opts.rotate || 0 + mi) % Math.max(1, pool.length);
+      var off = ((opts.rotate || 0) + mi) % Math.max(1, pool.length);
       var take = [];
       for (var i = 0; i < pool.length && take.length < n; i++) {
         var e = pool[(i + (i === 0 ? 0 : off)) % pool.length];
@@ -284,7 +284,7 @@
 
     if (G.store.hasConsent('history')) {
       s.history.push(session);
-      s.history.sort(function (a, b) { return a.day < b.day ? -1 : 1; });
+      s.history.sort(function (a, b) { return a.day < b.day ? -1 : (a.day > b.day ? 1 : 0); });
       G.store.recomputeStreak();
     }
 

@@ -81,7 +81,11 @@ public partial class MainWindow : Window
             VirtualHost, _appFolder, CoreWebView2HostResourceAccessKind.Allow);
 
         core.Settings.AreDefaultContextMenusEnabled = true;
+#if DEBUG
         core.Settings.AreDevToolsEnabled = true;
+#else
+        core.Settings.AreDevToolsEnabled = false;
+#endif
         core.Settings.IsStatusBarEnabled = false;
         core.Settings.IsZoomControlEnabled = true;
         core.Settings.IsSwipeNavigationEnabled = false;
@@ -92,8 +96,12 @@ public partial class MainWindow : Window
         // eingeholt.
         core.PermissionRequested += (_, args) =>
         {
-            if (args.PermissionKind == CoreWebView2PermissionKind.Notifications)
+            var fromApp = Uri.TryCreate(args.Uri, UriKind.Absolute, out var origin) &&
+                origin.Host.Equals(VirtualHost, StringComparison.OrdinalIgnoreCase);
+            if (fromApp && args.PermissionKind == CoreWebView2PermissionKind.Notifications)
                 args.State = CoreWebView2PermissionState.Allow;
+            else
+                args.State = CoreWebView2PermissionState.Deny;
         };
 
         // Externe Links im Standardbrowser öffnen, nicht im App-Fenster.
@@ -105,7 +113,9 @@ public partial class MainWindow : Window
 
         core.NavigationStarting += (_, args) =>
         {
-            if (args.Uri.StartsWith("https://" + VirtualHost, StringComparison.OrdinalIgnoreCase))
+            if (Uri.TryCreate(args.Uri, UriKind.Absolute, out var target) &&
+                target.Scheme == Uri.UriSchemeHttps &&
+                target.Host.Equals(VirtualHost, StringComparison.OrdinalIgnoreCase))
                 return;
             if (args.Uri.StartsWith("about:", StringComparison.OrdinalIgnoreCase))
                 return;

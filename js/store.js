@@ -375,23 +375,53 @@
     }, null, 2);
   }
 
+  function isObj(v) { return !!v && typeof v === 'object' && !Array.isArray(v); }
+  function isDay(v) { return typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v); }
+
+  /** Eine Einheit aus einer Sicherung: nur übernehmen, wenn die Struktur stimmt. */
+  function validSession(x) {
+    return isObj(x) && isDay(x.day) && Array.isArray(x.exercises) && x.exercises.every(function (b) {
+      return isObj(b) && typeof b.exId === 'string' && Array.isArray(b.sets) && b.sets.every(isObj);
+    });
+  }
+
+  /**
+   * Liest eine Sicherung ein. Erst wird alles geprüft, dann übernommen: bei einem
+   * Fehler bleibt der aktuelle Stand unverändert. Beschädigte Einheiten werden
+   * ausgelassen und gezählt.
+   */
   function importAll(json) {
     var d = JSON.parse(json);
-    if (!d || d.app !== 'G04Fit') throw new Error('Keine G04Fit-Sicherung.');
+    if (!isObj(d) || d.app !== 'G04Fit') throw new Error('Keine G04Fit-Sicherung.');
+    ['profile', 'settings', 'journey', 'obsidian', 'records'].forEach(function (k) {
+      if (d[k] != null && !isObj(d[k])) throw new Error('Die Sicherung ist beschädigt (' + k + ').');
+    });
+    if (d.history != null && !Array.isArray(d.history)) throw new Error('Die Sicherung ist beschädigt (history).');
+
+    var history = (d.history || []).filter(validSession);
+    var skipped = (d.history || []).length - history.length;
+
     if (d.profile) Object.assign(state.profile, d.profile);
     if (d.settings) Object.assign(state.settings, d.settings);
     if (d.journey) Object.assign(state.journey, d.journey);
     if (d.obsidian) Object.assign(state.obsidian, d.obsidian);
-    if (Array.isArray(d.history)) state.history = d.history;
+    if (d.history) state.history = history;
     if (d.records) state.records = d.records;
     state.onboarded = true;
     recomputeStreak();
     commit('import');
+    return { sessions: history.length, skipped: skipped, persisted: !!state.consent.history };
   }
 
   function wipe() {
     removeRaw(KEY);
     removeRaw(KEY_CONSENT);
+    // Auch Sprache und Push-Kennung entfernen, nicht nur die beiden Hauptschlüssel.
+    try {
+      Object.keys(localStorage).forEach(function (k) {
+        if (k.indexOf('gofit.') === 0) removeRaw(k);
+      });
+    } catch (e) { /* egal */ }
     state = blank();
     emit('wipe');
   }
