@@ -46,3 +46,15 @@
 
 - "Bankdrücken Langhantel" (`bench-bb-flat`) nutzt eine vom Projektinhaber gelieferte Animation
   (`bench-bb-flat-whiteclean.gif`, `bench-bb-flat-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Trizeps-Bankdrücken mit Kurzhanteln: neue Animation (25.09.2026)
+
+- "Trizeps-Bankdrücken mit Kurzhanteln" (`bench-db-triceps`, englisch "Close-grip dumbbell bench press") nutzt eine
+  neue, vom Projektinhaber gelieferte Animation (`bench-db-triceps-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor
+  der Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.
+
+## Liegestütze eng: neue Animation (25.09.2026)
+
+- "Liegestütze eng" (`pushup-close`, englisch "Close-grip push-up") nutzt eine neue, vom Projektinhaber gelieferte
+  Animation (`pushup-close-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären.
+  Die frühere Fassung liegt in der Git-Historie.

@@ -147,8 +147,8 @@
     {
       id: 'pushup-close', name: 'Liegestütze eng', muscle: 'chest',
       sec: ['triceps', 'shoulders', 'abs'], equip: 'Körpergewicht', pattern: 'dip',
-      demo: 'assets/exercises/gifs/pushup-close-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pushup-close-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pushup-close-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pushup-close-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pushup-close-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pushup-close-whiteclean.gif?v=9',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [8, 15],
       cues: [
         'Hände enger als schulterbreit unter der Brust aufsetzen',
@@ -765,8 +765,8 @@
     {
       id: 'bench-db-triceps', name: 'Trizeps-Bankdrücken mit Kurzhanteln', muscle: 'triceps',
       sec: ['chest', 'shoulders'], equip: 'Kurzhanteln', pattern: 'pressflat',
-      demo: 'assets/exercises/gifs/bench-db-triceps-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/bench-db-triceps-dark.gif?v=8', demoLight: 'assets/exercises/gifs/bench-db-triceps-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/bench-db-triceps-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/bench-db-triceps-dark.gif?v=9', demoLight: 'assets/exercises/gifs/bench-db-triceps-whiteclean.gif?v=9',
       level: 2, inc: 2, f: 0.18, reps: [8, 12],
       cues: [
         'Kurzhanteln eng und neutral über der Brust halten',
