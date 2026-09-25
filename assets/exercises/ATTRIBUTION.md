@@ -24,3 +24,12 @@
 - Die Animationen stammen ursprünglich von fitundattraktiv.de. Ob Wasserzeichen, Copyright-Zeile und der
   Wegfall des Herkunftshinweises erlaubt sind, muss der Projektinhaber mit dem Rechteinhaber klären, bevor die App
   veröffentlicht wird.
+
+## Butterfly (Maschine): neue Animation (25.09.2026)
+
+- "Butterfly (Maschine)" (`fly-machine`) nutzt jetzt `butterfly-machine-whiteclean.gif` und `butterfly-machine-dark.gif`
+  (vom Projektinhaber geliefert, ohne eingebrannten Herkunftshinweis). Die dunkle Fassung ist mit
+  `tools/dark-gifs.html` erzeugt (Eintrag `butterfly-machine` in `LIGHT_EDGE`).
+- Die früheren Dateien `butterfly-avatar*.gif` (Vorlage mit "© fitundattraktiv.de") sind aus dem Repository entfernt;
+  sie bleiben in der Git-Historie.
+- Die Herkunft der neuen Animation ist vom Projektinhaber vor der Veröffentlichung zu klären.

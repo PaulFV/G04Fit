@@ -137,8 +137,10 @@ function thinLines(bg, W, H) {
 
 /* Manche Vorlagen haben um helle Geräte einen Saum aus fast weißen Randpixeln (ohne dunklen Umriss), der auf
    dunklem Grund als helle Umrandung sichtbar ist. Hier steht je Datei, ab welcher Helligkeit (kleinster
-   Farbkanal) ein Randpixel neben dem Hintergrund selbst Hintergrund wird; EDGE_PASSES = wie oft. */
-var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 } };
+   Farbkanal) ein Randpixel neben dem Hintergrund selbst Hintergrund wird; passes = wie oft; hole = ab welcher
+   Größe eingeschlossene weiße Flächen Hintergrund sind (größer wählen, wenn helle Glanzlichter auf der Figur
+   sonst als Löcher erscheinen). */
+var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 } };
 
 function cleanPose(src, W, H, notice, lightEdge) {
   var N = W * H, white = new Uint8Array(N), p, i;
@@ -168,7 +170,7 @@ function cleanPose(src, W, H, notice, lightEdge) {
   for (p = 0; p < N; p++) {
     if (comp[p] < 0) continue;
     var c = info[comp[p]];
-    if (c.edge || c.area >= HOLE) bg[p] = 1;
+    if (c.edge || c.area >= (lightEdge && lightEdge.hole || HOLE)) bg[p] = 1;
   }
   // Bildrauschen: winzige, fast weiße Inseln neben der Figur. Auf Weiß fallen
   // sie nicht auf, auf dunklem Grund wären es helle Sprenkel und Streifen.
