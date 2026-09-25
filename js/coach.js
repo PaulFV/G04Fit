@@ -36,7 +36,7 @@
   function restFor(ex, modeKey) {
     var m = G.journey.mode(modeKey || st().profile.mode);
     // Grundübungen brauchen mehr Pause als Isolationsübungen
-    var heavy = ['pressflat', 'pressover', 'row', 'pulldown', 'dip'].indexOf(ex.pattern) >= 0;
+    var heavy = ['pressflat', 'pressover', 'row', 'pulldown', 'dip', 'legpress'].indexOf(ex.pattern) >= 0;
     return Math.round(m.restSec * (heavy ? 1.25 : 1));
   }
 

@@ -30,10 +30,11 @@
     abs:       { key: 'abs',       name: 'Bauch',    icon: 'muscleAbs', color: 'var(--m-abs)' },
     biceps:    { key: 'biceps',    name: 'Bizeps',   icon: 'muscleBiceps', color: 'var(--m-biceps)' },
     triceps:   { key: 'triceps',   name: 'Trizeps',  icon: 'muscleTriceps', color: 'var(--m-triceps)' },
-    shoulders: { key: 'shoulders', name: 'Schulter', icon: 'muscleShoulders', color: 'var(--m-shoulders)' }
+    shoulders: { key: 'shoulders', name: 'Schulter', icon: 'muscleShoulders', color: 'var(--m-shoulders)' },
+    legs:      { key: 'legs',      name: 'Beine',    icon: 'muscleLegs', color: 'var(--m-legs)' }
   };
 
-  var MUSCLE_ORDER = ['chest', 'back', 'shoulders', 'biceps', 'triceps', 'abs'];
+  var MUSCLE_ORDER = ['chest', 'back', 'shoulders', 'biceps', 'triceps', 'abs', 'legs'];
 
   var EX = [
     /* ================= BRUST ================= */
@@ -95,8 +96,8 @@
     {
       id: 'fly-cable', name: 'Kabel-Fliegende', muscle: 'chest',
       sec: ['shoulders'], equip: 'Kabelzug', pattern: 'fly',
-      demo: 'assets/exercises/gifs/fly-cable-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/fly-cable-dark.gif?v=8', demoLight: 'assets/exercises/gifs/fly-cable-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/fly-cable-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/fly-cable-dark.gif?v=9', demoLight: 'assets/exercises/gifs/fly-cable-whiteclean.gif?v=9',
       level: 1, inc: 2.5, f: 0.14, reps: [10, 15],
       cues: [
         'Ellenbogen leicht gebeugt und den ganzen Satz über konstant halten',
@@ -998,6 +999,21 @@
         'Hüftwinkel bleibt weitgehend konstant'
       ],
       err: ['Bewegung aus der Hüfte statt aus dem Bauch', 'Arme ziehen mit']
+    },
+
+    /* ================= BEINE ================= */
+    {
+      id: 'leg-press', name: 'Beinpresse', muscle: 'legs',
+      sec: [], equip: 'Maschine', pattern: 'legpress',
+      demo: 'assets/exercises/gifs/leg-press-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/leg-press-dark.gif?v=1', demoLight: 'assets/exercises/gifs/leg-press-whiteclean.gif?v=1',
+      level: 1, inc: 5, f: 1.2, reps: [10, 15],
+      cues: [
+        'Rücken und Gesäß bleiben fest an Lehne und Sitz',
+        'Füße schulterbreit auf die Platte, Knie zeigen in Richtung der Zehen',
+        'Kontrolliert absenken und oben die Knie nicht ganz durchstrecken'
+      ],
+      err: ['Knie fallen nach innen', 'Gesäß hebt vom Sitz ab', 'Knie werden oben durchgestreckt']
     }
   ];
 

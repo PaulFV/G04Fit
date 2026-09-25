@@ -15,25 +15,25 @@
   var SPLITS = {
     2: [
       { key: 'full-a', name: 'Ganzkörper A', muscles: ['chest', 'back', 'abs'] },
-      { key: 'full-b', name: 'Ganzkörper B', muscles: ['shoulders', 'biceps', 'triceps'] }
+      { key: 'full-b', name: 'Ganzkörper B', muscles: ['shoulders', 'biceps', 'triceps', 'legs'] }
     ],
     3: [
       { key: 'push', name: 'Push · Brust & Trizeps', muscles: ['chest', 'triceps', 'shoulders'] },
       { key: 'pull', name: 'Pull · Rücken & Bizeps', muscles: ['back', 'biceps'] },
-      { key: 'core', name: 'Schulter & Bauch', muscles: ['shoulders', 'abs'] }
+      { key: 'core', name: 'Schulter, Bauch & Beine', muscles: ['shoulders', 'abs', 'legs'] }
     ],
     4: [
       { key: 'chest', name: 'Brust & Trizeps', muscles: ['chest', 'triceps'] },
       { key: 'back', name: 'Rücken & Bizeps', muscles: ['back', 'biceps'] },
       { key: 'shoulder', name: 'Schulter', muscles: ['shoulders'] },
-      { key: 'core', name: 'Bauch & Arme', muscles: ['abs', 'biceps', 'triceps'] }
+      { key: 'core', name: 'Bauch, Arme & Beine', muscles: ['abs', 'biceps', 'triceps', 'legs'] }
     ],
     5: [
       { key: 'chest', name: 'Brust', muscles: ['chest'] },
       { key: 'back', name: 'Rücken', muscles: ['back'] },
       { key: 'shoulder', name: 'Schulter', muscles: ['shoulders'] },
       { key: 'arms', name: 'Arme', muscles: ['biceps', 'triceps'] },
-      { key: 'core', name: 'Bauch & Restvolumen', muscles: ['abs', 'chest'] }
+      { key: 'core', name: 'Bauch, Beine & Restvolumen', muscles: ['abs', 'legs', 'chest'] }
     ],
     6: [
       { key: 'chest', name: 'Brust', muscles: ['chest'] },
@@ -41,7 +41,7 @@
       { key: 'shoulder', name: 'Schulter', muscles: ['shoulders'] },
       { key: 'biceps', name: 'Bizeps', muscles: ['biceps'] },
       { key: 'triceps', name: 'Trizeps', muscles: ['triceps'] },
-      { key: 'abs', name: 'Bauch', muscles: ['abs'] }
+      { key: 'abs', name: 'Bauch & Beine', muscles: ['abs', 'legs'] }
     ]
   };
 
@@ -50,7 +50,7 @@
   }
 
   /** Grundübungen zuerst, danach Isolation */
-  var COMPOUND = ['pressflat', 'pressover', 'row', 'pulldown', 'dip'];
+  var COMPOUND = ['pressflat', 'pressover', 'row', 'pulldown', 'dip', 'legpress'];
   function isCompound(ex) { return COMPOUND.indexOf(ex.pattern) >= 0; }
 
   /**

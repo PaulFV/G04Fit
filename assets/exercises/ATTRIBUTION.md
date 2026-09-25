@@ -101,3 +101,16 @@
   (`pullup-whiteclean.gif`, `-dark.gif`). Am unteren Bildrand der Vorlage standen einzelne Pixel einer abgeschnittenen
   Textzeile; sie sind in `tools/dark-gifs.html` (`CLEAR_RECT`) entfernt. Die Herkunft ist vor der Veröffentlichung zu
   klären. Die frühere Fassung liegt in der Git-Historie.
+
+## Beinpresse: neue Übung und neue Muskelgruppe "Beine" (25.09.2026)
+
+- "Beinpresse" (`leg-press`, englisch "Leg press") nutzt eine vom Projektinhaber gelieferte Animation
+  (`leg-press-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären.
+- Mit ihr kommt die Muskelgruppe "Beine" (`legs`) dazu. Die Muskelkarte (Figur nur bis zu den Shorts) hat keine
+  Beinzone; dort erscheint nur der Name in der Legende.
+
+## Kabel-Fliegende: neue Animation (25.09.2026)
+
+- "Kabel-Fliegende" (`fly-cable`, englisch "Cable fly") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`fly-cable-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären. Die frühere Fassung
+  liegt in der Git-Historie.

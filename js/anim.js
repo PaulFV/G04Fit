@@ -309,7 +309,7 @@
 
   var MCOLOR = {
     chest: '#3DFF9E', back: '#22D3EE', abs: '#FFC857',
-    biceps: '#A78BFA', triceps: '#FF8FA3', shoulders: '#5EEAD4'
+    biceps: '#A78BFA', triceps: '#FF8FA3', shoulders: '#5EEAD4', legs: '#FF9F43'
   };
 
   /* Gruppen, die nur auf der Rückansicht sichtbar sind */

@@ -254,6 +254,7 @@
 .m-biceps{color:var(--m-biceps);background:var(--m-biceps)}
 .m-triceps{color:var(--m-triceps);background:var(--m-triceps)}
 .m-shoulders{color:var(--m-shoulders);background:var(--m-shoulders)}
+.m-legs{color:var(--m-legs);background:var(--m-legs)}
 
 /* ---------- Übungskarte ---------- */
 .ex-filters{
@@ -280,6 +281,7 @@
 .ex-filter-options .tabs__b[data-m="biceps"]{--filter-accent:var(--m-biceps)}
 .ex-filter-options .tabs__b[data-m="triceps"]{--filter-accent:var(--m-triceps)}
 .ex-filter-options .tabs__b[data-m="abs"]{--filter-accent:var(--m-abs)}
+.ex-filter-options .tabs__b[data-m="legs"]{--filter-accent:var(--m-legs)}
 .ex-filter-options .tabs__b[data-m]:not(.is-on){
   color:color-mix(in srgb,var(--filter-accent) 68%,var(--tx-1));
   background:color-mix(in srgb,var(--filter-accent) 6%,transparent);

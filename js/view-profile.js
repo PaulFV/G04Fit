@@ -205,7 +205,7 @@
           u.DAYS[d] + '</button>';
       }).join('') + '</div>' +
       '<p class="small muted">Der Split richtet sich nach der Anzahl der Tage: ' +
-      '2 Tage Ganzkörper, 3 Tage Push/Pull/Schulter-Bauch, ab 4 Tagen einzelne Muskelgruppen.</p>' +
+      '2 Tage Ganzkörper, 3 Tage Push/Pull/Schulter-Bauch-Beine, ab 4 Tagen einzelne Muskelgruppen.</p>' +
       '<div class="stack" style="--sp:10px;margin-top:16px">' +
       G.planner.weekPlan().map(function (p) {
         return '<div class="row" style="gap:10px">' +

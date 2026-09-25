@@ -286,7 +286,7 @@
     'Butterfly Reverse Kabelzug liegend': 'Lying cable reverse fly', 'Nackenheben (Shrugs)': 'Shrug', 'Langhantel-Curl': 'Barbell curl',
     'Langhantelcurls Scottcurls': 'Scott preacher curl', 'Kurzhantel-Curl': 'Dumbbell curl', 'Kurzhantelcurls beidarmig Schrägbank': 'Incline dumbbell curl',
     'Kurzhantelcurls beidarmig gleichzeitig': 'Dumbbell curl, both arms', 'Scott-Curl (Preacher)': 'Preacher curl', 'Kabel-Curl': 'Cable curl',
-    'Trizepsdrücken am Kabelzug liegend': 'Lying cable triceps extension', 'Trizepsdrücken am Kabelzug': 'Cable triceps pushdown', 'Trizepsdrücken Langhantel': 'Barbell triceps extension', 'Bank-Dips (Trizeps)': 'Bench dip', 'Trizeps-Bankdrücken mit Kurzhanteln': 'Close-grip dumbbell bench press',
+    'Trizepsdrücken am Kabelzug liegend': 'Lying cable triceps extension', 'Trizepsdrücken am Kabelzug': 'Cable triceps pushdown', 'Trizepsdrücken Langhantel': 'Barbell triceps extension', 'Beinpresse': 'Leg press', 'Bank-Dips (Trizeps)': 'Bench dip', 'Trizeps-Bankdrücken mit Kurzhanteln': 'Close-grip dumbbell bench press',
     'Trizeps-Bankdrücken mit Langhantel': 'Close-grip barbell bench press', 'Stirndrücken (French Press)': 'Skull crusher', 'Überkopf-Trizepsdrücken': 'Overhead triceps extension',
     'Trizepsdrücken am Kabelzug einarmig über Kopf': 'Single-arm overhead cable extension', 'Trizeps-Kickback': 'Triceps kickback', 'Crunches': 'Crunch',
     'Sit-ups (gerade Bauchmuskeln)': 'Sit-up', 'Seitliche Crunches (schräge Bauchmuskeln)': 'Side crunch', 'Seitlicher Bauch': 'Side abs',
@@ -321,8 +321,8 @@
     'Heute steht nichts im Plan. Erholung ist Teil des Trainings.': 'Nothing is planned for today. Recovery is part of training.',
     'noch kein Training': 'no workout yet', 'Dein Profil': 'Your profile', 'Angaben speichern': 'Save details',
     'Ein bis drei Jahre, Grundübungen sitzen.': 'One to three years; the basic lifts are familiar.',
-    'Der Split richtet sich nach der Anzahl der Tage: 2 Tage Ganzkörper, 3 Tage Push/Pull/Schulter-Bauch, ab 4 Tagen einzelne Muskelgruppen.':
-      'The split depends on the number of days: 2 days full body, 3 days push/pull/shoulders-abs, 4 or more days individual muscle groups.',
+    'Der Split richtet sich nach der Anzahl der Tage: 2 Tage Ganzkörper, 3 Tage Push/Pull/Schulter-Bauch-Beine, ab 4 Tagen einzelne Muskelgruppen.':
+      'The split depends on the number of days: 2 days full body, 3 days push/pull/shoulders-abs-legs, 4 or more days individual muscle groups.',
     'Signal': 'Signal', 'Puls': 'Pulse', 'Glockenspiel': 'Chime', 'Trainingserfahrung': 'Training experience',
     'Trainings-Avatar hochladen': 'Upload workout avatar', 'Beste Serie': 'Best streak',
     'Trage hier ein, womit du realistisch arbeitest. G04Fit startet dich dann nicht künstlich leicht.':
@@ -407,7 +407,7 @@
   var WORDS = {
     'Montag': 'Monday', 'Dienstag': 'Tuesday', 'Mittwoch': 'Wednesday', 'Donnerstag': 'Thursday', 'Freitag': 'Friday', 'Samstag': 'Saturday', 'Sonntag': 'Sunday',
     'Mo': 'Mon', 'Di': 'Tue', 'Mi': 'Wed', 'Do': 'Thu', 'Fr': 'Fri', 'Sa': 'Sat', 'So': 'Sun',
-    'Brust': 'Chest', 'Rücken': 'Back', 'Bauch': 'Abs', 'Schulter': 'Shoulders', 'Bizeps': 'Biceps', 'Trizeps': 'Triceps',
+    'Brust': 'Chest', 'Rücken': 'Back', 'Bauch': 'Abs', 'Schulter': 'Shoulders', 'Bizeps': 'Biceps', 'Trizeps': 'Triceps', 'Beine': 'Legs',
     'Kraft': 'Strength', 'Muskel': 'Muscle', 'Training': 'Workout', 'Übung': 'Exercise', 'Wiederholungen': 'reps', 'Wiederholung': 'rep',
     'Gewichte': 'weights', 'Startgewicht': 'starting weight', 'Körpergewicht': 'body weight', 'Eigengewicht': 'body weight',
     'Speichern': 'Save', 'Abbrechen': 'Cancel', 'Bestätigen': 'Confirm', 'Löschen': 'Delete', 'Bearbeiten': 'Edit', 'Schließen': 'Close',
