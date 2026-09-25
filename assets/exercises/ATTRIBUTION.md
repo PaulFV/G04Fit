@@ -147,3 +147,15 @@
 - "Kabel-Fliegende (mittlere Brust)" (`fly-cable-mid`, englisch "Cable fly (mid chest)") nutzt eine vom Projektinhaber
   gelieferte Animation (`fly-cable-mid-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu
   klären. In `tools/dark-gifs.html` gibt es dafür `lineGrow` (Kabel wirken sonst gestrichelt).
+
+## Liegestütze: neue Animation (25.09.2026)
+
+- "Liegestütze" (`pushup`, englisch "Push-up") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`pushup-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären. Die frühere Fassung
+  liegt in der Git-Historie.
+
+## Dips (brustbetont): neue Animation (25.09.2026)
+
+- "Dips (brustbetont)" (`dip-chest`, englisch "Chest-focused dip") nutzt eine neue, vom Projektinhaber gelieferte
+  Animation (`dip-chest-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären. Die
+  frühere Fassung liegt in der Git-Historie.

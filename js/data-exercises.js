@@ -148,8 +148,8 @@
     {
       id: 'pushup', name: 'Liegestütze', muscle: 'chest',
       sec: ['triceps', 'shoulders', 'abs'], equip: 'Körpergewicht', pattern: 'dip',
-      demo: 'assets/exercises/gifs/pushup-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pushup-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pushup-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pushup-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pushup-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pushup-whiteclean.gif?v=9',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [10, 20],
       cues: [
         'Körper bildet eine gerade Linie von Kopf bis Ferse',
@@ -213,8 +213,8 @@
     {
       id: 'dip-chest', name: 'Dips (brustbetont)', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Barren', pattern: 'dip',
-      demo: 'assets/exercises/gifs/dip-chest-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/dip-chest-dark.gif?v=8', demoLight: 'assets/exercises/gifs/dip-chest-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/dip-chest-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/dip-chest-dark.gif?v=9', demoLight: 'assets/exercises/gifs/dip-chest-whiteclean.gif?v=9',
       level: 3, bw: true, inc: 2.5, f: 0, reps: [6, 12],
       cues: [
         'Oberkörper bewusst nach vorne neigen',
