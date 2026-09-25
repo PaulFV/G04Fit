@@ -141,8 +141,9 @@
   zu klären. "Stirndrücken (French Press)" (`skullcrusher`) und "Trizepsdrücken am Kabelzug liegend" bleiben
   unverändert.
 
-## Kabel-Fliegende liegend: neue Übung (25.09.2026)
 
-- "Kabel-Fliegende liegend" (`fly-cable-lying`, englisch "Lying cable fly") nutzt eine vom Projektinhaber gelieferte
-  Animation (`fly-cable-lying-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu klären.
-  "Kabel-Fliegende" (`fly-cable`) bleibt unverändert.
+## Kabel-Fliegende (mittlere Brust): neue Übung (25.09.2026)
+
+- "Kabel-Fliegende (mittlere Brust)" (`fly-cable-mid`, englisch "Cable fly (mid chest)") nutzt eine vom Projektinhaber
+  gelieferte Animation (`fly-cable-mid-whiteclean.gif`, `-dark.gif`). Die Herkunft ist vor der Veröffentlichung zu
+  klären. In `tools/dark-gifs.html` gibt es dafür `lineGrow` (Kabel wirken sonst gestrichelt).

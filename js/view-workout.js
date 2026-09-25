@@ -11,7 +11,7 @@
      Die animierte Demonstration im Detailfenster bleibt davon unberührt. */
   var PHOTO_BY_ID = {
     'bench-bb': 'bench-bb', 'bench-bb-flat': 'bench-bb', 'bench-db': 'bench-db', 'incline-db': 'incline-db',
-    'fly-cable': 'fly-cable', 'fly-cable-lying': 'fly-cable', 'fly-machine': 'fly-machine-v2-dark', 'fly-machine-2': 'fly-machine-v2-dark',
+    'fly-cable': 'fly-cable', 'fly-cable-mid': 'fly-cable', 'fly-machine': 'fly-machine-v2-dark', 'fly-machine-2': 'fly-machine-v2-dark',
     'pushup': 'pushup', 'pushup-close': 'pushup-v2', 'pushup-decline': 'pushup-v2',
     'pushup-knee': 'pushup-v2', 'pushup-positive': 'pushup-v2', 'dip-chest': 'dip-chest', 'dip-heavy': 'dip-chest',
     'pullup': 'pullup', 'pullup-assisted': 'pullup', 'pullup-close-overhand': 'pullup',

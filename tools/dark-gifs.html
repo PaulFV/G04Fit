@@ -139,8 +139,9 @@ function thinLines(bg, W, H) {
    dunklem Grund als helle Umrandung sichtbar ist. Hier steht je Datei, ab welcher Helligkeit (kleinster
    Farbkanal) ein Randpixel neben dem Hintergrund selbst Hintergrund wird; passes = wie oft; hole = ab welcher
    Größe eingeschlossene weiße Flächen Hintergrund sind (größer wählen, wenn helle Glanzlichter auf der Figur
-   sonst als Löcher erscheinen); keepHoles = kleinere, vom Rand getrennte Hintergrundflecken in der Figur wieder füllen. */
-var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'latpull-wide': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'triceps-bb-overhead': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'leg-press': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'legraise-hanging-station': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'crunch-cable-standing': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-cable-upper': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'skullcrusher-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable-lying': { min: 205, passes: 2, hole: 400, keepHoles: 150 } };
+   sonst als Löcher erscheinen); keepHoles = kleinere, vom Rand getrennte Hintergrundflecken in der Figur wieder füllen;
+   lineGrow = wie oft dünne Linien (Kabel) um dunkle Nachbarpixel verbreitert werden. */
+var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'latpull-wide': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'triceps-bb-overhead': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'leg-press': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'legraise-hanging-station': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'crunch-cable-standing': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-cable-upper': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'skullcrusher-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable-mid': { min: 205, passes: 2, hole: 400, keepHoles: 150, lineGrow: 1 } };
 
 function cleanPose(src, W, H, notice, lightEdge) {
   var N = W * H, white = new Uint8Array(N), p, i;
@@ -250,6 +251,20 @@ function cleanPose(src, W, H, notice, lightEdge) {
     }
   }
   var thin = thinLines(bg, W, H);
+  if (lightEdge && lightEdge.lineGrow) {
+    // Kabel sind streckenweise dicker als 2 px und wirken sonst gestrichelt: dunkle Nachbarn dünner Linien mitnehmen.
+    for (var g = 0; g < lightEdge.lineGrow; g++) {
+      var add = [];
+      for (p = 0; p < N; p++) {
+        if (thin[p] || bg[p]) continue;
+        i = p * 4;
+        if (Math.max(src[i], src[i + 1], src[i + 2]) >= EDGE_MAX) continue;
+        var tx = p % W, ty = (p / W) | 0;
+        if ((tx > 0 && thin[p - 1]) || (tx < W - 1 && thin[p + 1]) || (ty > 0 && thin[p - W]) || (ty < H - 1 && thin[p + W])) add.push(p);
+      }
+      add.forEach(function (v) { thin[v] = 1; });
+    }
+  }
   var out = new Float32Array(N * 3);
   for (p = 0; p < N; p++) {
     i = p * 4;

@@ -107,13 +107,13 @@
       err: ['Bewegung wird zur Drückbewegung', 'Zu viel Gewicht, Schwung aus dem Rumpf']
     },
     {
-      id: 'fly-cable-lying', name: 'Kabel-Fliegende liegend', muscle: 'chest',
-      sec: ['shoulders'], equip: 'Kabelzug + Bank', pattern: 'fly',
-      demo: 'assets/exercises/gifs/fly-cable-lying-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/fly-cable-lying-dark.gif?v=1', demoLight: 'assets/exercises/gifs/fly-cable-lying-whiteclean.gif?v=1',
-      level: 2, inc: 2.5, f: 0.12, reps: [10, 15],
+      id: 'fly-cable-mid', name: 'Kabel-Fliegende (mittlere Brust)', muscle: 'chest',
+      sec: ['shoulders'], equip: 'Kabelzug', pattern: 'fly',
+      demo: 'assets/exercises/gifs/fly-cable-mid-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/fly-cable-mid-dark.gif?v=1', demoLight: 'assets/exercises/gifs/fly-cable-mid-whiteclean.gif?v=1',
+      level: 1, inc: 2.5, f: 0.14, reps: [10, 15],
       cues: [
-        'Bank mittig zwischen die Kabeltürme stellen und Schulterblätter fixieren',
+        'Kabel auf Brusthöhe einstellen und leicht versetzt stehen',
         'Ellenbogen leicht gebeugt und den ganzen Satz über konstant halten',
         'Am Endpunkt die Brust bewusst 1 Sekunde anspannen'
       ],

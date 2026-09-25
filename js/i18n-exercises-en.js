@@ -297,7 +297,7 @@
     'Gesäß hebt vom Sitz ab': 'Hips lift off the seat',
     'Knie werden oben durchgestreckt': 'Locking the knees out at the top',
     'Griff kontrolliert zur Stirn oder dahinter absenken': 'Lower the handle under control to the forehead or just behind it',
-    'Bank mittig zwischen die Kabeltürme stellen und Schulterblätter fixieren': 'Place the bench centred between the cable towers and set the shoulder blades',
+    'Kabel auf Brusthöhe einstellen und leicht versetzt stehen': 'Set the cables at chest height and stand in a slight split stance',
     'Oberarme eng am Körper halten, nur die Unterarme bewegen': 'Keep the upper arms close to the body and move only the forearms',
     'Unten die Arme ganz strecken und den Trizeps kurz anspannen': 'Fully extend the arms at the bottom and squeeze the triceps briefly',
     'Oberarme bewegen sich stark': 'Upper arms move a lot',
