@@ -503,3 +503,11 @@
   bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`,
   `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250). Die frühere Fassung liegt in der Git-Historie. Die
   Herkunft ist vor der Veröffentlichung zu klären.
+
+## Reverse Butterfly: neue Animation (26.09.2026)
+
+- "Reverse Butterfly" (`rear-fly`, englisch "Reverse fly machine") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`reverse-fly-machine-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei
+  "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`,
+  `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250). Die frühere Fassung liegt in der Git-Historie. Die
+  Herkunft ist vor der Veröffentlichung zu klären.

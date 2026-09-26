@@ -671,8 +671,8 @@
     {
       id: 'rear-fly', name: 'Reverse Butterfly', muscle: 'shoulders',
       sec: ['back'], equip: 'Maschine', pattern: 'fly',
-      demo: 'assets/exercises/gifs/reverse-fly-machine-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/reverse-fly-machine-dark.gif?v=8', demoLight: 'assets/exercises/gifs/reverse-fly-machine-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/reverse-fly-machine-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/reverse-fly-machine-dark.gif?v=9', demoLight: 'assets/exercises/gifs/reverse-fly-machine-whiteclean.gif?v=9',
       level: 1, inc: 2.5, f: 0.14, reps: [12, 18],
       cues: [
         'Brust an das Polster, Rücken gerade',
