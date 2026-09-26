@@ -332,8 +332,8 @@
     {
       id: 'latpull-close-neck', name: 'Latzug eng zum Nacken', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Kabelzug', pattern: 'pulldown',
-      demo: 'assets/exercises/gifs/latpull-neck-close-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/latpull-neck-close-dark.gif?v=8', demoLight: 'assets/exercises/gifs/latpull-neck-close-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/latpull-neck-close-whiteclean.gif?v=12', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/latpull-neck-close-dark.gif?v=12', demoLight: 'assets/exercises/gifs/latpull-neck-close-whiteclean.gif?v=12',
       level: 1, inc: 5, f: 0.50, reps: [8, 12],
       cues: [
         'Engen Griff kontrolliert hinter den Kopf führen',
@@ -358,8 +358,8 @@
     {
       id: 'latpull-wide-neck', name: 'Latzug breit zum Nacken', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Kabelzug', pattern: 'pulldown',
-      demo: 'assets/exercises/gifs/latpull-wide-neck-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/latpull-wide-neck-dark.gif?v=8', demoLight: 'assets/exercises/gifs/latpull-wide-neck-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/latpull-wide-neck-whiteclean.gif?v=12', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/latpull-wide-neck-dark.gif?v=12', demoLight: 'assets/exercises/gifs/latpull-wide-neck-whiteclean.gif?v=12',
       level: 2, inc: 5, f: 0.50, reps: [8, 12],
       cues: [
         'Breiten Obergriff stabil halten und aufrecht sitzen',
@@ -854,6 +854,19 @@
         'Bauch anspannen, kein Hohlkreuz'
       ],
       err: ['Ellenbogen weichen nach außen', 'Rippenbogen kippt nach vorne', 'Zu schnelles Absenken']
+    },
+    {
+      id: 'skullcrusher-db-onearm', name: 'Stirndrücken einarmig', muscle: 'triceps',
+      sec: [], equip: 'Kurzhantel + Bank', pattern: 'extension',
+      demo: 'assets/exercises/gifs/skullcrusher-db-onearm-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/skullcrusher-db-onearm-dark.gif?v=1', demoLight: 'assets/exercises/gifs/skullcrusher-db-onearm-whiteclean.gif?v=1',
+      level: 2, inc: 1, f: 0.10, reps: [10, 15], uni: true,
+      cues: [
+        'Auf der Bank liegen, Oberarm senkrecht über der Schulter halten',
+        'Die Hantel kontrolliert zur Stirn absenken, nur der Unterarm bewegt sich',
+        'Den Arm oben strecken und den Trizeps kurz anspannen, beide Seiten gleichmäßig'
+      ],
+      err: ['Oberarm wandert nach hinten', 'Ellenbogen weicht seitlich aus', 'Hantel zu schwer, unkontrolliertes Absenken']
     },
     {
       id: 'skullcrusher-cable', name: 'Stirndrücken am Kabelzug', muscle: 'triceps',

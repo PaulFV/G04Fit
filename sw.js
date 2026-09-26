@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'g04fit-v2.8.188';
+var CACHE = 'g04fit-v2.8.191';
 
 var ASSETS = [
   './',

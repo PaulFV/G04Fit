@@ -287,3 +287,27 @@
   echte Bewegungsphasen, keine Überblendungen. Die dunklen Fassungen wurden zunächst wie bei den älteren GIFs aus zwei
   Posen überblendet und zeigten dadurch helle Geisterbilder in der Aufwärtsbewegung. Jetzt wird jedes Bild einzeln
   freigestellt (`POSE_EVERY_BY` = 1 in `tools/dark-gifs.html`).
+
+## Latzug eng zum Nacken: neue Animation (26.09.2026)
+
+- "Latzug eng zum Nacken" (`latpull-close-neck`, englisch "Close-grip pulldown behind neck") nutzt eine neue, vom
+  Projektinhaber gelieferte Animation (`latpull-neck-close-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel,
+  nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten
+  Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die frühere Fassung liegt in der Git-Historie. Die
+  Herkunft ist vor der Veröffentlichung zu klären.
+
+## Latzug breit zum Nacken: neue Animation (26.09.2026)
+
+- "Latzug breit zum Nacken" (`latpull-wide-neck`, englisch "Wide-grip pulldown behind neck") nutzt eine neue, vom
+  Projektinhaber gelieferte Animation (`latpull-wide-neck-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel,
+  nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten
+  Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die frühere Fassung liegt in der Git-Historie. Die
+  Herkunft ist vor der Veröffentlichung zu klären.
+
+## Stirndrücken einarmig: neue Übung (26.09.2026)
+
+- "Stirndrücken einarmig" (`skullcrusher-db-onearm`, englisch "Single-arm skull crusher", Kurzhantel + Bank, Trizeps)
+  nutzt eine vom Projektinhaber gelieferte Animation (`skullcrusher-db-onearm-whiteclean.gif`, `-dark.gif`). Die Vorlage
+  (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit
+  selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der
+  Veröffentlichung zu klären.
