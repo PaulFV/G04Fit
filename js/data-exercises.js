@@ -133,6 +133,19 @@
       err: ['Bewegung wird zur Drückbewegung', 'Zu viel Gewicht, Schwung aus dem Rumpf']
     },
     {
+      id: 'bench-machine', name: 'Bankdrücken Maschine', muscle: 'chest',
+      sec: ['triceps', 'shoulders'], equip: 'Maschine', pattern: 'pressflat',
+      demo: 'assets/exercises/gifs/bench-machine-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/bench-machine-dark.gif?v=1', demoLight: 'assets/exercises/gifs/bench-machine-whiteclean.gif?v=1',
+      level: 1, inc: 5, f: 0.50, reps: [8, 12],
+      cues: [
+        'Sitz so einstellen, dass die Griffe auf Höhe der mittleren Brust liegen',
+        'Schulterblätter an die Lehne ziehen und die Griffe kontrolliert nach vorn drücken',
+        'Langsam zurückführen, ohne das Gewicht abzulegen'
+      ],
+      err: ['Schultern wandern nach vorn', 'Rücken löst sich von der Lehne', 'Ellenbogen werden vorn hart durchgestreckt']
+    },
+    {
       id: 'chest-press-machine', name: 'Brustpresse (Maschine)', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Maschine', pattern: 'pressflat',
       demo: 'assets/exercises/gifs/chest-press-machine-whiteclean.gif?v=1', demoStyle: 'reference-gif',
@@ -671,8 +684,8 @@
     {
       id: 'rear-fly-db', name: 'Butterfly Reverse Kurzhantel', muscle: 'shoulders',
       sec: ['back'], equip: 'Kurzhanteln + Bank', pattern: 'fly',
-      demo: 'assets/exercises/gifs/reverse-fly-db-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/reverse-fly-db-dark.gif?v=8', demoLight: 'assets/exercises/gifs/reverse-fly-db-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/reverse-fly-db-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/reverse-fly-db-dark.gif?v=9', demoLight: 'assets/exercises/gifs/reverse-fly-db-whiteclean.gif?v=9',
       level: 1, inc: 1, f: 0.08, reps: [12, 18],
       cues: [
         'Vorgebeugt auf der Bank sitzen und Rücken neutral halten',
@@ -723,8 +736,8 @@
     {
       id: 'rear-fly-cable-lying', name: 'Butterfly Reverse Kabelzug liegend', muscle: 'shoulders',
       sec: ['back'], equip: 'Kabelzug + Bank', pattern: 'fly',
-      demo: 'assets/exercises/gifs/reverse-fly-cable-lying-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/reverse-fly-cable-lying-dark.gif?v=8', demoLight: 'assets/exercises/gifs/reverse-fly-cable-lying-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/reverse-fly-cable-lying-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/reverse-fly-cable-lying-dark.gif?v=9', demoLight: 'assets/exercises/gifs/reverse-fly-cable-lying-whiteclean.gif?v=9',
       level: 2, inc: 2.5, f: 0.10, reps: [12, 18],
       cues: [
         'Mittig und stabil auf der Bank liegen',

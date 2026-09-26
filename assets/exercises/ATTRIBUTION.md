@@ -480,3 +480,26 @@
   und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Der Hintergrund ist leicht getönt
   (`white` = 250). Die englischen Namen und die Technikhinweise sind vorläufig. Die Herkunft ist vor der Veröffentlichung
   zu klären.
+
+## Butterfly Reverse Kabelzug liegend: neue Animation (26.09.2026)
+
+- "Butterfly Reverse Kabelzug liegend" (`rear-fly-cable-lying`) nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`reverse-fly-cable-lying-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist wie
+  bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`,
+  `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250), die dünnen Kabel werden hell gezeichnet (`lineGrow`). Die
+  frühere Fassung liegt in der Git-Historie. Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Bankdrücken Maschine: neue Übung (26.09.2026)
+
+- "Bankdrücken Maschine" (`bench-machine`, englisch "Machine bench press", Brust, Maschine) nutzt eine vom Projektinhaber
+  gelieferte Animation (`bench-machine-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden
+  Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12
+  Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Butterfly Reverse Kurzhantel: neue Animation (26.09.2026)
+
+- "Butterfly Reverse Kurzhantel" (`rear-fly-db`, englisch "Reverse dumbbell fly") nutzt eine neue, vom Projektinhaber gelieferte
+  Animation (`reverse-fly-db-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist wie
+  bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`,
+  `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250). Die frühere Fassung liegt in der Git-Historie. Die
+  Herkunft ist vor der Veröffentlichung zu klären.
