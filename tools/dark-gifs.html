@@ -63,6 +63,8 @@ var BG = [7, 16, 13];       // --exercise-canvas im dunklen Design (#07100D)
 var OUTLINE = 10;           // Farbe der Umrisslinien in den Vorlagen
 var HOLE = 30;              // eingeschlossene weiße Flächen ab dieser Größe sind Hintergrund
 var POSE_EVERY = 6;         // Abstand der Posen in der Bildfolge
+/* Vorlagen mit anderem Abstand der Posen (z. B. 10 Bilder: Pose, 4 Überblendungen, Pose, 4 Überblendungen). */
+var POSE_EVERY_BY = { 'pullup-assisted': 5, 'kneeraise-station': 5 };
 var EDGE_MAX = 200;         // hellere Randpixel sind Füllung (z. B. Geräte ohne Umriss), keine Kante
 var KNEE = 205, SLOPE = 0.5; // sehr helle Flächen sanft abdunkeln, damit weiße Geräte nicht blenden
 var LINE = [178, 192, 186];  // Farbe dünner Linien (Kabel) auf dunklem Grund
@@ -79,7 +81,7 @@ var NOTICE = {
 
 /* Vorlagen, die kleiner als 360 × 360 geliefert werden, werden beim Einlesen auf die Größe der anderen hochgerechnet
    (Faktor je Datei), damit alle Schwellenwerte in Pixeln passen. */
-var UPSCALE = { 'pushup-decline': 2 };
+var UPSCALE = { 'pushup-decline': 2, 'pullup-assisted': 0.703125, 'kneeraise-station': 0.703125 };
 /* Vorlagen, die nur aus den beiden Endstellungen bestehen: daraus die übliche Bildfolge mit 12 Bildern erzeugen
    (Stellung A halten, in 5 Schritten zu B überblenden, B halten, zurück), wie bei den anderen Übungen. */
 var SYNTH_BLEND = { 'pushup-decline': true, 'row-cable': true };
@@ -212,7 +214,7 @@ function thinLines(bg, W, H) {
    Größe eingeschlossene weiße Flächen Hintergrund sind (größer wählen, wenn helle Glanzlichter auf der Figur
    sonst als Löcher erscheinen); keepHoles = kleinere, vom Rand getrennte Hintergrundflecken in der Figur wieder füllen;
    lineGrow = wie oft dünne Linien (Kabel) um dunkle Nachbarpixel verbreitert werden. */
-var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'latpull-wide': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'triceps-bb-overhead': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'leg-press': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'legraise-hanging-station': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'crunch-cable-standing': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-cable-upper': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'skullcrusher-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable-mid': { min: 205, passes: 2, hole: 400, keepHoles: 150, lineGrow: 1 }, 'pushup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-chest': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-heavy': { min: 252, passes: 1, hole: 1, keepHoles: 150 }, 'pushup-decline': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'bench-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup-wide-weighted': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup-wide-overhand': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 } };
+var LIGHT_EDGE = { 'triceps-pushdown': { min: 205, passes: 2 }, 'butterfly-machine': { min: 205, passes: 2, hole: 400 }, 'bench-db': { min: 205, passes: 2, hole: 400 }, 'bench-bb-flat': { min: 205, passes: 2, hole: 400 }, 'bench-db-triceps': { min: 205, passes: 2, hole: 400 }, 'pushup-close': { min: 205, passes: 2, hole: 400 }, 'curl-cable': { min: 205, passes: 2, hole: 400 }, 'incline-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'latpull-wide': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-db': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'triceps-bb-overhead': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'leg-press': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'legraise-hanging-station': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'crunch-cable-standing': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-cable-upper': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'skullcrusher-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'fly-cable-mid': { min: 205, passes: 2, hole: 400, keepHoles: 150, lineGrow: 1 }, 'pushup': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-chest': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'dip-heavy': { min: 252, passes: 1, hole: 1, keepHoles: 150 }, 'pushup-decline': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'bench-bb': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup-wide-weighted': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup-assisted': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'kneeraise-station': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'pullup-wide-overhand': { min: 205, passes: 2, hole: 400, keepHoles: 150 }, 'row-cable': { min: 205, passes: 2, hole: 400, keepHoles: 150 } };
 
 function cleanPose(src, W, H, notice, lightEdge) {
   var N = W * H, white = new Uint8Array(N), p, i;
@@ -561,7 +563,7 @@ async function convert(url, transparent, name) {
   function pose(i) { i = i % n; if (!poses[i]) poses[i] = cleanPose(F[i].px, W, H, notice, LIGHT_EDGE[name]); return poses[i]; }
   var out = [];
   for (var i = 0; i < n; i++) {
-    var a = Math.floor(i / POSE_EVERY) * POSE_EVERY, b2 = (a + POSE_EVERY) % n;
+    var pe = POSE_EVERY_BY[name] || POSE_EVERY, a = Math.floor(i / pe) * pe, b2 = (a + pe) % n;
     var t = i === a ? 0 : blendShare(F[i].px, F[a].px, F[b2].px);
     var A = pose(a), B = t > 0 ? pose(b2) : A, N = W * H, rgba = new Uint8ClampedArray(N * 4);
     for (var p = 0; p < N; p++) {

@@ -209,3 +209,17 @@
   Animation (`row-cable-whiteclean.gif`, `-dark.gif`). Die Vorlage bestand nur aus den beiden Endstellungen; die
   Überblendungen zu 12 Bildern sind in `tools/dark-gifs.html` (`SYNTH_BLEND`) erzeugt. Die Herkunft ist vor der
   Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.
+
+## Klimmzüge Anfänger: neue Animation (26.09.2026)
+
+- "Klimmzüge Anfänger" (`pullup-assisted`, englisch "Assisted pull-up") nutzt eine neue, vom Projektinhaber gelieferte
+  Animation (`pullup-assisted-whiteclean.gif`, `-dark.gif`). Die Vorlage war 512 × 512 Pixel groß und ist in
+  `tools/dark-gifs.html` auf 360 × 360 verkleinert (`UPSCALE`, Faktor 0,703125); beide Fassungen sind mit dem Konverter
+  erzeugt (Bildfolge mit 10 Bildern: `POSE_EVERY_BY`). Die Herkunft ist vor der Veröffentlichung zu klären. Die frühere Fassung liegt in der Git-Historie.
+
+## Knieheben: neue Übung (26.09.2026)
+
+- "Knieheben" (`kneeraise-station`, englisch "Knee raise", Dipstation, Bauch) nutzt eine vom Projektinhaber gelieferte
+  Animation (`kneeraise-station-whiteclean.gif`, `-dark.gif`). Die Vorlage war 512 × 512 Pixel groß und ist wie bei
+  "Klimmzüge Anfänger" auf 360 × 360 verkleinert (`tools/dark-gifs.html`). Die Herkunft ist vor der Veröffentlichung
+  zu klären.

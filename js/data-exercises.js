@@ -254,8 +254,8 @@
     {
       id: 'pullup-assisted', name: 'Klimmzüge Anfänger', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange', pattern: 'pulldown',
-      demo: 'assets/exercises/gifs/pullup-assisted-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullup-assisted-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pullup-assisted-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pullup-assisted-whiteclean.gif?v=12', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pullup-assisted-dark.gif?v=12', demoLight: 'assets/exercises/gifs/pullup-assisted-whiteclean.gif?v=12',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [6, 12],
       cues: [
         'Ein Fuß unterstützt leicht auf einer stabilen Bank',
@@ -960,6 +960,19 @@
         'Ohne Pendeln langsam in die Ausgangsposition zurückkehren'
       ],
       err: ['Schwung aus dem Körper', 'Schultern vollständig aushängen', 'Beine unkontrolliert fallen lassen']
+    },
+    {
+      id: 'kneeraise-station', name: 'Knieheben', muscle: 'abs',
+      sec: ['shoulders'], equip: 'Dipstation', pattern: 'legraise',
+      demo: 'assets/exercises/gifs/kneeraise-station-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/kneeraise-station-dark.gif?v=1', demoLight: 'assets/exercises/gifs/kneeraise-station-whiteclean.gif?v=1',
+      level: 1, bw: true, inc: 2.5, f: 0, reps: [10, 15],
+      cues: [
+        'Unterarme oder Hände fest aufstützen und den Oberkörper ruhig halten',
+        'Becken leicht einrollen und die Knie kontrolliert zur Brust ziehen',
+        'Langsam absenken, ohne die Beine schwingen zu lassen'
+      ],
+      err: ['Schwung aus den Beinen', 'Hohlkreuz beim Absenken', 'Schultern zu den Ohren ziehen']
     },
     {
       id: 'plank', name: 'Unterarmstütz (Plank)', muscle: 'abs',

@@ -290,7 +290,7 @@
     'Trizeps-Bankdrücken mit Langhantel': 'Close-grip barbell bench press', 'Stirndrücken (French Press)': 'Skull crusher', 'Überkopf-Trizepsdrücken': 'Overhead triceps extension',
     'Trizepsdrücken am Kabelzug einarmig über Kopf': 'Single-arm overhead cable extension', 'Trizeps-Kickback': 'Triceps kickback', 'Crunches': 'Crunch',
     'Sit-ups (gerade Bauchmuskeln)': 'Sit-up', 'Seitliche Crunches (schräge Bauchmuskeln)': 'Side crunch', 'Seitlicher Bauch': 'Side abs',
-    'Beinheben (hängend)': 'Hanging leg raise', 'Hängendes Beinheben': 'Hanging leg raise', 'Unterarmstütz (Plank)': 'Forearm plank',
+    'Beinheben (hängend)': 'Hanging leg raise', 'Hängendes Beinheben': 'Hanging leg raise', 'Knieheben': 'Knee raise', 'Unterarmstütz (Plank)': 'Forearm plank',
     'Unterarmstütz (Plank) mit Gewicht': 'Weighted forearm plank', 'Unterarmstütz seitlich ohne Hantel': 'Side plank',
     'Unterarmstütz seitlich mit Kurzhantel': 'Weighted side plank', 'Crunches am Kabelzug': 'Cable crunch', 'Crunches am Kabelzug stehend': 'Standing cable crunch',
     'Freies Training': 'Free workout', 'Eigenes Startgewicht': 'Custom starting weight', 'Gespeichert': 'Saved', 'Startgewicht aktualisiert.': 'Starting weight updated.',
