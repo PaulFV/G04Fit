@@ -897,6 +897,19 @@
       err: ['Ziehen am Nacken', 'Zu großer Bewegungsumfang aus der Hüfte']
     },
     {
+      id: 'crunch-reverse', name: 'Reverse Crunches', muscle: 'abs',
+      sec: [], equip: 'Körpergewicht', pattern: 'crunch',
+      demo: 'assets/exercises/gifs/crunch-reverse-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/crunch-reverse-dark.gif?v=1', demoLight: 'assets/exercises/gifs/crunch-reverse-whiteclean.gif?v=1',
+      level: 1, bw: true, inc: 2.5, f: 0, reps: [12, 20],
+      cues: [
+        'Rücken liegt flach am Boden, Arme neben dem Körper',
+        'Knie angewinkelt und das Becken aus dem Bauch heraus vom Boden rollen',
+        'Langsam absenken, ohne die Beine schwingen zu lassen'
+      ],
+      err: ['Schwung aus den Beinen', 'Hüfte nur nach vorn schieben', 'Zu schnelles Absenken']
+    },
+    {
       id: 'situp-straight', name: 'Sit-ups (gerade Bauchmuskeln)', muscle: 'abs',
       sec: [], equip: 'Körpergewicht', pattern: 'crunch',
       demo: 'assets/exercises/gifs/situp-straight-whiteclean.gif?v=8', demoStyle: 'reference-gif',
@@ -912,8 +925,8 @@
     {
       id: 'crunch-side', name: 'Seitliche Crunches (schräge Bauchmuskeln)', muscle: 'abs',
       sec: [], equip: 'Körpergewicht', pattern: 'crunch',
-      demo: 'assets/exercises/gifs/crunch-side-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/crunch-side-dark.gif?v=8', demoLight: 'assets/exercises/gifs/crunch-side-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/crunch-side-whiteclean.gif?v=12', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/crunch-side-dark.gif?v=12', demoLight: 'assets/exercises/gifs/crunch-side-whiteclean.gif?v=12',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [12, 20], uni: true,
       cues: [
         'Schultern leicht anheben und den Oberkörper kontrolliert zur Seite drehen',
@@ -921,6 +934,19 @@
         'Beide Seiten gleichmäßig trainieren'
       ],
       err: ['Am Kopf ziehen', 'Nur den Ellenbogen bewegen', 'Mit Schwung rotieren']
+    },
+    {
+      id: 'sidebend-db', name: 'Seitbeugen mit Gewicht', muscle: 'abs',
+      sec: [], equip: 'Kurzhantel', pattern: 'crunch',
+      demo: 'assets/exercises/gifs/sidebend-db-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/sidebend-db-dark.gif?v=1', demoLight: 'assets/exercises/gifs/sidebend-db-whiteclean.gif?v=1',
+      level: 1, inc: 2, f: 0.15, reps: [12, 20], uni: true,
+      cues: [
+        'Aufrecht stehen, Kurzhantel seitlich am Körper halten',
+        'Oberkörper kontrolliert zur Seite neigen, nicht nach vorn oder hinten kippen',
+        'Mit der schrägen Bauchmuskulatur wieder aufrichten, beide Seiten gleichmäßig'
+      ],
+      err: ['Oberkörper dreht mit', 'Zu schweres Gewicht mit Schwung', 'Hüfte schiebt zur Seite']
     },
     {
       id: 'abs-side-bench', name: 'Seitlicher Bauch', muscle: 'abs',
@@ -1092,6 +1118,19 @@
         'Langsam absenken, ohne das Gewicht abzulegen'
       ],
       err: ['Schwung aus dem Rücken', 'Gesäß hebt vom Sitz ab', 'Knie werden oben hart durchgestreckt']
+    },
+    {
+      id: 'squat-split', name: 'Einbeinige Kniebeuge', muscle: 'legs',
+      sec: [], equip: 'Kurzhanteln + Bank', pattern: 'legpress',
+      demo: 'assets/exercises/gifs/squat-split-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/squat-split-dark.gif?v=1', demoLight: 'assets/exercises/gifs/squat-split-whiteclean.gif?v=1',
+      level: 2, inc: 2, f: 0.18, reps: [8, 12],
+      cues: [
+        'Hinteren Fuß auf der Bank ablegen, Oberkörper aufrecht',
+        'Vorderes Knie über dem Fuß halten und senkrecht nach unten beugen',
+        'Über die Ferse des vorderen Beins kontrolliert wieder aufrichten'
+      ],
+      err: ['Vorderes Knie fällt nach innen', 'Zu kurzer Schritt nach vorn', 'Oberkörper kippt weit nach vorn']
     }
   ];
 

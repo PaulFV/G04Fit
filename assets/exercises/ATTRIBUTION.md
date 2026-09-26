@@ -238,3 +238,29 @@
   Animation (`leg-extension-whiteclean.gif`, `-dark.gif`). Die Vorlage war 512 × 512 Pixel groß (10 Bilder wie bei
   "Klimmzüge Anfänger") und ist auf 360 × 360 verkleinert (`UPSCALE`, `POSE_EVERY_BY` in `tools/dark-gifs.html`). Die
   Herkunft ist vor der Veröffentlichung zu klären.
+
+## Einbeinige Kniebeuge: neue Übung (26.09.2026)
+
+- "Einbeinige Kniebeuge" (`squat-split`, englisch "Bulgarian split squat", Kurzhanteln + Bank, Beine) nutzt eine vom
+  Projektinhaber gelieferte Animation (`squat-split-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die
+  beiden Endstellungen) ist in `tools/dark-gifs.html` auf 360 × 360 verkleinert (`UPSCALE`) und mit selbst erzeugten
+  Überblendungen zu den üblichen 12 Bildern ergänzt (`SYNTH_BLEND`), wie bei "Liegestütze schwer". Die Herkunft ist vor
+  der Veröffentlichung zu klären.
+
+## Reverse Crunches: neue Übung (26.09.2026)
+
+- "Reverse Crunches" (`crunch-reverse`, englisch "Reverse crunch", Bauch, Körpergewicht) nutzt eine vom Projektinhaber
+  gelieferte Animation (`crunch-reverse-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden
+  Endstellungen) ist wie bei "Einbeinige Kniebeuge" in `tools/dark-gifs.html` auf 360 × 360 verkleinert und mit selbst
+  erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der Veröffentlichung
+  zu klären.
+
+## Seitliche Crunches: neue Animation, Seitbeugen mit Gewicht: neue Übung (26.09.2026)
+
+- "Seitliche Crunches (schräge Bauchmuskeln)" (`crunch-side`) nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`crunch-side-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei
+  "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt
+  (`UPSCALE`, `SYNTH_BLEND` in `tools/dark-gifs.html`). Die frühere Fassung liegt in der Git-Historie.
+- "Seitbeugen mit Gewicht" (`sidebend-db`, englisch "Weighted side bend", Kurzhantel, Bauch) ist neu und nutzt eine vom
+  Projektinhaber gelieferte Animation (`sidebend-db-whiteclean.gif`, `-dark.gif`; 512 × 512 Pixel, 10 Bilder, auf
+  360 × 360 verkleinert, `POSE_EVERY_BY`). Die Herkunft beider Animationen ist vor der Veröffentlichung zu klären.
