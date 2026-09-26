@@ -374,3 +374,16 @@
   (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit
   selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der
   Veröffentlichung zu klären.
+
+## Dunkle GIFs: Bildstaub entfernt (26.09.2026)
+
+- In 40 dunklen Übungs-GIFs sind winzige, vom Rest getrennte Bildpunkte (bis 8 Pixel, insgesamt etwa 5.000 Pixel) auf
+  durchsichtig gesetzt, zum Beispiel helle Pünktchen entlang von Gerätekanten. Alle anderen Pixel, die Palette und die
+  Anzeigedauer der Bilder sind unverändert.
+
+## Dunkle GIFs: helle Taschen bei Mountain Climbers und Kreuzheben (26.09.2026)
+
+- Bei "Mountain Climbers" (`mountain-climber`) und "Kreuzheben (Multipresse)" (`deadlift-smith`) blieben eingeschlossene weiße
+  Hintergrundflächen (zwischen Oberschenkel und Bauch, hinter der Figur an der Multipresse) als hellgraue Flecken stehen.
+  Sie sind in den dunklen Fassungen auf durchsichtig gesetzt (`tools/gif-postprocess/pockets.cjs`). Der Konverter kennt dafür
+  jetzt die Einstellung `near` (`tools/dark-gifs.html`); sie reichte bei "Mountain Climbers" allein nicht aus.

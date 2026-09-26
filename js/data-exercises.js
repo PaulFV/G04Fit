@@ -42,7 +42,7 @@
       id: 'bench-bb', name: 'Negativ-Bankdrücken (Langhantel)', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Langhantel', pattern: 'pressflat',
       demo: 'assets/exercises/gifs/bench-bb-whiteclean.gif?v=10', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/bench-bb-dark.gif?v=10', demoLight: 'assets/exercises/gifs/bench-bb-whiteclean.gif?v=10',
+      demoDark: 'assets/exercises/gifs/bench-bb-dark.gif?v=11', demoLight: 'assets/exercises/gifs/bench-bb-whiteclean.gif?v=10',
       level: 2, inc: 2.5, f: 0.60, reps: [6, 10],
       cues: [
         'Schulterblätter fest zusammenziehen und nach unten fixieren',
@@ -56,7 +56,7 @@
       id: 'bench-bb-flat', name: 'Bankdrücken Langhantel', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Langhantel', pattern: 'pressflat',
       demo: 'assets/exercises/gifs/bench-bb-flat-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/bench-bb-flat-dark.gif?v=1', demoLight: 'assets/exercises/gifs/bench-bb-flat-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/bench-bb-flat-dark.gif?v=2', demoLight: 'assets/exercises/gifs/bench-bb-flat-whiteclean.gif?v=1',
       level: 2, inc: 2.5, f: 0.60, reps: [6, 10],
       cues: [
         'Schulterblätter fest zusammenziehen und nach unten fixieren',
@@ -70,7 +70,7 @@
       id: 'bench-db', name: 'Kurzhantel-Bankdrücken', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Kurzhanteln', pattern: 'pressflat',
       demo: 'assets/exercises/gifs/bench-db-whiteclean.gif?v=11', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/bench-db-dark.gif?v=11', demoLight: 'assets/exercises/gifs/bench-db-whiteclean.gif?v=11',
+      demoDark: 'assets/exercises/gifs/bench-db-dark.gif?v=12', demoLight: 'assets/exercises/gifs/bench-db-whiteclean.gif?v=11',
       level: 1, inc: 2, f: 0.24, reps: [8, 12],
       cues: [
         'Hanteln auf Höhe der unteren Brust starten',
@@ -84,7 +84,7 @@
       id: 'incline-db', name: 'Schrägbankdrücken (Kurzhantel)', muscle: 'chest',
       sec: ['shoulders', 'triceps'], equip: 'Kurzhanteln', pattern: 'pressflat',
       demo: 'assets/exercises/gifs/incline-db-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/incline-db-dark.gif?v=9', demoLight: 'assets/exercises/gifs/incline-db-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/incline-db-dark.gif?v=10', demoLight: 'assets/exercises/gifs/incline-db-whiteclean.gif?v=9',
       level: 2, inc: 2, f: 0.20, reps: [8, 12],
       cues: [
         'Bank auf 30–40° einstellen – mehr belastet vor allem die Schulter',
@@ -97,7 +97,7 @@
       id: 'fly-cable', name: 'Kabel-Fliegende', muscle: 'chest',
       sec: ['shoulders'], equip: 'Kabelzug', pattern: 'fly',
       demo: 'assets/exercises/gifs/fly-cable-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/fly-cable-dark.gif?v=9', demoLight: 'assets/exercises/gifs/fly-cable-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/fly-cable-dark.gif?v=10', demoLight: 'assets/exercises/gifs/fly-cable-whiteclean.gif?v=9',
       level: 1, inc: 2.5, f: 0.14, reps: [10, 15],
       cues: [
         'Ellenbogen leicht gebeugt und den ganzen Satz über konstant halten',
@@ -110,7 +110,7 @@
       id: 'fly-cable-mid', name: 'Kabel-Fliegende (mittlere Brust)', muscle: 'chest',
       sec: ['shoulders'], equip: 'Kabelzug', pattern: 'fly',
       demo: 'assets/exercises/gifs/fly-cable-mid-whiteclean.gif?v=2', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/fly-cable-mid-dark.gif?v=2', demoLight: 'assets/exercises/gifs/fly-cable-mid-whiteclean.gif?v=2',
+      demoDark: 'assets/exercises/gifs/fly-cable-mid-dark.gif?v=3', demoLight: 'assets/exercises/gifs/fly-cable-mid-whiteclean.gif?v=2',
       level: 1, inc: 2.5, f: 0.14, reps: [10, 15],
       cues: [
         'Kabel auf Brusthöhe einstellen und leicht versetzt stehen',
@@ -136,7 +136,7 @@
       id: 'fly-machine', name: 'Butterfly (Maschine)', muscle: 'chest',
       sec: [], equip: 'Maschine', pattern: 'fly',
       demo: 'assets/exercises/gifs/butterfly-machine-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/butterfly-machine-dark.gif?v=1', demoLight: 'assets/exercises/gifs/butterfly-machine-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/butterfly-machine-dark.gif?v=2', demoLight: 'assets/exercises/gifs/butterfly-machine-whiteclean.gif?v=1',
       level: 1, inc: 5, f: 0.30, reps: [10, 15],
       cues: [
         'Sitzhöhe so wählen, dass die Griffe auf Brusthöhe liegen',
@@ -149,7 +149,7 @@
       id: 'fly-machine-2', name: 'Butterfly 2 (Maschine)', muscle: 'chest',
       sec: ['shoulders'], equip: 'Maschine', pattern: 'fly',
       demo: 'assets/exercises/gifs/butterfly2-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/butterfly2-dark.gif?v=8', demoLight: 'assets/exercises/gifs/butterfly2-whiteclean.gif?v=8',
+      demoDark: 'assets/exercises/gifs/butterfly2-dark.gif?v=9', demoLight: 'assets/exercises/gifs/butterfly2-whiteclean.gif?v=8',
       level: 1, inc: 5, f: 0.30, reps: [10, 15],
       cues: [
         'Sitzhöhe so einstellen, dass die Griffe auf Brusthöhe liegen',
@@ -227,7 +227,7 @@
       id: 'dip-chest', name: 'Dips (brustbetont)', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Barren', pattern: 'dip',
       demo: 'assets/exercises/gifs/dip-chest-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/dip-chest-dark.gif?v=9', demoLight: 'assets/exercises/gifs/dip-chest-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/dip-chest-dark.gif?v=10', demoLight: 'assets/exercises/gifs/dip-chest-whiteclean.gif?v=9',
       level: 3, bw: true, inc: 2.5, f: 0, reps: [6, 12],
       cues: [
         'Oberkörper bewusst nach vorne neigen',
@@ -240,7 +240,7 @@
       id: 'dip-heavy', name: 'Dips schwer', muscle: 'chest',
       sec: ['triceps', 'shoulders'], equip: 'Barren', pattern: 'dip',
       demo: 'assets/exercises/gifs/dip-heavy-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/dip-heavy-dark.gif?v=9', demoLight: 'assets/exercises/gifs/dip-heavy-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/dip-heavy-dark.gif?v=10', demoLight: 'assets/exercises/gifs/dip-heavy-whiteclean.gif?v=9',
       level: 3, bw: true, inc: 2.5, f: 0, reps: [5, 10],
       cues: [
         'Zusatzgewicht sicher am Gürtel befestigen',
@@ -268,7 +268,7 @@
       id: 'pullup-assisted', name: 'Klimmzüge Anfänger', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange', pattern: 'pulldown',
       demo: 'assets/exercises/gifs/pullup-assisted-whiteclean.gif?v=12', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullup-assisted-dark.gif?v=13', demoLight: 'assets/exercises/gifs/pullup-assisted-whiteclean.gif?v=12',
+      demoDark: 'assets/exercises/gifs/pullup-assisted-dark.gif?v=14', demoLight: 'assets/exercises/gifs/pullup-assisted-whiteclean.gif?v=12',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [6, 12],
       cues: [
         'Ein Fuß unterstützt leicht auf einer stabilen Bank',
@@ -281,7 +281,7 @@
       id: 'pullup-machine-kneeling', name: 'Klimmzüge Maschine kniend', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Maschine', pattern: 'pulldown',
       demo: 'assets/exercises/gifs/pullup-machine-kneeling-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullup-machine-kneeling-dark.gif?v=1', demoLight: 'assets/exercises/gifs/pullup-machine-kneeling-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/pullup-machine-kneeling-dark.gif?v=2', demoLight: 'assets/exercises/gifs/pullup-machine-kneeling-whiteclean.gif?v=1',
       level: 1, inc: 5, f: 0.30, reps: [8, 12],
       cues: [
         'Knie auf das Polster, Griffe schulterbreit greifen und Brust anheben',
@@ -320,7 +320,7 @@
       id: 'pullup-wide-overhand', name: 'Klimmzüge Obergriff breit', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange', pattern: 'pulldown',
       demo: 'assets/exercises/gifs/pullup-wide-overhand-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullup-wide-overhand-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pullup-wide-overhand-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/pullup-wide-overhand-dark.gif?v=10', demoLight: 'assets/exercises/gifs/pullup-wide-overhand-whiteclean.gif?v=9',
       level: 3, bw: true, inc: 2.5, f: 0, reps: [4, 8],
       cues: [
         'Stange deutlich breiter als schulterbreit im Obergriff greifen',
@@ -333,7 +333,7 @@
       id: 'pullup-wide-weighted', name: 'Klimmzüge Obergriff breit Zusatzgewicht', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange + Gewicht', pattern: 'pulldown',
       demo: 'assets/exercises/gifs/pullup-wide-weighted-whiteclean.gif?v=12', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullup-wide-weighted-dark.gif?v=12', demoLight: 'assets/exercises/gifs/pullup-wide-weighted-whiteclean.gif?v=12',
+      demoDark: 'assets/exercises/gifs/pullup-wide-weighted-dark.gif?v=13', demoLight: 'assets/exercises/gifs/pullup-wide-weighted-whiteclean.gif?v=12',
       level: 3, bw: true, inc: 2.5, f: 0, reps: [3, 8],
       cues: [
         'Zusatzgewicht sicher am Gürtel befestigen',
@@ -372,7 +372,7 @@
       id: 'latpull-wide-chest', name: 'Latzug breit zur Brust', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Kabelzug', pattern: 'pulldown',
       demo: 'assets/exercises/gifs/latpull-wide-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/latpull-wide-dark.gif?v=9', demoLight: 'assets/exercises/gifs/latpull-wide-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/latpull-wide-dark.gif?v=10', demoLight: 'assets/exercises/gifs/latpull-wide-whiteclean.gif?v=9',
       level: 1, inc: 5, f: 0.55, reps: [8, 12],
       cues: [
         'Breiten Obergriff etwas außerhalb der Schultern greifen',
@@ -424,7 +424,7 @@
       id: 'row-bb-underhand-incline', name: 'Langhantelrudern Untergriff Schrägbank', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Langhantel + Schrägbank', pattern: 'row',
       demo: 'assets/exercises/gifs/row-bb-underhand-incline-whiteclean.gif?v=12', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-bb-underhand-incline-dark.gif?v=12', demoLight: 'assets/exercises/gifs/row-bb-underhand-incline-whiteclean.gif?v=12',
+      demoDark: 'assets/exercises/gifs/row-bb-underhand-incline-dark.gif?v=13', demoLight: 'assets/exercises/gifs/row-bb-underhand-incline-whiteclean.gif?v=12',
       level: 2, inc: 2.5, f: 0.40, reps: [8, 12],
       cues: [
         'Brust auf der Schrägbank ablegen und Untergriff schulterbreit wählen',
@@ -437,7 +437,7 @@
       id: 'row-smith-underhand', name: 'Langhantelrudern Untergriff Multipresse', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Multipresse', pattern: 'row',
       demo: 'assets/exercises/gifs/row-smith-underhand-whiteclean.gif?v=12', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-smith-underhand-dark.gif?v=12', demoLight: 'assets/exercises/gifs/row-smith-underhand-whiteclean.gif?v=12',
+      demoDark: 'assets/exercises/gifs/row-smith-underhand-dark.gif?v=13', demoLight: 'assets/exercises/gifs/row-smith-underhand-whiteclean.gif?v=12',
       level: 2, inc: 2.5, f: 0.45, reps: [8, 12],
       cues: [
         'Stange im schulterbreiten Untergriff greifen',
@@ -450,7 +450,7 @@
       id: 'row-db', name: 'Kurzhantelrudern (einarmig)', muscle: 'back',
       sec: ['biceps'], equip: 'Kurzhantel', pattern: 'row',
       demo: 'assets/exercises/gifs/row-db-whiteclean.gif?v=10', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-db-dark.gif?v=10', demoLight: 'assets/exercises/gifs/row-db-whiteclean.gif?v=10',
+      demoDark: 'assets/exercises/gifs/row-db-dark.gif?v=11', demoLight: 'assets/exercises/gifs/row-db-whiteclean.gif?v=10',
       level: 1, inc: 2, f: 0.28, reps: [8, 12], uni: true,
       cues: [
         'Eine Hand und ein Knie stützen auf der Bank',
@@ -476,7 +476,7 @@
       id: 'row-cable', name: 'Kabelrudern (sitzend)', muscle: 'back',
       sec: ['biceps'], equip: 'Kabelzug', pattern: 'row',
       demo: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-cable-dark.gif?v=9', demoLight: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/row-cable-dark.gif?v=10', demoLight: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=9',
       level: 1, inc: 5, f: 0.50, reps: [10, 14],
       cues: [
         'Aufrecht sitzen, Brust raus, Knie leicht gebeugt',
@@ -489,7 +489,7 @@
       id: 'row-cable-upper', name: 'Rudern am Kabelzug (oberer Rücken)', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Kabelzug', pattern: 'row',
       demo: 'assets/exercises/gifs/row-cable-upper-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-cable-upper-dark.gif?v=1', demoLight: 'assets/exercises/gifs/row-cable-upper-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/row-cable-upper-dark.gif?v=2', demoLight: 'assets/exercises/gifs/row-cable-upper-whiteclean.gif?v=1',
       level: 1, inc: 5, f: 0.45, reps: [10, 14],
       cues: [
         'Aufrecht sitzen, Brust raus, Knie leicht gebeugt',
@@ -502,7 +502,7 @@
       id: 'deadlift-smith', name: 'Kreuzheben (Multipresse)', muscle: 'back',
       sec: ['legs'], equip: 'Multipresse', pattern: 'row',
       demo: 'assets/exercises/gifs/deadlift-smith-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/deadlift-smith-dark.gif?v=1', demoLight: 'assets/exercises/gifs/deadlift-smith-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/deadlift-smith-dark.gif?v=2', demoLight: 'assets/exercises/gifs/deadlift-smith-whiteclean.gif?v=1',
       level: 2, inc: 2.5, f: 0.70, reps: [6, 10],
       cues: [
         'Füße hüftbreit unter die Stange, Rücken gerade und Brust heraus',
@@ -515,7 +515,7 @@
       id: 'pullover', name: 'Überzüge (Pullover)', muscle: 'back',
       sec: ['chest'], equip: 'Kurzhantel', pattern: 'pullover',
       demo: 'assets/exercises/gifs/pullover-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullover-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pullover-whiteclean.gif?v=8',
+      demoDark: 'assets/exercises/gifs/pullover-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pullover-whiteclean.gif?v=8',
       level: 2, inc: 2.5, f: 0.18, reps: [10, 14],
       cues: [
         'Hantel mit beiden Händen über der Brust halten',
@@ -659,7 +659,7 @@
       id: 'rear-fly-db-incline', name: 'Butterfly Reverse Kurzhantel Schrägbank', muscle: 'shoulders',
       sec: ['back'], equip: 'Kurzhanteln + Schrägbank', pattern: 'fly',
       demo: 'assets/exercises/gifs/reverse-fly-db-incline-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/reverse-fly-db-incline-dark.gif?v=8', demoLight: 'assets/exercises/gifs/reverse-fly-db-incline-whiteclean.gif?v=8',
+      demoDark: 'assets/exercises/gifs/reverse-fly-db-incline-dark.gif?v=9', demoLight: 'assets/exercises/gifs/reverse-fly-db-incline-whiteclean.gif?v=8',
       level: 1, inc: 1, f: 0.08, reps: [12, 18],
       cues: [
         'Brust stabil auf der Schrägbank ablegen',
@@ -791,7 +791,7 @@
       id: 'curl-preacher', name: 'Scott-Curl (Preacher)', muscle: 'biceps',
       sec: [], equip: 'Scottbank', pattern: 'curl',
       demo: 'assets/exercises/gifs/curl-preacher-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/curl-preacher-dark.gif?v=8', demoLight: 'assets/exercises/gifs/curl-preacher-whiteclean.gif?v=8',
+      demoDark: 'assets/exercises/gifs/curl-preacher-dark.gif?v=9', demoLight: 'assets/exercises/gifs/curl-preacher-whiteclean.gif?v=8',
       level: 2, inc: 2.5, f: 0.20, reps: [8, 12],
       cues: [
         'Achseln liegen fest am Polster',
@@ -804,7 +804,7 @@
       id: 'curl-cable', name: 'Kabel-Curl', muscle: 'biceps',
       sec: [], equip: 'Kabelzug', pattern: 'curl',
       demo: 'assets/exercises/gifs/curl-cable-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/curl-cable-dark.gif?v=9', demoLight: 'assets/exercises/gifs/curl-cable-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/curl-cable-dark.gif?v=10', demoLight: 'assets/exercises/gifs/curl-cable-whiteclean.gif?v=9',
       level: 1, inc: 2.5, f: 0.24, reps: [12, 16],
       cues: [
         'Konstante Spannung über die gesamte Bewegung',
@@ -819,7 +819,7 @@
       id: 'triceps-pushdown', name: 'Trizepsdrücken am Kabelzug', muscle: 'triceps',
       sec: [], equip: 'Kabelzug', pattern: 'extension',
       demo: 'assets/exercises/gifs/triceps-pushdown-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/triceps-pushdown-dark.gif?v=3', demoLight: 'assets/exercises/gifs/triceps-pushdown-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/triceps-pushdown-dark.gif?v=4', demoLight: 'assets/exercises/gifs/triceps-pushdown-whiteclean.gif?v=1',
       level: 1, inc: 2.5, f: 0.25, reps: [10, 15],
       cues: [
         'Aufrecht und stabil vor dem Kabelzug stehen',
@@ -845,7 +845,7 @@
       id: 'bench-dip-triceps', name: 'Bank-Dips (Trizeps)', muscle: 'triceps',
       sec: ['chest', 'shoulders'], equip: 'Bank', pattern: 'dip',
       demo: 'assets/exercises/gifs/triceps-bench-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/triceps-bench-dark.gif?v=8', demoLight: 'assets/exercises/gifs/triceps-bench-whiteclean.gif?v=8',
+      demoDark: 'assets/exercises/gifs/triceps-bench-dark.gif?v=9', demoLight: 'assets/exercises/gifs/triceps-bench-whiteclean.gif?v=8',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [8, 15],
       cues: [
         'Hände schulterbreit an der vorderen Bankkante platzieren',
@@ -858,7 +858,7 @@
       id: 'bench-db-triceps', name: 'Trizeps-Bankdrücken mit Kurzhanteln', muscle: 'triceps',
       sec: ['chest', 'shoulders'], equip: 'Kurzhanteln', pattern: 'pressflat',
       demo: 'assets/exercises/gifs/bench-db-triceps-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/bench-db-triceps-dark.gif?v=9', demoLight: 'assets/exercises/gifs/bench-db-triceps-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/bench-db-triceps-dark.gif?v=10', demoLight: 'assets/exercises/gifs/bench-db-triceps-whiteclean.gif?v=9',
       level: 2, inc: 2, f: 0.18, reps: [8, 12],
       cues: [
         'Kurzhanteln eng und neutral über der Brust halten',
@@ -871,7 +871,7 @@
       id: 'bench-bb-triceps', name: 'Trizeps-Bankdrücken mit Langhantel', muscle: 'triceps',
       sec: ['chest', 'shoulders'], equip: 'Langhantel', pattern: 'pressflat',
       demo: 'assets/exercises/gifs/bench-bb-triceps-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/bench-bb-triceps-dark.gif?v=8', demoLight: 'assets/exercises/gifs/bench-bb-triceps-whiteclean.gif?v=8',
+      demoDark: 'assets/exercises/gifs/bench-bb-triceps-dark.gif?v=9', demoLight: 'assets/exercises/gifs/bench-bb-triceps-whiteclean.gif?v=8',
       level: 2, inc: 2.5, f: 0.42, reps: [6, 10],
       cues: [
         'Stange etwa schulterbreit greifen und Handgelenke gerade halten',
@@ -884,7 +884,7 @@
       id: 'triceps-bb-overhead', name: 'Trizepsdrücken Langhantel', muscle: 'triceps',
       sec: ['shoulders'], equip: 'Langhantel', pattern: 'extension',
       demo: 'assets/exercises/gifs/triceps-bb-overhead-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/triceps-bb-overhead-dark.gif?v=1', demoLight: 'assets/exercises/gifs/triceps-bb-overhead-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/triceps-bb-overhead-dark.gif?v=2', demoLight: 'assets/exercises/gifs/triceps-bb-overhead-whiteclean.gif?v=1',
       level: 2, inc: 2.5, f: 0.20, reps: [8, 12],
       cues: [
         'Oberarme bleiben senkrecht',
@@ -898,7 +898,7 @@
       id: 'skullcrusher-db-onearm', name: 'Stirndrücken einarmig', muscle: 'triceps',
       sec: [], equip: 'Kurzhantel + Bank', pattern: 'extension',
       demo: 'assets/exercises/gifs/skullcrusher-db-onearm-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/skullcrusher-db-onearm-dark.gif?v=1', demoLight: 'assets/exercises/gifs/skullcrusher-db-onearm-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/skullcrusher-db-onearm-dark.gif?v=2', demoLight: 'assets/exercises/gifs/skullcrusher-db-onearm-whiteclean.gif?v=1',
       level: 2, inc: 1, f: 0.10, reps: [10, 15], uni: true,
       cues: [
         'Auf der Bank liegen, Oberarm senkrecht über der Schulter halten',
@@ -911,7 +911,7 @@
       id: 'skullcrusher-cable', name: 'Stirndrücken am Kabelzug', muscle: 'triceps',
       sec: [], equip: 'Kabelzug + Bank', pattern: 'extension',
       demo: 'assets/exercises/gifs/skullcrusher-cable-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/skullcrusher-cable-dark.gif?v=1', demoLight: 'assets/exercises/gifs/skullcrusher-cable-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/skullcrusher-cable-dark.gif?v=2', demoLight: 'assets/exercises/gifs/skullcrusher-cable-whiteclean.gif?v=1',
       level: 2, inc: 2.5, f: 0.20, reps: [10, 15],
       cues: [
         'Oberarme senkrecht oder leicht nach hinten geneigt',
@@ -924,7 +924,7 @@
       id: 'skullcrusher', name: 'Stirndrücken (French Press)', muscle: 'triceps',
       sec: [], equip: 'SZ-Stange', pattern: 'extension',
       demo: 'assets/exercises/gifs/skullcrusher-bb-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/skullcrusher-bb-dark.gif?v=8', demoLight: 'assets/exercises/gifs/skullcrusher-bb-whiteclean.gif?v=8',
+      demoDark: 'assets/exercises/gifs/skullcrusher-bb-dark.gif?v=9', demoLight: 'assets/exercises/gifs/skullcrusher-bb-whiteclean.gif?v=8',
       level: 2, inc: 2.5, f: 0.22, reps: [8, 12],
       cues: [
         'Oberarme senkrecht oder leicht nach hinten geneigt',
@@ -1056,7 +1056,7 @@
       id: 'abs-side-bench', name: 'Seitlicher Bauch', muscle: 'abs',
       sec: [], equip: 'Bank', pattern: 'crunch',
       demo: 'assets/exercises/gifs/abs-side-bench-whiteclean.gif?v=12', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/abs-side-bench-dark.gif?v=12', demoLight: 'assets/exercises/gifs/abs-side-bench-whiteclean.gif?v=12',
+      demoDark: 'assets/exercises/gifs/abs-side-bench-dark.gif?v=13', demoLight: 'assets/exercises/gifs/abs-side-bench-whiteclean.gif?v=12',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [12, 20], uni: true,
       cues: [
         'Unterschenkel stabil auf der Bank ablegen',
@@ -1082,7 +1082,7 @@
       id: 'legraise-hanging-station', name: 'Hängendes Beinheben', muscle: 'abs',
       sec: ['back', 'shoulders'], equip: 'Klimmzugstation', pattern: 'legraise',
       demo: 'assets/exercises/gifs/legraise-hanging-station-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/legraise-hanging-station-dark.gif?v=9', demoLight: 'assets/exercises/gifs/legraise-hanging-station-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/legraise-hanging-station-dark.gif?v=10', demoLight: 'assets/exercises/gifs/legraise-hanging-station-whiteclean.gif?v=9',
       level: 2, bw: true, inc: 2.5, f: 0, reps: [8, 15],
       cues: [
         'Schultern aktiv nach unten ziehen und ruhig hängen',
@@ -1095,7 +1095,7 @@
       id: 'kneeraise-station', name: 'Knieheben', muscle: 'abs',
       sec: ['shoulders'], equip: 'Dipstation', pattern: 'legraise',
       demo: 'assets/exercises/gifs/kneeraise-station-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/kneeraise-station-dark.gif?v=2', demoLight: 'assets/exercises/gifs/kneeraise-station-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/kneeraise-station-dark.gif?v=3', demoLight: 'assets/exercises/gifs/kneeraise-station-whiteclean.gif?v=1',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [10, 15],
       cues: [
         'Unterarme oder Hände fest aufstützen und den Oberkörper ruhig halten',
@@ -1160,7 +1160,7 @@
       id: 'mountain-climber', name: 'Mountain Climbers', muscle: 'abs',
       sec: ['shoulders', 'chest'], equip: 'Körpergewicht', pattern: 'plank',
       demo: 'assets/exercises/gifs/mountain-climber-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/mountain-climber-dark.gif?v=1', demoLight: 'assets/exercises/gifs/mountain-climber-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/mountain-climber-dark.gif?v=2', demoLight: 'assets/exercises/gifs/mountain-climber-whiteclean.gif?v=1',
       level: 2, bw: true, time: true, inc: 5, f: 0, reps: [20, 45],
       cues: [
         'Hände unter den Schultern, Körper bildet eine gerade Linie',
@@ -1186,7 +1186,7 @@
       id: 'cable-crunch-standing', name: 'Crunches am Kabelzug stehend', muscle: 'abs',
       sec: [], equip: 'Kabelzug', pattern: 'crunch',
       demo: 'assets/exercises/gifs/crunch-cable-standing-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/crunch-cable-standing-dark.gif?v=1', demoLight: 'assets/exercises/gifs/crunch-cable-standing-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/crunch-cable-standing-dark.gif?v=2', demoLight: 'assets/exercises/gifs/crunch-cable-standing-whiteclean.gif?v=1',
       level: 1, inc: 2.5, f: 0.30, reps: [12, 18],
       cues: [
         'Aufrecht stehen und das Seil neben dem Kopf halten',
@@ -1201,7 +1201,7 @@
       id: 'leg-press', name: 'Beinpresse', muscle: 'legs',
       sec: [], equip: 'Maschine', pattern: 'legpress',
       demo: 'assets/exercises/gifs/leg-press-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/leg-press-dark.gif?v=1', demoLight: 'assets/exercises/gifs/leg-press-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/leg-press-dark.gif?v=2', demoLight: 'assets/exercises/gifs/leg-press-whiteclean.gif?v=1',
       level: 1, inc: 5, f: 1.2, reps: [10, 15],
       cues: [
         'Rücken und Gesäß bleiben fest an Lehne und Sitz',
@@ -1214,7 +1214,7 @@
       id: 'leg-extension', name: 'Beinstrecker', muscle: 'legs',
       sec: [], equip: 'Maschine', pattern: 'extension',
       demo: 'assets/exercises/gifs/leg-extension-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/leg-extension-dark.gif?v=2', demoLight: 'assets/exercises/gifs/leg-extension-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/leg-extension-dark.gif?v=3', demoLight: 'assets/exercises/gifs/leg-extension-whiteclean.gif?v=1',
       level: 1, inc: 5, f: 0.40, reps: [10, 15],
       cues: [
         'Sitz so einstellen, dass die Knie auf Höhe der Drehachse liegen',
