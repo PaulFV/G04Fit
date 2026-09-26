@@ -397,8 +397,8 @@
     {
       id: 'row-bb-underhand-incline', name: 'Langhantelrudern Untergriff Schrägbank', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Langhantel + Schrägbank', pattern: 'row',
-      demo: 'assets/exercises/gifs/row-bb-underhand-incline-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-bb-underhand-incline-dark.gif?v=8', demoLight: 'assets/exercises/gifs/row-bb-underhand-incline-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/row-bb-underhand-incline-whiteclean.gif?v=12', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/row-bb-underhand-incline-dark.gif?v=12', demoLight: 'assets/exercises/gifs/row-bb-underhand-incline-whiteclean.gif?v=12',
       level: 2, inc: 2.5, f: 0.40, reps: [8, 12],
       cues: [
         'Brust auf der Schrägbank ablegen und Untergriff schulterbreit wählen',
@@ -1183,6 +1183,19 @@
         'Über die Ferse des vorderen Beins kontrolliert wieder aufrichten'
       ],
       err: ['Vorderes Knie fällt nach innen', 'Zu kurzer Schritt nach vorn', 'Oberkörper kippt weit nach vorn']
+    },
+    {
+      id: 'lunge-db', name: 'Ausfallschritte (Kurzhanteln)', muscle: 'legs',
+      sec: [], equip: 'Kurzhanteln', pattern: 'legpress',
+      demo: 'assets/exercises/gifs/lunge-db-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/lunge-db-dark.gif?v=1', demoLight: 'assets/exercises/gifs/lunge-db-whiteclean.gif?v=1',
+      level: 1, inc: 2, f: 0.15, reps: [8, 12],
+      cues: [
+        'Aufrecht stehen, Kurzhanteln locker seitlich am Körper halten',
+        'Großen Schritt nach vorn machen und das hintere Knie kontrolliert Richtung Boden senken',
+        'Über die Ferse des vorderen Beins wieder aufrichten und die Seite wechseln'
+      ],
+      err: ['Vorderes Knie fällt nach innen', 'Zu kurzer Schritt nach vorn', 'Oberkörper kippt nach vorn']
     }
   ];
 

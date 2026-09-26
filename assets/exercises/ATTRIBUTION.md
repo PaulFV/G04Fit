@@ -311,3 +311,18 @@
   (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit
   selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der
   Veröffentlichung zu klären.
+
+## Ausfallschritte (Kurzhanteln): neue Übung (26.09.2026)
+
+- "Ausfallschritte (Kurzhanteln)" (`lunge-db`, englisch "Dumbbell lunge", Beine) nutzt eine vom Projektinhaber gelieferte
+  Animation (`lunge-db-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist
+  wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt
+  (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Langhantelrudern Untergriff Schrägbank: neue Animation (26.09.2026)
+
+- "Langhantelrudern Untergriff Schrägbank" (`row-bb-underhand-incline`, englisch "Underhand incline barbell row")
+  nutzt eine neue, vom Projektinhaber gelieferte Animation (`row-bb-underhand-incline-whiteclean.gif`, `-dark.gif`).
+  Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360
+  verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die frühere
+  Fassung liegt in der Git-Historie. Die Herkunft ist vor der Veröffentlichung zu klären.
