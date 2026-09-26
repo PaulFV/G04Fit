@@ -32,7 +32,7 @@
     'ohext-db': 'ohext-db', 'triceps-cable-overhead-onearm': 'ohext-db', 'kickback': 'kickback',
     'crunch': 'crunch', 'situp-straight': 'crunch', 'crunch-side': 'crunch', 'abs-side-bench': 'crunch',
     'legraise': 'legraise', 'legraise-hanging-station': 'legraise', 'kneeraise-station': 'legraise', 'plank': 'plank',
-    'plank-weighted': 'plank', 'side-plank': 'plank', 'side-plank-db': 'plank', 'cable-crunch': 'cable-crunch', 'cable-crunch-standing': 'cable-crunch'
+    'plank-weighted': 'plank', 'mountain-climber': 'plank', 'side-plank': 'plank', 'side-plank-db': 'plank', 'cable-crunch': 'cable-crunch', 'cable-crunch-standing': 'cable-crunch'
   };
 
   function exercisePhoto(ex) {

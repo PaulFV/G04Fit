@@ -223,3 +223,18 @@
   Animation (`kneeraise-station-whiteclean.gif`, `-dark.gif`). Die Vorlage war 512 × 512 Pixel groß und ist wie bei
   "Klimmzüge Anfänger" auf 360 × 360 verkleinert (`tools/dark-gifs.html`). Die Herkunft ist vor der Veröffentlichung
   zu klären.
+
+## Mountain Climbers: neue Übung (26.09.2026)
+
+- "Mountain Climbers" (`mountain-climber`, englisch "Mountain climber", Bauch, Körpergewicht, Zeitübung) nutzt eine vom
+  Projektinhaber gelieferte Animation (`mountain-climber-whiteclean.gif`, `-dark.gif`). Die Vorlage war 512 × 512 Pixel
+  groß und besteht aus 8 gleich langen Bildern ohne Überblendungen; sie ist auf 360 × 360 verkleinert und jedes Bild
+  wird für die dunkle Fassung einzeln freigestellt (`POSE_EVERY_BY` = 1 in `tools/dark-gifs.html`). Die Herkunft ist vor
+  der Veröffentlichung zu klären.
+
+## Beinstrecker: neue Übung (26.09.2026)
+
+- "Beinstrecker" (`leg-extension`, englisch "Leg extension", Maschine, Beine) nutzt eine vom Projektinhaber gelieferte
+  Animation (`leg-extension-whiteclean.gif`, `-dark.gif`). Die Vorlage war 512 × 512 Pixel groß (10 Bilder wie bei
+  "Klimmzüge Anfänger") und ist auf 360 × 360 verkleinert (`UPSCALE`, `POSE_EVERY_BY` in `tools/dark-gifs.html`). Die
+  Herkunft ist vor der Veröffentlichung zu klären.

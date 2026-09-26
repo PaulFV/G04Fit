@@ -1027,6 +1027,19 @@
       err: ['Hantel rutscht', 'Hüfte sinkt ab', 'Oberkörper dreht nach vorn']
     },
     {
+      id: 'mountain-climber', name: 'Mountain Climbers', muscle: 'abs',
+      sec: ['shoulders', 'chest'], equip: 'Körpergewicht', pattern: 'plank',
+      demo: 'assets/exercises/gifs/mountain-climber-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/mountain-climber-dark.gif?v=1', demoLight: 'assets/exercises/gifs/mountain-climber-whiteclean.gif?v=1',
+      level: 2, bw: true, time: true, inc: 5, f: 0, reps: [20, 45],
+      cues: [
+        'Hände unter den Schultern, Körper bildet eine gerade Linie',
+        'Abwechselnd ein Knie zügig zur Brust ziehen',
+        'Hüfte bleibt tief und ruhig, Bauch dauerhaft anspannen'
+      ],
+      err: ['Hüfte schiebt nach oben', 'Hüfte sackt durch', 'Schultern wandern hinter die Hände']
+    },
+    {
       id: 'cable-crunch', name: 'Crunches am Kabelzug', muscle: 'abs',
       sec: [], equip: 'Kabelzug', pattern: 'crunch',
       demo: 'assets/exercises/gifs/crunch-cable-kneeling-whiteclean.gif?v=8', demoStyle: 'reference-gif',
@@ -1066,6 +1079,19 @@
         'Kontrolliert absenken und oben die Knie nicht ganz durchstrecken'
       ],
       err: ['Knie fallen nach innen', 'Gesäß hebt vom Sitz ab', 'Knie werden oben durchgestreckt']
+    },
+    {
+      id: 'leg-extension', name: 'Beinstrecker', muscle: 'legs',
+      sec: [], equip: 'Maschine', pattern: 'extension',
+      demo: 'assets/exercises/gifs/leg-extension-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/leg-extension-dark.gif?v=1', demoLight: 'assets/exercises/gifs/leg-extension-whiteclean.gif?v=1',
+      level: 1, inc: 5, f: 0.40, reps: [10, 15],
+      cues: [
+        'Sitz so einstellen, dass die Knie auf Höhe der Drehachse liegen',
+        'Beine kontrolliert strecken und oben die Oberschenkel kurz anspannen',
+        'Langsam absenken, ohne das Gewicht abzulegen'
+      ],
+      err: ['Schwung aus dem Rücken', 'Gesäß hebt vom Sitz ab', 'Knie werden oben hart durchgestreckt']
     }
   ];
 
