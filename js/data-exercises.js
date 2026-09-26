@@ -410,8 +410,8 @@
     {
       id: 'row-smith-underhand', name: 'Langhantelrudern Untergriff Multipresse', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Multipresse', pattern: 'row',
-      demo: 'assets/exercises/gifs/row-smith-underhand-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-smith-underhand-dark.gif?v=8', demoLight: 'assets/exercises/gifs/row-smith-underhand-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/row-smith-underhand-whiteclean.gif?v=12', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/row-smith-underhand-dark.gif?v=12', demoLight: 'assets/exercises/gifs/row-smith-underhand-whiteclean.gif?v=12',
       level: 2, inc: 2.5, f: 0.45, reps: [8, 12],
       cues: [
         'Stange im schulterbreiten Untergriff greifen',
@@ -471,6 +471,19 @@
         'Schulterblätter am Endpunkt zusammenführen'
       ],
       err: ['Starkes Zurücklehnen', 'Schultern werden hochgezogen']
+    },
+    {
+      id: 'deadlift-smith', name: 'Kreuzheben (Multipresse)', muscle: 'back',
+      sec: ['legs'], equip: 'Multipresse', pattern: 'row',
+      demo: 'assets/exercises/gifs/deadlift-smith-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/deadlift-smith-dark.gif?v=1', demoLight: 'assets/exercises/gifs/deadlift-smith-whiteclean.gif?v=1',
+      level: 2, inc: 2.5, f: 0.70, reps: [6, 10],
+      cues: [
+        'Füße hüftbreit unter die Stange, Rücken gerade und Brust heraus',
+        'Stange eng am Körper nach oben führen, Hüfte und Knie strecken gleichzeitig',
+        'Oben aufrecht stehen und kontrolliert wieder absenken'
+      ],
+      err: ['Rücken wird rund', 'Stange driftet vom Körper weg', 'Hohlkreuz beim Aufrichten']
     },
     {
       id: 'pullover', name: 'Überzüge (Pullover)', muscle: 'back',
@@ -1003,8 +1016,8 @@
     {
       id: 'abs-side-bench', name: 'Seitlicher Bauch', muscle: 'abs',
       sec: [], equip: 'Bank', pattern: 'crunch',
-      demo: 'assets/exercises/gifs/abs-side-bench-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/abs-side-bench-dark.gif?v=8', demoLight: 'assets/exercises/gifs/abs-side-bench-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/abs-side-bench-whiteclean.gif?v=12', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/abs-side-bench-dark.gif?v=12', demoLight: 'assets/exercises/gifs/abs-side-bench-whiteclean.gif?v=12',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [12, 20], uni: true,
       cues: [
         'Unterschenkel stabil auf der Bank ablegen',

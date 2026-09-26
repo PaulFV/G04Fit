@@ -326,3 +326,28 @@
   Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360
   verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die frühere
   Fassung liegt in der Git-Historie. Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Kreuzheben (Multipresse): neue Übung (26.09.2026)
+
+- "Kreuzheben (Multipresse)" (`deadlift-smith`, englisch "Smith machine deadlift", Rücken, Multipresse) nutzt eine vom
+  Projektinhaber gelieferte Animation (`deadlift-smith-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur
+  die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten
+  Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Seitlicher Bauch: neue Animation (26.09.2026)
+
+- "Seitlicher Bauch" (`abs-side-bench`, englisch "Side abs") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`abs-side-bench-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist wie
+  bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt
+  (`UPSCALE`, `SYNTH_BLEND`). Die frühere Fassung liegt in der Git-Historie. Die Herkunft ist vor der Veröffentlichung
+  zu klären.
+
+## Langhantelrudern Untergriff Multipresse: neue Animation (26.09.2026)
+
+- "Langhantelrudern Untergriff Multipresse" (`row-smith-underhand`, englisch "Smith-machine underhand row") nutzt eine
+  neue, vom Projektinhaber gelieferte Animation (`row-smith-underhand-whiteclean.gif`, `-dark.gif`). Die Vorlage
+  (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit
+  selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Multipresse ist in der Vorlage
+  nur sehr blass auf Weiß gezeichnet; für die dunkle Fassung gilt deshalb dieselbe Einstellung wie bei "Dips schwer"
+  (`LIGHT_EDGE`, Eintrag `row-smith-underhand`). Die frühere Fassung liegt in der Git-Historie. Die Herkunft ist vor der
+  Veröffentlichung zu klären.

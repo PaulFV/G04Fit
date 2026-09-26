@@ -19,7 +19,7 @@
     'latpull': 'latpull', 'latpull-close-neck': 'latpull',
     'latpull-wide-chest': 'latpull', 'latpull-machine': 'latpull', 'latpull-wide-neck': 'latpull',
     'row-bb': 'row-bb', 'row-bb-underhand-incline': 'row-bb', 'row-smith-underhand': 'row-bb',
-    'row-db': 'row-db', 'row-cable': 'row-cable', 'row-machine-underhand': 'row-cable', 'chest-press-machine': 'bench-bb', 'row-cable-upper': 'row-cable',
+    'row-db': 'row-db', 'deadlift-smith': 'row-bb', 'row-cable': 'row-cable', 'row-machine-underhand': 'row-cable', 'chest-press-machine': 'bench-bb', 'row-cable-upper': 'row-cable',
     'pullover': 'pullover', 'pullover-db-hammer': 'pullover', 'pullover-db-ball': 'pullover',
     'pullover-cable': 'pullover', 'pullover-bb': 'pullover',
     'ohp-db': 'ohp-db', 'ohp-bb': 'ohp-bb', 'lateral': 'lateral', 'front-raise': 'front-raise',
