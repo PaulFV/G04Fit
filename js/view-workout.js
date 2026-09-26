@@ -14,7 +14,7 @@
     'fly-cable': 'fly-cable', 'fly-cable-mid': 'fly-cable', 'fly-machine': 'fly-machine-v2-dark', 'fly-machine-2': 'fly-machine-v2-dark',
     'pushup': 'pushup', 'pushup-close': 'pushup-v2', 'pushup-decline': 'pushup-v2',
     'pushup-knee': 'pushup-v2', 'pushup-positive': 'pushup-v2', 'dip-chest': 'dip-chest', 'dip-heavy': 'dip-chest',
-    'pullup': 'pullup', 'pullup-assisted': 'pullup', 'pullup-close-overhand': 'pullup',
+    'pullup': 'pullup', 'pullup-assisted': 'pullup', 'pullup-machine-kneeling': 'pullup', 'pullup-close-overhand': 'pullup', 'pullup-close-underhand': 'pullup',
     'pullup-wide-overhand': 'pullup', 'pullup-wide-weighted': 'pullup',
     'latpull': 'latpull', 'latpull-close-neck': 'latpull',
     'latpull-wide-chest': 'latpull', 'latpull-machine': 'latpull', 'latpull-wide-neck': 'latpull',
@@ -30,7 +30,7 @@
     'curl-cable': 'curl-cable', 'triceps-cable-lying': 'pushdown', 'triceps-pushdown': 'pushdown', 'bench-dip-triceps': 'dip-triceps',
     'bench-db-triceps': 'bench-db', 'bench-bb-triceps': 'bench-bb', 'skullcrusher': 'skullcrusher', 'skullcrusher-db-onearm': 'skullcrusher', 'skullcrusher-cable': 'skullcrusher', 'triceps-bb-overhead': 'ohext-db',
     'ohext-db': 'ohext-db', 'triceps-cable-overhead-onearm': 'ohext-db', 'kickback': 'kickback',
-    'crunch': 'crunch', 'crunch-reverse': 'crunch', 'situp-straight': 'crunch', 'crunch-side': 'crunch', 'sidebend-db': 'crunch', 'abs-side-bench': 'crunch',
+    'crunch': 'crunch', 'crunch-reverse': 'crunch', 'crunch-crisscross': 'crunch', 'situp-straight': 'crunch', 'crunch-side': 'crunch', 'sidebend-db': 'crunch', 'abs-side-bench': 'crunch',
     'legraise': 'legraise', 'legraise-hanging-station': 'legraise', 'kneeraise-station': 'legraise', 'plank': 'plank',
     'plank-weighted': 'plank', 'mountain-climber': 'plank', 'side-plank': 'plank', 'side-plank-db': 'plank', 'cable-crunch': 'cable-crunch', 'cable-crunch-standing': 'cable-crunch'
   };

@@ -351,3 +351,26 @@
   nur sehr blass auf Weiß gezeichnet; für die dunkle Fassung gilt deshalb dieselbe Einstellung wie bei "Dips schwer"
   (`LIGHT_EDGE`, Eintrag `row-smith-underhand`). Die frühere Fassung liegt in der Git-Historie. Die Herkunft ist vor der
   Veröffentlichung zu klären.
+
+## Klimmzüge Untergriff eng: neue Übung (26.09.2026)
+
+- "Klimmzüge Untergriff eng" (`pullup-close-underhand`, englisch "Close-grip chin-up", Rücken, Klimmzugstange) nutzt eine
+  vom Projektinhaber gelieferte Animation (`pullup-close-underhand-whiteclean.gif`, `-dark.gif`). Die Vorlage
+  (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit
+  selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der
+  Veröffentlichung zu klären.
+
+## Criss Cross Crunches: neue Übung (26.09.2026)
+
+- "Criss Cross Crunches" (`crunch-crisscross`, englisch "Criss-cross crunch", Bauch, Körpergewicht) nutzt eine vom
+  Projektinhaber gelieferte Animation (`crunch-crisscross-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel,
+  nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten
+  Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Klimmzüge Maschine kniend: neue Übung (26.09.2026)
+
+- "Klimmzüge Maschine kniend" (`pullup-machine-kneeling`, englisch "Kneeling assisted pull-up machine", Rücken, Maschine)
+  nutzt eine vom Projektinhaber gelieferte Animation (`pullup-machine-kneeling-whiteclean.gif`, `-dark.gif`). Die Vorlage
+  (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit
+  selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der
+  Veröffentlichung zu klären.

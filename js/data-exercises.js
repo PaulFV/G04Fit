@@ -278,6 +278,19 @@
       err: ['Mit dem Bein abspringen', 'Schwung aus der Hüfte', 'Nur halbe Wiederholungen']
     },
     {
+      id: 'pullup-machine-kneeling', name: 'Klimmzüge Maschine kniend', muscle: 'back',
+      sec: ['biceps', 'shoulders'], equip: 'Maschine', pattern: 'pulldown',
+      demo: 'assets/exercises/gifs/pullup-machine-kneeling-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pullup-machine-kneeling-dark.gif?v=1', demoLight: 'assets/exercises/gifs/pullup-machine-kneeling-whiteclean.gif?v=1',
+      level: 1, inc: 5, f: 0.30, reps: [8, 12],
+      cues: [
+        'Knie auf das Polster, Griffe schulterbreit greifen und Brust anheben',
+        'Ellenbogen nach unten führen und den Körper kontrolliert nach oben ziehen',
+        'Ohne Schwung langsam wieder absenken'
+      ],
+      err: ['Schwung aus dem Körper', 'Schultern werden hochgezogen', 'Nur mit den Armen ziehen']
+    },
+    {
       id: 'pullup-close-overhand', name: 'Klimmzüge Obergriff eng', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange', pattern: 'pulldown',
       demo: 'assets/exercises/gifs/pullup-close-overhand-whiteclean.gif?v=8', demoStyle: 'reference-gif',
@@ -289,6 +302,19 @@
         'Aus dem Hang vollständig und kontrolliert absenken'
       ],
       err: ['Handgelenke knicken ab', 'Schwung holen', 'Kinn nur nach vorn schieben']
+    },
+    {
+      id: 'pullup-close-underhand', name: 'Klimmzüge Untergriff eng', muscle: 'back',
+      sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange', pattern: 'pulldown',
+      demo: 'assets/exercises/gifs/pullup-close-underhand-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pullup-close-underhand-dark.gif?v=1', demoLight: 'assets/exercises/gifs/pullup-close-underhand-whiteclean.gif?v=1',
+      level: 2, bw: true, inc: 2.5, f: 0, reps: [5, 10],
+      cues: [
+        'Stange schulterbreit oder enger im Untergriff greifen',
+        'Brust zur Stange ziehen und die Ellenbogen nah am Körper nach unten führen',
+        'Oben kurz halten und ohne Schwung vollständig absenken'
+      ],
+      err: ['Schwung aus der Hüfte', 'Halbe Wiederholungen', 'Schultern zu den Ohren ziehen']
     },
     {
       id: 'pullup-wide-overhand', name: 'Klimmzüge Obergriff breit', muscle: 'back',
@@ -973,6 +999,19 @@
         'Langsam absenken, ohne die Beine schwingen zu lassen'
       ],
       err: ['Schwung aus den Beinen', 'Hüfte nur nach vorn schieben', 'Zu schnelles Absenken']
+    },
+    {
+      id: 'crunch-crisscross', name: 'Criss Cross Crunches', muscle: 'abs',
+      sec: [], equip: 'Körpergewicht', pattern: 'crunch',
+      demo: 'assets/exercises/gifs/crunch-crisscross-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/crunch-crisscross-dark.gif?v=1', demoLight: 'assets/exercises/gifs/crunch-crisscross-whiteclean.gif?v=1',
+      level: 1, bw: true, inc: 2.5, f: 0, reps: [12, 20],
+      cues: [
+        'Hände locker hinter dem Kopf, Ellenbogen weit nach außen',
+        'Ellenbogen abwechselnd zum gegenüberliegenden Knie drehen, das andere Bein strecken',
+        'Langsam wechseln und den unteren Rücken am Boden halten'
+      ],
+      err: ['Am Nacken ziehen', 'Nur die Ellenbogen bewegen', 'Zu schnelle Wechsel mit Schwung']
     },
     {
       id: 'situp-straight', name: 'Sit-ups (gerade Bauchmuskeln)', muscle: 'abs',
