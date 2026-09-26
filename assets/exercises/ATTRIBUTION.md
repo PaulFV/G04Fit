@@ -413,3 +413,38 @@
   (`UPSCALE`, `SYNTH_BLEND`). Der Hintergrund der Vorlage ist nicht reines Weiß (252/254/254); der Konverter kennt dafür
   die Einstellung `white` (`LIGHT_EDGE`, Eintrag `crunch-cable-kneeling`). Die frühere Fassung liegt in der Git-Historie.
   Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Pullover am Kabelzug: neue Animation (26.09.2026)
+
+- "Pullover am Kabelzug" (`pullover-cable`, englisch "Cable pullover") nutzt eine neue, vom Projektinhaber gelieferte
+  Animation (`pullover-cable-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist
+  wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt
+  (`UPSCALE`, `SYNTH_BLEND`). Das dünne Kabel wird in der dunklen Fassung hell gezeichnet (`lineGrow` in `LIGHT_EDGE`). Die
+  frühere Fassung liegt in der Git-Historie. Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Überzüge (Pullover), Pullover Kurzhantel Gymnastikball: neue Animationen (26.09.2026)
+
+- "Überzüge (Pullover)" (`pullover`, englisch "Dumbbell pullover") und "Pullover Kurzhantel Gymnastikball" (`pullover-db-ball`,
+  englisch "Dumbbell pullover on stability ball") nutzen neue, vom Projektinhaber gelieferte Animationen
+  (`pullover-whiteclean.gif`, `pullover-db-ball-whiteclean.gif`, jeweils mit `-dark.gif`). Die Vorlagen (600 × 600 Pixel, nur
+  die beiden Endstellungen) sind wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten
+  Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Beim Gymnastikball hat die Vorlage einen leicht getönten
+  Hintergrund (`white` = 250) und eine große weiße Lichtfläche auf dem Ball, die erhalten bleibt (`hole` = 6000). Die früheren
+  Fassungen liegen in der Git-Historie. Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Military Press (Langhantel): neue Animation (26.09.2026)
+
+- "Military Press (Langhantel)" (`ohp-bb`, englisch "Barbell military press") nutzt eine neue, vom Projektinhaber gelieferte
+  Animation (`ohp-bb-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei
+  "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`,
+  `SYNTH_BLEND`). Der Hintergrund der Vorlage ist leicht getönt (252/252/254, `white` = 250). Die frühere Fassung liegt in der
+  Git-Historie. Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Schulterdrücken (Kurzhantel), Pullover mit Langhantel: neue Animationen (26.09.2026)
+
+- "Schulterdrücken (Kurzhantel)" (`ohp-db`, englisch "Dumbbell shoulder press") und "Pullover mit Langhantel"
+  (`pullover-bb`, englisch "Barbell pullover") nutzen neue, vom Projektinhaber gelieferte Animationen (`ohp-db-whiteclean.gif`,
+  `pullover-bb-whiteclean.gif`, jeweils mit `-dark.gif`). Die Vorlagen (600 × 600 Pixel, nur die beiden Endstellungen) sind wie
+  bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt
+  (`UPSCALE`, `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250). Die früheren Fassungen liegen in der
+  Git-Historie. Die Herkunft ist vor der Veröffentlichung zu klären.

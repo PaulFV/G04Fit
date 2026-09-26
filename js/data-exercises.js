@@ -514,8 +514,8 @@
     {
       id: 'pullover', name: 'Überzüge (Pullover)', muscle: 'back',
       sec: ['chest'], equip: 'Kurzhantel', pattern: 'pullover',
-      demo: 'assets/exercises/gifs/pullover-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullover-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pullover-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pullover-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pullover-dark.gif?v=10', demoLight: 'assets/exercises/gifs/pullover-whiteclean.gif?v=9',
       level: 2, inc: 2.5, f: 0.18, reps: [10, 14],
       cues: [
         'Hantel mit beiden Händen über der Brust halten',
@@ -540,8 +540,8 @@
     {
       id: 'pullover-db-ball', name: 'Pullover Kurzhantel Gymnastikball', muscle: 'back',
       sec: ['chest', 'triceps', 'abs'], equip: 'Kurzhantel + Gymnastikball', pattern: 'pullover',
-      demo: 'assets/exercises/gifs/pullover-db-ball-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullover-db-ball-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pullover-db-ball-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pullover-db-ball-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pullover-db-ball-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pullover-db-ball-whiteclean.gif?v=9',
       level: 2, inc: 2, f: 0.14, reps: [10, 14],
       cues: [
         'Schulterblätter sicher auf dem Ball positionieren',
@@ -553,8 +553,8 @@
     {
       id: 'pullover-cable', name: 'Pullover am Kabelzug', muscle: 'back',
       sec: ['chest', 'triceps'], equip: 'Kabelzug + Bank', pattern: 'pullover',
-      demo: 'assets/exercises/gifs/pullover-cable-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullover-cable-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pullover-cable-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pullover-cable-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pullover-cable-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pullover-cable-whiteclean.gif?v=9',
       level: 2, inc: 2.5, f: 0.18, reps: [10, 15],
       cues: [
         'Bank stabil zum Kabelzug ausrichten',
@@ -566,8 +566,8 @@
     {
       id: 'pullover-bb', name: 'Pullover mit Langhantel', muscle: 'back',
       sec: ['chest', 'triceps'], equip: 'Langhantel', pattern: 'pullover',
-      demo: 'assets/exercises/gifs/pullover-bb-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullover-bb-dark.gif?v=8', demoLight: 'assets/exercises/gifs/pullover-bb-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/pullover-bb-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/pullover-bb-dark.gif?v=9', demoLight: 'assets/exercises/gifs/pullover-bb-whiteclean.gif?v=9',
       level: 2, inc: 2.5, f: 0.22, reps: [8, 12],
       cues: [
         'Langhantel schulterbreit über der Brust halten',
@@ -580,8 +580,8 @@
     {
       id: 'ohp-db', name: 'Schulterdrücken (Kurzhantel)', muscle: 'shoulders',
       sec: ['triceps'], equip: 'Kurzhanteln', pattern: 'pressover',
-      demo: 'assets/exercises/gifs/ohp-db-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/ohp-db-dark.gif?v=8', demoLight: 'assets/exercises/gifs/ohp-db-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/ohp-db-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/ohp-db-dark.gif?v=9', demoLight: 'assets/exercises/gifs/ohp-db-whiteclean.gif?v=9',
       level: 2, inc: 2, f: 0.20, reps: [8, 12],
       cues: [
         'Rumpf fest, Rippen nicht nach vorne kippen lassen',
@@ -593,8 +593,8 @@
     {
       id: 'ohp-bb', name: 'Military Press (Langhantel)', muscle: 'shoulders',
       sec: ['triceps', 'abs'], equip: 'Langhantel', pattern: 'pressover',
-      demo: 'assets/exercises/gifs/ohp-bb-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/ohp-bb-dark.gif?v=8', demoLight: 'assets/exercises/gifs/ohp-bb-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/ohp-bb-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/ohp-bb-dark.gif?v=9', demoLight: 'assets/exercises/gifs/ohp-bb-whiteclean.gif?v=9',
       level: 3, inc: 2.5, f: 0.42, reps: [5, 8],
       cues: [
         'Enger Stand, Gesäß und Bauch fest anspannen',
