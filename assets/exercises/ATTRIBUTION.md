@@ -463,3 +463,20 @@
   beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen
   zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250). Die Herkunft ist vor der
   Veröffentlichung zu klären.
+
+## Frontheben: neue Animation (26.09.2026)
+
+- "Frontheben" (`front-raise`, englisch "Front raise") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`front-raise-db-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei
+  "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`,
+  `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250). Die frühere Fassung liegt in der Git-Historie. Die
+  Herkunft ist vor der Veröffentlichung zu klären.
+
+## Frontziehen mit SZ-Stange und am Kabelzug: neue Übungen (26.09.2026)
+
+- "Frontziehen SZ-Stange" (`shrug-back-ez`) und "Frontziehen am Kabelzug" (`shrug-back-cable`), Schulter, nutzen vom
+  Projektinhaber gelieferte Animationen (`shrug-back-ez-whiteclean.gif`, `shrug-back-cable-whiteclean.gif`, jeweils mit `-dark.gif`).
+  Die Vorlagen (600 × 600 Pixel, nur die beiden Endstellungen) sind wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert
+  und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Der Hintergrund ist leicht getönt
+  (`white` = 250). Die englischen Namen und die Technikhinweise sind vorläufig. Die Herkunft ist vor der Veröffentlichung
+  zu klären.

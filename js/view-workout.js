@@ -25,7 +25,7 @@
     'ohp-db': 'ohp-db', 'ohp-bb': 'ohp-bb', 'lateral': 'lateral', 'lateral-seated': 'lateral', 'front-raise': 'front-raise',
     'rear-fly': 'rear-fly', 'rear-fly-db': 'rear-fly', 'rear-fly-db-incline': 'rear-fly',
     'rear-fly-cable-bent': 'rear-fly', 'rear-fly-cable-standing': 'rear-fly', 'rear-fly-cable-lying': 'rear-fly',
-    'shrug': 'shrug', 'curl-bb': 'curl-bb', 'curl-bb-scott': 'curl-bb', 'curl-db': 'curl-db',
+    'shrug': 'shrug', 'shrug-back-ez': 'shrug', 'shrug-back-cable': 'shrug', 'curl-bb': 'curl-bb', 'curl-bb-scott': 'curl-bb', 'curl-db': 'curl-db',
     'curl-db-incline-bilateral': 'curl-db', 'curl-db-bilateral': 'curl-db', 'curl-preacher': 'curl-preacher',
     'curl-cable': 'curl-cable', 'triceps-cable-lying': 'pushdown', 'triceps-pushdown': 'pushdown', 'bench-dip-triceps': 'dip-triceps',
     'bench-db-triceps': 'bench-db', 'bench-bb-triceps': 'bench-bb', 'skullcrusher': 'skullcrusher', 'skullcrusher-db-onearm': 'skullcrusher', 'skullcrusher-cable': 'skullcrusher', 'triceps-bb-overhead': 'ohext-db',

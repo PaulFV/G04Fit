@@ -645,8 +645,8 @@
     {
       id: 'front-raise', name: 'Frontheben', muscle: 'shoulders',
       sec: ['chest'], equip: 'Kurzhanteln', pattern: 'raise',
-      demo: 'assets/exercises/gifs/front-raise-db-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/front-raise-db-dark.gif?v=8', demoLight: 'assets/exercises/gifs/front-raise-db-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/front-raise-db-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/front-raise-db-dark.gif?v=9', demoLight: 'assets/exercises/gifs/front-raise-db-whiteclean.gif?v=9',
       level: 1, inc: 1, f: 0.07, reps: [10, 15],
       cues: [
         'Arme abwechselnd oder gleichzeitig nach vorne heben',
@@ -745,6 +745,32 @@
         'Arme bleiben gestreckt'
       ],
       err: ['Schulterkreisen', 'Mitziehen mit dem Bizeps']
+    },
+    {
+      id: 'shrug-back-ez', name: 'Frontziehen SZ-Stange', muscle: 'shoulders',
+      sec: ['back'], equip: 'SZ-Stange', pattern: 'raise',
+      demo: 'assets/exercises/gifs/shrug-back-ez-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/shrug-back-ez-dark.gif?v=1', demoLight: 'assets/exercises/gifs/shrug-back-ez-whiteclean.gif?v=1',
+      level: 2, inc: 2.5, f: 0.2, reps: [10, 15],
+      cues: [
+        'Aufrecht stehen, Griff hinter dem Körper und Schultern tief halten',
+        'Die Arme kontrolliert nach oben führen, der Oberkörper bleibt ruhig',
+        'Oben kurz halten und langsam wieder absenken'
+      ],
+      err: ['Schwung aus dem Rücken', 'Schultern werden hochgezogen', 'Zu schweres Gewicht']
+    },
+    {
+      id: 'shrug-back-cable', name: 'Frontziehen am Kabelzug', muscle: 'shoulders',
+      sec: ['back'], equip: 'Kabelzug', pattern: 'raise',
+      demo: 'assets/exercises/gifs/shrug-back-cable-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/shrug-back-cable-dark.gif?v=1', demoLight: 'assets/exercises/gifs/shrug-back-cable-whiteclean.gif?v=1',
+      level: 2, inc: 2.5, f: 0.15, reps: [10, 15],
+      cues: [
+        'Aufrecht stehen, Griff hinter dem Körper und Schultern tief halten',
+        'Die Arme kontrolliert nach oben führen, der Oberkörper bleibt ruhig',
+        'Oben kurz halten und langsam wieder absenken'
+      ],
+      err: ['Schwung aus dem Rücken', 'Schultern werden hochgezogen', 'Zu schweres Gewicht']
     },
 
     /* ================= BIZEPS ================= */
