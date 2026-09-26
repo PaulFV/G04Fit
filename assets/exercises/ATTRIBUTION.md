@@ -448,3 +448,18 @@
   bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt
   (`UPSCALE`, `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250). Die früheren Fassungen liegen in der
   Git-Historie. Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Seitheben sitzend: neue Übung (26.09.2026)
+
+- "Seitheben sitzend" (`lateral-seated`, englisch "Seated lateral raise", Schulter, Kurzhanteln + Bank) nutzt eine vom
+  Projektinhaber gelieferte Animation (`lateral-seated-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die
+  beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen
+  zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Fliegende Schrägbank: neue Übung (26.09.2026)
+
+- "Fliegende Schrägbank" (`fly-db-incline`, englisch "Incline dumbbell fly", Brust, Kurzhanteln + Schrägbank) nutzt eine vom
+  Projektinhaber gelieferte Animation (`fly-db-incline-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die
+  beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen
+  zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250). Die Herkunft ist vor der
+  Veröffentlichung zu klären.

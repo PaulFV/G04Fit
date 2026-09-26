@@ -10,7 +10,7 @@
      Übungen teilen sich bewusst ein Motiv, damit die Kacheln sofort laden.
      Die animierte Demonstration im Detailfenster bleibt davon unberührt. */
   var PHOTO_BY_ID = {
-    'bench-bb': 'bench-bb', 'bench-bb-flat': 'bench-bb', 'bench-db': 'bench-db', 'incline-db': 'incline-db',
+    'bench-bb': 'bench-bb', 'bench-bb-flat': 'bench-bb', 'bench-db': 'bench-db', 'incline-db': 'incline-db', 'fly-db-incline': 'incline-db',
     'fly-cable': 'fly-cable', 'fly-cable-mid': 'fly-cable', 'fly-machine': 'fly-machine-v2-dark', 'fly-machine-2': 'fly-machine-v2-dark',
     'pushup': 'pushup', 'pushup-close': 'pushup-v2', 'pushup-decline': 'pushup-v2',
     'pushup-knee': 'pushup-v2', 'pushup-positive': 'pushup-v2', 'dip-chest': 'dip-chest', 'dip-heavy': 'dip-chest',
@@ -22,7 +22,7 @@
     'row-db': 'row-db', 'deadlift-smith': 'row-bb', 'row-cable': 'row-cable', 'row-machine-underhand': 'row-cable', 'chest-press-machine': 'bench-bb', 'row-cable-upper': 'row-cable',
     'pullover': 'pullover', 'pullover-db-hammer': 'pullover', 'pullover-db-ball': 'pullover',
     'pullover-cable': 'pullover', 'pullover-bb': 'pullover',
-    'ohp-db': 'ohp-db', 'ohp-bb': 'ohp-bb', 'lateral': 'lateral', 'front-raise': 'front-raise',
+    'ohp-db': 'ohp-db', 'ohp-bb': 'ohp-bb', 'lateral': 'lateral', 'lateral-seated': 'lateral', 'front-raise': 'front-raise',
     'rear-fly': 'rear-fly', 'rear-fly-db': 'rear-fly', 'rear-fly-db-incline': 'rear-fly',
     'rear-fly-cable-bent': 'rear-fly', 'rear-fly-cable-standing': 'rear-fly', 'rear-fly-cable-lying': 'rear-fly',
     'shrug': 'shrug', 'curl-bb': 'curl-bb', 'curl-bb-scott': 'curl-bb', 'curl-db': 'curl-db',

@@ -94,6 +94,19 @@
       err: ['Bank zu steil', 'Schultern rollen nach vorn']
     },
     {
+      id: 'fly-db-incline', name: 'Fliegende Schrägbank', muscle: 'chest',
+      sec: ['shoulders'], equip: 'Kurzhanteln + Schrägbank', pattern: 'fly',
+      demo: 'assets/exercises/gifs/fly-db-incline-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/fly-db-incline-dark.gif?v=1', demoLight: 'assets/exercises/gifs/fly-db-incline-whiteclean.gif?v=1',
+      level: 2, inc: 2, f: 0.10, reps: [10, 15],
+      cues: [
+        'Schulterblätter zusammenziehen, Brust heraus und Ellenbogen leicht gebeugt lassen',
+        'Die Arme in einem weiten Bogen nach außen absenken, bis die Brust gedehnt ist',
+        'Die Hanteln über der oberen Brust wieder zusammenführen'
+      ],
+      err: ['Ellenbogen zu stark gebeugt, es wird gedrückt', 'Zu tiefes Absenken mit Schulterstress', 'Zu schwere Hanteln']
+    },
+    {
       id: 'fly-cable', name: 'Kabel-Fliegende', muscle: 'chest',
       sec: ['shoulders'], equip: 'Kabelzug', pattern: 'fly',
       demo: 'assets/exercises/gifs/fly-cable-whiteclean.gif?v=9', demoStyle: 'reference-gif',
@@ -615,6 +628,19 @@
         'Kleine Finger minimal höher als der Daumen'
       ],
       err: ['Zu schwer und mit Schwung', 'Schultern werden zum Ohr gezogen']
+    },
+    {
+      id: 'lateral-seated', name: 'Seitheben sitzend', muscle: 'shoulders',
+      sec: [], equip: 'Kurzhanteln + Bank', pattern: 'raise',
+      demo: 'assets/exercises/gifs/lateral-seated-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/lateral-seated-dark.gif?v=1', demoLight: 'assets/exercises/gifs/lateral-seated-whiteclean.gif?v=1',
+      level: 1, inc: 1, f: 0.05, reps: [12, 18],
+      cues: [
+        'Aufrecht auf der Bank sitzen, Oberkörper ruhig halten',
+        'Ellenbogen leicht gebeugt und die Hanteln bis maximal Schulterhöhe anheben',
+        'Langsam absenken, ohne Schwung aus dem Rücken'
+      ],
+      err: ['Zu schwer und mit Schwung', 'Schultern werden zum Ohr gezogen', 'Oberkörper lehnt zurück']
     },
     {
       id: 'front-raise', name: 'Frontheben', muscle: 'shoulders',
