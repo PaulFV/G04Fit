@@ -120,6 +120,19 @@
       err: ['Bewegung wird zur Drückbewegung', 'Zu viel Gewicht, Schwung aus dem Rumpf']
     },
     {
+      id: 'chest-press-machine', name: 'Brustpresse (Maschine)', muscle: 'chest',
+      sec: ['triceps', 'shoulders'], equip: 'Maschine', pattern: 'pressflat',
+      demo: 'assets/exercises/gifs/chest-press-machine-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/chest-press-machine-dark.gif?v=1', demoLight: 'assets/exercises/gifs/chest-press-machine-whiteclean.gif?v=1',
+      level: 1, inc: 5, f: 0.50, reps: [8, 12],
+      cues: [
+        'Sitz so einstellen, dass die Griffe auf Höhe der mittleren Brust liegen',
+        'Schulterblätter an die Lehne ziehen und kontrolliert nach vorn drücken',
+        'Arme zurückführen, ohne das Gewicht abzulegen'
+      ],
+      err: ['Schultern wandern nach vorn', 'Rücken löst sich von der Lehne', 'Ellenbogen werden oben hart durchgestreckt']
+    },
+    {
       id: 'fly-machine', name: 'Butterfly (Maschine)', muscle: 'chest',
       sec: [], equip: 'Maschine', pattern: 'fly',
       demo: 'assets/exercises/gifs/butterfly-machine-whiteclean.gif?v=1', demoStyle: 'reference-gif',
@@ -255,7 +268,7 @@
       id: 'pullup-assisted', name: 'Klimmzüge Anfänger', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange', pattern: 'pulldown',
       demo: 'assets/exercises/gifs/pullup-assisted-whiteclean.gif?v=12', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullup-assisted-dark.gif?v=12', demoLight: 'assets/exercises/gifs/pullup-assisted-whiteclean.gif?v=12',
+      demoDark: 'assets/exercises/gifs/pullup-assisted-dark.gif?v=13', demoLight: 'assets/exercises/gifs/pullup-assisted-whiteclean.gif?v=12',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [6, 12],
       cues: [
         'Ein Fuß unterstützt leicht auf einer stabilen Bank',
@@ -356,6 +369,19 @@
       err: ['Kopf nach vorn schieben', 'Schwung aus dem Oberkörper', 'Zu tief in den Nacken ziehen']
     },
     {
+      id: 'latpull-machine', name: 'Latzugmaschine Obergriff', muscle: 'back',
+      sec: ['biceps', 'shoulders'], equip: 'Maschine', pattern: 'pulldown',
+      demo: 'assets/exercises/gifs/latpull-machine-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/latpull-machine-dark.gif?v=1', demoLight: 'assets/exercises/gifs/latpull-machine-whiteclean.gif?v=1',
+      level: 1, inc: 5, f: 0.55, reps: [8, 12],
+      cues: [
+        'Sitz und Beinpolster so einstellen, dass die Oberschenkel fixiert sind',
+        'Griffe im Obergriff greifen, Brust anheben und die Ellenbogen nach unten führen',
+        'Kontrolliert zurücklassen, ohne die Schultern hochzuziehen'
+      ],
+      err: ['Rumpf pendelt stark', 'Schultern werden hochgezogen', 'Nur mit den Armen ziehen']
+    },
+    {
       id: 'row-bb', name: 'Langhantelrudern', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Langhantel', pattern: 'row',
       demo: 'assets/exercises/gifs/row-bb-whiteclean.gif?v=9', demoStyle: 'reference-gif',
@@ -406,6 +432,19 @@
         'Schulter am Ende bewusst zurücknehmen'
       ],
       err: ['Rumpf rotiert mit', 'Zug wird zur Bizepsübung']
+    },
+    {
+      id: 'row-machine-underhand', name: 'Rudern Maschine Untergriff', muscle: 'back',
+      sec: ['biceps'], equip: 'Maschine', pattern: 'row',
+      demo: 'assets/exercises/gifs/row-machine-underhand-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/row-machine-underhand-dark.gif?v=1', demoLight: 'assets/exercises/gifs/row-machine-underhand-whiteclean.gif?v=1',
+      level: 1, inc: 5, f: 0.50, reps: [10, 14],
+      cues: [
+        'Brust an das Polster, aufrecht sitzen und Schultern tief halten',
+        'Griffe im Untergriff zum Körper ziehen, Ellenbogen nah am Rumpf',
+        'Schulterblätter am Endpunkt zusammenführen und langsam zurücklassen'
+      ],
+      err: ['Starkes Zurücklehnen', 'Schultern werden hochgezogen', 'Nur mit den Armen ziehen']
     },
     {
       id: 'row-cable', name: 'Kabelrudern (sitzend)', muscle: 'back',
@@ -939,7 +978,7 @@
       id: 'sidebend-db', name: 'Seitbeugen mit Gewicht', muscle: 'abs',
       sec: [], equip: 'Kurzhantel', pattern: 'crunch',
       demo: 'assets/exercises/gifs/sidebend-db-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/sidebend-db-dark.gif?v=1', demoLight: 'assets/exercises/gifs/sidebend-db-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/sidebend-db-dark.gif?v=2', demoLight: 'assets/exercises/gifs/sidebend-db-whiteclean.gif?v=1',
       level: 1, inc: 2, f: 0.15, reps: [12, 20], uni: true,
       cues: [
         'Aufrecht stehen, Kurzhantel seitlich am Körper halten',
@@ -991,7 +1030,7 @@
       id: 'kneeraise-station', name: 'Knieheben', muscle: 'abs',
       sec: ['shoulders'], equip: 'Dipstation', pattern: 'legraise',
       demo: 'assets/exercises/gifs/kneeraise-station-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/kneeraise-station-dark.gif?v=1', demoLight: 'assets/exercises/gifs/kneeraise-station-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/kneeraise-station-dark.gif?v=2', demoLight: 'assets/exercises/gifs/kneeraise-station-whiteclean.gif?v=1',
       level: 1, bw: true, inc: 2.5, f: 0, reps: [10, 15],
       cues: [
         'Unterarme oder Hände fest aufstützen und den Oberkörper ruhig halten',
@@ -1110,7 +1149,7 @@
       id: 'leg-extension', name: 'Beinstrecker', muscle: 'legs',
       sec: [], equip: 'Maschine', pattern: 'extension',
       demo: 'assets/exercises/gifs/leg-extension-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/leg-extension-dark.gif?v=1', demoLight: 'assets/exercises/gifs/leg-extension-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/leg-extension-dark.gif?v=2', demoLight: 'assets/exercises/gifs/leg-extension-whiteclean.gif?v=1',
       level: 1, inc: 5, f: 0.40, reps: [10, 15],
       cues: [
         'Sitz so einstellen, dass die Knie auf Höhe der Drehachse liegen',

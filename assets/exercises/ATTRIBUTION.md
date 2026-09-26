@@ -264,3 +264,26 @@
 - "Seitbeugen mit Gewicht" (`sidebend-db`, englisch "Weighted side bend", Kurzhantel, Bauch) ist neu und nutzt eine vom
   Projektinhaber gelieferte Animation (`sidebend-db-whiteclean.gif`, `-dark.gif`; 512 × 512 Pixel, 10 Bilder, auf
   360 × 360 verkleinert, `POSE_EVERY_BY`). Die Herkunft beider Animationen ist vor der Veröffentlichung zu klären.
+
+## Brustpresse (Maschine), Rudern Maschine Untergriff: neue Übungen (26.09.2026)
+
+- "Brustpresse (Maschine)" (`chest-press-machine`, englisch "Machine chest press", Brust) und "Rudern Maschine
+  Untergriff" (`row-machine-underhand`, englisch "Underhand machine row", Rücken) nutzen vom Projektinhaber gelieferte
+  Animationen (`*-whiteclean.gif`, `*-dark.gif`). Die Vorlagen (600 × 600 Pixel, nur die beiden Endstellungen) sind wie
+  bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt
+  (`UPSCALE`, `SYNTH_BLEND` in `tools/dark-gifs.html`). Die Herkunft ist vor der Veröffentlichung zu klären.
+
+## Latzugmaschine Obergriff: neue Übung (26.09.2026)
+
+- "Latzugmaschine Obergriff" (`latpull-machine`, englisch "Overhand lat pulldown machine", Rücken, Maschine) nutzt eine
+  vom Projektinhaber gelieferte Animation (`latpull-machine-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600
+  Pixel, nur die beiden Endstellungen) ist wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst
+  erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Die Herkunft ist vor der Veröffentlichung
+  zu klären.
+
+## Dunkle Fassungen mit echten Bewegungsbildern (26.09.2026)
+
+- Bei "Klimmzüge Anfänger", "Knieheben", "Seitbeugen mit Gewicht", "Beinstrecker" und "Mountain Climbers" sind die Zwischenbilder der Vorlagen
+  echte Bewegungsphasen, keine Überblendungen. Die dunklen Fassungen wurden zunächst wie bei den älteren GIFs aus zwei
+  Posen überblendet und zeigten dadurch helle Geisterbilder in der Aufwärtsbewegung. Jetzt wird jedes Bild einzeln
+  freigestellt (`POSE_EVERY_BY` = 1 in `tools/dark-gifs.html`).
