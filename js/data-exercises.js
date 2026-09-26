@@ -747,6 +747,32 @@
       err: ['Arme stark beugen', 'Schultern hochziehen', 'Zu großer Bewegungsumfang']
     },
     {
+      id: 'rear-fly-cable-crossed', name: 'Reverse Flys Kabelzug liegend', muscle: 'shoulders',
+      sec: ['back'], equip: 'Kabelzug + Bank', pattern: 'fly',
+      demo: 'assets/exercises/gifs/reverse-fly-cable-crossed-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/reverse-fly-cable-crossed-dark.gif?v=1', demoLight: 'assets/exercises/gifs/reverse-fly-cable-crossed-whiteclean.gif?v=1',
+      level: 2, inc: 2.5, f: 0.1, reps: [12, 18],
+      cues: [
+        'Mittig auf der Bank liegen, die Kabel über Kreuz greifen',
+        'Die Arme mit leicht gebeugten Ellenbogen kontrolliert nach außen und unten führen',
+        'Schulterblätter am Ende kurz zusammenziehen und langsam zurückführen'
+      ],
+      err: ['Arme stark beugen', 'Schultern hochziehen', 'Zu schweres Gewicht mit Schwung']
+    },
+    {
+      id: 'rear-fly-db-standing', name: 'Reverse Flys stehend', muscle: 'shoulders',
+      sec: ['back'], equip: 'Kurzhanteln', pattern: 'fly',
+      demo: 'assets/exercises/gifs/reverse-fly-db-standing-whiteclean.gif?v=1', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/reverse-fly-db-standing-dark.gif?v=1', demoLight: 'assets/exercises/gifs/reverse-fly-db-standing-whiteclean.gif?v=1',
+      level: 2, inc: 1, f: 0.06, reps: [12, 18],
+      cues: [
+        'Mit geradem Rücken weit nach vorn beugen, die Knie leicht gebeugt',
+        'Die Arme mit leicht gebeugten Ellenbogen seitlich bis auf Schulterhöhe anheben',
+        'Oben kurz halten und die Hanteln langsam absenken'
+      ],
+      err: ['Rücken wird rund', 'Schwung aus dem Oberkörper', 'Arme stark beugen']
+    },
+    {
       id: 'shrug', name: 'Nackenheben (Shrugs)', muscle: 'shoulders',
       sec: ['back'], equip: 'Kurzhanteln', pattern: 'shrug',
       demo: 'assets/exercises/gifs/shrug-db-whiteclean.gif?v=8', demoStyle: 'reference-gif',

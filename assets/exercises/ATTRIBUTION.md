@@ -511,3 +511,13 @@
   "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`,
   `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250). Die frühere Fassung liegt in der Git-Historie. Die
   Herkunft ist vor der Veröffentlichung zu klären.
+
+## Reverse Flys Kabelzug liegend, Reverse Flys stehend: neue Übungen (26.09.2026)
+
+- "Reverse Flys Kabelzug liegend" (`rear-fly-cable-crossed`, Kabel über Kreuz, Kabelzug + Bank) und "Reverse Flys stehend"
+  (`rear-fly-db-standing`, vorgebeugt mit Kurzhanteln), Schulter, nutzen vom Projektinhaber gelieferte Animationen
+  (`reverse-fly-cable-crossed-whiteclean.gif`, `reverse-fly-db-standing-whiteclean.gif`, jeweils mit `-dark.gif`). Die Vorlagen
+  (600 × 600 Pixel, nur die beiden Endstellungen) sind wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst
+  erzeugten Überblendungen zu 12 Bildern ergänzt (`UPSCALE`, `SYNTH_BLEND`). Der Hintergrund ist leicht getönt (`white` = 250),
+  die dünnen Kabel werden hell gezeichnet (`lineGrow`). Die englischen Namen sind vorläufig. Die Herkunft ist vor der
+  Veröffentlichung zu klären.

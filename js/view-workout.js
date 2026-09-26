@@ -24,7 +24,7 @@
     'pullover-cable': 'pullover', 'pullover-bb': 'pullover',
     'ohp-db': 'ohp-db', 'ohp-bb': 'ohp-bb', 'lateral': 'lateral', 'lateral-seated': 'lateral', 'front-raise': 'front-raise',
     'rear-fly': 'rear-fly', 'rear-fly-db': 'rear-fly', 'rear-fly-db-incline': 'rear-fly',
-    'rear-fly-cable-bent': 'rear-fly', 'rear-fly-cable-standing': 'rear-fly', 'rear-fly-cable-lying': 'rear-fly',
+    'rear-fly-cable-bent': 'rear-fly', 'rear-fly-cable-standing': 'rear-fly', 'rear-fly-cable-lying': 'rear-fly', 'rear-fly-cable-crossed': 'rear-fly', 'rear-fly-db-standing': 'rear-fly',
     'shrug': 'shrug', 'shrug-back-ez': 'shrug', 'shrug-back-cable': 'shrug', 'curl-bb': 'curl-bb', 'curl-bb-scott': 'curl-bb', 'curl-db': 'curl-db',
     'curl-db-incline-bilateral': 'curl-db', 'curl-db-bilateral': 'curl-db', 'curl-preacher': 'curl-preacher',
     'curl-cable': 'curl-cable', 'triceps-cable-lying': 'pushdown', 'triceps-pushdown': 'pushdown', 'bench-dip-triceps': 'dip-triceps',
