@@ -475,8 +475,8 @@
     {
       id: 'row-cable', name: 'Kabelrudern (sitzend)', muscle: 'back',
       sec: ['biceps'], equip: 'Kabelzug', pattern: 'row',
-      demo: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/row-cable-dark.gif?v=10', demoLight: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=9',
+      demo: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=10', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/row-cable-dark.gif?v=11', demoLight: 'assets/exercises/gifs/row-cable-whiteclean.gif?v=10',
       level: 1, inc: 5, f: 0.50, reps: [10, 14],
       cues: [
         'Aufrecht sitzen, Brust raus, Knie leicht gebeugt',
@@ -1172,8 +1172,8 @@
     {
       id: 'cable-crunch', name: 'Crunches am Kabelzug', muscle: 'abs',
       sec: [], equip: 'Kabelzug', pattern: 'crunch',
-      demo: 'assets/exercises/gifs/crunch-cable-kneeling-whiteclean.gif?v=8', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/crunch-cable-kneeling-dark.gif?v=8', demoLight: 'assets/exercises/gifs/crunch-cable-kneeling-whiteclean.gif?v=8',
+      demo: 'assets/exercises/gifs/crunch-cable-kneeling-whiteclean.gif?v=9', demoStyle: 'reference-gif',
+      demoDark: 'assets/exercises/gifs/crunch-cable-kneeling-dark.gif?v=9', demoLight: 'assets/exercises/gifs/crunch-cable-kneeling-whiteclean.gif?v=9',
       level: 2, inc: 2.5, f: 0.30, reps: [12, 18],
       cues: [
         'Kniend, Seil neben dem Kopf halten',

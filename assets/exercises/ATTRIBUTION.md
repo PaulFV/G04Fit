@@ -396,3 +396,20 @@
 - Bei denselben beiden GIFs ist die Überblendung in der dunklen Fassung geschärft (`SHARPEN` in `tools/dark-gifs.html`,
   Exponent 2,5): Die Zwischenbilder bleiben länger nah an einer der beiden Posen, das halbdurchsichtige Doppelbild
   erscheint nur kurz. Die helle Fassung ist unverändert.
+
+## Kabelrudern (sitzend): neue Animation (26.09.2026)
+
+- "Kabelrudern (sitzend)" (`row-cable`, englisch "Seated cable row") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`row-cable-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist wie bei
+  "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt
+  (`UPSCALE`, `SYNTH_BLEND`). Die frühere Fassung liegt in der Git-Historie. Die Herkunft ist vor der Veröffentlichung
+  zu klären.
+
+## Crunches am Kabelzug: neue Animation (26.09.2026)
+
+- "Crunches am Kabelzug" (`cable-crunch`, englisch "Cable crunch") nutzt eine neue, vom Projektinhaber gelieferte Animation
+  (`crunch-cable-kneeling-whiteclean.gif`, `-dark.gif`). Die Vorlage (600 × 600 Pixel, nur die beiden Endstellungen) ist
+  wie bei "Einbeinige Kniebeuge" auf 360 × 360 verkleinert und mit selbst erzeugten Überblendungen zu 12 Bildern ergänzt
+  (`UPSCALE`, `SYNTH_BLEND`). Der Hintergrund der Vorlage ist nicht reines Weiß (252/254/254); der Konverter kennt dafür
+  die Einstellung `white` (`LIGHT_EDGE`, Eintrag `crunch-cable-kneeling`). Die frühere Fassung liegt in der Git-Historie.
+  Die Herkunft ist vor der Veröffentlichung zu klären.
