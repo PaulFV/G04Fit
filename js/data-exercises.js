@@ -320,7 +320,7 @@
       id: 'pullup-wide-overhand', name: 'Klimmzüge Obergriff breit', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Klimmzugstange', pattern: 'pulldown',
       demo: 'assets/exercises/gifs/pullup-wide-overhand-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/pullup-wide-overhand-dark.gif?v=10', demoLight: 'assets/exercises/gifs/pullup-wide-overhand-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/pullup-wide-overhand-dark.gif?v=11', demoLight: 'assets/exercises/gifs/pullup-wide-overhand-whiteclean.gif?v=9',
       level: 3, bw: true, inc: 2.5, f: 0, reps: [4, 8],
       cues: [
         'Stange deutlich breiter als schulterbreit im Obergriff greifen',
@@ -372,7 +372,7 @@
       id: 'latpull-wide-chest', name: 'Latzug breit zur Brust', muscle: 'back',
       sec: ['biceps', 'shoulders'], equip: 'Kabelzug', pattern: 'pulldown',
       demo: 'assets/exercises/gifs/latpull-wide-whiteclean.gif?v=9', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/latpull-wide-dark.gif?v=10', demoLight: 'assets/exercises/gifs/latpull-wide-whiteclean.gif?v=9',
+      demoDark: 'assets/exercises/gifs/latpull-wide-dark.gif?v=11', demoLight: 'assets/exercises/gifs/latpull-wide-whiteclean.gif?v=9',
       level: 1, inc: 5, f: 0.55, reps: [8, 12],
       cues: [
         'Breiten Obergriff etwas außerhalb der Schultern greifen',
@@ -502,7 +502,7 @@
       id: 'deadlift-smith', name: 'Kreuzheben (Multipresse)', muscle: 'back',
       sec: ['legs'], equip: 'Multipresse', pattern: 'row',
       demo: 'assets/exercises/gifs/deadlift-smith-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/deadlift-smith-dark.gif?v=2', demoLight: 'assets/exercises/gifs/deadlift-smith-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/deadlift-smith-dark.gif?v=4', demoLight: 'assets/exercises/gifs/deadlift-smith-whiteclean.gif?v=1',
       level: 2, inc: 2.5, f: 0.70, reps: [6, 10],
       cues: [
         'Füße hüftbreit unter die Stange, Rücken gerade und Brust heraus',
@@ -1160,7 +1160,7 @@
       id: 'mountain-climber', name: 'Mountain Climbers', muscle: 'abs',
       sec: ['shoulders', 'chest'], equip: 'Körpergewicht', pattern: 'plank',
       demo: 'assets/exercises/gifs/mountain-climber-whiteclean.gif?v=1', demoStyle: 'reference-gif',
-      demoDark: 'assets/exercises/gifs/mountain-climber-dark.gif?v=2', demoLight: 'assets/exercises/gifs/mountain-climber-whiteclean.gif?v=1',
+      demoDark: 'assets/exercises/gifs/mountain-climber-dark.gif?v=4', demoLight: 'assets/exercises/gifs/mountain-climber-whiteclean.gif?v=1',
       level: 2, bw: true, time: true, inc: 5, f: 0, reps: [20, 45],
       cues: [
         'Hände unter den Schultern, Körper bildet eine gerade Linie',

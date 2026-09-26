@@ -387,3 +387,12 @@
   Hintergrundflächen (zwischen Oberschenkel und Bauch, hinter der Figur an der Multipresse) als hellgraue Flecken stehen.
   Sie sind in den dunklen Fassungen auf durchsichtig gesetzt (`tools/gif-postprocess/pockets.cjs`). Der Konverter kennt dafür
   jetzt die Einstellung `near` (`tools/dark-gifs.html`); sie reichte bei "Mountain Climbers" allein nicht aus.
+
+## Dunkle GIFs: ausgefranste Kanten bei Klimmzug breit und Latzug breit (26.09.2026)
+
+- Bei "Klimmzüge Obergriff breit" (`pullup-wide-overhand`) und "Latzug breit zur Brust" (`latpull-wide`) sind ausgefranste helle
+  Randpixel an Stange, Armen und Gerät in den dunklen Fassungen entfernt (`tools/gif-postprocess/spurs.cjs`). Die
+  Überblendungen zwischen den beiden Endstellungen stammen aus der Vorlage und sind unverändert.
+- Bei denselben beiden GIFs ist die Überblendung in der dunklen Fassung geschärft (`SHARPEN` in `tools/dark-gifs.html`,
+  Exponent 2,5): Die Zwischenbilder bleiben länger nah an einer der beiden Posen, das halbdurchsichtige Doppelbild
+  erscheint nur kurz. Die helle Fassung ist unverändert.

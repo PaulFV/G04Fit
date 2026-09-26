@@ -64,6 +64,12 @@ var OUTLINE = 10;           // Farbe der Umrisslinien in den Vorlagen
 var HOLE = 30;              // eingeschlossene weiße Flächen ab dieser Größe sind Hintergrund
 var POSE_EVERY = 6;         // Abstand der Posen in der Bildfolge
 /* Vorlagen mit anderem Abstand der Posen (z. B. 10 Bilder: Pose, 4 Überblendungen, Pose, 4 Überblendungen). */
+/* Überblendungen schärfen: Die Zwischenbilder bleiben länger nah an einer der beiden Posen und zeigen das Doppelbild nur kurz
+   (Exponent; größer = schärfer). Nur für Vorlagen, deren Zwischenbilder echte Überblendungen sind. */
+var SHARPEN = { 'pullup-wide-overhand': 2.5, 'latpull-wide': 2.5 };
+function sharpenBlend(t, k) {
+  return t < 0.5 ? 0.5 * Math.pow(2 * t, k) : 1 - 0.5 * Math.pow(2 * (1 - t), k);
+}
 var POSE_EVERY_BY = { 'pullup-assisted': 1, 'kneeraise-station': 1, 'mountain-climber': 1, 'leg-extension': 1, 'sidebend-db': 1 }; // 1 = jedes Bild ist eine eigene Pose (fortlaufende Bewegung ohne Überblendungen)
 var EDGE_MAX = 200;         // hellere Randpixel sind Füllung (z. B. Geräte ohne Umriss), keine Kante
 var KNEE = 205, SLOPE = 0.5; // sehr helle Flächen sanft abdunkeln, damit weiße Geräte nicht blenden
@@ -581,6 +587,7 @@ async function convert(url, transparent, name) {
   for (var i = 0; i < n; i++) {
     var pe = POSE_EVERY_BY[name] || POSE_EVERY, a = Math.floor(i / pe) * pe, b2 = (a + pe) % n;
     var t = i === a ? 0 : blendShare(F[i].px, F[a].px, F[b2].px);
+    if (SHARPEN[name] && t > 0) t = sharpenBlend(t, SHARPEN[name]);
     var A = pose(a), B = t > 0 ? pose(b2) : A, N = W * H, rgba = new Uint8ClampedArray(N * 4);
     for (var p = 0; p < N; p++) {
       for (var c = 0; c < 3; c++) rgba[p * 4 + c] = Math.round((1 - t) * A.px[p * 3 + c] + t * B.px[p * 3 + c]);

@@ -9,7 +9,7 @@ g.frames.forEach(fr=>{const f=fr.rgba;const flat=new Uint8Array(N);
     while(st.length){const q=st.pop();for(const r of [q-1,q+1,q-W,q+W]){if(r>=0&&r<N&&flat[r]&&!seen[r]){seen[r]=1;st.push(r);cells.push(r);}}}
     if(cells.length>=MIN)cells.forEach(q=>kill[q]=1);}
   // grow over light grey neighbours (antialias rim)
-  for(let it=0;it<GROW;it++){const add=[];for(let p=0;p<N;p++){if(kill[p]||!f[p*4+3])continue;const r=f[p*4],ok=r>=196&&r===f[p*4+1]&&r===f[p*4+2];if(!ok)continue;
+  for(let it=0;it<GROW;it++){const add=[];for(let p=0;p<N;p++){if(kill[p]||!f[p*4+3])continue;const r=f[p*4],ok=r>=200&&Math.abs(r-f[p*4+1])<=3&&Math.abs(r-f[p*4+2])<=3;if(!ok)continue;
     const x=p%W,y=(p/W)|0;if((x>0&&kill[p-1])||(x<W-1&&kill[p+1])||(y>0&&kill[p-W])||(y<H-1&&kill[p+W]))add.push(p);}add.forEach(p=>kill[p]=1);}
   for(let p=0;p<N;p++)if(kill[p]){f[p*4+3]=0;removed++;}
 });
