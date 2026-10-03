@@ -100,7 +100,8 @@
     ['Speicherort und Speicherdauer',
       'Profil, Foto und Trainingsdaten liegen im lokalen Speicher deines Browsers (localStorage) auf dem ' +
       'jeweiligen Gerät. Nur bei aktivierten Benachrichtigungen werden die unter „Benachrichtigungen“ ' +
-      'genannten technischen Daten an den Push-Dienst übertragen. Die Daten bleiben erhalten, bis du sie ' +
+      'genannten technischen Daten an den Push-Dienst übertragen, und nur wenn du selbst Feedback absendest, ' +
+      'geht dieser Text hinaus (siehe „Feedback & Ideen“). Die Daten bleiben erhalten, bis du sie ' +
       'löschst, die jeweilige Einwilligung widerrufst oder die Browserdaten entfernst.'],
     ['Verarbeitung durch den G04Fit Coach',
       'Der Coach ist ein regelbasiertes Verfahren, das auf deinem Gerät rechnet. Es werden keine Daten an ' +
@@ -116,6 +117,14 @@
       'Trainingstage, Erinnerungszeit und Zeitzone an den G04Fit Push-Dienst auf Cloudflare übertragen. ' +
       'Name, Profil, Trainingsverlauf, Gewichte und Fotos werden nicht übertragen. Beim Widerruf werden ' +
       'die Push-Anmeldung und der zugehörige Zeitplan auf dem Dienst gelöscht.'],
+    ['Feedback & Ideen',
+      'In den Einstellungen kannst du mir eine Nachricht schicken. Sie wird nur gesendet, wenn du selbst auf ' +
+      '„Senden“ tippst, und läuft über den Formular-Dienst formsubmit.co, der sie als E-Mail an fodorpaul@web.de ' +
+      'weiterleitet. Übertragen werden dein Text, die optionale E-Mail-Adresse (nur wenn du sie einträgst), die ' +
+      'App-Version und die Sprache. Trainings-, Profil- und Gewichtsdaten werden nicht mitgeschickt. Dabei ' +
+      'verarbeitet formsubmit.co technische Verbindungsdaten wie die IP-Adresse. Die Nachricht ' +
+      'bleibt in meinem E-Mail-Postfach, bis ich sie lösche; auf Wunsch lösche ich sie früher. ' +
+      'Rechtsgrundlage ist deine freiwillige Eingabe und das Absenden (Art. 6 Abs. 1 lit. a DSGVO).'],
     ['Deine Rechte',
       'Du kannst deine Daten jederzeit als Datei exportieren (Recht auf Datenübertragbarkeit), einzeln oder ' +
       'vollständig löschen (Recht auf Löschung) und jede Einwilligung mit Wirkung für die Zukunft widerrufen. ' +
@@ -166,7 +175,8 @@
       'purpose and can be withdrawn individually.'],
     ['Storage and retention',
       'Profile, photo and workout data are stored in this browser on the device. Technical data for ' +
-      'enabled push reminders is the exception. Data remains until you delete it, withdraw consent or ' +
+      'enabled push reminders is the exception, and so is a feedback message that you send yourself (see ' +
+      '“Feedback & ideas”). Data remains until you delete it, withdraw consent or ' +
       'remove browser data.'],
     ['G04Fit Coach',
       'The coach is a rules-based process that runs on your device. No data is sent to an AI service.'],
@@ -177,6 +187,13 @@
       'When background push is enabled, a random device ID, Web Push subscription, training days, ' +
       'reminder time, timezone and language are sent to the configured Cloudflare push service. Your ' +
       'name, photo, profile and workout history are not sent. The schedule is deleted when consent is withdrawn.'],
+    ['Feedback & ideas',
+      'In the settings you can send me a message. It is sent only when you tap “Send” yourself and is ' +
+      'forwarded as an email to fodorpaul@web.de through the form service formsubmit.co. Your text, the optional ' +
+      'email address (only if you enter one), the app version and the language are transmitted. Training, profile ' +
+      'and weight data are not included. formsubmit.co processes technical connection data such as the IP ' +
+      'address. The message stays in my mailbox until I delete it; I will delete it earlier on request. ' +
+      'The legal basis is your voluntary input and sending it (Art. 6(1)(a) GDPR).'],
     ['Your rights',
       'You may request access, correction, deletion, restriction, portability and withdraw consent. You ' +
       'can delete all data directly in G04Fit. Contact the controller listed above for enquiries.'],

@@ -141,6 +141,12 @@
   .input,.select,.textarea,.set-row .input{font-size:16px}
 }
 .textarea{resize:vertical;min-height:96px;font-family:var(--mono);font-size:12.5px;line-height:1.6}
+/* Fließtext statt Code (z. B. Feedback): normale Schrift, 16 px gegen den iOS-Zoom */
+.textarea.textarea--prose{font-family:inherit;font-size:16px;line-height:1.5}
+/* Spam-Falle im Feedback-Formular: für Menschen unsichtbar, für Bots ein normales Feld */
+.fb-honey{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+.fb-ok{color:var(--neon);font-weight:600}
+.fb-err{color:var(--danger,#ff6b6b);font-weight:600}
 .select{appearance:none;cursor:pointer;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239FB2A9' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 11px center;background-size:16px;padding-right:34px}

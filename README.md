@@ -268,6 +268,15 @@ Browsers (`localStorage`). Wenn Push-Erinnerungen aktiviert werden, überträgt 
 die dafür nötigen technischen Daten an den konfigurierten Push-Dienst; Name, Foto, Profil und
 Trainingsverlauf werden nicht übertragen.
 
+Unter *Profil → App-Einstellungen* gibt es das Formular **Feedback & Ideen**. Es sendet nur, wenn
+man selbst auf *Senden* tippt: Der Text geht per AJAX direkt aus dem Browser an
+[formsubmit.co](https://formsubmit.co), die ihn als E-Mail an `fodorpaul@web.de` weiterleiten
+(wie in G04Event; ohne Konto, ohne eigenen Server). Mitgeschickt werden nur die optionale
+E-Mail-Adresse, die App-Version und die Sprache, keine Trainings- oder Profildaten. Beim allerersten
+Absenden verlangt formsubmit.co einmalig eine Bestätigung per E-Mail an `fodorpaul@web.de`; vorher
+kommen keine Nachrichten an. Technische Fehler lassen sich alternativ als öffentliches
+[GitHub-Issue](https://github.com/PaulFV/G04Fit/issues) melden.
+
 Unter *Datenschutz* lassen sich alle Daten als JSON exportieren, wieder einlesen sowie einzeln
 oder vollständig löschen. Dort stehen außerdem die Copyright- und Lizenzhinweise. Die öffentliche
 Datenschutzseite liegt unter [privacy.html](privacy.html), die Copyright-Seite unter

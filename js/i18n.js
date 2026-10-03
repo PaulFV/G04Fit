@@ -401,7 +401,21 @@
     'Übung auswählen': 'Choose exercise', 'Übung suchen …': 'Search exercises …', 'Countdown in der Mitte nach jedem Satz': 'Countdown in the centre after each set',
     'Wdh.': 'reps', 'Satz': 'Set', 'Satz abhaken': 'Tick off set', 'Notiz zur Einheit': 'Workout note',
     'Wie lief das Training? Was ist aufgefallen?': 'How did the workout go? Anything you noticed?',
-    'Volumen': 'Volume', 'War leicht': 'Felt easy', 'War schwer': 'Felt hard', 'Einheit abgeschlossen': 'Workout completed'
+    'Volumen': 'Volume', 'War leicht': 'Felt easy', 'War schwer': 'Felt hard', 'Einheit abgeschlossen': 'Workout completed',
+
+    // Feedback & Ideen (Profil → Einstellungen)
+    'Feedback & Ideen': 'Feedback & ideas',
+    'Fehler gefunden, eine Idee oder etwas, das dir fehlt? Schick es direkt an mich — ganz ohne Konto.': 'Found a bug, have an idea or miss something? Send it straight to me — no account needed.',
+    'Deine Nachricht*': 'Your message*', 'Was möchtest du mir mitteilen?': 'What would you like to tell me?',
+    'Deine E-Mail (optional, für eine Antwort)': 'Your email (optional, so I can reply)', 'name@beispiel.de': 'name@example.com',
+    'Senden': 'Send', 'Wird gesendet …': 'Sending …',
+    'Beim Senden geht dein Text über formsubmit.co als E-Mail an mich. Mitgeschickt werden nur die optionale E-Mail-Adresse, die App-Version und die Sprache — keine Trainings- oder Profildaten.': 'When you send, your text goes to me as an email via formsubmit.co. Only the optional email address, the app version and the language are included — no training or profile data.',
+    'Oder als öffentliches Issue auf': 'Or as a public issue on',
+    'Bitte schreibe zuerst eine Nachricht.': 'Please write a message first.',
+    'Bitte gib eine gültige E-Mail-Adresse an.': 'Please enter a valid email address.',
+    'Keine Internetverbindung. Bitte versuche es später noch einmal.': 'No internet connection. Please try again later.',
+    'Danke! Deine Nachricht ist unterwegs.': 'Thanks! Your message is on its way.',
+    'Senden hat nicht geklappt. Bitte versuche es noch einmal oder schreibe an fodorpaul@web.de.': 'Sending failed. Please try again or write to fodorpaul@web.de.'
   };
 
   var WORDS = {

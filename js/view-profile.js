@@ -219,6 +219,89 @@
   }
 
   /* ------------------------------------------------------------
+     Feedback & Ideen
+     Wie in G04Event: Die App hat keinen eigenen Server, deshalb geht der Text
+     per AJAX direkt vom Browser an formsubmit.co, die ihn als E-Mail an
+     fodorpaul@web.de weiterleiten. Gesendet wird nur beim Klick auf „Senden“,
+     nie im Hintergrund, und es werden keine Trainings- oder Profildaten
+     mitgeschickt. Beim allerersten Absenden jemals schickt formsubmit.co eine
+     Bestätigungs-Mail an diese Adresse; erst danach kommen Nachrichten an.
+     Das versteckte Feld "_honey" ist eine einfache Spam-Falle.
+     ------------------------------------------------------------ */
+  var FEEDBACK_ZIEL = 'https://formsubmit.co/ajax/fodorpaul@web.de';
+  var ISSUES_URL = 'https://github.com/PaulFV/G04Fit/issues';
+
+  function feedbackCard() {
+    return '<div class="card" id="feedbackCard">' +
+      '<div class="card__head">' + u.icon('share', 18) + '<h3>Feedback &amp; Ideen</h3></div>' +
+      '<form id="feedbackForm" novalidate style="margin:6px 13px 14px">' +
+      '<p class="small muted" style="margin:0 0 12px">Fehler gefunden, eine Idee oder etwas, das dir fehlt? ' +
+      'Schick es direkt an mich — ganz ohne Konto.</p>' +
+      '<div class="field" style="margin-bottom:12px"><label for="fbMessage">Deine Nachricht*</label>' +
+      '<textarea class="textarea textarea--prose" id="fbMessage" name="message" rows="4" maxlength="2000" ' +
+      'placeholder="Was möchtest du mir mitteilen?"></textarea></div>' +
+      '<div class="field" style="margin-bottom:12px"><label for="fbEmail">Deine E-Mail (optional, für eine Antwort)</label>' +
+      '<input class="input" id="fbEmail" name="_replyto" type="email" maxlength="120" inputmode="email" ' +
+      'autocomplete="email" placeholder="name@beispiel.de"></div>' +
+      '<input type="text" name="_honey" class="fb-honey" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+      '<div class="row row--wrap" style="gap:12px;align-items:center">' +
+      '<button type="submit" class="btn btn--primary" id="feedbackSend">' + u.icon('check', 17) + ' Senden</button>' +
+      '<span class="small" id="feedbackStatus" aria-live="polite"></span></div>' +
+      '<span class="field__hint" style="display:block;margin-top:10px">Beim Senden geht dein Text über formsubmit.co ' +
+      'als E-Mail an mich. Mitgeschickt werden nur die optionale E-Mail-Adresse, die App-Version und die Sprache — ' +
+      'keine Trainings- oder Profildaten.</span>' +
+      '<span class="field__hint" style="display:block;margin-top:6px">Oder als öffentliches Issue auf ' +
+      '<a href="' + ISSUES_URL + '" target="_blank" rel="noopener noreferrer">GitHub</a>.</span>' +
+      '</form></div>';
+  }
+
+  function sendFeedback(form) {
+    var status = form.querySelector('#feedbackStatus');
+    var btn = form.querySelector('#feedbackSend');
+    function say(text, kind) {
+      status.textContent = text;
+      status.className = 'small' + (kind === 'ok' ? ' fb-ok' : (kind === 'err' ? ' fb-err' : ''));
+    }
+    if (form.elements._honey.value) return Promise.resolve();      // Bot-Falle: stillschweigend nichts tun
+    var text = form.elements.message.value.trim();
+    var email = form.elements._replyto.value.trim();
+    if (!text) { say('Bitte schreibe zuerst eine Nachricht.', 'err'); return Promise.resolve(); }
+    if (email && !form.elements._replyto.checkValidity()) { say('Bitte gib eine gültige E-Mail-Adresse an.', 'err'); return Promise.resolve(); }
+    if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+      say('Keine Internetverbindung. Bitte versuche es später noch einmal.', 'err');
+      return Promise.resolve();
+    }
+    btn.disabled = true;
+    say('Wird gesendet …');
+    return fetch(FEEDBACK_ZIEL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        message: text,
+        _replyto: email,
+        _subject: 'G04Fit — Feedback',
+        _template: 'table',
+        App: 'G04Fit ' + G.VERSION,
+        Sprache: G.i18n.locale()
+      })
+    }).then(function (res) {
+      // formsubmit.co antwortet auch bei einer noch nicht aktivierten Adresse mit HTTP 200 und
+      // success:"false" — das darf nicht als „gesendet“ gelten.
+      return res.json().catch(function () { return null; }).then(function (data) {
+        var refused = !data || data.success === false || data.success === 'false';
+        if (!res.ok || refused) throw new Error('status ' + res.status);
+      });
+    }).then(function () {
+      say('Danke! Deine Nachricht ist unterwegs.', 'ok');
+      form.reset();
+    }).catch(function () {
+      say('Senden hat nicht geklappt. Bitte versuche es noch einmal oder schreibe an fodorpaul@web.de.', 'err');
+    }).then(function () {
+      btn.disabled = false;
+    });
+  }
+
+  /* ------------------------------------------------------------
      View
      ------------------------------------------------------------ */
   G.views.profile = {
@@ -335,6 +418,8 @@
         '</select><button class="btn btn--sm" data-act="test-alarm">Anhören</button></div>' +
         '<span class="field__hint">Der Ton wird abgespielt, wenn eine Satzpause endet.</span></div>' +
         '</div>' +
+
+        feedbackCard() +
 
         '<div class="note note--warn">' + u.icon('warn', 18) +
         '<div>G04Fit ersetzt keine ärztliche oder physiotherapeutische Beratung. ' +
@@ -541,6 +626,11 @@
       });
       u.on(host, 'click', '[data-act="test-alarm"]', function () {
         G.reminders.playAlarm(true);
+      });
+
+      u.on(host, 'submit', '#feedbackForm', function (e, form) {
+        e.preventDefault();
+        sendFeedback(form);
       });
     }
   };
