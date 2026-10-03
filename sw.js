@@ -5,7 +5,7 @@
    eigenen Programmdateien zwischengespeichert. Der optionale
    Push-Dienst wird nur nach ausdrücklicher Einwilligung verwendet.
    ============================================================ */
-var CACHE = 'g04fit-v2.8.218';
+var CACHE = 'g04fit-v2.8.219';
 
 var ASSETS = [
   './',
@@ -57,7 +57,6 @@ var ASSETS = [
   './js/coach.js',
   './js/planner.js',
   './js/reminders.js',
-  './js/obsidian.js',
   './js/view-dashboard.js',
   './js/view-journey.js',
   './js/view-workout.js',
@@ -66,7 +65,6 @@ var ASSETS = [
   './js/view-profile.js',
   './js/view-coach.js',
   './js/view-reminders.js',
-  './js/view-obsidian.js',
   './js/view-privacy.js',
   './js/onboarding.js',
   './js/app.js',

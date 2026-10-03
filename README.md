@@ -1,7 +1,7 @@
 # G04Fit v2.1.0
 
 Trainingsplaner für **Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter** — mit Wochenplan,
-Journey, regelbasiertem Coach, Fortschrittsauswertung, Obsidian-Export und einem
+Journey, regelbasiertem Coach, Fortschrittsauswertung und einem
 Datenschutzkonzept, das ohne Einwilligung nichts speichert.
 
 Umgesetzt als eigenständige Web-App: läuft auf **Desktop, iPhone und Android**, offline,
@@ -21,8 +21,7 @@ ohne Backend, ohne Konto, ohne Tracking.
 | **Profil** | Persönliche Angaben, Erfahrungsstufe, Ziele, Trainingstage, Startgewichte, Trainings-Avatar |
 | **G04Fit Coach** | Vorschläge zu Gewicht, Wiederholungen, Progression und Wiedereinstieg |
 | **Erinnerungen** | Trainingstage, Uhrzeit, Benachrichtigungen, Wiedereinstiegsmodus |
-| **Obsidian** | Trainingsprotokolle und Übersicht als Markdown für deinen Vault |
-| **Datenschutz** | Fünf einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung und Copyright-Hinweise |
+| **Datenschutz** | Vier einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung und Copyright-Hinweise |
 
 ---
 
@@ -176,7 +175,6 @@ G04Fit/
 │   ├── coach.js                Progressionsregeln und Auswertung
 │   ├── planner.js              Wochenplan und Einheiten
 │   ├── reminders.js            Erinnerungen
-│   ├── obsidian.js             Markdown-Erzeugung
 │   ├── view-*.js               Die zehn Bereiche
 │   ├── onboarding.js           Ersteinrichtung
 │   └── app.js                  Router und Start
@@ -254,14 +252,13 @@ und XP-Faktor:
 
 ## Datenschutz
 
-G04Fit speichert **nichts**, solange keine ausdrückliche Einwilligung vorliegt. Es gibt fünf
+G04Fit speichert **nichts**, solange keine ausdrückliche Einwilligung vorliegt. Es gibt vier
 getrennte Einwilligungen, jede einzeln erteilbar und jederzeit widerrufbar:
 
 1. **Profil, Foto & Einstellungen speichern**
 2. **Trainingshistorie & Rekorde**
 3. **Auswertung durch den G04Fit Coach**
-4. **Obsidian-Export**
-5. **Erinnerungen & Benachrichtigungen**
+4. **Erinnerungen & Benachrichtigungen**
 
 Ein Widerruf löscht die betroffenen Daten sofort. Die meisten Daten liegen im lokalen Speicher des
 Browsers (`localStorage`). Wenn Push-Erinnerungen aktiviert werden, überträgt G04Fit ausschließlich
@@ -322,7 +319,6 @@ Das Konzept sieht für spätere Versionen vor:
 * Portierung auf React, TypeScript, Tailwind CSS und Framer Motion
 * Optionales Benutzerkonto für die Synchronisation zwischen mehreren Geräten
 * 3D-Avatar mit hervorgehobenen Muskelgruppen
-* Obsidian-Plugin für die direkte Synchronisation in den Vault
 * Erweiterung um Beine und Ganzkörperübungen
 
 Die Fachlogik liegt bereits getrennt von der Oberfläche (`store.js`, `coach.js`, `planner.js`,

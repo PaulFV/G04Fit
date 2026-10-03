@@ -15,7 +15,6 @@
     { k: 'profile', n: 'Profil', ic: 'profile' },
     { k: 'coach', n: 'G04Fit Coach', ic: 'coach' },
     { k: 'reminders', n: 'Erinnerungen', ic: 'reminders' },
-    { k: 'obsidian', n: 'Obsidian', ic: 'obsidian' },
     { k: 'privacy', n: 'Datenschutz', ic: 'privacy' }
   ];
 

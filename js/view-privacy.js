@@ -30,11 +30,6 @@
       data: 'Trainingshistorie, Rekorde, Pausen zwischen Einheiten'
     },
     {
-      k: 'obsidian', t: 'Obsidian-Synchronisation',
-      d: 'G04Fit erzeugt Markdown-Notizen für deinen Vault. Der Export erfolgt nur, wenn du ihn selbst auslöst.',
-      data: 'Trainingsprotokolle, optional Coach-Auswertungen'
-    },
-    {
       k: 'push', t: 'Erinnerungen & Benachrichtigungen',
       d: 'G04Fit erinnert an geplante Einheiten und meldet sich nach längeren Pausen. ' +
         'Systembenachrichtigungen benötigen zusätzlich die Erlaubnis des Browsers.',
@@ -108,10 +103,6 @@
       'einen KI-Dienst gesendet. Die Regeln (Wiederholungsbereiche, Gewichtsschritte, Pausenlängen, ' +
       'Wiedereinstieg) sind in der App dokumentiert. Sollte in einer späteren Version ein externer ' +
       'KI-Dienst hinzukommen, ist dafür eine gesonderte Einwilligung nötig.'],
-    ['Obsidian',
-      'Der Export erzeugt Markdown-Dateien, die du selbst kopierst oder speicherst. G04Fit greift nicht ' +
-      'eigenständig auf dein Dateisystem zu. Was nach dem Export in deinem Vault passiert, liegt in deiner ' +
-      'Verantwortung.'],
     ['Benachrichtigungen',
       'Nach deiner Einwilligung werden eine zufällige Geräte-ID, die technische Web-Push-Anmeldung, ' +
       'Trainingstage, Erinnerungszeit und Zeitzone an den G04Fit Push-Dienst auf Cloudflare übertragen. ' +
@@ -180,9 +171,6 @@
       'remove browser data.'],
     ['G04Fit Coach',
       'The coach is a rules-based process that runs on your device. No data is sent to an AI service.'],
-    ['Obsidian',
-      'The export creates Markdown files that you copy or save yourself. G04Fit does not access your ' +
-      'file system automatically.'],
     ['Notifications',
       'When background push is enabled, a random device ID, Web Push subscription, training days, ' +
       'reminder time, timezone and language are sent to the configured Cloudflare push service. Your ' +
@@ -317,7 +305,7 @@
         '<div class="card__head">' + u.icon('privacy', 18) + '<h3>Datenschutzerklärung</h3>' +
         '<span class="spacer"></span><span class="pill pill--muted">Entwurf</span></div>' +
         '<p class="small muted" style="margin-bottom:14px">Verantwortlicher, Datenarten, Rechtsgrundlage, ' +
-        'Speicherdauer, KI-Verarbeitung, Obsidian, Benachrichtigungen, Löschung, Widerruf und Betroffenenrechte.</p>' +
+        'Speicherdauer, KI-Verarbeitung, Benachrichtigungen, Löschung, Widerruf und Betroffenenrechte.</p>' +
         '<div class="btn-row">' +
         '<button class="btn" data-act="policy">Vollständig lesen</button>' +
         '<button class="btn btn--ghost" data-act="policy-md">Als Markdown speichern</button>' +
@@ -371,7 +359,7 @@
 
         // Folgeabhängigkeiten sichtbar machen
         if (k === 'profile' && !want) {
-          ['history', 'ai', 'obsidian', 'push'].forEach(function (x) {
+          ['history', 'ai', 'push'].forEach(function (x) {
             if (G.store.hasConsent(x)) G.store.setConsent(x, false);
           });
           u.toast('Alle Einwilligungen zurückgesetzt',

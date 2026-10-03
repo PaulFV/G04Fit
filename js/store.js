@@ -8,7 +8,6 @@
      consent.profile   Profil & Einstellungen lokal sichern
      consent.history   Trainingshistorie & Rekorde sichern
      consent.ai        Auswertung durch den G04Fit Coach
-     consent.obsidian  Markdown-Export für Obsidian
      consent.push      Erinnerungen / Benachrichtigungen
 
    Ohne Einwilligung lebt der jeweilige Datenbereich nur im
@@ -36,7 +35,6 @@
         profile: false,
         history: false,
         ai: false,
-        obsidian: false,
         push: false,
         decidedAt: null
       },
@@ -81,13 +79,6 @@
       records: {},                   // exId -> {weight, reps, e1rm, date}
 
       session: null,                 // laufende Einheit
-
-      obsidian: {
-        vault: '',
-        folder: 'G04Fit',
-        includeAi: true,
-        lastSync: null
-      },
 
       settings: {
         theme: 'dark',
@@ -140,7 +131,6 @@
       profile: state.profile,
       settings: state.settings,
       journey: state.journey,
-      obsidian: state.consent.obsidian ? state.obsidian : null,
       history: state.consent.history ? state.history : [],
       records: state.consent.history ? state.records : {},
       session: state.session
@@ -154,6 +144,9 @@
       try {
         var parsed = JSON.parse(c);
         Object.assign(state.consent, parsed.consent || {});
+        // Einwilligungen, die es nicht mehr gibt (entfernte Funktionen), nicht weitertragen.
+        var known = blank().consent;
+        Object.keys(state.consent).forEach(function (k) { if (!(k in known)) delete state.consent[k]; });
         state.onboarded = !!parsed.onboarded;
       } catch (e) { /* beschädigt – ignorieren */ }
     }
@@ -183,7 +176,6 @@
       }
       Object.assign(state.settings, d.settings || {});
       Object.assign(state.journey, d.journey || {});
-      if (d.obsidian) Object.assign(state.obsidian, d.obsidian);
       if (state.consent.history) {
         state.history = Array.isArray(d.history) ? d.history : [];
         state.records = d.records || {};
@@ -232,9 +224,6 @@
         state.history = [];
         state.records = {};
         G.u.toast('Trainingshistorie gelöscht', 'Rekorde und vergangene Einheiten wurden entfernt.', 'warn');
-      }
-      if (key === 'obsidian') {
-        state.obsidian.lastSync = null;
       }
     }
     commit('consent');
@@ -369,7 +358,6 @@
       profile: state.profile,
       settings: state.settings,
       journey: state.journey,
-      obsidian: state.obsidian,
       history: state.history,
       records: state.records
     }, null, 2);
@@ -393,7 +381,7 @@
   function importAll(json) {
     var d = JSON.parse(json);
     if (!isObj(d) || d.app !== 'G04Fit') throw new Error('Keine G04Fit-Sicherung.');
-    ['profile', 'settings', 'journey', 'obsidian', 'records'].forEach(function (k) {
+    ['profile', 'settings', 'journey', 'records'].forEach(function (k) {
       if (d[k] != null && !isObj(d[k])) throw new Error('Die Sicherung ist beschädigt (' + k + ').');
     });
     if (d.history != null && !Array.isArray(d.history)) throw new Error('Die Sicherung ist beschädigt (history).');
@@ -404,7 +392,6 @@
     if (d.profile) Object.assign(state.profile, d.profile);
     if (d.settings) Object.assign(state.settings, d.settings);
     if (d.journey) Object.assign(state.journey, d.journey);
-    if (d.obsidian) Object.assign(state.obsidian, d.obsidian);
     if (d.history) state.history = history;
     if (d.records) state.records = d.records;
     state.onboarded = true;

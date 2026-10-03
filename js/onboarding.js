@@ -67,9 +67,7 @@
       ['ai', 'Auswertung durch den G04Fit Coach',
         'Rechnet ausschließlich auf diesem Gerät. Keine Übertragung an Dienste.', true],
       ['push', 'Erinnerungen',
-        'Hinweise an deinen Trainingstagen und nach längeren Pausen.', false],
-      ['obsidian', 'Obsidian-Export',
-        'Markdown-Notizen für deinen Vault. Kann später aktiviert werden.', false]
+        'Hinweise an deinen Trainingstagen und nach längeren Pausen.', false]
     ];
 
     return '<div class="ob-step">' + progress() +
@@ -213,7 +211,7 @@
     var s = G.store.state;
     var plan = G.planner.weekPlan();
     var next = G.planner.nextPlan();
-    var given = ['profile', 'history', 'ai', 'push', 'obsidian']
+    var given = ['profile', 'history', 'ai', 'push']
       .filter(function (k) { return G.store.hasConsent(k); }).length;
 
     return '<div class="ob-step">' + progress() +
@@ -228,7 +226,7 @@
       '<div class="grid grid--3" style="--sp:10px">' +
       miniStat('Einheiten/Woche', plan.length) +
       miniStat('Modus', G.journey.mode(s.profile.mode).name) +
-      miniStat('Einwilligungen', given + '/5') +
+      miniStat('Einwilligungen', given + '/4') +
       '</div>' +
 
       (next ? '<div class="card card--pad-sm card--hl">' +
@@ -333,7 +331,7 @@
         G.store.setConsent('profile', true);
       }
       if (k === 'profile' && !t.checked) {
-        ['history', 'ai', 'obsidian', 'push'].forEach(function (x) { G.store.setConsent(x, false); });
+        ['history', 'ai', 'push'].forEach(function (x) { G.store.setConsent(x, false); });
       }
       render();
     });

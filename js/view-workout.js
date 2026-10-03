@@ -603,22 +603,12 @@
         'Diese Einheit wird deshalb nicht gespeichert und erscheint nicht im Fortschritt.</div></div>');
     }
 
-    if (G.obsidian.allowed()) {
-      lines.push('<button class="btn btn--cyan btn--block" data-act="to-obsidian">' +
-        u.icon('obsidian', 17) + ' Als Markdown für Obsidian</button>');
-    }
-
     lines.push('<button class="btn btn--primary btn--block" data-act="sum-close">Fertig</button>');
     lines.push('</div>');
 
     u.openSheet('Einheit abgeschlossen', lines.join(''), function (body) {
       body.querySelector('[data-act="sum-close"]').onclick = function () {
         u.closeSheet(); G.app.go('dashboard');
-      };
-      var ob = body.querySelector('[data-act="to-obsidian"]');
-      if (ob) ob.onclick = function () {
-        u.closeSheet();
-        G.app.go('obsidian', { session: sess });
       };
     });
 

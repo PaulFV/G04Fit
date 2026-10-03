@@ -41,7 +41,6 @@ erteilbar:
 | Profil, Foto & Einstellungen speichern | Persönliche Angaben über die Sitzung hinaus erhalten |
 | Trainingshistorie & Rekorde | Fortschritt, Bestleistungen, Verlaufskurven |
 | Auswertung durch den G04Fit Coach | Vorschläge zu Gewicht, Wiederholungen, Progression |
-| Obsidian-Export | Erzeugung von Markdown-Notizen |
 | Erinnerungen & Benachrichtigungen | Hinweise an Trainingstagen und nach Pausen |
 
 Ohne die jeweilige Einwilligung wird der betreffende Datenbereich **nicht dauerhaft
@@ -72,11 +71,15 @@ der App verwendet. Es findet **keine Gesichtserkennung, keine biometrische Auswe
 Das Foto kann jederzeit im Profil ausgetauscht, entfernt oder die Anzeige ganz abgeschaltet
 werden. Beim Löschen der Daten wird es mit entfernt.
 
-## 7. Obsidian
+## 7. Feedback und Ideen
 
-Der Export erzeugt Markdown-Dateien, die selbst kopiert oder gespeichert werden. G04Fit greift
-**nicht eigenständig auf das Dateisystem zu**. Was nach dem Export im Vault geschieht, liegt in
-der Verantwortung der nutzenden Person.
+In den Einstellungen kann eine Nachricht an den Verantwortlichen gesendet werden. Sie wird nur
+gesendet, wenn die Person selbst auf „Senden“ tippt, und über den Formular-Dienst formsubmit.co
+als E-Mail an fodorpaul@web.de weitergeleitet. Übertragen werden der Text, die optionale
+E-Mail-Adresse, die App-Version und die Sprache, keine Trainings- oder Profildaten. formsubmit.co
+verarbeitet dabei technische Verbindungsdaten wie die IP-Adresse. Die Nachricht bleibt im
+E-Mail-Postfach des Verantwortlichen, bis sie gelöscht wird. Rechtsgrundlage ist die freiwillige
+Eingabe und das Absenden (Art. 6 Abs. 1 lit. a DSGVO).
 
 ## 8. Benachrichtigungen
 

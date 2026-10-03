@@ -388,20 +388,11 @@
         '<h3>Notiz</h3></div><p class="small muted">' + u.esc(sess.notes) + '</p></div>');
     }
 
-    if (G.obsidian.allowed()) {
-      html.push('<button class="btn btn--cyan btn--block" data-act="md">' + u.icon('obsidian', 17) +
-        ' Als Markdown ausgeben</button>');
-    }
     html.push('<button class="btn btn--danger btn--block" data-act="del">' + u.icon('trash', 16) +
       ' Diese Einheit löschen</button>');
     html.push('</div>');
 
     u.openSheet(sess.title, html.join(''), function (body) {
-      var md = body.querySelector('[data-act="md"]');
-      if (md) md.onclick = function () {
-        u.closeSheet();
-        G.app.go('obsidian', { session: sess });
-      };
       body.querySelector('[data-act="del"]').onclick = async function () {
         var ok = await u.confirmSheet({
           title: 'Einheit löschen',

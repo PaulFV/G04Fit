@@ -24,8 +24,6 @@
     'Rechnet ausschließlich auf diesem Gerät. Keine Übertragung an Dienste.': 'Calculated only on this device. Nothing is sent to external services.',
     'Erinnerungen': 'Reminders',
     'Hinweise an deinen Trainingstagen und nach längeren Pausen.': 'Prompts on training days and after longer breaks.',
-    'Obsidian-Export': 'Obsidian export',
-    'Markdown-Notizen für deinen Vault. Kann später aktiviert werden.': 'Markdown notes for your vault. Can be enabled later.',
     'empfohlen': 'recommended',
     'Du kannst G04Fit auch ganz ohne Einwilligung ausprobieren. Dann funktioniert alles, aber nichts bleibt nach dem Schließen erhalten.': 'You can try G04Fit without giving consent. Everything works, but nothing is kept after closing the app.',
     'Datenschutzerklärung lesen': 'Read privacy policy',
@@ -93,7 +91,7 @@
     'Drittanbieter': 'Third-party software', 'Veröffentlichung': 'Release', 'Übersicht': 'Overview', 'Kopiert': 'Copied',
     'Urheberrecht, eigene Inhalte und Hinweise zu verwendeten Drittanbieter-Paketen.': 'Copyright, original content and notices for third-party packages.',
     'Öffentliche Datenschutzerklärung': 'Public privacy policy', 'Öffentliche Copyright-Hinweise': 'Public copyright notices',
-    'Füge die Notiz in Obsidian ein.': 'Paste the note into Obsidian.', 'Nicht möglich': 'Not possible', 'Der Download wurde vom Browser blockiert.': 'The browser blocked the download.',
+    'Nicht möglich': 'Not possible',
 
     /* App chrome, dashboard and common dynamic phrases */
     'Guten Morgen': 'Good morning', 'Mahlzeit': 'Good afternoon', 'Guten Tag': 'Good day',
@@ -151,9 +149,9 @@
     'Der Coach erhöht beim nächsten Mal stärker.': 'The Coach will increase more next time.', 'Der Coach geht beim nächsten Mal vorsichtiger vor.': 'The Coach will be more cautious next time.',
     'Keine Sätze erledigt': 'No sets completed', 'Hake mindestens einen Satz ab.': 'Complete at least one set.',
     'Einheit abschließen': 'Finish workout', 'Es sind noch <b>': 'There are still <b>', ' Sätze offen. Nicht abgehakte Sätze werden nicht gewertet.': ' sets open. Uncompleted sets do not count.',
-    'Trotzdem abschließen': 'Finish anyway', 'Als Markdown für Obsidian': 'As Markdown for Obsidian',
+    'Trotzdem abschließen': 'Finish anyway',
 
-    /* Progress and Obsidian */
+    /* Progress */
     'Volumen je Woche': 'Volume per week', 'Wiederholungen gesamt': 'Total reps', 'Kraftentwicklung': 'Strength development',
     'Historie': 'History', 'Leistungsprofil': 'Performance profile', 'Noch keine Trainingsdaten.': 'No workout data yet.',
     'Noch keine Daten.': 'No data yet.', 'Fortschritt wird nicht aufgezeichnet': 'Progress is not being recorded',
@@ -163,12 +161,6 @@
     'Sobald du eine Übung abschließt, merkt sich G04Fit deine beste Leistung.': 'Once you complete an exercise, G04Fit remembers your best performance.',
     'Abgeschlossene Trainings erscheinen hier mit allen Sätzen.': 'Completed workouts appear here with all sets.', 'Diese Einheit löschen': 'Delete this workout',
     'Die Einheit wurde entfernt.': 'The workout was removed.', 'Ab jetzt merkt sich G04Fit deine Einheiten – nur auf diesem Gerät.': 'G04Fit will now remember your workouts — on this device only.',
-    'für deinen Vault erzeugen. Das passiert nur, wenn du dem ausdrücklich zustimmst.': 'for your vault. This only happens when you explicitly consent.',
-    'Eine Übersichtsnotiz mit Level, Rekorden und den letzten Einheiten': 'An overview note with level, records and recent workouts',
-    'Auf Wunsch die Empfehlungen des Coach für die nächste Einheit': 'Optionally, the Coach recommendations for the next workout',
-    'Markdown für deinen Vault': 'Markdown for your vault', 'Empfehlungen und Beobachtungen erscheinen in der Notiz. Benötigt die Einwilligung KI-Analyse.': 'Recommendations and observations appear in the note. AI analysis consent is required.',
-    'Ein direkter Schreibzugriff auf deinen Vault ist aus dem Browser heraus nicht möglich – und wäre ohne ausdrückliche Freigabe auch nicht wünschenswert. Für eine automatische Synchronisation braucht es später ein Obsidian-Plugin oder einen lokalen Dienst.': 'Direct write access to your vault is not possible from the browser — and would not be desirable without explicit permission. Automatic synchronisation will require an Obsidian plugin or local service later.',
-    'Die Einwilligung für den Obsidian-Export wird widerrufen. Bereits exportierte Dateien in deinem Vault bleiben unberührt.': 'Obsidian export consent will be revoked. Files already exported to your vault remain untouched.',
     'Die Sicherung wurde übernommen.': 'The backup was imported.', 'Lokal gelöscht. Die Abmeldung beim Push-Dienst konnte nicht bestätigt werden.': 'Deleted locally. Unregistering from the push service could not be confirmed.', 'Alle Einwilligungen zurückgesetzt': 'All consents reset',
     'Profil-Speicherung ergänzt': 'Profile storage enabled', 'Die Historie braucht ein gespeichertes Profil.': 'History needs a saved profile.',
     'Exportiert': 'Exported', 'Eingelesen': 'Imported', 'Zurückgesetzt': 'Reset', 'Alle Daten wurden gelöscht.': 'All data was deleted.',
@@ -367,34 +359,18 @@
     'Der Coach analysiert deine gespeicherten Trainingsdaten und leitet daraus Vorschläge für Gewicht, Wiederholungen, Progression und Wiedereinstieg ab. Die Berechnung läuft ausschließlich auf diesem Gerät.':
       'The Coach analyses your stored workout data and derives suggestions for weight, reps, progression and return mode. The calculation runs on this device only.',
     'Analyse deiner Trainingsdaten': 'Analysis of your workout data',
-    'G04Fit erzeugt Markdown-Notizen für deinen Vault. Der Export erfolgt nur, wenn du ihn selbst auslöst.':
-      'G04Fit creates Markdown notes for your vault. Export only happens when you trigger it yourself.',
-    'Trainingsprotokolle, optional Coach-Auswertungen': 'Workout logs, optionally Coach analyses',
     'G04Fit erinnert an geplante Einheiten und meldet sich nach längeren Pausen. Systembenachrichtigungen benötigen zusätzlich die Erlaubnis des Browsers.':
       'G04Fit reminds you of planned workouts and checks in after longer breaks. System notifications also require the browser’s permission.',
     'Zufällige Geräte-ID, Push-Anmeldung, Trainingstage, Uhrzeit und Zeitzone': 'Random device ID, push registration, training days, time and time zone',
     'Erinnerungen & Benachrichtigungen': 'Reminders & notifications', 'Trainingsdaten lokal': 'Workout data stays local',
     'Exportiere alles als JSON-Datei – zur Sicherung oder zum Umzug auf ein anderes Gerät.': 'Export everything as a JSON file — as a backup or to move to another device.',
-    'Verantwortlicher, Datenarten, Rechtsgrundlage, Speicherdauer, KI-Verarbeitung, Obsidian, Benachrichtigungen, Löschung, Widerruf und Betroffenenrechte.':
-      'Controller, data types, legal basis, storage period, AI processing, Obsidian, notifications, deletion, revocation and data subject rights.',
+    'Verantwortlicher, Datenarten, Rechtsgrundlage, Speicherdauer, KI-Verarbeitung, Benachrichtigungen, Löschung, Widerruf und Betroffenenrechte.':
+      'Controller, data types, legal basis, storage period, AI processing, notifications, deletion, revocation and data subject rights.',
 
     // Erinnerungen
     'Ohne die Einwilligung „Benachrichtigungen“ erinnert G04Fit dich nicht.': 'Without the “Notifications” consent, G04Fit will not remind you.',
     'Motivation auch bei geschlossener App': 'Motivation even when the app is closed',
     'Testerinnerung': 'Test reminder', 'Abschalten': 'Turn off',
-
-    // Obsidian
-    'Obsidian-Verbindung ist aus': 'Obsidian connection is off', 'Obsidian-Synchronisation': 'Obsidian sync',
-    'G04Fit kann Trainingsprotokolle und Auswertungen als Markdown-Dateien für deinen Vault erzeugen. Das passiert nur, wenn du dem ausdrücklich zustimmst.':
-      'G04Fit can create workout logs and analyses as Markdown files for your vault. This only happens if you explicitly agree.',
-    'Was erzeugt wird': 'What gets created', 'Je Einheit eine Notiz mit Frontmatter, Satztabelle und Volumen': 'One note per workout with frontmatter, set table and volume',
-    'Bereit zum Export': 'Ready to export', 'Verbindung trennen': 'Disconnect', 'Vault-Pfad': 'Vault path', 'Unterordner': 'Subfolder',
-    'G04Fit erzeugt fertige Notizen. Kopiere sie in deinen Vault oder speichere sie direkt in den unten angegebenen Ordner.':
-      'G04Fit creates ready-made notes. Copy them into your vault or save them directly to the folder below.',
-    'Ziel im Vault': 'Destination in vault', 'Nur zur Anzeige – G04Fit schreibt nicht selbst in den Ordner.': 'For display only — G04Fit does not write to the folder itself.',
-    'Coach-Auswertung mitschreiben': 'Include Coach analysis', 'Zielpfad der aktuellen Notiz:': 'Target path of the current note:',
-    'In die Zwischenablage': 'Copy to clipboard', 'Alle Notizen als eine Datei': 'All notes as one file', 'Als .md speichern': 'Save as .md',
-    'Einzelne Einheit': 'Single workout', 'Was ausgeben?': 'What to export?',
 
     // Übungen und laufende Einheit
     'Bewegungsablauf': 'Movement', 'Vorderseite': 'Front view', 'Technikhinweise': 'Technique tips', 'Beanspruchte Muskeln': 'Muscles worked',
@@ -586,8 +562,7 @@
 
   var ATTRS = ['placeholder', 'title', 'aria-label'];
 
-  // PRE und CODE zeigen den Obsidian-Export. Der bleibt unverändert,
-  // damit die Vorschau genau der Datei entspricht, die gespeichert wird.
+  // PRE und CODE (Codeblöcke) bleiben unübersetzt.
   function skipped(node) {
     var p = node.parentNode;
     return !p || /^(SCRIPT|STYLE|TEXTAREA|PRE|CODE)$/i.test(p.nodeName);
