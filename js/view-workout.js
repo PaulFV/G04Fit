@@ -64,7 +64,21 @@
   }
   /** Sind alle Sätze erledigt, blinkt "Abschließen"; mit scroll springt die
       Ansicht dorthin (Kopfkarte ganz oben). Sonst blinkt nichts. */
+  /** Die nächste Übung (erste mit offenen Sätzen) dauerhaft farbig/pulsierend
+      markieren; sind alle Sätze erledigt, ist keine mehr markiert. */
+  function markNextBlock(host) {
+    var sess = G.store.state.session;
+    if (!sess) return;
+    var next = -1;
+    for (var i = 0; i < sess.exercises.length; i++) {
+      if (sess.exercises[i].sets.some(function (x) { return !x.done; })) { next = i; break; }
+    }
+    host.querySelectorAll('[data-block]').forEach(function (card) {
+      card.classList.toggle('is-up-next', +card.getAttribute('data-block') === next);
+    });
+  }
   function updateFinishCue(host, scroll) {
+    markNextBlock(host);
     var btn = host.querySelector('[data-act="finish"]');
     if (!btn) return;
     var all = allSetsDone(G.store.state.session);

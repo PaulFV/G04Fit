@@ -178,6 +178,13 @@
 .sum-time{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:6px 12px;border-radius:999px;
   background:var(--cyan-dim);color:var(--cyan);font-size:13px}
 .sum-time b{font-family:var(--mono);font-size:15px}
+/* Nächste Übung: farbiger, pulsierender Rahmen */
+[data-block].is-up-next{border-color:var(--neon);background-image:linear-gradient(135deg,rgba(61,255,158,.09),transparent 55%);animation:blockUpNext 1.8s ease-in-out infinite}
+[data-block].is-up-next .card__head h3{color:var(--neon)}
+@keyframes blockUpNext{
+  0%,100%{box-shadow:0 0 0 1px rgba(61,255,158,.35),0 0 12px rgba(61,255,158,.15)}
+  50%{box-shadow:0 0 0 2px rgba(61,255,158,.8),0 0 30px rgba(61,255,158,.45)}
+}
 /* Alle Sätze erledigt: Abschließen-Knopf blinkt */
 #sessHero{scroll-margin-top:90px}
 .btn[hidden]{display:none}
@@ -190,4 +197,4 @@
   0%,100%{box-shadow:0 0 0 0 rgba(61,255,158,.6),0 0 18px rgba(61,255,158,.3);transform:scale(1)}
   50%{box-shadow:0 0 0 7px rgba(61,255,158,0),0 0 38px rgba(61,255,158,.8);transform:scale(1.06)}
 }
-@media (prefers-reduced-motion:reduce){[data-block].is-next{animation:none;box-shadow:0 0 0 2px var(--neon)}.btn--blink{animation:none;box-shadow:0 0 0 3px var(--neon)}}
+@media (prefers-reduced-motion:reduce){[data-block].is-next{animation:none;box-shadow:0 0 0 2px var(--neon)}.btn--blink{animation:none;box-shadow:0 0 0 3px var(--neon)}[data-block].is-up-next{animation:none;box-shadow:0 0 0 2px var(--neon)}}
