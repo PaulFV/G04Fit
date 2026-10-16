@@ -473,9 +473,11 @@
       '<span class="pill pill--muted">' + sess.exercises.length + ' Übungen</span>' +
       (sess.reentry ? '<span class="pill pill--gold">Wiedereinstieg ' + Math.round(sess.reentry.factor * 100) + ' %</span>' : '') +
       '</div></div>' +
-      '<div class="btn-row">' +
-      (sess.startedAt ? '' : '<button class="btn btn--primary btn--blink" data-act="clock-start">' + u.icon('play', 16) + ' Start</button>') +
-      '<button class="btn' + (sess.startedAt ? ' btn--primary' : '') + '" data-act="finish">' + u.icon('check', 17) + ' Abschließen</button>' +
+      '<div class="btn-row btn-row--wide">' +
+      (sess.startedAt ? '' : '<button class="btn btn--primary btn--blink btn--wide" data-act="clock-start">' + u.icon('play', 16) + ' Start</button>') +
+      // "Abschließen" gibt es erst nach dem Start (vorher nur versteckt, damit
+      // der automatische Start durch den ersten Haken es einblenden kann).
+      '<button class="btn btn--primary btn--wide" data-act="finish"' + (sess.startedAt ? '' : ' hidden') + '>' + u.icon('check', 17) + ' Abschließen</button>' +
       '<button class="btn btn--ghost" data-act="abort">Abbrechen</button>' +
       '</div>' +
       '</div>' +
@@ -809,7 +811,7 @@
           var startHint = host.querySelector('#sessStartHint');
           if (startHint) startHint.remove();
           var fin = host.querySelector('[data-act="finish"]');
-          if (fin) fin.classList.add('btn--primary');
+          if (fin) fin.hidden = false;
           startClock();
         }
 
