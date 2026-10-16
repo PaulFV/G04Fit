@@ -282,7 +282,7 @@
         show.muscles.map(function (m) { return G.MUSCLES[m].name; }).join(', ')
         : 'Wähle die Übungen selbst aus.') + '</p>' +
       '<div class="workout-preview__actions">' +
-      (show ? '<button class="btn btn--primary btn--lg" data-act="start-plan">' + u.icon('play', 16) + ' Training starten</button>' : '') +
+      (show ? '<button class="btn btn--primary btn--lg btn--glass-green" data-act="start-plan">' + u.icon('play', 16) + ' Training starten</button>' : '') +
       '<button class="btn btn--lg btn--free" data-act="open-free">' + u.icon('plus', 16) + ' Freies Training</button>' +
       '</div>' + repeatBtn +
       '<div class="workout-preview__rest">' +
