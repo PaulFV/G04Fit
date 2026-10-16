@@ -283,7 +283,7 @@
         : 'Wähle die Übungen selbst aus.') + '</p>' +
       '<div class="workout-preview__actions">' +
       (show ? '<button class="btn btn--primary btn--lg" data-act="start-plan">' + u.icon('play', 16) + ' Training starten</button>' : '') +
-      '<button class="btn btn--lg" data-act="open-free">' + u.icon('plus', 16) + ' Freies Training</button>' +
+      '<button class="btn btn--lg btn--free" data-act="open-free">' + u.icon('plus', 16) + ' Freies Training</button>' +
       '</div>' + repeatBtn +
       '<div class="workout-preview__rest">' +
       '<label class="switch workout-preview__switch">' +
