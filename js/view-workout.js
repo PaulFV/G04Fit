@@ -478,7 +478,7 @@
       // "Abschließen" gibt es erst nach dem Start (vorher nur versteckt, damit
       // der automatische Start durch den ersten Haken es einblenden kann).
       '<button class="btn btn--primary btn--wide" data-act="finish"' + (sess.startedAt ? '' : ' hidden') + '>' + u.icon('check', 17) + ' Abschließen</button>' +
-      '<button class="btn btn--ghost" data-act="abort">Abbrechen</button>' +
+      '<button class="btn btn--danger" data-act="abort">Abbrechen</button>' +
       '</div>' +
       '</div>' +
 
