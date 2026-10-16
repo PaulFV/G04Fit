@@ -76,6 +76,12 @@
     host.querySelectorAll('[data-block]').forEach(function (card) {
       card.classList.toggle('is-up-next', +card.getAttribute('data-block') === next);
     });
+    // Innerhalb dieser Übung zusätzlich den nächsten offenen Satz animieren.
+    var nextSet = next >= 0 ? sess.exercises[next].sets.findIndex(function (x) { return !x.done; }) : -1;
+    host.querySelectorAll('.set-row').forEach(function (row) {
+      row.classList.toggle('is-next-set',
+        +row.getAttribute('data-b') === next && +row.getAttribute('data-s') === nextSet);
+    });
   }
   function updateFinishCue(host, scroll) {
     markNextBlock(host);
