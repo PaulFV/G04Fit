@@ -662,6 +662,7 @@
   extend({
     'Letztes Training wiederholen': 'Repeat last workout',
     'Zeit startet mit „Start“': 'Timer starts with “Start”',
+    'Notiz vorhanden': 'Note added',
     'Trainingszeit': 'Workout time',
     ' Trainingszeit': ' workout time',
     ' wird wiederholt.': ' is being repeated.',

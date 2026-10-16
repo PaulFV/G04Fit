@@ -475,7 +475,16 @@
     if (volPill) volPill.textContent = u.fmt(vol) + ' kg Volumen';
   }
 
+  /* Notiz-Karte: eingeklappt, solange noch keine Notiz da ist. Der Zustand
+     bleibt über Neuaufbauten der Ansicht ("+ Satz" …) erhalten. */
+  var noteState = { id: null, open: false };
+  function noteIsOpen(sess) {
+    if (noteState.id !== sess.id) noteState = { id: sess.id, open: !!(sess.notes && sess.notes.trim()) };
+    return noteState.open;
+  }
+
   function activeSession(sess) {
+    var noteOpen = noteIsOpen(sess);
     // Sessions aus einer früheren Sitzung (vor diesem Feature gestartet)
     // bekommen sinnvolle Standardwerte statt undefined.
     if (sess.restSeconds == null) sess.restSeconds = 90;
@@ -526,10 +535,14 @@
 
       sess.exercises.map(block).join('') +
 
-      '<div class="card">' +
-      '<div class="card__head">' + u.icon('exercises', 18) + '<h3>Notiz zur Einheit</h3></div>' +
+      '<div class="card note-card' + (noteOpen ? ' is-open' : '') + '">' +
+      '<button type="button" class="card__head note-card__toggle" data-act="note-toggle" aria-expanded="' + noteOpen + '">' +
+      u.icon('exercises', 18) + '<h3>Notiz zur Einheit</h3><span class="spacer"></span>' +
+      '<span class="note-card__hint" id="noteHint"' + (sess.notes && sess.notes.trim() ? '' : ' hidden') + '>Notiz vorhanden</span>' +
+      '<span class="note-card__chev">' + u.icon('chevron', 18) + '</span></button>' +
+      '<div class="note-card__body"' + (noteOpen ? '' : ' hidden') + '>' +
       '<textarea class="textarea" id="sessNotes" placeholder="Wie lief das Training? Was ist aufgefallen?">' +
-      u.esc(sess.notes || '') + '</textarea>' +
+      u.esc(sess.notes || '') + '</textarea></div>' +
       '<div class="btn-row" style="margin-top:12px">' +
       '<button class="btn btn--sm" data-act="add-ex">' + u.icon('plus', 15) + ' Übung ergänzen</button>' +
       '</div></div>' +
@@ -910,6 +923,18 @@
           G.store.commit('ex-added');
           G.app.rerender();
         });
+      }, signal);
+
+      /* --- Notiz ein-/ausklappen --- */
+      u.on(host, 'click', '[data-act="note-toggle"]', function (e, t) {
+        var card = t.closest('.note-card');
+        var open = !noteIsOpen(s.session);
+        noteState.open = open;
+        card.classList.toggle('is-open', open);
+        t.setAttribute('aria-expanded', open);
+        card.querySelector('.note-card__body').hidden = !open;
+        card.querySelector('#noteHint').hidden = !(s.session.notes && s.session.notes.trim());
+        if (open) card.querySelector('#sessNotes').focus();
       }, signal);
 
       /* --- Notizen --- */
