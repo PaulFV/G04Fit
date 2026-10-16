@@ -189,7 +189,11 @@
     return {
       id: u.uid(),
       day: opts.day || u.today(),
-      startedAt: new Date().toISOString(),
+      // Freies Training: Die Uhr startet erst mit dem Start-Knopf (startedAt
+      // bleibt bis dahin null) und steht, sobald der letzte Satz abgehakt ist
+      // (stoppedAt).
+      startedAt: opts.manualStart ? null : new Date().toISOString(),
+      stoppedAt: null,
       finishedAt: null,
       planKey: dayPlan.key,
       title: dayPlan.name,
@@ -212,7 +216,7 @@
       name: title || 'Freies Training',
       muscles: exIds.map(function (id) { var e = G.ex.byId(id); return e && e.muscle; }).filter(Boolean),
       exercises: exIds
-    });
+    }, { manualStart: true });
   }
 
   /** Zuletzt abgeschlossene Einheit (für "Letztes Training wiederholen") */
@@ -269,8 +273,11 @@
     });
 
     session.finishedAt = new Date().toISOString();
-    // Trainingszeit von "Training starten" bis "Abschließen" (Sekunden)
-    session.duration = u.sessionDuration({ startedAt: session.startedAt, finishedAt: session.finishedAt });
+    // Trainingszeit von "Start" bis zum letzten abgehakten Satz bzw. bis
+    // "Abschließen" (Sekunden); ohne Start keine Zeit.
+    session.duration = session.startedAt
+      ? u.sessionDuration({ startedAt: session.startedAt, finishedAt: session.stoppedAt || session.finishedAt })
+      : 0;
     session.totalSets = totalSets;
     session.totalReps = totalReps;
     session.volume = Math.round(vol);

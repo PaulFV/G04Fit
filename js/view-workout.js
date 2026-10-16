@@ -42,13 +42,49 @@
 
   var rest = { left: 0, timer: null, exId: null, endAt: 0, finished: false };
 
-  /* Trainingszeit: läuft ab "Training starten" (session.startedAt) bis
-     "Abschließen". Gerechnet wird immer aus dem Startzeitpunkt, damit die
-     Uhr auch nach Tab-Wechsel, Neuladen oder gesperrtem Bildschirm stimmt. */
+  /* Trainingszeit: läuft ab "Start" (session.startedAt; beim freien Training
+     erst nach Tipp auf den Start-Knopf) und steht, sobald der letzte Satz
+     abgehakt ist (session.stoppedAt). Gerechnet wird immer aus dem
+     Startzeitpunkt, damit die Uhr auch nach Tab-Wechsel, Neuladen oder
+     gesperrtem Bildschirm stimmt. */
   var clockTimer = null;
   function sessionElapsed(sess) {
     var t = Date.parse(sess && sess.startedAt);
-    return isFinite(t) ? Math.max(0, (Date.now() - t) / 1000) : 0;
+    if (!isFinite(t)) return 0;
+    var end = sess.stoppedAt ? Date.parse(sess.stoppedAt) : Date.now();
+    return isFinite(end) ? Math.max(0, (end - t) / 1000) : 0;
+  }
+  /** Uhr an den Abhak-Stand anpassen: stehen lassen, wenn alle Sätze erledigt
+      sind; wieder anlaufen (ohne die Standzeit zu zählen), wenn danach ein
+      Satz zurückgenommen oder ergänzt wird. */
+  function allSetsDone(sess) {
+    return !!sess && sess.exercises.length > 0 && sess.exercises.every(function (b) {
+      return b.sets.length > 0 && b.sets.every(function (x) { return x.done; });
+    });
+  }
+  /** Sind alle Sätze erledigt, blinkt "Abschließen"; mit scroll springt die
+      Ansicht dorthin (Kopfkarte ganz oben). Sonst blinkt nichts. */
+  function updateFinishCue(host, scroll) {
+    var btn = host.querySelector('[data-act="finish"]');
+    if (!btn) return;
+    var all = allSetsDone(G.store.state.session);
+    btn.classList.toggle('btn--blink', all);
+    if (all && scroll) {
+      var hero = host.querySelector('#sessHero') || btn;
+      setTimeout(function () { hero.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 350);
+    }
+  }
+  function syncClock(sess) {
+    if (!sess || !sess.startedAt) return;
+    var all = allSetsDone(sess);
+    if (all && !sess.stoppedAt) {
+      sess.stoppedAt = new Date().toISOString();
+    } else if (!all && sess.stoppedAt) {
+      var idle = Date.now() - Date.parse(sess.stoppedAt);
+      sess.startedAt = new Date(Date.parse(sess.startedAt) + (isFinite(idle) ? idle : 0)).toISOString();
+      sess.stoppedAt = null;
+    }
+    tickClock();
   }
   function tickClock() {
     var sess = G.store.state.session;
@@ -432,12 +468,14 @@
       '<div class="row row--wrap" style="gap:7px">' +
       '<span class="pill pill--cyan sess-time" title="Trainingszeit">' + u.icon('clock', 14) +
       '<b id="sessTimeV">' + u.fmtDuration(sessionElapsed(sess)) + '</b></span>' +
+      (sess.startedAt ? '' : '<span class="pill pill--muted" id="sessStartHint">Zeit startet mit „Start“</span>') +
       '<span class="pill pill--neon" id="sessVol">' + u.fmt(vol) + ' kg Volumen</span>' +
       '<span class="pill pill--muted">' + sess.exercises.length + ' Übungen</span>' +
       (sess.reentry ? '<span class="pill pill--gold">Wiedereinstieg ' + Math.round(sess.reentry.factor * 100) + ' %</span>' : '') +
       '</div></div>' +
       '<div class="btn-row">' +
-      '<button class="btn btn--primary" data-act="finish">' + u.icon('check', 17) + ' Abschließen</button>' +
+      (sess.startedAt ? '' : '<button class="btn btn--primary" data-act="clock-start">' + u.icon('play', 16) + ' Start</button>') +
+      '<button class="btn' + (sess.startedAt ? ' btn--primary' : '') + '" data-act="finish">' + u.icon('check', 17) + ' Abschließen</button>' +
       '<button class="btn btn--ghost" data-act="abort">Abbrechen</button>' +
       '</div>' +
       '</div>' +
@@ -711,6 +749,16 @@
 
       if (!s.session) { if (clockTimer) { clearInterval(clockTimer); clockTimer = null; } return; }
       startClock();
+      updateFinishCue(host, false);
+
+      /* --- Zeit starten (freies Training) --- */
+      u.on(host, 'click', '[data-act="clock-start"]', function () {
+        if (!s.session || s.session.startedAt) return;
+        s.session.startedAt = new Date().toISOString();
+        s.session.stoppedAt = null;
+        G.store.commit('session-clock-start');
+        G.app.rerender();
+      }, signal);
 
       /* --- Satzpause: an/aus + Sekunden --- */
       u.on(host, 'change', '#restToggle', function (e, t) {
@@ -750,6 +798,21 @@
         set.done = !set.done;
         row.classList.toggle('is-done', set.done);
 
+        // Wer den ersten Satz abhakt, ohne Start gedrückt zu haben, startet
+        // die Zeit damit automatisch (sonst gäbe es keine Trainingszeit).
+        var autoStarted = set.done && !s.session.startedAt;
+        if (autoStarted) s.session.startedAt = new Date().toISOString();
+        syncClock(s.session);
+        if (autoStarted) {
+          var startBtn = host.querySelector('[data-act="clock-start"]');
+          if (startBtn) startBtn.remove();
+          var startHint = host.querySelector('#sessStartHint');
+          if (startHint) startHint.remove();
+          var fin = host.querySelector('[data-act="finish"]');
+          if (fin) fin.classList.add('btn--primary');
+          startClock();
+        }
+
         var head = host.querySelector('[data-block="' + bi + '"] .pill');
         if (head) {
           var b = s.session.exercises[bi];
@@ -762,7 +825,9 @@
         if (set.done) {
           var r = t.getBoundingClientRect();
           u.xpPop(Math.round(7 * G.journey.mode(s.profile.mode).xpMult), r.left, r.top);
-          startRest(s.session.restSeconds, s.session.exercises[bi].exId);
+          // Nach dem allerletzten Satz keine Pause mehr — es geht zu "Abschließen".
+          if (allSetsDone(s.session)) stopRest();
+          else startRest(s.session.restSeconds, s.session.exercises[bi].exId);
           if (!wasComplete && s.session.exercises[bi].sets.every(function (x) { return x.done; })) {
             setTimeout(function () { focusNextBlock(host, bi); }, 350);
           }
@@ -770,6 +835,7 @@
           stopRest();
         }
         refreshHero();
+        updateFinishCue(host, set.done);
         G.store.save();
       }, signal);
 
@@ -784,6 +850,7 @@
           targetReps: last ? last.targetReps : [8, 12],
           done: false, rpe: null
         });
+        syncClock(s.session);
         G.store.commit('set-added');
         G.app.rerender();
       }, signal);
@@ -803,6 +870,7 @@
         openPicker(function (ids) {
           var add = G.planner.buildCustomSession(ids).exercises;
           s.session.exercises = s.session.exercises.concat(add);
+          syncClock(s.session);
           G.store.commit('ex-added');
           G.app.rerender();
         });

@@ -661,6 +661,7 @@
   // Freies Training: Trainingszeit, Wiederholen (23.09.2026)
   extend({
     'Letztes Training wiederholen': 'Repeat last workout',
+    'Zeit startet mit „Start“': 'Timer starts with “Start”',
     'Trainingszeit': 'Workout time',
     ' Trainingszeit': ' workout time',
     ' wird wiederholt.': ' is being repeated.',
