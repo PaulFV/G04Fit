@@ -62,8 +62,6 @@
       return b.sets.length > 0 && b.sets.every(function (x) { return x.done; });
     });
   }
-  /** Sind alle Sätze erledigt, blinkt "Abschließen"; mit scroll springt die
-      Ansicht dorthin (Kopfkarte ganz oben). Sonst blinkt nichts. */
   /** Die nächste Übung (erste mit offenen Sätzen) dauerhaft farbig/pulsierend
       markieren; sind alle Sätze erledigt, ist keine mehr markiert. */
   function markNextBlock(host) {
@@ -83,6 +81,8 @@
         +row.getAttribute('data-b') === next && +row.getAttribute('data-s') === nextSet);
     });
   }
+  /** Sind alle Sätze erledigt, blinkt "Abschließen" (ganz unten); mit scroll
+      springt die Ansicht dorthin. Sonst blinkt nichts. */
   function updateFinishCue(host, scroll) {
     markNextBlock(host);
     var btn = host.querySelector('[data-act="finish"]');
@@ -90,8 +90,7 @@
     var all = allSetsDone(G.store.state.session);
     btn.classList.toggle('btn--blink', all);
     if (all && scroll) {
-      var hero = host.querySelector('#sessHero') || btn;
-      setTimeout(function () { hero.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 350);
+      setTimeout(function () { btn.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 350);
     }
   }
   function syncClock(sess) {
@@ -502,11 +501,8 @@
       '<span class="pill pill--muted">' + sess.exercises.length + ' Übungen</span>' +
       (sess.reentry ? '<span class="pill pill--gold">Wiedereinstieg ' + Math.round(sess.reentry.factor * 100) + ' %</span>' : '') +
       '</div></div>' +
-      '<div class="btn-row btn-row--wide">' +
+      '<div class="btn-row' + (sess.startedAt ? '' : ' btn-row--wide') + '">' +
       (sess.startedAt ? '' : '<button class="btn btn--primary btn--blink btn--wide" data-act="clock-start">' + u.icon('play', 16) + ' Start</button>') +
-      // "Abschließen" gibt es erst nach dem Start (vorher nur versteckt, damit
-      // der automatische Start durch den ersten Haken es einblenden kann).
-      '<button class="btn btn--primary btn--wide" data-act="finish"' + (sess.startedAt ? '' : ' hidden') + '>' + u.icon('check', 17) + ' Abschließen</button>' +
       '<button class="btn btn--danger" data-act="abort">Abbrechen</button>' +
       '</div>' +
       '</div>' +
@@ -537,6 +533,12 @@
       '<div class="btn-row" style="margin-top:12px">' +
       '<button class="btn btn--sm" data-act="add-ex">' + u.icon('plus', 15) + ' Übung ergänzen</button>' +
       '</div></div>' +
+
+      // "Abschließen" steht ganz unten und gibt es erst nach dem Start (vorher
+      // nur versteckt, damit der automatische Start durch den ersten Haken es
+      // einblenden kann).
+      '<button class="btn btn--primary btn--finish" data-act="finish"' + (sess.startedAt ? '' : ' hidden') + '>' +
+      u.icon('check', 17) + ' Abschließen</button>' +
       '</div>';
   }
 
@@ -836,7 +838,10 @@
         syncClock(s.session);
         if (autoStarted) {
           var startBtn = host.querySelector('[data-act="clock-start"]');
-          if (startBtn) startBtn.remove();
+          if (startBtn) {
+            startBtn.closest('.btn-row').classList.remove('btn-row--wide');
+            startBtn.remove();
+          }
           var startHint = host.querySelector('#sessStartHint');
           if (startHint) startHint.remove();
           var fin = host.querySelector('[data-act="finish"]');
