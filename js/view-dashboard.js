@@ -132,7 +132,7 @@
         '<p class="small dim dashboard-hero__exlist">' + u.esc(exNames.join(' · ')) +
         (plan.exercises.length > 3 ? ' …' : '') + '</p>';
       cta = '<button class="btn btn--primary btn--lg" data-act="start">' + u.icon('play', 18) + ' Training starten</button>' +
-        '<button class="btn btn--lg" data-go="workout">Plan ansehen</button>';
+        '<button class="btn btn--lg btn--free" data-go="workout">Plan ansehen</button>';
     } else if (doneToday) {
       var t = s.history.filter(function (h) { return h.day === today; }).pop();
       body = '<h2 class="big">Heute erledigt ' + u.icon('check', 26) + '</h2>' +
