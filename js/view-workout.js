@@ -352,11 +352,20 @@
   /* ------------------------------------------------------------
      Laufende Einheit
      ------------------------------------------------------------ */
+  /** Liegestütze: kein Gewichtsfeld, stattdessen steht das eigene Körpergewicht
+      (Profil) da — es wird nur angezeigt, nicht eingegeben. */
+  function ownWeightOnly(ex) { return /^pushup/.test(ex.id); }
+  function ownWeightCell() {
+    var bw = G.store.state.profile.weight;
+    return '<div class="input-suffix"><input class="input" type="text" readonly tabindex="-1" value="' +
+      (bw ? u.esc(u.fmt(bw)) : '–') + '" aria-label="Eigengewicht"><span>kg</span></div>';
+  }
   function setRow(bi, si, set, ex) {
     return '<div class="set-row' + (set.done ? ' is-done' : '') + '" data-b="' + bi + '" data-s="' + si + '">' +
       '<span class="set-row__n">' + (si + 1) + '</span>' +
       (ex.time
         ? '<span class="small dim center">Halten</span>'
+        : ownWeightOnly(ex) ? ownWeightCell()
         : '<div class="input-suffix"><input class="input" type="number" inputmode="decimal" step="' +
         (ex.inc || 2.5) + '" min="0" value="' + set.weight + '" data-f="weight" aria-label="Gewicht"><span>kg</span></div>') +
       '<div class="input-suffix"><input class="input" type="number" inputmode="numeric" step="1" min="0" value="' +
@@ -406,7 +415,7 @@
         '<div class="coach__av" style="width:32px;height:32px;border-radius:10px">' + u.icon('coach', 16) + '</div>' +
         '<div class="coach__msg small">' + u.esc(b.hint) + '</div></div>' : '') +
 
-      '<div class="set-head"><span>#</span><span>' + (ex.time ? '' : 'Gewicht') + '</span><span>' +
+      '<div class="set-head"><span>#</span><span>' + (ex.time ? '' : ownWeightOnly(ex) ? 'Eigengewicht' : 'Gewicht') + '</span><span>' +
       (ex.time ? 'Sekunden' : 'Wdh.') + '</span><span></span></div>' +
       b.sets.map(function (s, si) { return setRow(bi, si, s, ex); }).join('') +
 
