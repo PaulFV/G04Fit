@@ -535,6 +535,8 @@
 
       sess.exercises.map(block).join('') +
 
+      '<button class="btn btn--block btn--add-ex" data-act="add-ex">' + u.icon('plus', 17) + ' Übung ergänzen</button>' +
+
       '<div class="card note-card' + (noteOpen ? ' is-open' : '') + '">' +
       '<button type="button" class="card__head note-card__toggle" data-act="note-toggle" aria-expanded="' + noteOpen + '">' +
       u.icon('exercises', 18) + '<h3>Notiz zur Einheit</h3><span class="spacer"></span>' +
@@ -543,9 +545,7 @@
       '<div class="note-card__body"' + (noteOpen ? '' : ' hidden') + '>' +
       '<textarea class="textarea" id="sessNotes" placeholder="Wie lief das Training? Was ist aufgefallen?">' +
       u.esc(sess.notes || '') + '</textarea></div>' +
-      '<div class="btn-row" style="margin-top:12px">' +
-      '<button class="btn btn--sm" data-act="add-ex">' + u.icon('plus', 15) + ' Übung ergänzen</button>' +
-      '</div></div>' +
+      '</div>' +
 
       // "Abschließen" steht ganz unten und gibt es erst nach dem Start (vorher
       // nur versteckt, damit der automatische Start durch den ersten Haken es

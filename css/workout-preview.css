@@ -213,6 +213,8 @@
 .btn-row--wide .btn--wide{flex:2.2 1 0;min-height:48px;font-size:16px}
 .btn-row--wide [data-act="abort"]{flex:1 1 0}
 #sessHero [data-act="abort"]{min-width:104px;min-height:48px;font-size:16px}
+.btn--add-ex{min-height:50px;font-size:16px;color:var(--cyan);border-color:var(--cyan);background:var(--cyan-dim);font-weight:650}
+.btn--add-ex:hover{background:var(--cyan-dim);box-shadow:0 0 22px rgba(0,210,255,.3)}
 .btn--finish{width:100%;min-height:54px;font-size:17px}
 .btn--blink{animation:finishBlink 1s ease-in-out infinite}
 @keyframes finishBlink{
