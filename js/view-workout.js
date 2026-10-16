@@ -474,7 +474,7 @@
       (sess.reentry ? '<span class="pill pill--gold">Wiedereinstieg ' + Math.round(sess.reentry.factor * 100) + ' %</span>' : '') +
       '</div></div>' +
       '<div class="btn-row">' +
-      (sess.startedAt ? '' : '<button class="btn btn--primary" data-act="clock-start">' + u.icon('play', 16) + ' Start</button>') +
+      (sess.startedAt ? '' : '<button class="btn btn--primary btn--blink" data-act="clock-start">' + u.icon('play', 16) + ' Start</button>') +
       '<button class="btn' + (sess.startedAt ? ' btn--primary' : '') + '" data-act="finish">' + u.icon('check', 17) + ' Abschließen</button>' +
       '<button class="btn btn--ghost" data-act="abort">Abbrechen</button>' +
       '</div>' +
