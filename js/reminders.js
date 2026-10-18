@@ -363,10 +363,13 @@
     }
   }
 
+  /** Ton am Ende der Satzpause: eigener Schalter, nicht von 'Benachrichtigungen stumm' abhängig. */
+  function restSoundOn() { return st().settings.restSound !== false; }
+
   function restFinished() {
-    playAlarm();
+    playAlarm(restSoundOn());
     return notify('G04Fit · Pause vorbei', 'Weiter mit dem nächsten Satz.', 'g04fit-rest', {
-      silent: st().settings.soundless,
+      silent: !restSoundOn(),
       requireInteraction: true,
       url: './index.html#workout'
     });
@@ -384,7 +387,7 @@
     ms = ms || 10000;
     var elapsed = 0, step = 1100;
     // Android: 10 s Vibrationsmuster (iPhone unterstützt keine Web-Vibration)
-    if (!st().settings.soundless && navigator.vibrate) {
+    if (restSoundOn() && navigator.vibrate) {
       try {
         var pat = [];
         for (var t = 0; t < ms; t += 1100) pat.push(600, 500);
@@ -394,7 +397,7 @@
     ringTimer = setInterval(function () {
       elapsed += step;
       if (elapsed >= ms) { stopRingAlarm(); return; }
-      playAlarm();
+      playAlarm(restSoundOn());
     }, step);
   }
 
@@ -523,6 +526,7 @@
     requestPermission: requestPermission,
     notify: notify,
     prepareAlarm: prepareAlarm,
+    restSoundOn: restSoundOn,
     playAlarm: playAlarm,
     restFinished: restFinished,
     ringAlarm: ringAlarm,

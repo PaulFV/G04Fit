@@ -214,7 +214,7 @@
     rest.left = seconds; rest.exId = exId;
     rest.endAt = Date.now() + seconds * 1000;
     rest.finished = false;
-    G.reminders.prepareAlarm();
+    G.reminders.prepareAlarm(G.reminders.restSoundOn());
 
     showRestBox();
 
@@ -297,6 +297,12 @@
       'value="' + (s.settings.restSeconds || 90) + '"' + (s.settings.restTimer === false ? ' disabled' : '') + '>' +
       '<span>s</span>' +
       '</div></div>' +
+      '<label class="switch workout-rest-sound">' +
+      '<input type="checkbox" id="restSoundPreset"' + (G.reminders.restSoundOn() ? ' checked' : '') + '>' +
+      '<span class="switch__track"></span>' +
+      '<span class="switch__label"><b>Ton am Ende der Pause</b>' +
+      '<span>Signalton, wenn die Zeit abgelaufen ist</span></span>' +
+      '</label>' +
       '</div>' +
       '<div class="workout-preview__hero-art" aria-hidden="true">' +
       '<span class="workout-preview__art-glow"></span>' +
@@ -529,6 +535,12 @@
       '<span>s</span>' +
       '</div>' +
       '</div>' +
+      '<label class="switch workout-rest-sound">' +
+      '<input type="checkbox" id="restSoundToggle"' + (G.reminders.restSoundOn() ? ' checked' : '') + '>' +
+      '<span class="switch__track"></span>' +
+      '<span class="switch__label"><b>Ton am Ende der Pause</b>' +
+      '<span>Signalton, wenn die Zeit abgelaufen ist</span></span>' +
+      '</label>' +
       '</div>' +
 
       '<div id="restHost"></div>' +
@@ -777,6 +789,12 @@
         G.store.commit('settings');
       }, signal);
 
+      u.on(host, 'change', '#restSoundPreset', function (e, t) {
+        s.settings.restSound = t.checked;
+        G.store.commit('settings');
+        if (t.checked) G.reminders.playAlarm(true);
+      }, signal);
+
       u.on(host, 'click', '[data-ex]', function (e, t) {
         if (t.getAttribute('data-act') === 'info' || t.hasAttribute('data-ex')) {
           var id = t.getAttribute('data-ex');
@@ -796,6 +814,12 @@
       if (!s.session) { if (clockTimer) { clearInterval(clockTimer); clockTimer = null; } return; }
       startClock();
       updateFinishCue(host, false);
+
+      u.on(host, 'change', '#restSoundToggle', function (e, t) {
+        s.settings.restSound = t.checked;
+        G.store.save();
+        if (t.checked) G.reminders.playAlarm(true);
+      }, signal);
 
       /* --- Zeit starten (freies Training) --- */
       u.on(host, 'click', '[data-act="clock-start"]', function () {

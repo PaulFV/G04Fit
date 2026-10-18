@@ -87,6 +87,7 @@
         restSeconds: 90,
         reentry: true,               // Wiedereinstiegsmodus
         soundless: true,
+        restSound: true,             // Ton, wenn die Satzpause endet (unabhängig von 'stumm')
         alarmSound: 'signal'         // signal | pulse | chime
       }
     };

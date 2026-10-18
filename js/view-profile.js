@@ -409,6 +409,7 @@
         sw('setReentry', 'Wiedereinstiegsmodus', 'Nach längeren Pausen reduziert G04Fit Gewicht und Volumen automatisch.', s.settings.reentry) +
         sw('setMotion', 'Animationen reduzieren', 'Schaltet Bewegungseffekte weitgehend ab.', s.settings.reduceMotion) +
         sw('setMotivation', 'Trainingsmotivation aufs iPhone', 'Sendet an deinen Trainingstagen wechselnde motivierende Push-Nachrichten.', G.store.hasConsent('push')) +
+        sw('setRestSound', 'Ton am Ende der Pause', 'Signalton, wenn die Satzpause abgelaufen ist.', s.settings.restSound !== false) +
         sw('setSilent', 'Benachrichtigungen stumm', 'Erinnerungen ohne Ton zustellen.', s.settings.soundless) +
         '<div class="field" style="margin:14px 13px 4px"><label>Alarmton für Satzpausen</label>' +
         '<div class="row row--wrap"><select class="select" id="alarmSound" style="flex:1;min-width:180px">' +
@@ -582,6 +583,7 @@
       bindSwitch(host, 'setLight', function (v) { G.app.setTheme(v ? 'light' : 'dark'); }, false);
       bindSwitch(host, 'setRest', function (v) { s.settings.restTimer = v; });
       bindSwitch(host, 'setReentry', function (v) { s.settings.reentry = v; });
+      bindSwitch(host, 'setRestSound', function (v) { s.settings.restSound = v; });
       bindSwitch(host, 'setSilent', function (v) { s.settings.soundless = v; });
       bindSwitch(host, 'setMotion', function (v) {
         s.settings.reduceMotion = v;
