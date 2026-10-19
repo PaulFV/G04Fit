@@ -1,6 +1,6 @@
 # G04Fit v2.1.0
 
-Trainingsplaner für **Brust, Rücken, Bauch, Bizeps, Trizeps und Schulter** — mit Wochenplan,
+Trainingsplaner für **Brust, Rücken, Schulter, Bizeps, Trizeps, Bauch und Beine** — mit Wochenplan,
 Journey, regelbasiertem Coach, Fortschrittsauswertung und einem
 Datenschutzkonzept, das ohne Einwilligung nichts speichert.
 
@@ -13,12 +13,12 @@ ohne Backend, ohne Konto, ohne Tracking.
 
 | Bereich | Beschreibung |
 |:--|:--|
-| **Dashboard** | Begrüßung, Tagesplan, Wochenübersicht, Kennzahlen, Coach-Tipp, nächste Erinnerung |
-| **Journey** | Weltkarte mit sechs Regionen, Level und XP, Modi von Easy bis Beast |
-| **Workout** | Laufende Einheit mit Sätzen, Gewichten, Pausentimer und Coach-Hinweisen |
-| **Übungen** | 37 Übungen mit animierter Ausführung, anatomischer Muskelkarte, Technikhinweisen und häufigen Fehlern |
-| **Fortschritt** | Volumen, Kraftentwicklung, Rekorde, Muskelbalance, Leistungsprofil, Historie |
-| **Profil** | Persönliche Angaben, Erfahrungsstufe, Ziele, Trainingstage, Startgewichte, Trainings-Avatar |
+| **Dashboard** | Begrüßung mit Profilbild, Tagesplan, Wochenleiste (erledigt / geplant / verpasst), Kennzahlen, Coach-Tipp, nächste Erinnerung |
+| **Journey** | Einklappbare Kachel zur aktuellen Region, Weltkarte mit sechs Regionen, Level und XP, Modi von Easy bis Beast |
+| **Workout** | Geplantes oder freies Training, „Letztes Training wiederholen“, Start-Knopf mit Trainingszeit, Sätze und Gewichte (bei Eigengewicht ohne Gewichtsfeld), Satzpause mit Ton, Fokus auf die nächste Übung, Coach-Hinweise |
+| **Übungen** | 99 Übungen in sieben Muskelgruppen mit animierter Ausführung, anatomischer Muskelkarte, Technikhinweisen und häufigen Fehlern |
+| **Fortschritt** | Volumen, Kraftentwicklung, Rekorde (Bestwert je Gruppe und neuester Rekord hervorgehoben), Muskelbalance, Leistungsprofil, Historie mit Trainingszeit |
+| **Profil** | Persönliche Angaben, Gewichtsverlauf, Erfahrungsstufe, Ziele, Trainingstage, Startgewichte, Trainings-Avatar, Sprache, Feedback & Ideen |
 | **G04Fit Coach** | Vorschläge zu Gewicht, Wiederholungen, Progression und Wiedereinstieg |
 | **Erinnerungen** | Trainingstage, Uhrzeit, Benachrichtigungen, Wiedereinstiegsmodus |
 | **Datenschutz** | Vier einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung und Copyright-Hinweise |
@@ -161,12 +161,17 @@ G04Fit/
 ├── css/
 │   ├── theme.css               Farben, Typografie, Glaseffekt
 │   ├── layout.css              Shell, Navigation, Responsive
-│   ├── components.css          Karten, Formulare, Listen, Avatar
+│   ├── components.css          Karten, Formulare, Listen, Avatar, Journey
+│   ├── dashboard-preview.css   Dashboard
+│   ├── workout-preview.css     Workout-Vorschau und laufende Einheit
+│   ├── progress-overview.css   Fortschritt
 │   └── anim.css                Übungsanimationen, Muskelkarte
 │
 ├── js/
 │   ├── util.js                 Hilfsfunktionen, Icons, Toasts, Sheets
-│   ├── data-exercises.js       Übungsdatenbank (37 Übungen)
+│   ├── i18n.js                 Sprachumschaltung Deutsch/Englisch
+│   ├── i18n-exercises-en.js    Englische Übungstexte
+│   ├── data-exercises.js       Übungsdatenbank (99 Übungen, 7 Muskelgruppen)
 │   ├── data-journey.js         Regionen, Modi, XP-Kurve
 │   ├── store.js                Zustand und Speicherung (Privacy First)
 │   ├── anim.js                 SVG-Figuren und Muskelkarte
@@ -175,11 +180,15 @@ G04Fit/
 │   ├── coach.js                Progressionsregeln und Auswertung
 │   ├── planner.js              Wochenplan und Einheiten
 │   ├── reminders.js            Erinnerungen
-│   ├── view-*.js               Die zehn Bereiche
+│   ├── view-*.js               Die neun Bereiche
 │   ├── onboarding.js           Ersteinrichtung
 │   └── app.js                  Router und Start
 │
 ├── icons/                      App-Icons
+├── assets/                     Übungs-GIFs, Muskelkarten, Grafiken
+├── privacy*.html, support*.html, copyright*.html   Rechts- und Supportseiten
+├── push-config.js, push-worker/   Optionaler Push-Dienst (Cloudflare Worker)
+├── android/, play-store/       Android-Verpackung (TWA) und Store-Texte
 │
 └── src/
     ├── G04Fit.Desktop/         Windows-Anwendung (WPF + WebView2, .NET 10)
@@ -204,6 +213,9 @@ Die Darstellung ist ein anatomischer Körper in Vorder- und Rückansicht:
 | Vorderseite | Schulter, Brust, Bizeps, Bauch |
 | Rückseite | Schulter, Rücken, Trizeps |
 
+Beinübungen werden in der Muskelkarte noch nicht eingefärbt, ihre Gruppe erscheint aber überall
+mit eigener Farbe.
+
 Die **primäre** Gruppe leuchtet kräftig in ihrer Farbe, **unterstützende** Gruppen erscheinen
 gedämpft. In kleinen Kacheln wird automatisch die Ansicht gewählt, auf der die Hauptgruppe
 liegt, und auf den Oberkörper zugeschnitten. Im Übungsdetail sind beide Ansichten nebeneinander
@@ -219,6 +231,7 @@ Die Farben sind durchgängig dieselben wie in der Muskelgruppen-Balance unter *F
 | Bizeps | Violett |
 | Trizeps | Rosé |
 | Schulter | Türkis |
+| Beine | Orange |
 
 ---
 
@@ -232,6 +245,7 @@ Regelbasiert und nachvollziehbar, vollständig auf dem Gerät:
 | Alle Sätze als *leicht* markiert | Doppelter Gewichtsschritt |
 | Untere Grenze deutlich verfehlt oder überwiegend *schwer* | Gewicht um rund 8 % reduzieren |
 | Innerhalb des Bereichs | Gewicht halten, Wiederholungen steigern |
+| Eigengewichtsübung (Liegestütze, Dips, Klimmzüge, Crunches …) | Kein Zusatzgewicht: nur die Wiederholungen steigern, auch über den üblichen Bereich hinaus |
 | Über 10 Tage Pause | Wiedereinstieg: 10–45 % weniger Gewicht, ein Satz weniger, Aufbau über 1–4 Wochen |
 
 Beispiel aus dem Konzept: nach **80 kg × 12** sauberen Wiederholungen folgt eine Empfehlung
@@ -319,7 +333,7 @@ Das Konzept sieht für spätere Versionen vor:
 * Portierung auf React, TypeScript, Tailwind CSS und Framer Motion
 * Optionales Benutzerkonto für die Synchronisation zwischen mehreren Geräten
 * 3D-Avatar mit hervorgehobenen Muskelgruppen
-* Erweiterung um Beine und Ganzkörperübungen
+* Mehr Bein- und Ganzkörperübungen, Beine in der Muskelkarte
 
 Die Fachlogik liegt bereits getrennt von der Oberfläche (`store.js`, `coach.js`, `planner.js`,
 `data-*.js`) und lässt sich für eine React-Fassung übernehmen.
