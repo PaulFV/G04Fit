@@ -396,7 +396,7 @@
       return '<div class="view stack journey-view">' +
 
         '<section class="journey-hero card card--hero card--hl' + (heroOpen() ? '' : ' is-collapsed') + '" data-region="' + li.region.key + '"' +
-        ' style="--journey-sum-image:url(\'' + li.region.image + '\');--journey-image-position:' + (li.region.imagePosition || 'center') + '">' +
+        ' style="--journey-sum-image:url(\'' + new URL(li.region.image, document.baseURI).href + '\');--journey-image-position:' + (li.region.imagePosition || 'center') + '">' +
         heroSummary(li) +
         '<div class="journey-hero__scene" style="background-image:url(\'' + li.region.image + '\');--journey-image-position:' + (li.region.imagePosition || 'center') + '" aria-hidden="true"></div>' +
         // Kopf: Ring und Titel. Fuß: Beschreibung, Werte und Fortschritt.
