@@ -219,6 +219,69 @@
     }, { manualStart: true });
   }
 
+  /* ------------------------------------------------------------
+     Schnellstart „Freies Training“: eine Muskelgruppe antippen,
+     der Coach stellt passende Übungen zusammen.
+     ------------------------------------------------------------ */
+  var QUICK = [
+    { key: 'chest', name: 'Brust', take: { chest: 4 } },
+    { key: 'back', name: 'Rücken', take: { back: 4 } },
+    { key: 'shoulders', name: 'Schulter', take: { shoulders: 4 } },
+    { key: 'arms', name: 'Arme', take: { biceps: 2, triceps: 2 } },
+    { key: 'abs', name: 'Bauch', take: { abs: 4 } },
+    { key: 'legs', name: 'Beine', take: { legs: 4 } },
+    { key: 'full', name: 'Ganzkörper', take: { chest: 1, back: 1, shoulders: 1, abs: 1, legs: 1 } }
+  ];
+
+  /** Tag der letzten Einheit mit dieser Übung ('' = noch nie) */
+  function lastDayFor(exId) {
+    var l = G.store.lastSessionFor(exId);
+    return l && l.session ? (l.session.day || '') : '';
+  }
+
+  /** Übungen einer Schnellstart-Gruppe: zuerst eine Grundübung, danach
+      bevorzugt das, was am längsten nicht (oder noch nie) trainiert wurde —
+      so wechseln die Übungen von Mal zu Mal. Nur Übungen bis zur
+      Erfahrungsstufe; reicht das nicht, wird aufgefüllt. */
+  function quickPick(key) {
+    var q = QUICK.filter(function (x) { return x.key === key; })[0];
+    if (!q) return [];
+    var lvl = maxLevel(st().profile.experience);
+    var out = [];
+    Object.keys(q.take).forEach(function (m) {
+      var n = q.take[m];
+      var all = G.ex.byMuscle(m);
+      var pool = all.filter(function (e) { return e.level <= lvl; });
+      if (pool.length < n) pool = pool.concat(all.filter(function (e) { return pool.indexOf(e) < 0; }));
+      var byAge = pool.slice().sort(function (a, b) {
+        var da = lastDayFor(a.id), db = lastDayFor(b.id);
+        if (da !== db) return da < db ? -1 : 1;
+        return a.level - b.level;
+      });
+      var first = byAge.filter(isCompound)[0];
+      var take = first ? [first] : [];
+      // erst unterschiedliche Bewegungsmuster (nicht zweimal Fliegende),
+      // dann notfalls auffüllen
+      byAge.forEach(function (e) {
+        if (take.length >= n || take.indexOf(e) >= 0) return;
+        if (e.pattern && take.some(function (x) { return x.pattern === e.pattern; })) return;
+        take.push(e);
+      });
+      byAge.forEach(function (e) { if (take.length < n && take.indexOf(e) < 0) take.push(e); });
+      out = out.concat(take);
+    });
+    var seen = {};
+    return out.filter(function (e) { if (seen[e.id]) return false; seen[e.id] = 1; return true; })
+      .map(function (e) { return e.id; });
+  }
+
+  function buildQuickSession(key) {
+    var q = QUICK.filter(function (x) { return x.key === key; })[0];
+    var ids = quickPick(key);
+    if (!q || !ids.length) return null;
+    return buildCustomSession(ids, 'Freies Training · ' + q.name);
+  }
+
   /** Zuletzt abgeschlossene Einheit (für "Letztes Training wiederholen") */
   function lastFinished() {
     var h = st().history || [];
@@ -311,6 +374,9 @@
     buildSession: buildSession,
     buildCustomSession: buildCustomSession,
     lastFinished: lastFinished,
+    QUICK: QUICK,
+    quickPick: quickPick,
+    buildQuickSession: buildQuickSession,
     buildRepeatSession: buildRepeatSession,
     finishSession: finishSession
   };

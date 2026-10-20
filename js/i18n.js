@@ -670,6 +670,10 @@
     ' Trainingszeit': ' workout time',
     ' wird wiederholt.': ' is being repeated.',
     'Erledigt': 'Done', 'Geplant': 'Planned', 'Verpasst': 'Missed', ', heute': ', today',
-    'Letzte Einheit': 'Latest workout', 'Neuester Rekord': 'Latest record', 'Bestwert': 'Best'
+    'Letzte Einheit': 'Latest workout', 'Neuester Rekord': 'Latest record', 'Bestwert': 'Best',
+    'Heute steht nichts im Plan. Lust auf Training? Starte ein freies Training.': 'Nothing is planned for today. Feel like training? Start a free workout.',
+    'Was trainierst du heute? Ein Tipp – der Coach stellt passende Übungen zusammen.': 'What are you training today? One tap – the Coach picks matching exercises.',
+    'Übungen selbst auswählen …': 'Choose exercises yourself …', 'Arme': 'Arms', 'Ganzkörper': 'Full body',
+    'Bizeps + Trizeps': 'Biceps + triceps', 'je 1 Übung aus ': '1 exercise each from ', ' Gruppen': ' groups', 'ca. ': 'approx. '
   });
 })(G04Fit);

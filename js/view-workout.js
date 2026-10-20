@@ -605,6 +605,51 @@
     }).join('');
   }
 
+  /** Freies Training in zwei Tipps: Muskelgruppe wählen → Einheit läuft.
+      „Selbst auswählen“ öffnet wie bisher die volle Übungsliste. */
+  function startCustom() {
+    openPicker(function (ids) {
+      G.store.state.session = G.planner.buildCustomSession(ids);
+      G.store.commit('session-start');
+      G.app.go('workout');
+    });
+  }
+
+  function openQuickFree() {
+    var s = G.store.state;
+    var m = G.journey.mode(s.profile.mode);
+    var perEx = (m.sets || 3) * (40 + (s.settings.restSeconds || m.restSec || 90)) / 60;
+    var tiles = G.planner.QUICK.map(function (q) {
+      var ids = G.planner.quickPick(q.key);
+      if (!ids.length) return '';
+      var groups = Object.keys(q.take);
+      var color = q.key === 'full' ? 'linear-gradient(90deg,var(--neon),var(--cyan))' : G.MUSCLES[groups[0]].color;
+      var sub = q.key === 'full' ? 'je 1 Übung aus ' + groups.length + ' Gruppen' : ids.length + ' Übungen';
+      return '<button class="quick-tile' + (q.key === 'full' ? ' quick-tile--wide' : '') + '" type="button" data-quick="' + q.key + '">' +
+        '<b><i style="background:' + color + '"></i>' + u.esc(q.name) + '</b>' +
+        '<span>' + u.esc(sub) + ' · ca. ' + Math.max(10, Math.round(ids.length * perEx / 5) * 5) + ' min</span></button>';
+    }).join('');
+    u.openSheet('Freies Training',
+      '<p class="muted small quick-lead">Was trainierst du heute? Ein Tipp – der Coach stellt passende Übungen zusammen.</p>' +
+      '<div class="quick-grid">' + tiles + '</div>' +
+      '<button class="btn btn--block btn--ghost quick-custom" type="button" data-quick="custom">' + u.icon('exercises', 16) + ' Übungen selbst auswählen …</button>',
+      function (body) {
+        body.addEventListener('click', function (e) {
+          var t = e.target.closest('[data-quick]');
+          if (!t) return;
+          var key = t.getAttribute('data-quick');
+          u.closeSheet();
+          if (key === 'custom') { setTimeout(startCustom, 60); return; }
+          var sess = G.planner.buildQuickSession(key);
+          if (!sess) return;
+          s.session = sess;
+          G.store.commit('session-start');
+          u.toast('Los geht’s', sess.title + ' · ' + sess.exercises.length + ' Übungen', 'ok');
+          G.app.go('workout');
+        });
+      });
+  }
+
   function openPicker(onDone, preselect, prefilter) {
     var selected = (preselect || []).slice();
     var initialMuscle = prefilter || 'all';
@@ -730,13 +775,7 @@
       var s = G.store.state;
       if (s.session) return activeSession(s.session);
       if (params && params.free) {
-        setTimeout(function () {
-          openPicker(function (ids) {
-            s.session = G.planner.buildCustomSession(ids);
-            G.store.commit('session-start');
-            G.app.rerender();
-          });
-        }, 60);
+        setTimeout(openQuickFree, 60);
       }
       return planPreview();
     },
@@ -765,11 +804,7 @@
       }, signal);
 
       u.on(host, 'click', '[data-act="open-free"]', function () {
-        openPicker(function (ids) {
-          s.session = G.planner.buildCustomSession(ids);
-          G.store.commit('session-start');
-          G.app.rerender();
-        });
+        openQuickFree();
       }, signal);
 
       /* --- Satzpause vor dem Start: an/aus + Sekunden ---
@@ -1007,6 +1042,7 @@
         showSummary(res, sess);
       }, signal);
     },
-    openPicker: openPicker
+    openPicker: openPicker,
+    openQuickFree: openQuickFree
   };
 })(G04Fit);
