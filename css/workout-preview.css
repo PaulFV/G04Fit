@@ -246,3 +246,23 @@
 .quick-tile span{font-size:11.5px;color:var(--tx-2)}
 .quick-tile--wide{grid-column:1/-1;border-color:var(--neon-line)}
 .quick-custom{margin-top:2px}
+
+/* ---------- Freies Training: selbst auswählen zuerst, Auswahl mit Suche ---------- */
+.quick-own{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 14px;padding:14px;border-radius:16px;text-align:left;
+  border:2px solid var(--cyan);background:linear-gradient(120deg,rgba(34,211,238,.18),rgba(34,211,238,.05));color:var(--tx-0);
+  font:inherit;cursor:pointer;box-shadow:0 0 18px rgba(34,211,238,.15)}
+.quick-own > .ui-icon{color:var(--cyan);flex:none}
+.quick-own > .ui-icon:last-child{margin-left:auto;color:var(--tx-2)}
+.quick-own > span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.quick-own b{font-size:15.5px}
+.quick-own span span{font-size:12px;color:var(--tx-2)}
+.quick-own:active{transform:scale(.99)}
+.picker__search{margin-bottom:2px}
+.picker__tabs{display:flex;flex-wrap:wrap;gap:6px;overflow:visible;padding:0;background:none;border:0}
+.picker__tabs .tabs__b{flex:0 0 auto;min-height:36px;padding:6px 11px;border-radius:11px;font-size:13px;border:1px solid var(--glass-br);background:var(--glass-bg);display:inline-flex;align-items:center;gap:5px}
+.picker__tabs .tabs__b.is-on{border-color:var(--neon);background:var(--neon-dim);color:var(--neon)}
+.picker__tabs .tabs__b[data-m="sel"]{border-color:rgba(61,255,158,.4)}
+/* Laufende Einheit: Übung entfernen, solange kein Satz abgehakt ist */
+.ex-remove{color:var(--danger)}
+.ex-remove:hover{border-color:rgba(255,92,122,.5);background:rgba(255,92,122,.08)}
+.has-done .ex-remove{display:none}
