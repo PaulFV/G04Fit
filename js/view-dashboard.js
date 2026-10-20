@@ -132,7 +132,7 @@
         '<p class="small dim dashboard-hero__exlist">' + u.esc(exNames.join(' · ')) +
         (plan.exercises.length > 3 ? ' …' : '') + '</p>';
       cta = '<button class="btn btn--primary btn--lg btn--glass-green" data-act="start">' + u.icon('play', 18) + ' Training starten</button>' +
-        '<button class="btn btn--lg btn--free" data-go="workout">Plan ansehen</button>';
+        '<button class="btn btn--lg btn--free" data-act="free">' + u.icon('plus', 18) + ' Freies Training</button>';
     } else if (doneToday) {
       var t = s.history.filter(function (h) { return h.day === today; }).pop();
       body = '<h2 class="big">Heute erledigt ' + u.icon('check', 26) + '</h2>' +
@@ -141,7 +141,7 @@
         (next ? '<p class="small dim" style="margin-top:8px">Als Nächstes: ' + u.esc(next.name) + ' am ' +
           u.esc(u.dayName(next.day, true)) + '</p>' : '');
       cta = '<button class="btn btn--lg" data-go="progress">Fortschritt ansehen</button>' +
-        '<button class="btn btn--lg btn--ghost" data-act="free">Zusatzeinheit</button>';
+        '<button class="btn btn--lg btn--free" data-act="free">' + u.icon('plus', 18) + ' Freies Training</button>';
     } else {
       body = '<h2 class="big">Ruhetag</h2>' +
         '<p class="muted">Heute steht nichts im Plan. Lust auf Training? Starte ein freies Training.</p>' +
