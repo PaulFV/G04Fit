@@ -417,6 +417,7 @@
         '<span>s</span></div>' +
         '<span class="field__hint">Vorschlag beim Start einer neuen Einheit (Freies Training oder Plan) — dort weiterhin änderbar.</span></div>' +
         sw('setReentry', 'Wiedereinstiegsmodus', 'Nach längeren Pausen reduziert G04Fit Gewicht und Volumen automatisch.', s.settings.reentry) +
+        sw('setIntro', 'Start-Animation', 'Beim Öffnen der App präsentiert die Figur ihre Muskeln – mit Begrüßung und Level.', s.settings.intro !== false) +
         sw('setMotion', 'Animationen reduzieren', 'Schaltet Bewegungseffekte weitgehend ab.', s.settings.reduceMotion) +
         sw('setMotivation', 'Trainingsmotivation aufs iPhone', 'Sendet an deinen Trainingstagen wechselnde motivierende Push-Nachrichten.', G.store.hasConsent('push')) +
         sw('setRestSound', 'Ton am Ende der Pause', 'Signalton, wenn die Satzpause abgelaufen ist.', s.settings.restSound !== false) +
@@ -594,6 +595,11 @@
       bindSwitch(host, 'setReentry', function (v) { s.settings.reentry = v; });
       bindSwitch(host, 'setRestSound', function (v) { s.settings.restSound = v; });
       bindSwitch(host, 'setSilent', function (v) { s.settings.soundless = v; });
+      bindSwitch(host, 'setIntro', function (v) {
+        s.settings.intro = v;
+        // Beim Einschalten einmal zeigen, wie es aussieht
+        if (v && G.intro) setTimeout(function () { G.intro.play(true); }, 150);
+      });
       bindSwitch(host, 'setMotion', function (v) {
         s.settings.reduceMotion = v;
         document.body.classList.toggle('no-motion', v);

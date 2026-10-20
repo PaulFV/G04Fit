@@ -290,6 +290,7 @@
     var start = resolve(location.hash.replace('#', ''));
     current = G.views[start] ? start : 'dashboard';
     render();
+    if (G.intro) G.intro.play();
 
     if (G.store.hasConsent('push')) G.reminders.start();
 

@@ -683,6 +683,7 @@
     'Gewählt': 'Selected', 'Noch keine Übung gewählt. Tippe bei einer Übung auf ＋.': 'No exercise selected yet. Tap ＋ on an exercise.',
     'Keine passende Übung gefunden.': 'No matching exercise found.',
     'Übung entfernen': 'Remove exercise', 'Entfernen': 'Remove', 'Entfernt': 'Removed',
-    ' wird aus dieser Einheit entfernt.': ' will be removed from this workout.', ' ist nicht mehr in dieser Einheit.': ' is no longer in this workout.'
+    ' wird aus dieser Einheit entfernt.': ' will be removed from this workout.', ' ist nicht mehr in dieser Einheit.': ' is no longer in this workout.',
+    'Start-Animation': 'Start animation', 'Tippen zum Überspringen': 'Tap to skip', 'Schultern': 'Shoulders', 'Beim Öffnen der App präsentiert die Figur ihre Muskeln – mit Begrüßung und Level.': 'When the app opens, the figure shows off its muscles – with greeting and level.'
   });
 })(G04Fit);
