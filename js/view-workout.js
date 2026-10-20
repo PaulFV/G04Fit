@@ -609,15 +609,85 @@
     }).join('');
   }
 
+  /* ------------------------------------------------------------
+     Pausen-Dialog vor jedem Trainingsstart (20.10.2026):
+     Pause an/aus, Dauer, Ton am Ende an/aus und Klang. Die Wahl
+     wird als neuer Standard gespeichert und gilt für die Einheit.
+     ------------------------------------------------------------ */
+  var REST_CHIPS = [30, 60, 90, 120, 180];
+  function restDialog(title, onGo) {
+    var s = G.store.state;
+    var on = s.settings.restTimer !== false;
+    var sec = u.clamp(s.settings.restSeconds || 90, 15, 500);
+    var snd = s.settings.restSound !== false;
+    var kind = s.settings.alarmSound || 'signal';
+    var body =
+      '<div class="rest-dlg">' +
+      '<p class="small muted" style="margin:0">' + u.esc(title) + '</p>' +
+      '<label class="switch rest-dlg__sw"><input type="checkbox" id="rdOn"' + (on ? ' checked' : '') + '>' +
+      '<span class="switch__track"></span><span class="switch__label"><b>Pause zwischen Sätzen</b>' +
+      '<span>Startet nach jedem abgehakten Satz automatisch.</span></span></label>' +
+      '<div class="rest-dlg__time"' + (on ? '' : ' hidden') + ' id="rdTime">' +
+      '<div class="rest-dlg__big"><b id="rdVal">' + sec + '</b><span>Sekunden</span></div>' +
+      '<div class="chips rest-dlg__chips">' + REST_CHIPS.map(function (v) {
+        return '<button type="button" class="chip' + (v === sec ? ' is-on' : '') + '" data-rs="' + v + '">' + (v < 60 ? v + ' s' : (v % 60 ? (v / 60).toString().replace('.', ',') : v / 60) + ' min') + '</button>';
+      }).join('') + '</div>' +
+      '<div class="row" style="gap:8px;align-items:center;justify-content:center">' +
+      '<button type="button" class="btn btn--sm" data-rs-step="-15">−15 s</button>' +
+      '<button type="button" class="btn btn--sm" data-rs-step="15">+15 s</button></div>' +
+      '</div>' +
+      '<label class="switch rest-dlg__sw"><input type="checkbox" id="rdSnd"' + (snd ? ' checked' : '') + '>' +
+      '<span class="switch__track"></span><span class="switch__label"><b>Ton am Ende der Pause</b>' +
+      '<span>Signal, wenn die Pause vorbei ist.</span></span></label>' +
+      '<div class="row rest-dlg__sound"' + (snd ? '' : ' hidden') + ' id="rdSound" style="gap:8px">' +
+      '<select class="select" id="rdKind" style="flex:1">' +
+      '<option value="signal"' + (kind === 'signal' ? ' selected' : '') + '>Signal</option>' +
+      '<option value="pulse"' + (kind === 'pulse' ? ' selected' : '') + '>Puls</option>' +
+      '<option value="chime"' + (kind === 'chime' ? ' selected' : '') + '>Glockenspiel</option>' +
+      '</select><button type="button" class="btn btn--sm" data-act="rd-test">' + u.icon('play', 14) + ' Anhören</button></div>' +
+      '<div class="btn-row rest-dlg__go">' +
+      '<button type="button" class="btn btn--ghost" data-act="rd-cancel">Abbrechen</button>' +
+      '<button type="button" class="btn btn--primary btn--lg" data-act="rd-go">' + u.icon('play', 16) + ' Los geht’s</button>' +
+      '</div></div>';
+
+    u.openSheet('Pause einstellen', body, function (root) {
+      var val = root.querySelector('#rdVal');
+      function setSec(v) {
+        sec = u.clamp(v, 15, 500);
+        val.textContent = sec;
+        root.querySelectorAll('[data-rs]').forEach(function (b) { b.classList.toggle('is-on', +b.getAttribute('data-rs') === sec); });
+      }
+      root.querySelector('#rdOn').onchange = function (e) { on = e.target.checked; root.querySelector('#rdTime').hidden = !on; };
+      root.querySelector('#rdSnd').onchange = function (e) { snd = e.target.checked; root.querySelector('#rdSound').hidden = !snd; };
+      root.querySelectorAll('[data-rs]').forEach(function (b) { b.onclick = function () { setSec(+b.getAttribute('data-rs')); }; });
+      root.querySelectorAll('[data-rs-step]').forEach(function (b) { b.onclick = function () { setSec(sec + (+b.getAttribute('data-rs-step'))); }; });
+      root.querySelector('#rdKind').onchange = function (e) { kind = e.target.value; s.settings.alarmSound = kind; G.reminders.playAlarm(true); };
+      root.querySelector('[data-act="rd-test"]').onclick = function () { s.settings.alarmSound = kind; G.reminders.playAlarm(true); };
+      root.querySelector('[data-act="rd-cancel"]').onclick = function () { u.closeSheet(); };
+      root.querySelector('[data-act="rd-go"]').onclick = function () {
+        s.settings.restTimer = on;
+        s.settings.restSeconds = sec;
+        s.settings.restSound = snd;
+        s.settings.alarmSound = kind;
+        G.store.commit('settings');
+        if (snd) G.reminders.prepareAlarm(true);
+        u.closeSheet();
+        onGo();
+      };
+    });
+  }
+
   /** Freies Training in zwei Tipps: Muskelgruppe wählen → Einheit läuft.
       „Selbst auswählen“ öffnet wie bisher die volle Übungsliste. */
   function startCustom(preselect, prefilter, title) {
     openPicker(function (ids) {
-      G.store.state.session = G.planner.buildCustomSession(ids, title);
-      G.store.commit('session-start');
-      u.toast('Los geht’s', (title || 'Freies Training') + ' · ' + ids.length + ' Übungen', 'ok');
-      G.app.go('workout');
-    }, preselect, prefilter, { title: title || 'Freies Training', okLabel: 'Training starten' });
+      restDialog((title || 'Freies Training') + ' · ' + ids.length + ' Übungen', function () {
+        G.store.state.session = G.planner.buildCustomSession(ids, title);
+        G.store.commit('session-start');
+        u.toast('Los geht’s', (title || 'Freies Training') + ' · ' + ids.length + ' Übungen', 'ok');
+        G.app.go('workout');
+      });
+    }, preselect, prefilter, { title: title || 'Freies Training', okLabel: 'Weiter' });
   }
 
   function openQuickFree() {
@@ -833,10 +903,12 @@
       u.on(host, 'click', '[data-act="start-plan"]', function () {
         var plan = G.planner.todayPlan() || G.planner.nextPlan();
         if (!plan) return;
-        s.session = G.planner.buildSession(plan, { day: u.today() });
-        G.store.commit('session-start');
-        u.toast('Los geht’s', plan.name + ' gestartet.', 'ok');
-        G.app.rerender();
+        restDialog(plan.name, function () {
+          s.session = G.planner.buildSession(plan, { day: u.today() });
+          G.store.commit('session-start');
+          u.toast('Los geht’s', plan.name + ' gestartet.', 'ok');
+          G.app.rerender();
+        });
       }, signal);
 
       u.on(host, 'click', '[data-act="open-free"]', function () {
@@ -853,10 +925,12 @@
       u.on(host, 'click', '[data-act="repeat-last"]', function () {
         var prev = G.planner.lastFinished();
         if (!prev) return;
-        s.session = G.planner.buildRepeatSession(prev);
-        G.store.commit('session-start');
-        u.toast('Los geht’s', prev.title + ' wird wiederholt.', 'ok');
-        G.app.rerender();
+        restDialog(prev.title, function () {
+          s.session = G.planner.buildRepeatSession(prev);
+          G.store.commit('session-start');
+          u.toast('Los geht’s', prev.title + ' wird wiederholt.', 'ok');
+          G.app.rerender();
+        });
       }, signal);
 
       if (!s.session) { if (clockTimer) { clearInterval(clockTimer); clockTimer = null; } return; }
@@ -1078,6 +1152,7 @@
       }, signal);
     },
     openPicker: openPicker,
+    restDialog: restDialog,
     openQuickFree: openQuickFree
   };
 })(G04Fit);

@@ -274,9 +274,11 @@
       u.on(host, 'click', '[data-act="start"]', function () {
         var plan = G.planner.todayPlan();
         if (!plan) return;
-        G.store.state.session = G.planner.buildSession(plan);
-        G.store.commit('session-start');
-        G.app.go('workout');
+        G.views.workout.restDialog(plan.name, function () {
+          G.store.state.session = G.planner.buildSession(plan);
+          G.store.commit('session-start');
+          G.app.go('workout');
+        });
       });
       u.on(host, 'click', '[data-act="free"]', function () {
         G.app.go('workout', { free: true });

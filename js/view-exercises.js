@@ -223,10 +223,12 @@
           u.toast('Hinzugefügt', ex.name + ' ist Teil der laufenden Einheit.', 'ok');
           G.app.go('workout');
         } else {
-          s.session = G.planner.buildCustomSession([ex.id], ex.name);
-          G.store.commit('session-start');
           u.closeSheet();
-          G.app.go('workout');
+          G.views.workout.restDialog(ex.name, function () {
+            s.session = G.planner.buildCustomSession([ex.id], ex.name);
+            G.store.commit('session-start');
+            G.app.go('workout');
+          });
         }
       };
     }, onClose);
