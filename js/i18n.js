@@ -677,6 +677,12 @@
     'Bizeps + Trizeps': 'Biceps + triceps', 'je 1 Übung aus ': '1 exercise each from ', ' Gruppen': ' groups', 'ca. ': 'approx. ',
     'Plan und freies Training': 'Plan and free workout', 'Übungen mit Ausführung und Muskelkarte': 'Exercises with technique and muscle map',
     ' XP · noch ': ' XP · ', ' XP bis Level ': ' XP to level ',
-    'Kurzhantel': 'Dumbbell', 'Sonstiges': 'Other'
+    'Kurzhantel': 'Dumbbell', 'Sonstiges': 'Other',
+    'Übungen selbst auswählen': 'Choose exercises yourself', 'Aus allen ': 'From all ', ' Übungen frei zusammenstellen': ' exercises, your own mix',
+    'Oder eine Muskelgruppe – der Coach schlägt Übungen vor, du kannst sie vor dem Start ändern.': 'Or a muscle group – the Coach suggests exercises, you can change them before starting.',
+    'Gewählt': 'Selected', 'Noch keine Übung gewählt. Tippe bei einer Übung auf ＋.': 'No exercise selected yet. Tap ＋ on an exercise.',
+    'Keine passende Übung gefunden.': 'No matching exercise found.',
+    'Übung entfernen': 'Remove exercise', 'Entfernen': 'Remove', 'Entfernt': 'Removed',
+    ' wird aus dieser Einheit entfernt.': ' will be removed from this workout.', ' ist nicht mehr in dieser Einheit.': ' is no longer in this workout.'
   });
 })(G04Fit);

@@ -406,7 +406,7 @@
     var all = b.sets.length;
     var mv = G.MUSCLES[ex.muscle];
 
-    return '<div class="card" data-block="' + bi + '">' +
+    return '<div class="card' + (done ? ' has-done' : '') + '" data-block="' + bi + '">' +
       '<div class="card__head">' +
       '<span class="map-chip" style="width:44px;height:46px" title="Beanspruchte Muskeln">' +
       G.anim.muscleMap(ex.muscle, ex.sec, { view: 'auto' }) + '</span>' +
@@ -420,6 +420,9 @@
       '<span class="pill ' + (done === all ? 'pill--neon' : 'pill--muted') + '">' + done + '/' + all + '</span>' +
       '<button class="icon-btn" data-act="info" data-ex="' + ex.id + '" title="Übung ansehen" style="width:32px;height:32px">' +
       u.icon('info', 16) + '</button>' +
+      (G.store.state.session.exercises.length > 1
+        ? '<button class="icon-btn ex-remove" data-act="del-ex" data-b="' + bi + '" title="Übung entfernen" aria-label="Übung entfernen" style="width:32px;height:32px">' +
+          u.icon('trash', 16) + '</button>' : '') +
       '</div>' +
 
       (b.hint ? '<div class="coach" style="margin-bottom:14px">' +
@@ -570,25 +573,44 @@
   /* ------------------------------------------------------------
      Übungsauswahl (freies Training / Übung ergänzen)
      ------------------------------------------------------------ */
-  function pickerHtml(selected, activeMuscle) {
+  function pickerHtml(selected, activeMuscle, okLabel) {
     selected = selected || [];
     activeMuscle = activeMuscle || 'all';
-    return '<div class="stack">' +
-      '<div class="tabs" id="pickTabs">' +
+    return '<div class="stack picker">' +
+      '<label class="ex-search picker__search" aria-label="Übung suchen">' + u.icon('search', 18) +
+      '<input class="input" id="pickSearch" type="search" placeholder="Übung suchen …" autocomplete="off"></label>' +
+      '<div class="tabs picker__tabs" id="pickTabs">' +
+      '<button class="tabs__b' + (activeMuscle === 'sel' ? ' is-on' : '') + '" data-m="sel">' + u.icon('check', 14) + ' Gewählt</button>' +
       '<button class="tabs__b' + (activeMuscle === 'all' ? ' is-on' : '') + '" data-m="all">Alle</button>' +
       G.MUSCLE_ORDER.map(function (m) {
         return '<button class="tabs__b' + (activeMuscle === m ? ' is-on' : '') + '" data-m="' + m + '">' + u.esc(G.MUSCLES[m].name) + '</button>';
       }).join('') + '</div>' +
       '<div class="list" id="pickList"></div>' +
-      '<div class="btn-row" style="position:sticky;bottom:0;padding-top:10px;background:linear-gradient(180deg,transparent,rgba(11,17,24,.9) 40%)">' +
+      '<div class="btn-row picker__foot" style="position:sticky;bottom:0;padding-top:10px;background:linear-gradient(180deg,transparent,rgba(11,17,24,.9) 40%)">' +
       '<span class="pill pill--neon" id="pickCount">0 gewählt</span>' +
       '<span class="spacer"></span>' +
-      '<button class="btn btn--primary" data-act="pick-ok">Übernehmen</button>' +
+      '<button class="btn btn--primary" data-act="pick-ok">' + u.esc(okLabel || 'Übernehmen') + '</button>' +
       '</div></div>';
   }
 
-  function renderPickList(host, muscle, selected) {
-    var list = muscle === 'all' ? G.EXERCISES : G.ex.byMuscle(muscle);
+  function pickNorm(t) {
+    return String(t || '').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss');
+  }
+
+  function renderPickList(host, muscle, selected, q) {
+    var list = muscle === 'sel'
+      ? selected.map(function (id) { return G.ex.byId(id); }).filter(Boolean)
+      : muscle === 'all' ? G.EXERCISES : G.ex.byMuscle(muscle);
+    var words = pickNorm(q).split(/\s+/).filter(Boolean);
+    if (words.length) list = list.filter(function (ex) {
+      var hay = pickNorm(ex.name + ' ' + ex.equip + ' ' + G.MUSCLES[ex.muscle].name);
+      return words.every(function (w) { return hay.indexOf(w) >= 0; });
+    });
+    if (!list.length) {
+      host.innerHTML = '<p class="muted small" style="padding:14px 4px">' +
+        (muscle === 'sel' ? 'Noch keine Übung gewählt. Tippe bei einer Übung auf ＋.' : 'Keine passende Übung gefunden.') + '</p>';
+      return;
+    }
     host.innerHTML = list.map(function (ex) {
       var on = selected.indexOf(ex.id) >= 0;
       return '<div class="list__row workout-picker__row" style="' +
@@ -607,12 +629,13 @@
 
   /** Freies Training in zwei Tipps: Muskelgruppe wählen → Einheit läuft.
       „Selbst auswählen“ öffnet wie bisher die volle Übungsliste. */
-  function startCustom() {
+  function startCustom(preselect, prefilter, title) {
     openPicker(function (ids) {
-      G.store.state.session = G.planner.buildCustomSession(ids);
+      G.store.state.session = G.planner.buildCustomSession(ids, title);
       G.store.commit('session-start');
+      u.toast('Los geht’s', (title || 'Freies Training') + ' · ' + ids.length + ' Übungen', 'ok');
       G.app.go('workout');
-    });
+    }, preselect, prefilter, { title: title || 'Freies Training', okLabel: 'Training starten' });
   }
 
   function openQuickFree() {
@@ -630,45 +653,52 @@
         '<span>' + u.esc(sub) + ' · ca. ' + Math.max(10, Math.round(ids.length * perEx / 5) * 5) + ' min</span></button>';
     }).join('');
     u.openSheet('Freies Training',
-      '<p class="muted small quick-lead">Was trainierst du heute? Ein Tipp – der Coach stellt passende Übungen zusammen.</p>' +
-      '<div class="quick-grid">' + tiles + '</div>' +
-      '<button class="btn btn--block btn--ghost quick-custom" type="button" data-quick="custom">' + u.icon('exercises', 16) + ' Übungen selbst auswählen …</button>',
+      '<button class="quick-own" type="button" data-quick="custom">' + u.icon('exercises', 22) +
+      '<span><b>Übungen selbst auswählen</b><span>Aus allen ' + G.EXERCISES.length + ' Übungen frei zusammenstellen</span></span>' +
+      u.icon('chevron', 18) + '</button>' +
+      '<p class="muted small quick-lead">Oder eine Muskelgruppe – der Coach schlägt Übungen vor, du kannst sie vor dem Start ändern.</p>' +
+      '<div class="quick-grid">' + tiles + '</div>',
       function (body) {
         body.addEventListener('click', function (e) {
           var t = e.target.closest('[data-quick]');
           if (!t) return;
           var key = t.getAttribute('data-quick');
           u.closeSheet();
-          if (key === 'custom') { setTimeout(startCustom, 60); return; }
-          var sess = G.planner.buildQuickSession(key);
-          if (!sess) return;
-          s.session = sess;
-          G.store.commit('session-start');
-          u.toast('Los geht’s', sess.title + ' · ' + sess.exercises.length + ' Übungen', 'ok');
-          G.app.go('workout');
+          if (key === 'custom') { setTimeout(function () { startCustom([], 'all'); }, 60); return; }
+          // Vorschlag des Coaches vorausgewählt, Liste auf die Gruppe gefiltert —
+          // hinzufügen, abwählen, dann „Training starten“
+          var q = G.planner.QUICK.filter(function (x) { return x.key === key; })[0];
+          var groups = Object.keys(q.take);
+          setTimeout(function () {
+            startCustom(G.planner.quickPick(key), groups.length === 1 ? groups[0] : 'sel', 'Freies Training · ' + q.name);
+          }, 60);
         });
       });
   }
 
-  function openPicker(onDone, preselect, prefilter) {
+  function openPicker(onDone, preselect, prefilter, opts) {
+    opts = opts || {};
     var selected = (preselect || []).slice();
     var initialMuscle = prefilter || 'all';
-    u.openSheet('Übungen wählen', pickerHtml(selected, initialMuscle), function (body) {
+    u.openSheet(opts.title || 'Übungen wählen', pickerHtml(selected, initialMuscle, opts.okLabel), function (body) {
       var list = body.querySelector('#pickList');
       var count = body.querySelector('#pickCount');
+      var search = body.querySelector('#pickSearch');
       var cur = initialMuscle;
 
       function refresh() {
-        renderPickList(list, cur, selected);
+        renderPickList(list, cur, selected, search ? search.value : '');
         count.textContent = selected.length + ' gewählt';
+        if (G.i18n) G.i18n.apply(body);
       }
       refresh();
+      if (search) search.addEventListener('input', u.debounce(refresh, 150));
 
       u.on(body, 'click', '[data-pick-info]', function (e, t) {
         e.preventDefault();
         var id = t.getAttribute('data-pick-info');
         if (G.views.exercises && G.views.exercises.openDetail) {
-          G.views.exercises.openDetail(id, function () { openPicker(onDone, selected, cur); });
+          G.views.exercises.openDetail(id, function () { openPicker(onDone, selected, cur, opts); });
         }
       });
 
@@ -677,7 +707,7 @@
         e.preventDefault();
         var id = t.getAttribute('data-pick-info');
         if (G.views.exercises && G.views.exercises.openDetail) {
-          G.views.exercises.openDetail(id, function () { openPicker(onDone, selected, cur); });
+          G.views.exercises.openDetail(id, function () { openPicker(onDone, selected, cur, opts); });
         }
       });
 
@@ -923,8 +953,11 @@
         var row = t.closest('.set-row');
         var bi = +row.getAttribute('data-b'), si = +row.getAttribute('data-s');
         var set = s.session.exercises[bi].sets[si];
+        var blockEl = host.querySelector('[data-block="' + bi + '"]');
         var wasComplete = s.session.exercises[bi].sets.every(function (x) { return x.done; });
         set.done = !set.done;
+        // Entfernen-Knopf nur, solange in dieser Übung kein Satz abgehakt ist
+        if (blockEl) blockEl.classList.toggle('has-done', s.session.exercises[bi].sets.some(function (x) { return x.done; }));
         row.classList.toggle('is-done', set.done);
 
         // Wer den ersten Satz abhakt, ohne Start gedrückt zu haben, startet
@@ -998,6 +1031,25 @@
       }, signal);
 
       /* --- Übung ergänzen --- */
+      /* --- Übung entfernen (nur ohne abgehakten Satz) --- */
+      u.on(host, 'click', '[data-act="del-ex"]', async function (e, t) {
+        e.stopPropagation();
+        var bi = +t.getAttribute('data-b');
+        var b = s.session.exercises[bi];
+        if (!b || b.sets.some(function (x) { return x.done; }) || s.session.exercises.length < 2) return;
+        var ex = G.ex.byId(b.exId);
+        var ok = await u.confirmSheet({
+          title: 'Übung entfernen',
+          body: '„' + u.esc(ex ? ex.name : '') + '“ wird aus dieser Einheit entfernt.',
+          ok: 'Entfernen'
+        });
+        if (!ok || !s.session) return;
+        s.session.exercises.splice(bi, 1);
+        G.store.commit('ex-removed');
+        u.toast('Entfernt', (ex ? ex.name : 'Übung') + ' ist nicht mehr in dieser Einheit.', 'ok', 2400);
+        G.app.rerender();
+      }, signal);
+
       u.on(host, 'click', '[data-act="add-ex"]', function () {
         openPicker(function (ids) {
           var add = G.planner.buildCustomSession(ids).exercises;

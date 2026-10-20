@@ -157,7 +157,10 @@
       var ex = G.ex.byId(exId);
       if (!ex) return null;
       var sug = G.coach.suggestNext(exId);
-      var nSets = sug.sets - (re && re.weeks >= 2 && s.settings.reentry ? 1 : 0);
+      // Freies Training: immer 3 Sätze als Standard (Nutzerwunsch 20.10.2026),
+      // geplante Einheiten folgen weiter dem Schwierigkeitsmodus
+      var baseSets = opts.sets || sug.sets;
+      var nSets = baseSets - (re && re.weeks >= 2 && s.settings.reentry ? 1 : 0);
       nSets = Math.max(1, nSets);
       var w = ex.time ? 0 : u.roundWeight(sug.weight * factor, ex.inc || 2.5);
 
@@ -216,7 +219,7 @@
       name: title || 'Freies Training',
       muscles: exIds.map(function (id) { var e = G.ex.byId(id); return e && e.muscle; }).filter(Boolean),
       exercises: exIds
-    }, { manualStart: true });
+    }, { manualStart: true, sets: 3 });
   }
 
   /* ------------------------------------------------------------
