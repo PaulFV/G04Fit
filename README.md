@@ -1,4 +1,4 @@
-# G04Fit v2.1.0
+# G04Fit v2.8
 
 Trainingsplaner für **Brust, Rücken, Schulter, Bizeps, Trizeps, Bauch und Beine** — mit Wochenplan,
 Journey, regelbasiertem Coach, Fortschrittsauswertung und einem
@@ -11,17 +11,27 @@ ohne Backend, ohne Konto, ohne Tracking.
 
 ## Inhalt
 
-| Bereich | Beschreibung |
+Die App hat vier Reiter in der unteren Leiste (am Desktop in der Seitenleiste):
+**Dashboard · Training · Fortschritt · Einstellungen**.
+
+| Reiter | Beschreibung |
 |:--|:--|
-| **Dashboard** | Begrüßung mit Profilbild, Tagesplan, Wochenleiste (erledigt / geplant / verpasst), Kennzahlen, Coach-Tipp, nächste Erinnerung |
-| **Journey** | Einklappbare Kachel zur aktuellen Region, Weltkarte mit sechs Regionen, Level und XP, Modi von Easy bis Beast |
-| **Workout** | Geplantes oder freies Training, „Letztes Training wiederholen“, Start-Knopf mit Trainingszeit, Sätze und Gewichte (bei Eigengewicht ohne Gewichtsfeld), Satzpause mit Ton, Fokus auf die nächste Übung, Coach-Hinweise |
-| **Übungen** | 99 Übungen in sieben Muskelgruppen mit animierter Ausführung, anatomischer Muskelkarte, Technikhinweisen und häufigen Fehlern |
-| **Fortschritt** | Volumen, Kraftentwicklung, Rekorde (Bestwert je Gruppe und neuester Rekord hervorgehoben), Muskelbalance, Leistungsprofil, Historie mit Trainingszeit |
-| **Profil** | Persönliche Angaben, Gewichtsverlauf, Erfahrungsstufe, Ziele, Trainingstage, Startgewichte, Trainings-Avatar, Sprache, Feedback & Ideen |
-| **G04Fit Coach** | Vorschläge zu Gewicht, Wiederholungen, Progression und Wiedereinstieg |
-| **Erinnerungen** | Trainingstage, Uhrzeit, Benachrichtigungen, Wiedereinstiegsmodus |
-| **Datenschutz** | Vier einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung und Copyright-Hinweise |
+| **Dashboard** | Begrüßung mit Profilbild, Tagesplan mit den Knöpfen **„Training starten“** und **„Freies Training“** (am Ruhetag nur „Freies Training“), Wochenleiste mit Legende (erledigt / geplant / verpasst / heute), Kennzahlen, Coach-Tipp, nächste Erinnerung |
+| **Training** | Unterreiter *Training* und *Übungen*. **Training:** geplantes oder freies Training, „Letztes Training wiederholen“, Start-Knopf mit Trainingszeit, Sätze und Gewichte (bei Eigengewicht ohne Gewichtsfeld), Satzpause mit Ton, Fokus auf die nächste Übung, Coach-Hinweise. **Freies Training:** per Muskelgruppe (Vorschlag änderbar) oder „Übungen selbst auswählen“ mit Suche, Standard 3 Sätze; noch nicht begonnene Übungen lassen sich wieder entfernen. **Übungen:** 99 Übungen in sieben Muskelgruppen mit Suche, Geräte-Filter, animierter Ausführung, anatomischer Muskelkarte, Technikhinweisen und häufigen Fehlern |
+| **Fortschritt** | Unterreiter *Überblick · Journey · Kraft · Rekorde · Historie*. Level-Karte, Volumen, Kraftentwicklung, Rekorde (Bestwert und neuester Rekord hervorgehoben), Muskelbalance, Leistungsprofil, Historie mit Trainingszeit. **Journey:** einklappbare Kachel zur aktuellen Region, Weltkarte mit sechs Regionen, Level und XP, Modi von Easy bis Beast. Ohne Einwilligung in die Historie sind nur Überblick und Journey sichtbar |
+| **Einstellungen** | Unterreiter *Profil · Coach · Erinnerungen · Datenschutz · Feedback*. **Profil:** persönliche Angaben, Gewichtsverlauf, Erfahrungsstufe, Ziele, Trainingstage, Startgewichte, Trainings-Avatar, Sprache, App-Einstellungen (u. a. Start-Animation, Animationen reduzieren). **Coach:** Vorschläge zu Gewicht, Wiederholungen, Progression und Wiedereinstieg. **Erinnerungen:** Trainingstage, Uhrzeit, Benachrichtigungen, Wiedereinstiegsmodus. **Datenschutz:** vier einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung und Copyright-Hinweise. **Feedback:** Formular „Feedback & Ideen“ |
+
+Alte Links wie `#journey`, `#exercises`, `#profile`, `#coach`, `#reminders`, `#privacy` oder
+`#feedback` funktionieren weiter und öffnen den passenden Reiter.
+
+### Start-Animation
+
+Beim Öffnen der App füllt die Anatomie-Figur aus den Übungen den ganzen Bildschirm: Die Kamera
+fährt an den Oberkörper heran, Schultern, Brust, Bizeps und Bauch spannen sich nacheinander an
+(schwellen leicht an und leuchten), danach erscheinen Begrüßung und Level. Dauer rund 3,5 Sekunden,
+Antippen überspringt. Sie erscheint einmal pro App-Start, ist standardmäßig an und lässt sich
+unter *Einstellungen → Profil → Start-Animation* abschalten. Bei „Animationen reduzieren“ oder
+reduzierter Bewegung im System läuft eine ruhige Kurzfassung.
 
 ---
 
@@ -165,7 +175,7 @@ G04Fit/
 │   ├── dashboard-preview.css   Dashboard
 │   ├── workout-preview.css     Workout-Vorschau und laufende Einheit
 │   ├── progress-overview.css   Fortschritt
-│   └── anim.css                Übungsanimationen, Muskelkarte
+│   └── anim.css                Übungsanimationen, Muskelkarte, Start-Animation
 │
 ├── js/
 │   ├── util.js                 Hilfsfunktionen, Icons, Toasts, Sheets
@@ -180,8 +190,10 @@ G04Fit/
 │   ├── coach.js                Progressionsregeln und Auswertung
 │   ├── planner.js              Wochenplan und Einheiten
 │   ├── reminders.js            Erinnerungen
-│   ├── view-*.js               Die neun Bereiche
+│   ├── view-*.js               Die Bereiche (view-settings.js bündelt Profil, Coach,
+│   │                           Erinnerungen, Datenschutz und Feedback)
 │   ├── onboarding.js           Ersteinrichtung
+│   ├── intro.js                Start-Animation beim Öffnen
 │   └── app.js                  Router und Start
 │
 ├── icons/                      App-Icons
@@ -279,7 +291,7 @@ Browsers (`localStorage`). Wenn Push-Erinnerungen aktiviert werden, überträgt 
 die dafür nötigen technischen Daten an den konfigurierten Push-Dienst; Name, Foto, Profil und
 Trainingsverlauf werden nicht übertragen.
 
-Unter *Profil → App-Einstellungen* gibt es das Formular **Feedback & Ideen**. Es sendet nur, wenn
+Unter *Einstellungen → Feedback* gibt es das Formular **Feedback & Ideen**. Es sendet nur, wenn
 man selbst auf *Senden* tippt: Der Text geht per AJAX direkt aus dem Browser an
 [formsubmit.co](https://formsubmit.co), die ihn als E-Mail an `fodorpaul@web.de` weiterleiten
 (wie in G04Event; ohne Konto, ohne eigenen Server). Mitgeschickt werden nur die optionale
@@ -288,7 +300,7 @@ Absenden verlangt formsubmit.co einmalig eine Bestätigung per E-Mail an `fodorp
 kommen keine Nachrichten an. Technische Fehler lassen sich alternativ als öffentliches
 [GitHub-Issue](https://github.com/PaulFV/G04Fit/issues) melden.
 
-Unter *Datenschutz* lassen sich alle Daten als JSON exportieren, wieder einlesen sowie einzeln
+Unter *Einstellungen → Datenschutz* lassen sich alle Daten als JSON exportieren, wieder einlesen sowie einzeln
 oder vollständig löschen. Dort stehen außerdem die Copyright- und Lizenzhinweise. Die öffentliche
 Datenschutzseite liegt unter [privacy.html](privacy.html), die Copyright-Seite unter
 [copyright.html](copyright.html); englische Fassungen liegen unter [privacy-en.html](privacy-en.html)
@@ -302,7 +314,7 @@ Profil aus deinen Trainingsdaten — ausdrücklich keine medizinischen Werte.**
 ### Trainings-Avatar
 
 G04Fit wird **ohne vorgegebenes Bild** ausgeliefert. Jede Person lädt ihr eigenes hoch — im
-Profil unter *Trainings-Avatar* oder durch Antippen des Avatars an beliebiger Stelle
+Profil (*Einstellungen → Profil*) unter *Trainings-Avatar* oder durch Antippen des Avatars an beliebiger Stelle
 (Dashboard, Journey, Seitenleiste, Ersteinrichtung).
 
 Solange kein Bild gewählt wurde, zeigt G04Fit die Initialen des eingetragenen Namens,
