@@ -65,7 +65,7 @@
     'Zeitpunkt': 'Time', 'Uhrzeit der Erinnerung': 'Reminder time', 'Nächste Termine': 'Upcoming dates', 'Keine Termine': 'No dates',
     'heute': 'today', 'gestern': 'yesterday', 'vorgestern': 'the day before yesterday', 'Trotzdem trainieren': 'Train anyway', 'Ruhetag': 'Rest day',
     'Training starten': 'Start workout', 'Weiter trainieren': 'Continue workout', 'Einheit läuft': 'Workout in progress', 'Heute erledigt': 'Completed today',
-    'Diese Woche': 'This week', 'Einheiten gesamt': 'Total workouts', 'Serie (Wochen)': 'Streak (weeks)', 'Dunkel': 'Dark', 'Hell': 'Light', '/ 4 Wo.': '/ 4 wks', 'Noch kein Eintrag': 'No entry yet', 'Name, Alter, Größe, Erfahrung, Ziele': 'Name, age, height, experience, goals', 'Serie': 'Streak', 'Volumen 7 Tage': '7-day volume', 'Rekorde': 'Records',
+    'Diese Woche': 'This week', 'Einheiten gesamt': 'Total workouts', 'Serie (Wochen)': 'Streak (weeks)', 'Zuletzt:': 'Latest:', 'Noch keine Bestleistungen': 'No personal bests yet', 'Dunkel': 'Dark', 'Hell': 'Light', '/ 4 Wo.': '/ 4 wks', 'Noch kein Eintrag': 'No entry yet', 'Name, Alter, Größe, Erfahrung, Ziele': 'Name, age, height, experience, goals', 'Serie': 'Streak', 'Volumen 7 Tage': '7-day volume', 'Rekorde': 'Records',
     'Fortschritt ansehen': 'View progress', 'Plan ansehen': 'View plan', 'Zusatzeinheit': 'Extra workout', 'Gespeicherte Daten': 'Stored data',
     'Daten mitnehmen': 'Take your data with you', 'Als Datei exportieren': 'Export as file', 'Sicherung einlesen': 'Import backup', 'Daten löschen': 'Delete data',
     'Persönliche Angaben': 'Personal details', 'Keine Einwilligung': 'No consent', 'Woche': 'week', 'Wochen': 'weeks', 'Tag': 'day', 'Tage': 'days', 'Monat': 'month', 'Monate': 'months',
