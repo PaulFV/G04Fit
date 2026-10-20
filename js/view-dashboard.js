@@ -65,23 +65,20 @@
       return u.daysBetween(s.records[id].date, today) <= 30;
     }).length;
 
+    // Kompakt in einer Reihe: kleines Bild, Zahl, Beschriftung.
     var items = [
-      { k: 'Einheiten gesamt', v: s.journey.completed, art: 'assets/nav/nav-workout.png', tone: '', graph: 'bars' },
-      { k: 'Serie', v: s.journey.streak, d: s.journey.streak === 1 ? 'Woche' : 'Wochen', art: 'assets/progress/stat-streak.png', tone: 'gold', graph: 'dots' },
-      { k: 'Volumen 7 Tage', v: vol >= 1000 ? u.fmt(vol / 1000, 1) : u.fmt(vol), d: vol >= 1000 ? 'Tonnen' : 'kg', art: 'assets/progress/stat-volume.png', tone: 'neon', graph: 'bars' },
-      { k: 'Sätze 7 Tage', v: sets, art: 'assets/nav/nav-exercises.png', tone: '', graph: 'bars' },
-      { k: 'Rekorde 30 Tage', v: prs, art: 'assets/progress/stat-records.png', tone: 'cyan', graph: 'dots', wide: true }
+      { k: 'Einheiten gesamt', v: s.journey.completed, art: 'assets/nav/nav-workout.png', tone: '' },
+      { k: 'Serie (Wochen)', v: s.journey.streak, art: 'assets/progress/stat-streak.png', tone: 'gold' },
+      { k: 'Volumen 7 Tage', v: vol >= 1000 ? u.fmt(vol / 1000, 1) : u.fmt(vol), d: vol >= 1000 ? 't' : 'kg', art: 'assets/progress/stat-volume.png', tone: 'neon' },
+      { k: 'Sätze 7 Tage', v: sets, art: 'assets/nav/nav-exercises.png', tone: '' },
+      { k: 'Rekorde 30 Tage', v: prs, art: 'assets/progress/stat-records.png', tone: 'cyan' }
     ];
 
-    return '<section class="dashboard-stats" aria-label="Kennzahlen">' + items.map(function (i) {
-      var graph = '<span class="dashboard-stat__graph dashboard-stat__graph--' + i.graph + '">' +
-        (i.graph === 'dots' ? '<i></i><i></i><i></i><i></i><i></i><i></i>' : '<i></i><i></i><i></i><i></i><i></i><i></i><i></i>') +
-        '</span>';
-      return '<div class="dashboard-stat card ' + (i.tone ? 'dashboard-stat--' + i.tone + ' ' : '') + (i.wide ? 'dashboard-stat--wide' : '') + '">' +
-        '<div class="dashboard-stat__icon"><img class="dashboard-stat__art" src="' + u.esc(i.art) + '?v=2.5.0" alt=""></div>' +
-        '<div class="dashboard-stat__copy"><span class="dashboard-stat__k">' + u.esc(i.k) + '</span>' +
-        '<span class="dashboard-stat__v">' + u.esc(String(i.v)) + (i.d ? '<span class="dashboard-stat__u">' + u.esc(i.d) + '</span>' : '') + '</span></div>' +
-        graph +
+    return '<section class="dashboard-stats dashboard-stats--row" aria-label="Kennzahlen">' + items.map(function (i) {
+      return '<div class="dashboard-stat card' + (i.tone ? ' dashboard-stat--' + i.tone : '') + '">' +
+        '<img class="dashboard-stat__art" src="' + u.esc(i.art) + '?v=2.5.0" alt="">' +
+        '<span class="dashboard-stat__v">' + u.esc(String(i.v)) + (i.d ? '<span class="dashboard-stat__u">' + u.esc(i.d) + '</span>' : '') + '</span>' +
+        '<span class="dashboard-stat__k">' + u.esc(i.k) + '</span>' +
         '</div>';
     }).join('') + '</section>';
   }
@@ -201,23 +198,6 @@
       '</section>';
   }
 
-  function reminderCard() {
-    var next = G.reminders.nextReminder();
-    var on = G.store.hasConsent('push');
-    return '<section class="dashboard-reminder card">' +
-      '<div class="card__head dashboard-card__head">' + u.icon('reminders', 18) + '<h3>Nächste Erinnerung</h3></div>' +
-      (next
-        ? '<div class="list__row" style="padding-top:0">' +
-        '<div class="list__ic">' + u.icon('clock', 18) + '</div>' +
-        '<div class="list__main"><b>' + u.esc(next.title) + '</b><span>' + u.esc(next.when) + '</span></div>' +
-        '</div>'
-        : '<p class="small muted">Kein offener Termin in den nächsten Tagen.</p>') +
-      '<p class="tiny ' + (on ? 'neon' : 'dim') + '" style="margin-top:10px">' +
-      (on ? 'Benachrichtigungen sind aktiv.' : 'Benachrichtigungen sind ausgeschaltet.') + '</p>' +
-      '<button class="btn btn--sm btn--block" style="margin-top:12px" data-go="reminders">Erinnerungen verwalten</button>' +
-      '</section>';
-  }
-
   function recordsCard() {
     var s = G.store.state;
     var ids = Object.keys(s.records)
@@ -254,7 +234,7 @@
         '<span class="spacer"></span><span class="pill pill--muted dashboard-week__count">' + weekCount() + '</span></div>' +
         weekStrip() + '</section>' +
         quickStats() +
-        levelCard() + coachCard() + reminderCard() + recordsCard() +
+        levelCard() + coachCard() + recordsCard() +
         '</div>';
     },
     mount: function (host) {

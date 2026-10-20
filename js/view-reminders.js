@@ -64,6 +64,24 @@
     }).join('') + '</div>';
   }
 
+  /** „Nächste Erinnerung" — früher auf dem Dashboard, jetzt hier unter
+      Einstellungen → Erinnerungen (20.10.2026). */
+  function nextCard() {
+    var next = G.reminders.nextReminder();
+    var on = G.store.hasConsent('push');
+    return '<section class="dashboard-reminder card">' +
+      '<div class="card__head dashboard-card__head">' + u.icon('reminders', 18) + '<h3>Nächste Erinnerung</h3></div>' +
+      (next
+        ? '<div class="list__row" style="padding-top:0">' +
+        '<div class="list__ic">' + u.icon('clock', 18) + '</div>' +
+        '<div class="list__main"><b>' + u.esc(next.title) + '</b><span>' + u.esc(next.when) + '</span></div>' +
+        '</div>'
+        : '<p class="small muted">Kein offener Termin in den nächsten Tagen.</p>') +
+      '<p class="tiny ' + (on ? 'neon' : 'dim') + '" style="margin-top:10px">' +
+      (on ? 'Benachrichtigungen sind aktiv.' : 'Benachrichtigungen sind ausgeschaltet.') + '</p>' +
+      '</section>';
+  }
+
   G.views.reminders = {
     title: 'Erinnerungen',
     sub: function () {
@@ -94,6 +112,8 @@
           '<button class="btn btn--ghost" data-act="off">Abschalten</button>'
           : '<button class="btn btn--primary" data-act="on">Erinnerungen erlauben</button>') +
         '</div></div></div>' +
+
+        nextCard() +
 
         iosInstallHint() + permissionBox() +
 
