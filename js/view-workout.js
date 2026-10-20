@@ -285,24 +285,6 @@
       (show ? '<button class="btn btn--primary btn--lg btn--glass-green" data-act="start-plan">' + u.icon('play', 16) + ' Training starten</button>' : '') +
       '<button class="btn btn--lg btn--free" data-act="open-free">' + u.icon('plus', 16) + ' Freies Training</button>' +
       '</div>' + repeatBtn +
-      '<div class="workout-preview__rest">' +
-      '<label class="switch workout-preview__switch">' +
-      '<input type="checkbox" id="restEnablePreset"' + (s.settings.restTimer !== false ? ' checked' : '') + '>' +
-      '<span class="switch__track"></span>' +
-      '<span class="switch__label"><b>Pause zwischen Sätzen</b>' +
-      '<span>Gilt für die nächste gestartete Einheit</span></span>' +
-      '</label>' +
-      '<div class="input-suffix workout-preview__rest-value">' +
-      '<input class="input" type="number" id="restSecondsPreset" min="15" max="500" step="5" ' +
-      'value="' + (s.settings.restSeconds || 90) + '"' + (s.settings.restTimer === false ? ' disabled' : '') + '>' +
-      '<span>s</span>' +
-      '</div></div>' +
-      '<label class="switch workout-rest-sound">' +
-      '<input type="checkbox" id="restSoundPreset"' + (G.reminders.restSoundOn() ? ' checked' : '') + '>' +
-      '<span class="switch__track"></span>' +
-      '<span class="switch__label"><b>Ton am Ende der Pause</b>' +
-      '<span>Signalton, wenn die Zeit abgelaufen ist</span></span>' +
-      '</label>' +
       '</div>' +
       '<div class="workout-preview__hero-art" aria-hidden="true">' +
       '<span class="workout-preview__art-glow"></span>' +
@@ -859,29 +841,6 @@
 
       u.on(host, 'click', '[data-act="open-free"]', function () {
         openQuickFree();
-      }, signal);
-
-      /* --- Satzpause vor dem Start: an/aus + Sekunden ---
-         Wirkt auf die globale Einstellung (s.settings), die buildSession()
-         als Startwert für die nächste Einheit verwendet. */
-      u.on(host, 'change', '#restEnablePreset', function (e, t) {
-        s.settings.restTimer = t.checked;
-        var secInput = host.querySelector('#restSecondsPreset');
-        if (secInput) secInput.disabled = !t.checked;
-        G.store.commit('settings');
-      }, signal);
-
-      u.on(host, 'change', '#restSecondsPreset', function (e, t) {
-        var v = u.clamp(u.num(t.value, s.settings.restSeconds || 90), 15, 500);
-        t.value = v;
-        s.settings.restSeconds = v;
-        G.store.commit('settings');
-      }, signal);
-
-      u.on(host, 'change', '#restSoundPreset', function (e, t) {
-        s.settings.restSound = t.checked;
-        G.store.commit('settings');
-        if (t.checked) G.reminders.playAlarm(true);
       }, signal);
 
       u.on(host, 'click', '[data-ex]', function (e, t) {
