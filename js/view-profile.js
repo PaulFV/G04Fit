@@ -39,6 +39,32 @@
   }
 
   /* ------------------------------------------------------------
+     Einklappbare Karten (20.10.2026): Kopf zeigt nur das Wichtigste,
+     Antippen klappt die Details auf. Zustand bleibt beim Neuzeichnen
+     der Ansicht erhalten (nur für die laufende Sitzung).
+     ------------------------------------------------------------ */
+  var FOLD = { personal: false, weight: false, app: false };
+  function foldHead(key, icon, title, summary, extra) {
+    return '<button type="button" class="card__head fold__head" data-fold="' + key + '" aria-expanded="' + !!FOLD[key] + '">' +
+      u.icon(icon, 18) +
+      '<span class="fold__title"><h3>' + u.esc(title) + '</h3>' +
+      (summary ? '<span class="fold__sum">' + summary + '</span>' : '') + '</span>' +
+      '<span class="spacer"></span>' + (extra || '') +
+      '<span class="fold__chev">' + u.icon('chevron', 18) + '</span></button>';
+  }
+  function foldOpen(key) { return FOLD[key] ? ' is-open' : ''; }
+
+  function personalSum(p) {
+    var e = EXPERIENCE.filter(function (x) { return x.k === p.experience; })[0];
+    var goals = GOALS.filter(function (g) { return (p.goals || []).indexOf(g.k) >= 0; }).map(function (g) { return g.n; });
+    var bits = [];
+    if (e) bits.push('<b>' + u.esc(e.n) + '</b>');
+    if (goals.length) bits.push(u.esc(goals.join(', ')));
+    if (!bits.length) bits.push('Name, Alter, Größe, Erfahrung, Ziele');
+    return bits.join(' · ');
+  }
+
+  /* ------------------------------------------------------------
      Gewichtsverlauf
      Eigener Verlauf über der Zeit statt eines einzelnen Werts —
      gehört zur selben Einwilligung wie das übrige Profil.
@@ -49,12 +75,13 @@
       .sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
     var pts = log.map(function (e) { return { x: u.fmtDateShort(e.date), y: e.weight }; });
 
-    var deltaText = '';
+    var deltaText = '', delta4 = null;
     if (log.length >= 2) {
       var cutoff = u.addDays(u.today(), -28);
       var inRange = log.filter(function (e) { return e.date >= cutoff; });
       if (inRange.length >= 2) {
         var delta = inRange[inRange.length - 1].weight - inRange[0].weight;
+        delta4 = delta;
         deltaText = '<p class="tiny dim center" style="margin-top:10px">Veränderung letzte 4 Wochen: ' +
           '<span style="color:' + (delta <= 0 ? 'var(--neon)' : 'var(--tx-2)') + '">' +
           (delta > 0 ? '+' : '') + u.fmt(delta, 1) + ' kg</span></p>';
@@ -63,10 +90,16 @@
 
     var recent = log.slice(-6).reverse();
 
-    return '<div class="card">' +
-      '<div class="card__head">' + u.icon('progress', 18) + '<h3>Gewichtsverlauf</h3>' +
-      '<span class="spacer"></span><span class="pill pill--muted">' +
-      log.length + (log.length === 1 ? ' Eintrag' : ' Einträge') + '</span></div>' +
+    var last = log.length ? log[log.length - 1] : null;
+    var wSum = last
+      ? '<b>' + u.fmt(last.weight) + ' kg</b> · ' + u.esc(u.relDay(last.date)) +
+        (delta4 != null ? ' · <span style="color:' + (delta4 <= 0 ? 'var(--neon)' : 'var(--tx-2)') + '">' +
+          (delta4 > 0 ? '+' : '') + u.fmt(delta4, 1) + ' kg / 4 Wo.</span>' : '')
+      : 'Noch kein Eintrag';
+
+    return '<div class="card fold' + foldOpen('weight') + '">' +
+      foldHead('weight', 'progress', 'Gewichtsverlauf', wSum) +
+      '<div class="fold__body">' +
 
       (log.length >= 2
         ? G.charts.line(pts.slice(-24), { height: 170 }) + deltaText
@@ -95,7 +128,7 @@
 
       '<p class="tiny dim" style="margin-top:14px">Gespeichert wird der Verlauf mit derselben Einwilligung ' +
       'wie das übrige Profil. Das aktuelle Gewicht oben übernimmt automatisch den jeweils neuesten Eintrag.</p>' +
-      '</div>';
+      '</div></div>';
   }
 
   /* ------------------------------------------------------------
@@ -345,12 +378,12 @@
         '</div></div></div></div>' +
 
         /* Persönliche Daten */
-        '<div class="card">' +
-        '<div class="card__head">' + u.icon('profile', 18) + '<h3>Persönliche Angaben</h3>' +
-        '<span class="spacer"></span>' +
-        '<span class="consent-state ' + (G.store.hasConsent('profile') ? 'on' : 'off') + '">' +
-        u.icon(G.store.hasConsent('profile') ? 'check' : 'lock', 13) +
-        (G.store.hasConsent('profile') ? 'wird gespeichert' : 'nur temporär') + '</span></div>' +
+        '<div class="card fold' + foldOpen('personal') + '">' +
+        foldHead('personal', 'profile', 'Persönliche Angaben', personalSum(p),
+          '<span class="consent-state fold__state ' + (G.store.hasConsent('profile') ? 'on' : 'off') + '" title="' +
+          (G.store.hasConsent('profile') ? 'wird gespeichert' : 'nur temporär') + '">' +
+          u.icon(G.store.hasConsent('profile') ? 'check' : 'lock', 13) + '</span>') +
+        '<div class="fold__body">' +
 
         '<div class="grid grid--2" style="--sp:14px">' +
         field('Name oder Spitzname',
@@ -393,7 +426,7 @@
 
         '<div class="btn-row" style="margin-top:20px">' +
         '<button class="btn btn--primary" data-act="save">' + u.icon('check', 17) + ' Angaben speichern</button>' +
-        '</div></div>' +
+        '</div></div></div>' +
 
         weightLogCard() +
         avatarCard() +
@@ -401,8 +434,11 @@
         startWeightsCard() +
 
         /* Einstellungen */
-        '<div class="card">' +
-        '<div class="card__head">' + u.icon('refresh', 18) + '<h3>App-Einstellungen</h3></div>' +
+        '<div class="card fold' + foldOpen('app') + '">' +
+        foldHead('app', 'refresh', 'App-Einstellungen',
+          (G.i18n.locale() === 'en' ? 'English' : 'Deutsch') + ' · ' + (s.settings.theme === 'light' ? 'Hell' : 'Dunkel') + ' · ' +
+          (s.settings.restTimer !== false ? 'Pause ' + (s.settings.restSeconds || 90) + ' s' : 'Pause aus')) +
+        '<div class="fold__body">' +
         '<div class="field" style="margin:10px 13px 14px"><label>Sprache / Language</label>' +
         '<select class="select" id="languageSelect">' +
         '<option value="en"' + (G.i18n.locale() === 'en' ? ' selected' : '') + '>English</option>' +
@@ -429,7 +465,7 @@
         '<option value="chime"' + (s.settings.alarmSound === 'chime' ? ' selected' : '') + '>Glockenspiel</option>' +
         '</select><button class="btn btn--sm" data-act="test-alarm">Anhören</button></div>' +
         '<span class="field__hint">Der Ton wird abgespielt, wenn eine Satzpause endet.</span></div>' +
-        '</div>' +
+        '</div></div>' +
 
 
         '<div class="note note--warn">' + u.icon('warn', 18) +
@@ -440,6 +476,15 @@
     },
     mount: function (host) {
       var s = G.store.state;
+
+      /* Karten auf- und zuklappen, ohne neu zu zeichnen */
+      u.on(host, 'click', '[data-fold]', function (e, t) {
+        var key = t.getAttribute('data-fold');
+        FOLD[key] = !FOLD[key];
+        var card = t.closest('.fold');
+        if (card) card.classList.toggle('is-open', FOLD[key]);
+        t.setAttribute('aria-expanded', String(FOLD[key]));
+      });
 
       function readFields() {
         var g = function (id) { var e = host.querySelector('#' + id); return e ? e.value : ''; };
