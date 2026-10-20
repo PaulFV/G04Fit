@@ -264,3 +264,5 @@
   .dashboard-hero__greeting{align-self:end}
   .dashboard-hero__copy > .row{align-self:start}
 }
+/* Ruhetag: ein einzelner Hauptknopf über die volle Breite */
+.dashboard-hero__actions .dashboard-hero__main{flex:1 1 100%;max-width:100%}
