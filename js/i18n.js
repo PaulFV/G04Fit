@@ -676,6 +676,7 @@
     'Übungen selbst auswählen …': 'Choose exercises yourself …', 'Arme': 'Arms', 'Ganzkörper': 'Full body',
     'Bizeps + Trizeps': 'Biceps + triceps', 'je 1 Übung aus ': '1 exercise each from ', ' Gruppen': ' groups', 'ca. ': 'approx. ',
     'Plan und freies Training': 'Plan and free workout', 'Übungen mit Ausführung und Muskelkarte': 'Exercises with technique and muscle map',
-    ' XP · noch ': ' XP · ', ' XP bis Level ': ' XP to level '
+    ' XP · noch ': ' XP · ', ' XP bis Level ': ' XP to level ',
+    'Kurzhantel': 'Dumbbell', 'Sonstiges': 'Other'
   });
 })(G04Fit);

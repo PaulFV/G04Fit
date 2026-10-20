@@ -38,15 +38,55 @@
     return 'neutral';
   }
 
-  function matches(ex) {
+  /* Geräte-Filter: Die Übungsdaten nennen über 20 Gerätekombinationen
+     („Kurzhantel“, „Kurzhanteln + Bank“, „Kabelzug + Bank“ …). Zum Filtern
+     werden sie zu sechs Gruppen zusammengefasst, sonst findet z. B.
+     „Kurzhantel“ die Übungen mit „Kurzhanteln“ nicht. */
+  var EQUIP_ORDER = ['Langhantel', 'Kurzhantel', 'Kabelzug', 'Maschine', 'Körpergewicht', 'Sonstiges'];
+  function equipCat(name) {
+    name = name || '';
+    if (/Kabel/i.test(name)) return 'Kabelzug';
+    if (/Maschine|Multipresse/i.test(name)) return 'Maschine';
+    if (/Langhantel|SZ-Stange|Scottbank/i.test(name)) return 'Langhantel';
+    if (/Kurzhantel/i.test(name)) return 'Kurzhantel';
+    if (/Körpergewicht|Klimmzug|Barren|Dip|^Bank$/i.test(name)) return 'Körpergewicht';
+    return 'Sonstiges';
+  }
+
+  function norm(t) {
+    return String(t || '').toLowerCase()
+      .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss');
+  }
+
+  /** Muskelgruppe + Gerät; ohne Suchbegriff */
+  function matchesBase(ex, ignoreEquip) {
     if (filter.muscle !== 'all' && ex.muscle !== filter.muscle) return false;
-    if (filter.equip !== 'all' && ex.equip !== filter.equip) return false;
+    if (!ignoreEquip && filter.equip !== 'all' && equipCat(ex.equip) !== filter.equip) return false;
+    return true;
+  }
+
+  function matches(ex) {
+    if (!matchesBase(ex)) return false;
     if (filter.q) {
-      var q = filter.q.toLowerCase();
-      var hay = (ex.name + ' ' + ex.equip + ' ' + G.MUSCLES[ex.muscle].name).toLowerCase();
-      if (hay.indexOf(q) < 0) return false;
+      // Jedes Suchwort muss vorkommen („bank brust“), Umlaute egal
+      var hay = norm(ex.name + ' ' + ex.equip + ' ' + equipCat(ex.equip) + ' ' + G.MUSCLES[ex.muscle].name +
+        (ex.sec || []).map(function (m) { return ' ' + G.MUSCLES[m].name; }).join(''));
+      var words = norm(filter.q).split(/\s+/).filter(Boolean);
+      for (var i = 0; i < words.length; i++) if (hay.indexOf(words[i]) < 0) return false;
     }
     return true;
+  }
+
+  /** Trefferzahl + Karten — wird beim Tippen ohne Neuaufbau der Seite
+      ersetzt, damit Eingabefeld und Bildschirmtastatur offen bleiben. */
+  function resultsHtml() {
+    var list = G.EXERCISES.filter(matches);
+    return '<div class="row ex-results"><span class="small muted"><b>' + list.length + '</b> Übungen</span><span class="spacer"></span>' +
+      '<span class="tiny dim ex-results__hint">Tippen für Ausführung, Muskelkarte und Technik</span></div>' +
+      (list.length
+        ? '<div class="grid grid--auto">' + list.map(card).join('') + '</div>'
+        : '<div class="empty">' + u.icon('exercises', 40) + '<b>Nichts gefunden</b>' +
+        '<p>Ändere Suchbegriff oder Filter.</p></div>');
   }
 
   function card(ex) {
@@ -235,8 +275,13 @@
     title: 'Übungen',
     sub: function () { return G.EXERCISES.length + ' Übungen · 6 Muskelgruppen'; },
     render: function () {
-      var equips = ['all'].concat(Object.keys(u.groupBy(G.EXERCISES, function (e) { return e.equip; })).sort());
-      var list = G.EXERCISES.filter(matches);
+      // Nur Gerätegruppen anbieten, die es in der gewählten Muskelgruppe gibt
+      var counts = {};
+      G.EXERCISES.forEach(function (e) {
+        if (matchesBase(e, true)) counts[equipCat(e.equip)] = (counts[equipCat(e.equip)] || 0) + 1;
+      });
+      if (filter.equip !== 'all' && !counts[filter.equip]) filter.equip = 'all';
+      var equips = ['all'].concat(EQUIP_ORDER.filter(function (c) { return counts[c]; }));
       var activeFilters = (filter.muscle !== 'all' ? 1 : 0) + (filter.equip !== 'all' ? 1 : 0);
 
       return '<div class="view stack">' +
@@ -256,29 +301,23 @@
         }).join('') + '</div>' +
         '<div class="chips">' + equips.map(function (e) {
           return '<button class="chip' + (filter.equip === e ? ' is-on' : '') + '" data-tone="' + equipTone(e) + '" data-eq="' + u.esc(e) + '">' +
-            u.icon(equipIcon(e), 15) + '<span>' + (e === 'all' ? 'Alle Geräte' : u.esc(e)) + '</span></button>';
+            u.icon(equipIcon(e), 15) + '<span>' + (e === 'all' ? 'Alle Geräte' : u.esc(e) + ' <small>' + counts[e] + '</small>') + '</span></button>';
         }).join('') + '</div>' +
         '</div></div>' +
 
-        '<div class="row ex-results"><span class="small muted"><b>' + list.length + '</b> Übungen</span><span class="spacer"></span>' +
-        '<span class="tiny dim ex-results__hint">Tippen für Ausführung, Muskelkarte und Technik</span></div>' +
-
-        (list.length
-          ? '<div class="grid grid--auto">' + list.map(card).join('') + '</div>'
-          : '<div class="empty">' + u.icon('exercises', 40) + '<b>Nichts gefunden</b>' +
-          '<p>Ändere Suchbegriff oder Filter.</p></div>') +
-
+        '<div id="exResults">' + resultsHtml() + '</div>' +
         '</div>';
     },
     mount: function (host) {
       var search = host.querySelector('#exSearch');
       if (search) search.addEventListener('input', u.debounce(function () {
         filter.q = search.value.trim();
-        G.app.rerender(function () {
-          var s2 = u.$('#exSearch');
-          if (s2) { s2.focus(); s2.setSelectionRange(s2.value.length, s2.value.length); }
-        });
-      }, 260));
+        var box = host.querySelector('#exResults');
+        if (box) {
+          box.innerHTML = resultsHtml();
+          if (G.i18n) G.i18n.apply(box);
+        }
+      }, 200));
 
       u.on(host, 'click', '[data-m]', function (e, t) {
         filter.muscle = t.getAttribute('data-m');
