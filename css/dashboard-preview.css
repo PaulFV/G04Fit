@@ -297,3 +297,17 @@
 @media (max-width:380px){
   .dashboard-hero__actions .btn{font-size:13px}
 }
+
+/* Kennzahlen kompakt in einer Reihe (20.10.2026) */
+.dashboard-stats.dashboard-stats--row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.dashboard-stats--row .dashboard-stat{min-height:0;padding:10px 2px 9px;gap:2px;border-radius:16px;flex-direction:column;justify-content:flex-start;text-align:center}
+.dashboard-stats--row .dashboard-stat__art{width:28px;height:28px;flex:none;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35));margin-bottom:2px}
+.dashboard-stats--row .dashboard-stat__v{font-size:20px;line-height:1.1;letter-spacing:-.03em;white-space:nowrap}
+.dashboard-stats--row .dashboard-stat__u{font-size:11px;margin-left:2px}
+.dashboard-stats--row .dashboard-stat__k{font-size:8.5px;line-height:1.2;letter-spacing:.02em;white-space:normal;color:var(--tx-2)}
+@media (min-width:700px){
+  .dashboard-stats--row .dashboard-stat{padding:12px 8px}
+  .dashboard-stats--row .dashboard-stat__art{width:34px;height:34px}
+  .dashboard-stats--row .dashboard-stat__v{font-size:24px}
+  .dashboard-stats--row .dashboard-stat__k{font-size:10px}
+}
