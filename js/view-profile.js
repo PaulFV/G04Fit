@@ -305,6 +305,16 @@
      View
      ------------------------------------------------------------ */
   G.views.profile = {
+    /* Feedback & Ideen ist ein eigener Reiter in „Einstellungen“ */
+    feedback: {
+      render: function () { return '<div class="view stack">' + feedbackCard() + '</div>'; },
+      mount: function (host) {
+        u.on(host, 'submit', '#feedbackForm', function (e, form) {
+          e.preventDefault();
+          sendFeedback(form);
+        });
+      }
+    },
     title: 'Profil',
     sub: function () {
       var s = G.store.state;
@@ -420,7 +430,6 @@
         '<span class="field__hint">Der Ton wird abgespielt, wenn eine Satzpause endet.</span></div>' +
         '</div>' +
 
-        feedbackCard() +
 
         '<div class="note note--warn">' + u.icon('warn', 18) +
         '<div>G04Fit ersetzt keine ärztliche oder physiotherapeutische Beratung. ' +

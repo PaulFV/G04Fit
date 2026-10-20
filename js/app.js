@@ -10,10 +10,7 @@
     { k: 'dashboard', n: 'Dashboard', ic: 'dashboard', tab: true },
     { k: 'workout', n: 'Training', ic: 'workout', tab: true },
     { k: 'progress', n: 'Fortschritt', ic: 'progress', tab: true },
-    { k: 'profile', n: 'Profil', ic: 'profile' },
-    { k: 'coach', n: 'G04Fit Coach', ic: 'coach' },
-    { k: 'reminders', n: 'Erinnerungen', ic: 'reminders' },
-    { k: 'privacy', n: 'Datenschutz', ic: 'privacy' }
+    { k: 'settings', n: 'Einstellungen', ic: 'settings', tab: true }
   ];
 
   var current = 'dashboard';
@@ -65,7 +62,7 @@
     u.$('#nav').innerHTML = NAV.map(function (v) {
       var badge = '';
       if (v.k === 'workout' && s.session) badge = '<span class="nav__badge">läuft</span>';
-      if (v.k === 'coach' && G.coach.allowed()) {
+      if ((v.k === 'coach' || v.k === 'settings') && G.coach.allowed()) {
         var n = G.coach.insights().filter(function (i) { return i.kind === 'warn'; }).length;
         if (n) badge = '<span class="nav__badge">' + n + '</span>';
       }
@@ -73,14 +70,16 @@
         u.icon(v.ic, 19) + '<span>' + u.esc(v.n) + '</span>' + badge + '</button>';
     }).join('');
 
-    var tabKeys = ['dashboard', 'workout', 'progress'];
+    var tabKeys = ['dashboard', 'workout', 'progress', 'settings'];
     var tabNav = tabKeys.map(function (key) {
       for (var i = 0; i < NAV.length; i++) if (NAV[i].k === key) return NAV[i];
       return null;
     }).filter(function (v) { return v && v.tab; });
     u.$('#tabbar').innerHTML = tabNav.map(function (v) {
       return '<button class="tabbar__item" data-nav="' + v.k + '">' +
-        '<img class="tabbar__art" src="assets/nav/nav-' + v.k + '.png?v=2.4.1" alt="" aria-hidden="true">' +
+        (v.k === 'settings'
+          ? '<span class="tabbar__art tabbar__art--icon">' + u.icon('settings', 28) + '</span>'
+          : '<img class="tabbar__art" src="assets/nav/nav-' + v.k + '.png?v=2.4.1" alt="" aria-hidden="true">') +
         '<span>' + u.esc(v.n) + '</span></button>';
     }).join('');
 
@@ -133,6 +132,8 @@
     }
 
     u.$('#viewTitle').textContent = typeof view.title === 'function' ? view.title() : view.title;
+    // Lange Titel („Einstellungen“) auf dem Handy etwas kleiner statt abgeschnitten
+    u.$('#viewTitle').classList.toggle('is-long', (u.$('#viewTitle').textContent || '').length > 11);
     var sub = typeof view.sub === 'function' ? view.sub() : (view.sub || '');
     u.$('#viewSub').textContent = sub;
     var title = typeof view.title === 'function' ? view.title() : view.title;
@@ -176,7 +177,12 @@
      #exercises) landen automatisch im passenden Reiter. */
   var ALIAS = {
     journey: { to: 'progress', tab: 'journey' },
-    exercises: { to: 'workout', tab: 'uebungen' }
+    exercises: { to: 'workout', tab: 'uebungen' },
+    profile: { to: 'settings', tab: 'profile' },
+    coach: { to: 'settings', tab: 'coach' },
+    reminders: { to: 'settings', tab: 'reminders' },
+    privacy: { to: 'settings', tab: 'privacy' },
+    feedback: { to: 'settings', tab: 'feedback' }
   };
   function resolve(key) {
     var a = ALIAS[key];
