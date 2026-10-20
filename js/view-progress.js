@@ -161,7 +161,7 @@
       { k: 'Rekorde', v: Object.keys(s.records).length, cls: 'stat--cyan', art: 'assets/progress/stat-records.png' }
     ];
 
-    return '<div class="progress-overview">' +
+    return '<div class="progress-overview">' + levelCard() +
       '<div class="progress-stats">' +
       cards.map(function (i) {
         return '<article class="card progress-stat ' + i.cls + '">' +
@@ -414,10 +414,30 @@
      ------------------------------------------------------------ */
   var TABS = [
     { k: 'ueberblick', n: 'Überblick' },
-    { k: 'kraft', n: 'Kraftentwicklung' },
+    { k: 'journey', n: 'Journey' },
+    { k: 'kraft', n: 'Kraft' },
     { k: 'rekorde', n: 'Rekorde' },
     { k: 'historie', n: 'Historie' }
   ];
+
+  function tabBar(list) {
+    return '<div class="tabs progress-tabs progress-tabs--' + list.length + '" id="progTabs" role="tablist">' + list.map(function (t) {
+      return '<button class="tabs__b progress-tabs__button' + (tab === t.k ? ' is-on' : '') + '" data-t="' + t.k + '" role="tab" aria-selected="' + (tab === t.k ? 'true' : 'false') + '">' +
+        u.esc(t.n) + '</button>';
+    }).join('') + '</div>';
+  }
+
+  /** Level-Karte oben im Überblick, führt in den Reiter Journey */
+  function levelCard() {
+    var s = G.store.state, li = G.store.levelInfo();
+    return '<button class="card progress-level" type="button" data-t="journey">' +
+      '<span class="progress-level__ring">' + G.charts.ring(li.pct, { size: 64, stroke: 6, value: li.level, label: 'Level' }) + '</span>' +
+      '<span class="progress-level__copy"><span class="progress-level__eyebrow">Journey · ' + u.esc(li.title) + '</span>' +
+      '<b>' + li.region.icon + ' ' + u.esc(li.region.name) + '</b>' +
+      '<span class="progress-level__bar"><span style="width:' + Math.round(li.pct * 100) + '%"></span></span>' +
+      '<span class="progress-level__meta">' + s.journey.xp + ' XP · noch ' + (li.need - li.into) + ' XP bis Level ' + (li.level + 1) + '</span></span>' +
+      '<span class="progress-level__go"><span>Weltkarte</span>' + u.icon('chevron', 18) + '</span></button>';
+  }
 
   G.views.progress = {
     title: 'Fortschritt',
@@ -427,22 +447,27 @@
       return s.journey.completed + ' Einheiten · Serie ' + s.journey.streak +
         (s.journey.streak === 1 ? ' Woche' : ' Wochen');
     },
+    setTab: function (t) { tab = t; },
     render: function () {
-      if (!G.store.hasConsent('history')) return lockedView();
+      // Ohne Einwilligung „Trainingshistorie“ gibt es nur Überblick (Sperr-
+      // hinweis) und Journey — Level und XP brauchen keine Historie.
+      if (!G.store.hasConsent('history')) {
+        if (tab !== 'journey') tab = 'ueberblick';
+        return '<div class="view stack progress-view">' + tabBar(TABS.filter(function (t) {
+          return t.k === 'ueberblick' || t.k === 'journey';
+        })) + (tab === 'journey' ? G.views.journey.render() : lockedView()) + '</div>';
+      }
 
-      var body = tab === 'kraft' ? tabStrength()
+      var body = tab === 'journey' ? G.views.journey.render()
+        : tab === 'kraft' ? tabStrength()
         : tab === 'rekorde' ? tabRecords()
           : tab === 'historie' ? tabHistory()
             : tabOverview();
 
-      return '<div class="view stack progress-view">' +
-        '<div class="tabs progress-tabs" id="progTabs" role="tablist">' + TABS.map(function (t) {
-          return '<button class="tabs__b progress-tabs__button' + (tab === t.k ? ' is-on' : '') + '" data-t="' + t.k + '" role="tab" aria-selected="' + (tab === t.k ? 'true' : 'false') + '">' +
-            u.esc(t.n) + '</button>';
-        }).join('') + '</div>' +
-        body + '</div>';
+      return '<div class="view stack progress-view">' + tabBar(TABS) + body + '</div>';
     },
     mount: function (host) {
+      if (tab === 'journey' && G.views.journey && G.views.journey.mount) G.views.journey.mount(host);
       u.on(host, 'click', '[data-t]', function (e, t) {
         tab = t.getAttribute('data-t');
         G.app.rerender();

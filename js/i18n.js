@@ -674,6 +674,8 @@
     'Heute steht nichts im Plan. Lust auf Training? Starte ein freies Training.': 'Nothing is planned for today. Feel like training? Start a free workout.',
     'Was trainierst du heute? Ein Tipp – der Coach stellt passende Übungen zusammen.': 'What are you training today? One tap – the Coach picks matching exercises.',
     'Übungen selbst auswählen …': 'Choose exercises yourself …', 'Arme': 'Arms', 'Ganzkörper': 'Full body',
-    'Bizeps + Trizeps': 'Biceps + triceps', 'je 1 Übung aus ': '1 exercise each from ', ' Gruppen': ' groups', 'ca. ': 'approx. '
+    'Bizeps + Trizeps': 'Biceps + triceps', 'je 1 Übung aus ': '1 exercise each from ', ' Gruppen': ' groups', 'ca. ': 'approx. ',
+    'Plan und freies Training': 'Plan and free workout', 'Übungen mit Ausführung und Muskelkarte': 'Exercises with technique and muscle map',
+    ' XP · noch ': ' XP · ', ' XP bis Level ': ' XP to level '
   });
 })(G04Fit);

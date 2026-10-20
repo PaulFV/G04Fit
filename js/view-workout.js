@@ -765,19 +765,32 @@
   /* ------------------------------------------------------------
      View
      ------------------------------------------------------------ */
+  /* Reiter „Training“ (Start, Wochenplan) und „Übungen“ (Bibliothek).
+     Die Reiter sind nur sichtbar, solange keine Einheit läuft. */
+  var wtab = 'plan';
+  function subTabs() {
+    return '<div class="tabs progress-tabs progress-tabs--2 workout-tabs" role="tablist">' +
+      [['plan', 'Training'], ['uebungen', 'Übungen']].map(function (t) {
+        return '<button class="tabs__b progress-tabs__button' + (wtab === t[0] ? ' is-on' : '') + '" data-wt="' + t[0] + '" role="tab" aria-selected="' + (wtab === t[0]) + '">' + t[1] + '</button>';
+      }).join('') + '</div>';
+  }
+
   G.views.workout = {
-    title: 'Workout',
+    title: 'Training',
     sub: function () {
       var s = G.store.state;
-      return s.session ? 'Einheit läuft · ' + s.session.title : 'Plan und Übungsauswahl';
+      return s.session ? 'Einheit läuft · ' + s.session.title : (wtab === 'uebungen' ? 'Übungen mit Ausführung und Muskelkarte' : 'Plan und freies Training');
     },
+    setTab: function (t) { wtab = t === 'uebungen' ? 'uebungen' : 'plan'; },
     render: function (params) {
       var s = G.store.state;
       if (s.session) return activeSession(s.session);
       if (params && params.free) {
+        wtab = 'plan';
         setTimeout(openQuickFree, 60);
       }
-      return planPreview();
+      return '<div class="view stack workout-tabs-view">' + subTabs() +
+        (wtab === 'uebungen' ? G.views.exercises.render(params) : planPreview()) + '</div>';
     },
     // Der Pausentimer gehört zur laufenden Einheit und läuft auch weiter,
     // wenn innerhalb von G04Fit eine andere Ansicht geöffnet wird.
@@ -792,6 +805,17 @@
       var signal = mountAbort.signal;
 
       showRestBox();
+
+      if (!s.session) {
+        u.on(host, 'click', '[data-wt]', function (e, t) {
+          wtab = t.getAttribute('data-wt');
+          G.app.rerender();
+        }, signal);
+        if (wtab === 'uebungen') {
+          if (G.views.exercises.mount) G.views.exercises.mount(host);
+          return;
+        }
+      }
 
       /* --- Start --- */
       u.on(host, 'click', '[data-act="start-plan"]', function () {

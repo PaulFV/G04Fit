@@ -8,9 +8,7 @@
   /* Die zehn Bereiche aus dem Konzept, Abschnitt 13 */
   var NAV = [
     { k: 'dashboard', n: 'Dashboard', ic: 'dashboard', tab: true },
-    { k: 'journey', n: 'Journey', ic: 'journey', tab: true },
-    { k: 'workout', n: 'Workout', ic: 'workout', tab: true },
-    { k: 'exercises', n: 'Übungen', ic: 'exercises', tab: true },
+    { k: 'workout', n: 'Training', ic: 'workout', tab: true },
     { k: 'progress', n: 'Fortschritt', ic: 'progress', tab: true },
     { k: 'profile', n: 'Profil', ic: 'profile' },
     { k: 'coach', n: 'G04Fit Coach', ic: 'coach' },
@@ -75,7 +73,7 @@
         u.icon(v.ic, 19) + '<span>' + u.esc(v.n) + '</span>' + badge + '</button>';
     }).join('');
 
-    var tabKeys = ['dashboard', 'workout', 'exercises', 'journey', 'progress'];
+    var tabKeys = ['dashboard', 'workout', 'progress'];
     var tabNav = tabKeys.map(function (key) {
       for (var i = 0; i < NAV.length; i++) if (NAV[i].k === key) return NAV[i];
       return null;
@@ -173,7 +171,23 @@
     if (afterFn) afterFn();
   }
 
+  /* Journey ist ein Reiter in „Fortschritt“, die Übungen ein Reiter in
+     „Training“ (20.10.2026). Alte Sprungziele (Links, #journey,
+     #exercises) landen automatisch im passenden Reiter. */
+  var ALIAS = {
+    journey: { to: 'progress', tab: 'journey' },
+    exercises: { to: 'workout', tab: 'uebungen' }
+  };
+  function resolve(key) {
+    var a = ALIAS[key];
+    if (!a) return key;
+    var v = G.views[a.to];
+    if (v && v.setTab) v.setTab(a.tab);
+    return a.to;
+  }
+
   function go(key, params) {
+    key = resolve(key);
     if (!G.views[key]) return;
     current = key;
     currentParams = params || null;
@@ -258,6 +272,7 @@
 
     window.addEventListener('hashchange', function () {
       var k = location.hash.replace('#', '');
+      if (k && ALIAS[k]) { go(k); return; }
       if (k && G.views[k] && k !== current) go(k);
     });
 
@@ -268,7 +283,7 @@
     }
 
     u.$('#app').hidden = false;
-    var start = location.hash.replace('#', '');
+    var start = resolve(location.hash.replace('#', ''));
     current = G.views[start] ? start : 'dashboard';
     render();
 
