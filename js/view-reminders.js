@@ -64,22 +64,83 @@
     }).join('') + '</div>';
   }
 
-  /** „Nächste Erinnerung" — früher auf dem Dashboard, jetzt hier unter
-      Einstellungen → Erinnerungen (20.10.2026). */
-  function nextCard() {
+  /* ------------------------------------------------------------
+     Kompakt als farbige Kacheln (20.10.2026) — Antippen öffnet ein Fenster
+     ------------------------------------------------------------ */
+  var ST = { open: null };
+  var TITLES = { next: 'Nächste Termine', time: 'Zeitpunkt & Tage', re: 'Wiedereinstieg', push: 'Benachrichtigungen' };
+
+  function tileItems(on, re, days) {
+    var s = G.store.state;
     var next = G.reminders.nextReminder();
-    var on = G.store.hasConsent('push');
-    return '<section class="dashboard-reminder card">' +
-      '<div class="card__head dashboard-card__head">' + u.icon('reminders', 18) + '<h3>Nächste Erinnerung</h3></div>' +
-      (next
-        ? '<div class="list__row" style="padding-top:0">' +
-        '<div class="list__ic">' + u.icon('clock', 18) + '</div>' +
-        '<div class="list__main"><b>' + u.esc(next.title) + '</b><span>' + u.esc(next.when) + '</span></div>' +
-        '</div>'
-        : '<p class="small muted">Kein offener Termin in den nächsten Tagen.</p>') +
-      '<p class="tiny ' + (on ? 'neon' : 'dim') + '" style="margin-top:10px">' +
-      (on ? 'Benachrichtigungen sind aktiv.' : 'Benachrichtigungen sind ausgeschaltet.') + '</p>' +
-      '</section>';
+    var order = [1, 2, 3, 4, 5, 6, 0], sel = s.profile.trainingDays || [];
+    var dn = order.filter(function (d) { return sel.indexOf(d) >= 0; }).map(function (d) { return u.DAYS[d]; });
+    var perm = G.reminders.permission();
+    var permTxt = !on ? '<span>Ausgeschaltet</span>' : perm === 'granted' ? '<b>Erlaubt</b> · <span>auch bei geschlossener App</span>'
+      : perm === 'denied' ? '<b>Blockiert</b> · <span>nur in der App</span>' : perm === 'unsupported' ? '<span>Nur in der App</span>' : '<b>Noch nicht erlaubt</b>';
+    return [
+      { k: 'next', color: 'green', icon: 'reminders', title: 'Nächste Termine',
+        sum: next ? '<b>' + u.esc(next.title) + '</b> · ' + u.esc(next.when) : '<span>Kein offener Termin</span>' },
+      { k: 'time', color: 'gold', icon: 'clock', title: 'Zeitpunkt & Tage',
+        sum: '<b>' + u.esc(s.profile.reminderTime || '18:00') + '</b>' + (dn.length ? ' · ' + u.esc(dn.join(' · ')) : '') },
+      { k: 're', color: 'orange', icon: 'refresh', title: 'Wiedereinstieg',
+        sum: (s.settings.reentry ? '<b>Eingeschaltet</b>' : '<span>Ausgeschaltet</span>') + ' · <span>' + (days == null ? 'noch kein Training'
+          : days === 0 ? 'heute trainiert' : 'letzte Einheit vor ' + days + ' Tagen') + '</span>' },
+      { k: 'push', color: 'cyan', icon: 'info', title: 'Benachrichtigungen', sum: permTxt }
+    ];
+  }
+
+  function parts() {
+    var s = G.store.state;
+    var re = G.coach.allowed() ? G.coach.reentry() : null;
+    var days = G.store.daysSinceLastWorkout();
+    return {
+      next: upcomingList(),
+      time: (
+        '<div class="field"><label>Uhrzeit der Erinnerung</label>' +
+        '<input class="input" id="remTime" type="time" value="' + u.esc(s.profile.reminderTime || '18:00') + '">' +
+        '<span class="field__hint">Gilt für alle Trainingstage. Der Motivationstext wechselt automatisch.</span></div>' +
+
+        '<div class="field" style="margin-top:16px"><label>Trainingstage</label>' +
+        '<div class="chips chips--days" style="margin-top:6px">' +
+        [1, 2, 3, 4, 5, 6, 0].map(function (d) {
+          return '<button class="chip' + ((s.profile.trainingDays || []).indexOf(d) >= 0 ? ' is-on' : '') +
+            '" data-day="' + d + '">' + u.DAYS[d] + '</button>';
+        }).join('') + '</div></div>' +
+
+        '<label class="switch" style="margin-top:16px">' +
+        '<input type="checkbox" id="remReentry"' + (s.settings.reentry ? ' checked' : '') + '>' +
+        '<span class="switch__track"></span>' +
+        '<span class="switch__label"><b>Wiedereinstiegsmodus</b>' +
+        '<span>Nach mehr als 10 Tagen ohne Training erinnert G04Fit gesondert und reduziert die Gewichte.</span></span></label>'
+      ),
+      re: (
+        (re
+          ? '<p class="small muted">' + u.esc(re.text) + '</p>' +
+          '<div class="row row--wrap" style="gap:8px;margin-top:12px">' +
+          '<span class="pill pill--neon">Gewichte auf ' + Math.round(re.factor * 100) + ' %</span>' +
+          '<span class="pill">Aufbau über ' + re.weeks + (re.weeks === 1 ? ' Woche' : ' Wochen') + '</span>' +
+          '</div>'
+          : '<p class="small muted">' +
+          (days == null
+            ? 'Sobald du die erste Einheit abgeschlossen hast, überwacht G04Fit deine Pausen.'
+            : days > 10
+              ? 'Der Wiedereinstiegsmodus greift, sobald der Coach die Auswertung übernehmen darf.'
+              : 'Deine Pausen sind im normalen Bereich. Es ist keine Anpassung nötig.') + '</p>')
+      ),
+      push: (iosInstallHint() + permissionBox() +
+      '<div class="note">' + u.icon('info', 18) +
+        '<div><b>Motivation auch bei geschlossener App</b><br>' +
+        'G04Fit meldet Uhrzeit und Trainingstage verschlüsselt beim Push-Dienst an. Auf dem iPhone muss ' +
+        'G04Fit dafür als Home-Bildschirm-App installiert und von dort geöffnet sein. Ohne Push-Unterstützung ' +
+        'bleibt die lokale Erinnerung innerhalb der geöffneten App aktiv.</div></div>') || ''
+    };
+  }
+
+  function openTile(key) {
+    var body = parts()[key];
+    if (!body) { ST.open = null; return; }
+    u.tileOpen(ST, key, TITLES[key], body, function (root) { mountRem(root); });
   }
 
   G.views.reminders = {
@@ -113,68 +174,18 @@
           : '<button class="btn btn--primary" data-act="on">Erinnerungen erlauben</button>') +
         '</div></div></div>' +
 
-        nextCard() +
-
-        iosInstallHint() + permissionBox() +
-
-        '<div class="grid grid--2">' +
-
-        '<div class="card">' +
-        '<div class="card__head">' + u.icon('clock', 18) + '<h3>Zeitpunkt</h3></div>' +
-        '<div class="field"><label>Uhrzeit der Erinnerung</label>' +
-        '<input class="input" id="remTime" type="time" value="' + u.esc(s.profile.reminderTime || '18:00') + '">' +
-        '<span class="field__hint">Gilt für alle Trainingstage. Der Motivationstext wechselt automatisch.</span></div>' +
-
-        '<div class="field" style="margin-top:16px"><label>Trainingstage</label>' +
-        '<div class="chips chips--days" style="margin-top:6px">' +
-        [1, 2, 3, 4, 5, 6, 0].map(function (d) {
-          return '<button class="chip' + ((s.profile.trainingDays || []).indexOf(d) >= 0 ? ' is-on' : '') +
-            '" data-day="' + d + '">' + u.DAYS[d] + '</button>';
-        }).join('') + '</div></div>' +
-
-        '<label class="switch" style="margin-top:16px">' +
-        '<input type="checkbox" id="remReentry"' + (s.settings.reentry ? ' checked' : '') + '>' +
-        '<span class="switch__track"></span>' +
-        '<span class="switch__label"><b>Wiedereinstiegsmodus</b>' +
-        '<span>Nach mehr als 10 Tagen ohne Training erinnert G04Fit gesondert und reduziert die Gewichte.</span></span></label>' +
-        '</div>' +
-
-        '<div class="card">' +
-        '<div class="card__head">' + u.icon('reminders', 18) + '<h3>Nächste Termine</h3></div>' +
-        upcomingList() +
-        '</div></div>' +
-
-        /* Wiedereinstieg-Status */
-        '<div class="card">' +
-        '<div class="card__head">' + u.icon('refresh', 18) + '<h3>Wiedereinstieg</h3>' +
-        '<span class="spacer"></span>' +
-        (days == null ? '<span class="pill pill--muted">noch kein Training</span>'
-          : '<span class="pill ' + (days > 10 ? 'pill--gold' : 'pill--neon') + '">' +
-          (days === 0 ? 'heute trainiert' : 'letzte Einheit vor ' + days + ' Tagen') + '</span>') +
-        '</div>' +
-        (re
-          ? '<p class="small muted">' + u.esc(re.text) + '</p>' +
-          '<div class="row row--wrap" style="gap:8px;margin-top:12px">' +
-          '<span class="pill pill--neon">Gewichte auf ' + Math.round(re.factor * 100) + ' %</span>' +
-          '<span class="pill">Aufbau über ' + re.weeks + (re.weeks === 1 ? ' Woche' : ' Wochen') + '</span>' +
-          '</div>'
-          : '<p class="small muted">' +
-          (days == null
-            ? 'Sobald du die erste Einheit abgeschlossen hast, überwacht G04Fit deine Pausen.'
-            : days > 10
-              ? 'Der Wiedereinstiegsmodus greift, sobald der Coach die Auswertung übernehmen darf.'
-              : 'Deine Pausen sind im normalen Bereich. Es ist keine Anpassung nötig.') + '</p>') +
-        '</div>' +
-
-      '<div class="note">' + u.icon('info', 18) +
-        '<div><b>Motivation auch bei geschlossener App</b><br>' +
-        'G04Fit meldet Uhrzeit und Trainingstage verschlüsselt beim Push-Dienst an. Auf dem iPhone muss ' +
-        'G04Fit dafür als Home-Bildschirm-App installiert und von dort geöffnet sein. Ohne Push-Unterstützung ' +
-        'bleibt die lokale Erinnerung innerhalb der geöffneten App aktiv.</div></div>' +
+        u.tileGrid(tileItems(on, re, days)) +
 
         '</div>';
     },
     mount: function (host) {
+      mountRem(host);
+      u.on(host, 'click', '[data-tile]', function (e, t) { openTile(t.getAttribute('data-tile')); });
+      if (ST.open) openTile(ST.open);
+    }
+  };
+
+  function mountRem(host) {
       var s = G.store.state;
 
       u.on(host, 'click', '[data-act="on"]', async function () {
@@ -237,6 +248,5 @@
         G.store.commit('settings');
         G.app.rerender();
       });
-    }
-  };
+  }
 })(G04Fit);

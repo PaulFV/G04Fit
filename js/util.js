@@ -349,6 +349,27 @@ G04Fit.VERSION = '2.1.0';
     if (G.i18n) G.i18n.apply($('#sheetBody'));
   }
 
+  /* ------------------------------------------------------------
+     Farbige Kacheln, die ein eigenes Fenster öffnen (20.10.2026)
+     items: [{ k, color, icon, title, sum, state }] — color: green,
+     cyan, violet, gold, orange, blue. st: { open: null } je Ansicht.
+     ------------------------------------------------------------ */
+  function tileGrid(items) {
+    return '<div class="set-tiles">' + items.map(function (x) {
+      return '<button type="button" class="set-tile card set-tile--' + (x.color || 'green') + '" data-tile="' + x.k + '">' +
+        '<span class="set-tile__top"><span class="set-tile__ic">' + icon(x.icon || 'info', 18) + '</span>' + (x.state || '') + '</span>' +
+        '<b class="set-tile__title' + (String(x.title).length > 16 ? ' set-tile__title--long' : '') + '">' + esc(x.title) + '</b>' +
+        '<span class="set-tile__sum">' + (x.sum || '') + '</span></button>';
+    }).join('') + '</div>';
+  }
+  function tileOpen(st, key, title, body, onMount) {
+    st.open = key;
+    openSheet(title, '<div class="set-sheet">' + body + '</div>', function (sb) {
+      var root = sb.querySelector('.set-sheet');
+      if (root && onMount) onMount(root);
+    }, function () { st.open = null; });
+  }
+
   function closeSheet(reason) {
     var onClose = reason === 'user' ? sheetOnClose : null;
     sheetOnClose = null;
@@ -410,6 +431,7 @@ G04Fit.VERSION = '2.1.0';
     download: download, copy: copy,
     icon: icon, ICONS: ICONS,
     toast: toast, openSheet: openSheet, closeSheet: closeSheet, confirmSheet: confirmSheet,
+    tileGrid: tileGrid, tileOpen: tileOpen,
     xpPop: xpPop, levelUpFx: levelUpFx
   };
 })(G04Fit);

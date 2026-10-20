@@ -76,6 +76,56 @@
     return '<span class="pill pill--muted">halten</span>';
   }
 
+  /* Inhalte der Fenster (früher alles untereinander auf der Seite) */
+  var ST = { open: null };
+  var TITLES = { re: 'Wiedereinstieg', rec: 'Empfehlungen je Übung', obs: 'Beobachtungen', perf: 'Leistungsprofil', how: 'So rechnet der Coach' };
+  function parts() {
+    var rows = suggestionRows(), re = G.coach.reentry(), metrics = G.coach.metrics(), ins = G.coach.insights();
+    return {
+      re: re ? '<p class="small muted">' + u.esc(re.text) + '</p>' +
+        '<div class="row row--wrap" style="gap:8px">' +
+        '<span class="pill pill--neon">Gewicht auf ' + Math.round(re.factor * 100) + ' %</span>' +
+        '<span class="pill">Aufbau über ' + re.weeks + (re.weeks === 1 ? ' Woche' : ' Wochen') + '</span>' +
+        (G.store.state.settings.reentry ? '<span class="pill pill--neon">automatisch aktiv</span>'
+          : '<span class="pill pill--muted">im Profil deaktiviert</span>') + '</div>' : '',
+      obs: '<div class="stack" style="--sp:10px">' + ins.map(insightCard).join('') + '</div>',
+      rec: rows.length
+        ? '<div class="list">' + rows.map(function (r) {
+          var ex = r.ex, g = r.s;
+          return '<div class="list__row list__row--click" data-ex="' + ex.id + '">' +
+            '<div class="list__ic list__ic--map">' + G.anim.muscleMap(ex.muscle, ex.sec, { view: 'auto' }) + '</div>' +
+            '<div class="list__main"><b>' + u.esc(ex.name) + '</b><span>' + u.esc(g.reason) + '</span></div>' +
+            '<div class="list__end" style="min-width:96px">' +
+            '<b class="mono small' + (g.kind === 'up' ? ' neon' : '') + '"' + (g.kind === 'down' ? ' style="color:var(--danger)"' : '') + '>' +
+            (ex.time ? u.fmtReps(g.reps, 's') : u.fmt(g.weight) + ' kg') + '</b>' +
+            '<br><span class="tiny dim">' + (ex.time ? 'Haltezeit' : u.fmtReps(g.reps) + ' × ' + g.sets) + '</span>' +
+            '<br>' + kindPill(g.kind) + '</div></div>';
+        }).join('') + '</div>'
+        : '<div class="empty">' + u.icon('coach', 40) + '<b>Noch keine Grundlage</b>' +
+          '<p>Absolviere eine Einheit, danach entstehen konkrete Vorschläge.</p></div>',
+      perf: '<div style="display:grid;place-items:center">' + G.charts.radar(metrics, { size: 250 }) + '</div>' +
+        '<div class="attrs">' + metrics.map(function (m) {
+          return '<div class="attr"><span class="muted">' + u.esc(m.label) + '</span>' +
+            '<span class="bar"><span class="bar__fill" style="width:' + Math.round(m.value * 100) + '%"></span></span>' +
+            '<span class="attr__v neon">' + Math.round(m.value * 100) + '</span></div>';
+        }).join('') + '</div>' +
+        '<div class="note note--warn">' + u.icon('warn', 17) +
+        '<div>Die Kennzahlen beschreiben nur dein Trainingsverhalten in G04Fit. ' +
+        '<b>Sie sind ausdrücklich keine medizinischen Werte.</b></div></div>',
+      how: '<p class="small muted">Erreichst du in allen Sätzen die obere Grenze des Wiederholungsbereichs, wird das Gewicht um den ' +
+        'kleinsten sinnvollen Schritt erhöht und der Bereich beginnt wieder unten. Bleibst du darunter oder ' +
+        'markierst die Sätze als schwer, hält der Coach das Gewicht oder reduziert es. ' +
+        'Nach längeren Pausen greift zusätzlich der Wiedereinstiegsmodus.</p>'
+    };
+  }
+  function openTile(key) {
+    var body = parts()[key];
+    if (!body) { ST.open = null; return; }
+    u.tileOpen(ST, key, TITLES[key], body, function (root) {
+      u.on(root, 'click', '[data-ex]', function (e, t) { ST.open = null; G.views.exercises.openDetail(t.getAttribute('data-ex')); });
+    });
+  }
+
   G.views.coach = {
     title: 'G04Fit Coach',
     sub: function () {
@@ -86,15 +136,26 @@
     },
     render: function () {
       if (!G.coach.allowed()) return lockedView();
-
       var s = G.store.state;
-      var ins = G.coach.insights();
-      var rows = suggestionRows();
-      var re = G.coach.reentry();
-      var metrics = G.coach.metrics();
+      var P = parts();
+      var ins = G.coach.insights(), rows = suggestionRows(), re = G.coach.reentry(), metrics = G.coach.metrics();
+      var up = rows.filter(function (r) { return r.s.kind === 'up'; }).length;
+      var best = metrics.slice().sort(function (a, b) { return b.value - a.value; })[0];
+      var warn = ins.filter(function (i) { return i.kind === 'warn'; }).length;
+
+      var items = [];
+      if (re) items.push({ k: 're', color: 'orange', icon: 'refresh', title: 'Wiedereinstieg',
+        sum: '<b>' + re.days + ' Tage Pause</b> · Gewicht auf ' + Math.round(re.factor * 100) + ' %' });
+      items.push({ k: 'rec', color: 'green', icon: 'dumbbell', title: 'Empfehlungen je Übung',
+        sum: rows.length ? (up ? '<b>' + up + ' steigern</b> · ' : '') + rows.length + ' Übungen' : 'Noch keine Grundlage' });
+      if (ins.length) items.push({ k: 'obs', color: warn ? 'gold' : 'cyan', icon: warn ? 'warn' : 'info', title: 'Beobachtungen',
+        sum: '<b>' + u.esc(ins[0].title) + '</b>' + (ins.length > 1 ? ' (+' + (ins.length - 1) + ')' : '') });
+      items.push({ k: 'perf', color: 'violet', icon: 'target', title: 'Leistungsprofil',
+        sum: best ? '<span>Stärke:</span> <b>' + u.esc(best.label) + ' ' + Math.round(best.value * 100) + '</b>' : '' });
+      items.push({ k: 'how', color: 'blue', icon: 'info', title: 'So rechnet der Coach',
+        sum: '<span>Regeln für Gewicht, Wiederholungen und Pausen</span>' });
 
       return '<div class="view stack">' +
-
         /* Kopf */
         '<div class="card card--hero card--hl">' +
         '<div class="coach">' +
@@ -102,80 +163,10 @@
         '<div style="flex:1">' +
         '<p class="muted small">Auswertung vom ' + u.fmtDate(u.today()) + '</p>' +
         '<h2 style="font-size:20px;margin:4px 0 8px">' +
-        (s.history.length
-          ? s.history.length + ' Einheiten ausgewertet'
-          : 'Noch keine Trainingsdaten') + '</h2>' +
+        (s.history.length ? s.history.length + ' Einheiten ausgewertet' : 'Noch keine Trainingsdaten') + '</h2>' +
         '<p class="muted small">Alle Berechnungen laufen lokal auf diesem Gerät.</p>' +
         '</div></div></div>' +
-
-        /* Wiedereinstieg */
-        (re ? '<div class="card card--hl">' +
-          '<div class="card__head">' + u.icon('refresh', 18) + '<h3>Wiedereinstieg</h3>' +
-          '<span class="spacer"></span><span class="pill pill--gold">' + re.days + ' Tage Pause</span></div>' +
-          '<p class="small muted">' + u.esc(re.text) + '</p>' +
-          '<div class="row row--wrap" style="gap:8px;margin-top:14px">' +
-          '<span class="pill pill--neon">Gewicht auf ' + Math.round(re.factor * 100) + ' %</span>' +
-          '<span class="pill">Aufbau über ' + re.weeks + (re.weeks === 1 ? ' Woche' : ' Wochen') + '</span>' +
-          (G.store.state.settings.reentry ? '<span class="pill pill--neon">automatisch aktiv</span>'
-            : '<span class="pill pill--muted">im Profil deaktiviert</span>') +
-          '</div></div>' : '') +
-
-        /* Hinweise */
-        (ins.length
-          ? '<div class="sec"><h2>Beobachtungen</h2><span class="sec__line"></span></div>' +
-          '<div class="stack" style="--sp:10px">' + ins.map(insightCard).join('') + '</div>'
-          : '') +
-
-        /* Empfehlungen je Übung */
-        '<div class="sec"><h2>Empfehlungen je Übung</h2><span class="sec__line"></span>' +
-        '<span class="tiny dim">' + rows.length + ' Übungen</span></div>' +
-
-        (rows.length
-          ? '<div class="card card--flush"><div class="list" style="padding:6px 14px">' +
-          rows.map(function (r) {
-            var ex = r.ex, g = r.s;
-            return '<div class="list__row list__row--click" data-ex="' + ex.id + '">' +
-              '<div class="list__ic list__ic--map">' +
-              G.anim.muscleMap(ex.muscle, ex.sec, { view: 'auto' }) + '</div>' +
-              '<div class="list__main">' +
-              '<b>' + u.esc(ex.name) + '</b>' +
-              '<span>' + u.esc(g.reason) + '</span></div>' +
-              '<div class="list__end" style="min-width:96px">' +
-              '<b class="mono small' + (g.kind === 'up' ? ' neon' : g.kind === 'down' ? '' : '') + '"' +
-              (g.kind === 'down' ? ' style="color:var(--danger)"' : '') + '>' +
-              (ex.time ? u.fmtReps(g.reps, 's') : u.fmt(g.weight) + ' kg') + '</b>' +
-              '<br><span class="tiny dim">' + (ex.time ? 'Haltezeit' : u.fmtReps(g.reps) + ' × ' + g.sets) + '</span>' +
-              '<br>' + kindPill(g.kind) +
-              '</div></div>';
-          }).join('') + '</div></div>'
-          : '<div class="empty">' + u.icon('coach', 40) + '<b>Noch keine Grundlage</b>' +
-          '<p>Absolviere eine Einheit, danach entstehen konkrete Vorschläge.</p></div>') +
-
-        /* Leistungsprofil */
-        '<div class="sec"><h2>Leistungsprofil</h2><span class="sec__line"></span></div>' +
-        '<div class="grid grid--2">' +
-        '<div class="card">' + G.charts.radar(metrics, { size: 250 }) + '</div>' +
-        '<div class="card">' +
-        '<div class="card__head">' + u.icon('target', 18) + '<h3>Kennzahlen</h3></div>' +
-        '<div class="attrs">' + metrics.map(function (m) {
-          return '<div class="attr">' +
-            '<span class="muted">' + u.esc(m.label) + '</span>' +
-            '<span class="bar"><span class="bar__fill" style="width:' + Math.round(m.value * 100) + '%"></span></span>' +
-            '<span class="attr__v neon">' + Math.round(m.value * 100) + '</span>' +
-            '</div>';
-        }).join('') + '</div>' +
-        '<div class="note note--warn" style="margin-top:16px">' + u.icon('warn', 17) +
-        '<div>Die Kennzahlen beschreiben nur dein Trainingsverhalten in G04Fit. ' +
-        '<b>Sie sind ausdrücklich keine medizinischen Werte.</b></div></div>' +
-        '</div></div>' +
-
-        '<div class="note">' + u.icon('info', 18) +
-        '<div><b>Wie der Coach rechnet</b><br>' +
-        'Erreichst du in allen Sätzen die obere Grenze des Wiederholungsbereichs, wird das Gewicht um den ' +
-        'kleinsten sinnvollen Schritt erhöht und der Bereich beginnt wieder unten. Bleibst du darunter oder ' +
-        'markierst die Sätze als schwer, hält der Coach das Gewicht oder reduziert es. ' +
-        'Nach längeren Pausen greift zusätzlich der Wiedereinstiegsmodus.</div></div>' +
-
+        u.tileGrid(items) +
         '</div>';
     },
     mount: function (host) {
@@ -187,6 +178,8 @@
       u.on(host, 'click', '[data-ex]', function (e, t) {
         G.views.exercises.openDetail(t.getAttribute('data-ex'));
       });
+      u.on(host, 'click', '[data-tile]', function (e, t) { openTile(t.getAttribute('data-tile')); });
+      if (ST.open) openTile(ST.open);
     }
   };
 })(G04Fit);
