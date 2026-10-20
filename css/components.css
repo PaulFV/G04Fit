@@ -842,3 +842,12 @@
   .journey-hero__sum-more span{display:none}
   .journey-hero__sum-more{padding:8px}
 }
+/* Übungen: Trefferzahl im Geräte-Chip */
+.ex-filter-options .chip small{font-size:.78em;opacity:.7;margin-left:3px;font-weight:600}
+/* Übungen-Filter: alle Muskelgruppen und Geräte sichtbar (umbrechen statt
+   seitlich wischen), damit die Auswahl nicht aus dem Bild rutscht */
+.ex-filter-options .tabs,.ex-filter-options .chips{display:flex;flex-wrap:wrap;overflow:visible;gap:7px;padding:0;background:none;border:0}
+.ex-filter-options .tabs__b,.ex-filter-options .chip{flex:0 0 auto;min-height:38px;padding:7px 12px;border-radius:12px;font-size:13px;white-space:nowrap;
+  border:1px solid var(--glass-br);background:var(--glass-bg)}
+.ex-filter-options .tabs__b.is-on,.ex-filter-options .chip.is-on{border-color:var(--filter-accent,var(--neon));
+  background:color-mix(in srgb,var(--filter-accent,var(--neon)) 16%,transparent);color:var(--tx-0)}
