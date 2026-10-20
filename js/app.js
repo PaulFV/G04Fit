@@ -77,9 +77,7 @@
     }).filter(function (v) { return v && v.tab; });
     u.$('#tabbar').innerHTML = tabNav.map(function (v) {
       return '<button class="tabbar__item" data-nav="' + v.k + '">' +
-        (v.k === 'settings'
-          ? '<span class="tabbar__art tabbar__art--icon">' + u.icon('settings', 28) + '</span>'
-          : '<img class="tabbar__art" src="assets/nav/nav-' + v.k + '.png?v=2.4.1" alt="" aria-hidden="true">') +
+        '<img class="tabbar__art" src="assets/nav/nav-' + v.k + '.png?v=' + (v.k === 'settings' ? '2.8.254' : '2.4.1') + '" alt="" aria-hidden="true">' +
         '<span>' + u.esc(v.n) + '</span></button>';
     }).join('');
 
