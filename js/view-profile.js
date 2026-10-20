@@ -43,7 +43,7 @@
      Antippen klappt die Details auf. Zustand bleibt beim Neuzeichnen
      der Ansicht erhalten (nur für die laufende Sitzung).
      ------------------------------------------------------------ */
-  var FOLD = { personal: false, weight: false, app: false };
+  var FOLD = { personal: false, weight: false, app: false, avatar: false, days: false, start: false };
   function foldHead(key, icon, title, summary, extra) {
     return '<button type="button" class="card__head fold__head" data-fold="' + key + '" aria-expanded="' + !!FOLD[key] + '">' +
       u.icon(icon, 18) +
@@ -145,9 +145,11 @@
       if (key.indexOf(id) < 0 && G.ex.byId(id)) list.push(G.ex.byId(id));
     });
 
-    return '<div class="card">' +
-      '<div class="card__head">' + u.icon('dumbbell', 18) + '<h3>Startgewichte</h3>' +
-      '<span class="spacer"></span><span class="pill pill--muted">' + set.length + ' gesetzt</span></div>' +
+    return '<div class="card fold' + foldOpen('start') + '">' +
+      foldHead('start', 'dumbbell', 'Startgewichte', set.length
+        ? '<b>' + set.length + '</b> eigene Werte · sonst Richtwerte'
+        : 'Richtwerte aus Körpergewicht und Erfahrung') +
+      '<div class="fold__body">' +
       '<div class="note note--neon" style="margin-bottom:16px">' + u.icon('info', 17) +
       '<div>Trage ein, womit du tatsächlich arbeitest. G04Fit übernimmt diese Werte statt eines ' +
       'pauschalen Einsteigergewichts – der Coach baut die Progression darauf auf.</div></div>' +
@@ -169,7 +171,7 @@
       '<div class="btn-row" style="margin-top:14px">' +
       '<button class="btn btn--sm" data-act="sw-more">' + u.icon('plus', 15) + ' Weitere Übung</button>' +
       (set.length ? '<button class="btn btn--sm btn--ghost" data-act="sw-clear">Alle zurücksetzen</button>' : '') +
-      '</div></div>';
+      '</div></div></div>';
   }
 
   /* ------------------------------------------------------------
@@ -180,11 +182,9 @@
     var has = G.avatar.has();
     var kb = G.avatar.sizeKb();
 
-    return '<div class="card">' +
-      '<div class="card__head">' + u.icon('profile', 18) + '<h3>Trainings-Avatar</h3>' +
-      '<span class="spacer"></span>' +
-      '<span class="pill ' + (has ? 'pill--neon' : 'pill--muted') + '">' +
-      (has ? 'eigenes Bild' : 'kein Bild') + '</span></div>' +
+    return '<div class="card fold' + foldOpen('avatar') + '">' +
+      foldHead('avatar', 'profile', 'Trainings-Avatar', has ? '<b>Eigenes Bild</b> · nur auf diesem Gerät' : 'Kein eigenes Bild · Platzhalter-Figur') +
+      '<div class="fold__body">' +
 
       '<div class="row" style="gap:20px;align-items:flex-start;flex-wrap:wrap">' +
 
@@ -216,7 +216,7 @@
       '<b>Profil speichern</b>' +
       (has && kb ? ' — aktuell rund <b>' + kb + ' KB</b> im lokalen Speicher' : '') + '.</div></div>' +
 
-      '</div></div></div>';
+      '</div></div></div></div>';
   }
 
   /* ------------------------------------------------------------
@@ -228,10 +228,12 @@
     var sel = s.profile.trainingDays || [];
     var order = [1, 2, 3, 4, 5, 6, 0];
 
-    return '<div class="card">' +
-      '<div class="card__head">' + u.icon('clock', 18) + '<h3>Trainingstage</h3>' +
-      '<span class="spacer"></span><span class="pill ' + (sel.length === m.weekly ? 'pill--neon' : 'pill--muted') + '">' +
-      sel.length + ' von ' + m.weekly + ' empfohlen</span></div>' +
+    var dayNames = order.filter(function (d) { return sel.indexOf(d) >= 0; }).map(function (d) { return u.DAYS[d]; });
+    return '<div class="card fold' + foldOpen('days') + '">' +
+      foldHead('days', 'clock', 'Trainingstage',
+        (dayNames.length ? '<b>' + u.esc(dayNames.join(' · ')) + '</b>' : 'Keine Tage gewählt') +
+        ' · ' + sel.length + ' von ' + m.weekly + ' empfohlen') +
+      '<div class="fold__body">' +
       '<div class="chips chips--days" style="margin-bottom:16px">' +
       order.map(function (d) {
         return '<button class="chip' + (sel.indexOf(d) >= 0 ? ' is-on' : '') + '" data-day="' + d + '">' +
@@ -248,7 +250,7 @@
           '<span class="tiny dim nowrap">' + p.exercises.length + ' Übungen</span>' +
           '</div>';
       }).join('') + '</div>' +
-      '</div>';
+      '</div></div>';
   }
 
   /* ------------------------------------------------------------
@@ -337,46 +339,12 @@
   /* ------------------------------------------------------------
      View
      ------------------------------------------------------------ */
-  G.views.profile = {
-    /* Feedback & Ideen ist ein eigener Reiter in „Einstellungen“ */
-    feedback: {
-      render: function () { return '<div class="view stack">' + feedbackCard() + '</div>'; },
-      mount: function (host) {
-        u.on(host, 'submit', '#feedbackForm', function (e, form) {
-          e.preventDefault();
-          sendFeedback(form);
-        });
-      }
-    },
-    title: 'Profil',
-    sub: function () {
-      var s = G.store.state;
-      var e = EXPERIENCE.filter(function (x) { return x.k === s.profile.experience; })[0];
-      return (s.profile.name || 'Ohne Namen') + ' · ' + (e ? e.n : '') + ' · ' + G.journey.mode(s.profile.mode).name;
-    },
-    render: function () {
-      var s = G.store.state;
-      var p = s.profile;
-      var li = G.store.levelInfo();
-
-      return '<div class="view stack">' +
-
-        /* Kopf */
-        '<div class="card card--hero">' +
-        '<div class="row" style="gap:18px;flex-wrap:wrap">' +
-        G.avatar.render(92, { ring: li.pct, level: li.level, hero: true, action: true, fallback: 'assets/dashboard-profile.png?v=2.8.0' }) +
-        '<div style="flex:1;min-width:190px">' +
-        '<h2 style="font-size:21px">' + u.esc(p.name || 'Dein Profil') + '</h2>' +
-        '<p class="muted small" style="margin-top:4px">' + u.esc(li.title) + ' · ' +
-        li.region.icon + ' ' + u.esc(li.region.name) + '</p>' +
-        '<div class="row row--wrap" style="gap:7px;margin-top:12px">' +
-        (p.age ? '<span class="pill">' + p.age + ' Jahre</span>' : '') +
-        (p.height ? '<span class="pill">' + p.height + ' cm</span>' : '') +
-        (p.weight ? '<span class="pill">' + u.fmt(p.weight) + ' kg</span>' : '') +
-        (p.height && p.weight ? '<span class="pill pill--muted">BMI ' +
-          u.fmt(p.weight / Math.pow(p.height / 100, 2), 1) + '</span>' : '') +
-        '</div></div></div></div>' +
-
+  /* ------------------------------------------------------------
+     Persönliche Angaben / App-Einstellungen als eigene Karten
+     ------------------------------------------------------------ */
+  function personalCard() {
+    var s = G.store.state, p = s.profile;
+    return (
         /* Persönliche Daten */
         '<div class="card fold' + foldOpen('personal') + '">' +
         foldHead('personal', 'profile', 'Persönliche Angaben', personalSum(p),
@@ -426,13 +394,13 @@
 
         '<div class="btn-row" style="margin-top:20px">' +
         '<button class="btn btn--primary" data-act="save">' + u.icon('check', 17) + ' Angaben speichern</button>' +
-        '</div></div></div>' +
+        '</div></div></div>'
+    );
+  }
 
-        weightLogCard() +
-        avatarCard() +
-        daysCard() +
-        startWeightsCard() +
-
+  function appCard() {
+    var s = G.store.state;
+    return (
         /* Einstellungen */
         '<div class="card fold' + foldOpen('app') + '">' +
         foldHead('app', 'refresh', 'App-Einstellungen',
@@ -465,8 +433,104 @@
         '<option value="chime"' + (s.settings.alarmSound === 'chime' ? ' selected' : '') + '>Glockenspiel</option>' +
         '</select><button class="btn btn--sm" data-act="test-alarm">Anhören</button></div>' +
         '<span class="field__hint">Der Ton wird abgespielt, wenn eine Satzpause endet.</span></div>' +
-        '</div></div>' +
+        '</div></div>'
+    );
+  }
 
+  /* ------------------------------------------------------------
+     Einstellungen als Kacheln (20.10.2026): jede Kachel zeigt Titel
+     und Kurzinfo, Antippen öffnet den Bereich in einem eigenen
+     Fenster (Sheet). Die Handler werden auf das Fenster gebunden;
+     nach jedem Neuzeichnen öffnet mount() das Fenster erneut.
+     ------------------------------------------------------------ */
+  var SECTIONS = [
+    { k: 'personal', card: function () { return personalCard(); } },
+    { k: 'weight', card: function () { return weightLogCard(); } },
+    { k: 'avatar', card: function () { return avatarCard(); } },
+    { k: 'days', card: function () { return daysCard(); } },
+    { k: 'start', card: function () { return startWeightsCard(); } },
+    { k: 'app', card: function () { return appCard(); } }
+  ];
+  var OPEN = null;
+
+  function sectionParts(sec) {
+    var el = document.createElement('div');
+    el.innerHTML = sec.card();
+    var head = el.querySelector('.fold__head');
+    var ic = head ? head.querySelector('svg') : null;
+    var h3 = head ? head.querySelector('h3') : null;
+    var sum = head ? head.querySelector('.fold__sum') : null;
+    var state = head ? head.querySelector('.fold__state') : null;
+    var body = el.querySelector('.fold__body');
+    return {
+      icon: ic ? ic.outerHTML : '', title: h3 ? h3.textContent : '', sum: sum ? sum.innerHTML : '',
+      state: state ? state.outerHTML : '', body: body ? body.innerHTML : ''
+    };
+  }
+
+  function sectionTiles() {
+    return '<div class="set-tiles">' + SECTIONS.map(function (sec) {
+      var x = sectionParts(sec);
+      return '<button type="button" class="set-tile card" data-sec="' + sec.k + '">' +
+        '<span class="set-tile__top"><span class="set-tile__ic">' + x.icon + '</span>' + x.state + '</span>' +
+        '<b class="set-tile__title">' + u.esc(x.title) + '</b>' +
+        '<span class="set-tile__sum">' + x.sum + '</span></button>';
+    }).join('') + '</div>';
+  }
+
+  function openSection(key) {
+    var sec = SECTIONS.filter(function (x) { return x.k === key; })[0];
+    if (!sec) return;
+    OPEN = key;
+    var x = sectionParts(sec);
+    u.openSheet(x.title, '<div class="set-sheet" data-sec-body="' + key + '">' + x.body + '</div>', function (sb) {
+      var root = sb.querySelector('.set-sheet');
+      if (root) mountProfile(root);
+    }, function () { OPEN = null; });
+  }
+
+  G.views.profile = {
+    /* Feedback & Ideen ist ein eigener Reiter in „Einstellungen“ */
+    feedback: {
+      render: function () { return '<div class="view stack">' + feedbackCard() + '</div>'; },
+      mount: function (host) {
+        u.on(host, 'submit', '#feedbackForm', function (e, form) {
+          e.preventDefault();
+          sendFeedback(form);
+        });
+      }
+    },
+    title: 'Profil',
+    sub: function () {
+      var s = G.store.state;
+      var e = EXPERIENCE.filter(function (x) { return x.k === s.profile.experience; })[0];
+      return (s.profile.name || 'Ohne Namen') + ' · ' + (e ? e.n : '') + ' · ' + G.journey.mode(s.profile.mode).name;
+    },
+    render: function () {
+      var s = G.store.state;
+      var p = s.profile;
+      var li = G.store.levelInfo();
+
+      return '<div class="view stack">' +
+
+        /* Kopf */
+        '<div class="card card--hero">' +
+        '<div class="row" style="gap:18px;flex-wrap:wrap">' +
+        G.avatar.render(92, { ring: li.pct, level: li.level, hero: true, action: true, fallback: 'assets/dashboard-profile.png?v=2.8.0' }) +
+        '<div style="flex:1;min-width:190px">' +
+        '<h2 style="font-size:21px">' + u.esc(p.name || 'Dein Profil') + '</h2>' +
+        '<p class="muted small" style="margin-top:4px">' + u.esc(li.title) + ' · ' +
+        li.region.icon + ' ' + u.esc(li.region.name) + '</p>' +
+        '<div class="row row--wrap" style="gap:7px;margin-top:12px">' +
+        (p.age ? '<span class="pill">' + p.age + ' Jahre</span>' : '') +
+        (p.height ? '<span class="pill">' + p.height + ' cm</span>' : '') +
+        (p.weight ? '<span class="pill">' + u.fmt(p.weight) + ' kg</span>' : '') +
+        (p.height && p.weight ? '<span class="pill pill--muted">BMI ' +
+          u.fmt(p.weight / Math.pow(p.height / 100, 2), 1) + '</span>' : '') +
+        '</div></div></div></div>' +
+
+        /* Bereiche als Kacheln — Antippen öffnet ein eigenes Fenster (20.10.2026) */
+        sectionTiles() +
 
         '<div class="note note--warn">' + u.icon('warn', 18) +
         '<div>G04Fit ersetzt keine ärztliche oder physiotherapeutische Beratung. ' +
@@ -475,6 +539,14 @@
         '</div>';
     },
     mount: function (host) {
+      mountProfile(host);
+      u.on(host, 'click', '[data-sec]', function (e, t) { openSection(t.getAttribute('data-sec')); });
+      // Nach dem Neuzeichnen (z. B. Speichern) das offene Fenster aktualisieren
+      if (OPEN) openSection(OPEN);
+    }
+  };
+
+  function mountProfile(host) {
       var s = G.store.state;
 
       /* Karten auf- und zuklappen, ohne neu zu zeichnen */
@@ -580,7 +652,7 @@
           body: 'Der Gewichtseintrag vom ' + u.esc(u.fmtDate(day)) + ' wird entfernt.',
           ok: 'Löschen'
         });
-        if (!ok) return;
+        if (!ok) { if (OPEN) openSection(OPEN); return; }
         G.store.deleteWeightEntry(day);
         u.toast('Gelöscht', 'Der Eintrag wurde entfernt.', 'ok');
         G.app.rerender();
@@ -598,7 +670,7 @@
             'Die Bilddatei auf deinem Gerät bleibt unberührt.',
           ok: 'Entfernen'
         });
-        if (!ok) return;
+        if (!ok) { if (OPEN) openSection(OPEN); return; }
         G.avatar.remove();
         u.toast('Entfernt', 'Du kannst jederzeit ein neues Bild hochladen.', 'ok');
         G.app.rerender();
@@ -623,7 +695,7 @@
           body: 'Alle eigenen Startgewichte werden entfernt. G04Fit verwendet dann wieder Richtwerte.',
           ok: 'Zurücksetzen'
         });
-        if (!ok) return;
+        if (!ok) { if (OPEN) openSection(OPEN); return; }
         s.profile.startWeights = {};
         G.store.commit('start-weights');
         G.app.rerender();
@@ -695,7 +767,6 @@
         sendFeedback(form);
       });
     }
-  };
 
   function sw(id, title, desc, on) {
     return '<label class="switch"><input type="checkbox" id="' + id + '"' + (on ? ' checked' : '') + '>' +
