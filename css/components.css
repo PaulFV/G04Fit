@@ -899,3 +899,16 @@
 .set-tile--orange{--cr:255,138,76;--c:#FF8A4C}
 .set-tile--blue{--cr:96,165,250;--c:#60A5FA}
 .set-tile__title{hyphens:auto;-webkit-hyphens:auto}.set-tile__title--long{font-size:13px;letter-spacing:-.01em}
+
+/* Pausen-Dialog vor dem Trainingsstart (20.10.2026) */
+.rest-dlg{display:flex;flex-direction:column;gap:14px}
+.rest-dlg__sw{padding:12px 14px;border-radius:16px;border:1px solid var(--glass-br);background:rgba(255,255,255,.03)}
+.rest-dlg__time{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:18px;border:1px solid rgba(34,211,238,.35);
+  background:radial-gradient(120% 90% at 50% 0%,rgba(34,211,238,.14),transparent 65%)}
+.rest-dlg__time[hidden],.rest-dlg__sound[hidden]{display:none!important}
+.rest-dlg__big{display:flex;align-items:baseline;justify-content:center;gap:8px}
+.rest-dlg__big b{font-family:var(--mono);font-size:52px;line-height:1;font-weight:800;color:var(--cyan);text-shadow:0 0 22px rgba(34,211,238,.35)}
+.rest-dlg__big span{color:var(--tx-2);font-size:14px}
+.rest-dlg__chips{justify-content:center}
+.rest-dlg__go{margin-top:4px}
+.rest-dlg__go .btn--primary{flex:1}
