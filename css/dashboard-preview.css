@@ -266,3 +266,34 @@
 }
 /* Ruhetag: ein einzelner Hauptknopf über die volle Breite */
 .dashboard-hero__actions .dashboard-hero__main{flex:1 1 100%;max-width:100%}
+
+/* Startknöpfe in der ersten Kachel deutlich sichtbar (20.10.2026):
+   „Training starten“ gefüllt in Neon-Grün, „Freies Training“ kräftig in Cyan,
+   beide mit dickerem Rahmen, Leuchten und dunklem Untergrund gegen das Foto. */
+.dashboard-hero__actions .btn{min-height:54px;font-size:16px;font-weight:800;border-width:2px;letter-spacing:.01em}
+.dashboard-hero__actions .btn .ui-icon{width:18px;height:18px}
+.dashboard-hero__actions .btn--primary,
+.dashboard-hero__actions .btn--glass-green,
+.dashboard-hero__actions .btn--glass-green:hover{
+  background:linear-gradient(180deg,#5dffb1,var(--neon));color:#03140c;border-color:var(--neon);
+  box-shadow:0 0 0 1px rgba(61,255,158,.35),0 6px 22px rgba(61,255,158,.38)
+}
+.dashboard-hero__actions .btn--glass-green:hover{box-shadow:0 0 0 1px rgba(61,255,158,.5),0 8px 30px rgba(61,255,158,.55)}
+.dashboard-hero__actions .btn--free,
+.dashboard-hero__actions .btn--free:hover{
+  background:linear-gradient(180deg,rgba(34,211,238,.34),rgba(34,211,238,.2)),rgba(2,14,18,.72);
+  color:#e9fcff;border-color:var(--cyan);
+  box-shadow:0 0 0 1px rgba(34,211,238,.3),0 6px 22px rgba(34,211,238,.3);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)
+}
+.dashboard-hero__actions .btn--free .ui-icon{color:var(--cyan)}
+.dashboard-hero__actions .btn--free:hover{box-shadow:0 0 0 1px rgba(34,211,238,.45),0 8px 30px rgba(34,211,238,.45)}
+.dashboard-hero__actions .btn:active{transform:scale(.98)}
+:root[data-theme="light"] .dashboard-hero__actions .btn--free{background:linear-gradient(180deg,rgba(34,211,238,.28),rgba(34,211,238,.16)),#fff;color:#04505c}
+@media (max-width:650px){
+  .dashboard-hero__actions .btn{min-height:50px;font-size:14px;padding:10px 6px;gap:6px}
+  .dashboard-hero__actions .btn .ui-icon{width:14px;height:14px}
+}
+@media (max-width:380px){
+  .dashboard-hero__actions .btn{font-size:13px}
+}
