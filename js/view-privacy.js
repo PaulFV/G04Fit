@@ -385,6 +385,7 @@
 
       u.on(host, 'click', '[data-act="export"]', function () {
         var ok = u.download('G04Fit-Sicherung-' + u.today() + '.json', G.store.exportAll(), 'application/json');
+        if (ok) { G.store.state.settings.lastBackup = u.today(); G.store.commit('settings'); }
         u.toast(ok ? 'Exportiert' : 'Nicht möglich',
           ok ? 'Die Datei wurde gespeichert.' : 'Der Download wurde blockiert.', ok ? 'ok' : 'err');
       });
@@ -469,4 +470,42 @@
     openCopyright: openCopyright,
     POLICY: POLICY
   };
+
+  /* ------------------------------------------------------------
+     Erinnerung an die Datensicherung (21.10.2026): Alle Daten liegen
+     nur auf diesem Gerät. Höchstens alle 30 Tage (ab dem ersten Start
+     mit dieser Funktion gezählt) fragt G04Fit, ob eine Sicherungsdatei
+     gespeichert werden soll — nur mit Trainingshistorie (≥ 3 Einheiten).
+     ------------------------------------------------------------ */
+  function maybeRemindBackup() {
+    var s = G.store.state, today = u.today();
+    if (!G.store.hasConsent('history') || s.session || s.history.length < 3) return false;
+    var last = s.settings.lastBackup || s.settings.lastBackupAsk;
+    if (!last) { s.settings.lastBackupAsk = today; G.store.commit('settings'); return false; }
+    if (u.daysBetween(last, today) < 30) return false;
+    s.settings.lastBackupAsk = today; G.store.commit('settings');
+    u.openSheet('Daten sichern',
+      '<div class="backup-ask">' +
+      '<div class="backup-ask__ic">' + u.icon('download', 30) + '</div>' +
+      '<p><b>Deine Trainingsdaten liegen nur auf diesem Gerät.</b></p>' +
+      '<p class="small muted">Speichere ab und zu eine Sicherungsdatei, damit bei einem Handywechsel oder ' +
+      'gelöschten Browserdaten nichts verloren geht. Wiederherstellen kannst du sie unter ' +
+      '<i>Einstellungen → Datenschutz → Datei einlesen</i>.</p>' +
+      (s.settings.lastBackup ? '<p class="tiny dim">Letzte Sicherung: ' + u.esc(u.fmtDate(s.settings.lastBackup)) + '</p>'
+        : '<p class="tiny dim">Bisher wurde noch keine Sicherung gespeichert.</p>') +
+      '<button type="button" class="btn btn--primary btn--lg btn--block" data-act="bk-save">' + u.icon('download', 17) + ' Jetzt sichern</button>' +
+      '<button type="button" class="rest-dlg__cancel" data-act="bk-later">Später</button>' +
+      '</div>',
+      function (root) {
+        root.querySelector('[data-act="bk-save"]').onclick = function () {
+          var ok = u.download('G04Fit-Sicherung-' + today + '.json', G.store.exportAll(), 'application/json');
+          if (ok) { s.settings.lastBackup = today; G.store.commit('settings'); }
+          u.closeSheet();
+          u.toast(ok ? 'Gesichert' : 'Nicht möglich', ok ? 'Die Sicherungsdatei wurde gespeichert.' : 'Der Download wurde blockiert.', ok ? 'ok' : 'err');
+        };
+        root.querySelector('[data-act="bk-later"]').onclick = function () { u.closeSheet(); };
+      });
+    return true;
+  }
+  G.backup = { maybeRemind: maybeRemindBackup };
 })(G04Fit);

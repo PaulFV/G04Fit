@@ -294,7 +294,11 @@
     // Einmal pro Woche: Rückblick auf die Vorwoche — erst nach der Start-Animation
     if (G.weekReview) (function waitIntro(n) {
       if (document.getElementById('intro') && n < 30) return setTimeout(function () { waitIntro(n + 1); }, 300);
-      setTimeout(G.weekReview.maybeShow, 400);
+      setTimeout(function () {
+        // Höchstens ein Fenster pro Start: erst Wochen-Rückblick, sonst ggf. Sicherungs-Erinnerung
+        var shown = G.weekReview.maybeShow();
+        if (!shown && G.backup) G.backup.maybeRemind();
+      }, 400);
     })(0);
 
     if (G.store.hasConsent('push')) G.reminders.start();

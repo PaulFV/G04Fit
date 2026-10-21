@@ -445,6 +445,7 @@
       '</span></div>' +
       '<span class="spacer"></span>' +
       '<span class="pill ' + (done === all ? 'pill--neon' : 'pill--muted') + '">' + done + '/' + all + '</span>' +
+      (ex.equip === 'Langhantel' ? '<button class="plate-btn" data-act="plates" data-b="' + bi + '" title="Hantelscheiben berechnen">' + u.icon('plate', 15) + '<span>Scheiben</span></button>' : '') +
       '<button class="icon-btn" data-act="info" data-ex="' + ex.id + '" title="Übung ansehen" style="width:32px;height:32px">' +
       u.icon('info', 16) + '</button>' +
       (G.store.state.session.exercises.length > 1
@@ -843,6 +844,72 @@
   /* ------------------------------------------------------------
      Abschluss-Zusammenfassung
      ------------------------------------------------------------ */
+  /* ------------------------------------------------------------
+     Hantelscheiben-Rechner (21.10.2026): Was muss pro Seite auf die
+     Langhantel (Stange 20 kg)? Scheiben 25/20/15/10/5/2,5/1,25 kg.
+     ------------------------------------------------------------ */
+  var BAR = 20, PLATES = [25, 20, 15, 10, 5, 2.5, 1.25];
+  function kg(v) { v = Math.round(v * 100) / 100; return String(v).replace('.', ','); }
+  function platesFor(total) {
+    var side = Math.round(((total - BAR) / 2) * 100) / 100, out = [];
+    if (side < 0) return { side: side, plates: [], rest: 0, light: true };
+    PLATES.forEach(function (pl) { while (side + 1e-9 >= pl) { out.push(pl); side = Math.round((side - pl) * 100) / 100; } });
+    return { side: (total - BAR) / 2, plates: out, rest: side, light: false };
+  }
+  function plateBar(r) {
+    return '<div class="plate-bar"><span class="plate-bar__sleeve"></span>' +
+      r.plates.slice().reverse().map(function (pl) {
+        return '<span class="plate plate--' + String(pl).replace('.', '_') + '">' + kg(pl) + '</span>';
+      }).join('') + '<span class="plate-bar__collar"></span><span class="plate-bar__rod"></span></div>';
+  }
+  function openPlates(bi) {
+    var b = G.store.state.session.exercises[bi], ex = G.ex.byId(b.exId);
+    var ws = []; b.sets.forEach(function (x) { var w = +x.weight || 0; if (ws.indexOf(w) < 0) ws.push(w); });
+    var html = '<div class="plates">' +
+      '<p class="small muted" style="margin:0">' + u.esc(ex.name) + ' · Stange ' + BAR + ' kg · angezeigt ist <b>eine Seite</b></p>' +
+      ws.map(function (w) {
+        var r = platesFor(w);
+        return '<div class="plates__row"><div class="plates__w"><b>' + kg(w) + ' kg</b><span>' +
+          (r.light ? 'leichter als die Stange' : kg(r.side) + ' kg pro Seite') + '</span></div>' +
+          (r.light ? '<p class="tiny dim">Mit einer leichteren Stange oder Kurzhanteln trainieren.</p>'
+            : (r.plates.length ? plateBar(r) + '<p class="plates__list">' + r.plates.map(function (pl) { return kg(pl); }).join(' + ') + ' kg</p>'
+              : '<p class="tiny dim">Nur die Stange.</p>') +
+              (r.rest > 0 ? '<p class="tiny" style="color:var(--warn)">Rest ' + kg(r.rest) + ' kg pro Seite lässt sich nicht genau legen.</p>' : '')) +
+          '</div>';
+      }).join('') + '</div>';
+    u.openSheet('Hantelscheiben', html);
+  }
+
+  /* ------------------------------------------------------------
+     Rekord-Feier (21.10.2026): kurzer Vollbild-Moment mit der
+     Anatomie-Figur, Medaille und Konfetti, wenn eine Einheit neue
+     Rekorde gebracht hat. Antippen schließt, nach 3 s von selbst.
+     ------------------------------------------------------------ */
+  function celebratePRs(names) {
+    if (!names.length) return;
+    var reduce = G.store.state.settings.reduceMotion;
+    var conf = '';
+    for (var i = 0; i < 26; i++) {
+      conf += '<i style="--x:' + Math.round(Math.random() * 100) + ';--d:' + (Math.random() * 0.6).toFixed(2) + 's;--r:' +
+        Math.round(Math.random() * 360) + 'deg;--c:' + ['#FFC857', '#3DFF9E', '#22D3EE', '#FF8A4C', '#A78BFA'][i % 5] + '"></i>';
+    }
+    var el = u.el('<div class="pr-party' + (reduce ? ' pr-party--calm' : '') + '" role="dialog" aria-label="Neuer Rekord">' +
+      '<div class="pr-party__conf">' + conf + '</div>' +
+      '<div class="pr-party__stage">' +
+      '<div class="pr-party__fig"><img src="assets/avatar/anatomy-front-v4.webp" alt=""></div>' +
+      '<div class="pr-party__medal">' + u.icon('medal', 44) + '</div>' +
+      '<h2>' + (names.length === 1 ? 'Neuer Rekord!' : names.length + ' neue Rekorde!') + '</h2>' +
+      '<p>' + u.esc(names.slice(0, 3).join(' · ')) + (names.length > 3 ? ' …' : '') + '</p>' +
+      '<span class="pr-party__tap">Antippen zum Schließen</span>' +
+      '</div></div>');
+    document.body.appendChild(el);
+    if (G.i18n) G.i18n.apply(el);
+    var gone = false;
+    function close() { if (gone) return; gone = true; el.classList.add('is-out'); setTimeout(function () { el.remove(); }, 400); }
+    el.addEventListener('click', close);
+    setTimeout(close, reduce ? 1800 : 3200);
+  }
+
   function showSummary(res, sess) {
     var lines = [
       '<div class="stack">',
@@ -889,6 +956,13 @@
         u.closeSheet(); G.app.go('dashboard');
       };
     });
+
+    // Neue Rekorde dieser Einheit feiern
+    var day = sess.day || u.today(), recs = G.store.state.records;
+    var prNames = (sess.exercises || []).map(function (b) { return b.exId; })
+      .filter(function (id, i, a) { return a.indexOf(id) === i && recs[id] && recs[id].date === day; })
+      .map(function (id) { var ex = G.ex.byId(id); return ex ? ex.name : null; }).filter(Boolean);
+    if (res.records && prNames.length) setTimeout(function () { celebratePRs(prNames); }, 350);
 
     if (res.level.leveled) u.levelUpFx(res.level.after, G.journey.titleFor(res.level.after));
   }
@@ -1094,6 +1168,9 @@
         G.store.save();
       }, signal);
 
+      /* --- Hantelscheiben-Rechner --- */
+      u.on(host, 'click', '[data-act="plates"]', function (e, t) { openPlates(+t.getAttribute('data-b')); }, signal);
+
       /* --- Satz ergänzen --- */
       u.on(host, 'click', '[data-act="add-set"]', function (e, t) {
         var bi = +t.getAttribute('data-b');
@@ -1210,6 +1287,8 @@
     },
     openPicker: openPicker,
     restDialog: restDialog,
+    celebratePRs: celebratePRs,
+    platesFor: platesFor,
     openQuickFree: openQuickFree
   };
 })(G04Fit);

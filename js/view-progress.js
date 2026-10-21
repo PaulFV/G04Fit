@@ -201,16 +201,17 @@
   /** Einmal pro Woche beim App-Start: Rückblick auf die abgeschlossene Vorwoche */
   function maybeShowWeekReview() {
     var s = G.store.state;
-    if (!G.store.hasConsent('history') || s.session) return;
+    if (!G.store.hasConsent('history') || s.session) return false;
     var thisWeek = u.weekStart(u.today());
-    if (s.settings.lastReviewWeek === thisWeek) return;
+    if (s.settings.lastReviewWeek === thisWeek) return false;
     var last = u.addDays(thisWeek, -7);
     s.settings.lastReviewWeek = thisWeek;
     G.store.commit('settings');
-    if (!weekStats(last).n) return;
+    if (!weekStats(last).n) return false;
     u.openSheet('Dein Wochen-Rückblick', weekReviewHtml(last, 'Letzte Woche') +
       '<button type="button" class="btn btn--primary btn--block" data-act="wr-close" style="margin-top:14px">Weiter so!</button>',
       function (root) { var b = root.querySelector('[data-act="wr-close"]'); if (b) b.onclick = function () { u.closeSheet(); }; });
+    return true;
   }
   G.weekReview = { html: weekReviewHtml, maybeShow: maybeShowWeekReview, stats: weekStats };
 
