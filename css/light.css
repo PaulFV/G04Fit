@@ -1,0 +1,81 @@
+/* ============================================================
+   G04Fit — Heller Modus: kräftigere Farben und Kontraste
+   (21.10.2026). Wird als letzte CSS-Datei geladen und greift nur
+   bei :root[data-theme="light"]. Ziel: alle Texte mind. 4,5:1
+   Kontrast, keine dunklen Flächen mehr aus dem dunklen Design.
+   ============================================================ */
+:root[data-theme="light"]{
+  --tx-0:#0E1D16;
+  --tx-1:#2B4539;
+  --tx-2:#4A6256;
+  --glass-br:rgba(18,65,44,.2);
+}
+
+/* Kopfzeile: helle Knöpfe statt dunkler Glas-Kacheln */
+:root[data-theme="light"] .topbar .icon-btn,
+:root[data-theme="light"] .streak-chip{
+  background:linear-gradient(145deg,#fff,#E6EFEA);
+  border-color:rgba(18,65,44,.22);
+  color:var(--tx-0);
+  box-shadow:inset 0 1px 0 #fff,0 4px 12px rgba(31,72,53,.12);
+}
+:root[data-theme="light"] .topbar .icon-btn:hover{background:linear-gradient(145deg,#fff,#DCEBE3);border-color:rgba(6,118,71,.45)}
+:root[data-theme="light"] .streak-chip b,:root[data-theme="light"] .streak-chip span{color:var(--tx-0)}
+:root[data-theme="light"] .streak-chip.is-hot{color:#8A5A00;border-color:rgba(138,90,0,.4)}
+
+/* Untere Leiste hell */
+:root[data-theme="light"] .tabbar{
+  background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(236,244,240,.99));
+  border-color:rgba(18,65,44,.18);
+  box-shadow:0 -1px 0 rgba(18,65,44,.08),0 -8px 24px rgba(31,72,53,.12);
+}
+:root[data-theme="light"] .tabbar__item{color:var(--tx-1)}
+:root[data-theme="light"] .tabbar__item.is-on{color:#05663D;background:rgba(6,118,71,.1);border-color:rgba(6,118,71,.4)}
+
+/* Karten, die noch dunkle Verläufe hatten */
+:root[data-theme="light"] .dashboard-week{background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(232,241,236,.88))}
+:root[data-theme="light"] .avatar--empty{background:linear-gradient(145deg,#fff,#E3EDE8)}
+
+/* Startkacheln: Bild etwas weiter hinter einen hellen Schleier, damit
+   Überschrift und Text auch rechts gut lesbar bleiben */
+:root[data-theme="light"] .dashboard-hero{
+  background:linear-gradient(90deg,rgba(243,247,245,.98) 0%,rgba(243,247,245,.93) 45%,rgba(243,247,245,.72) 75%,rgba(243,247,245,.45) 100%),
+    url("../assets/dashboard-hero-bg.webp") center center/cover no-repeat,var(--bg-1)}
+:root[data-theme="light"] .workout-preview__hero{
+  background:linear-gradient(90deg,rgba(234,241,237,.98) 0%,rgba(234,241,237,.93) 45%,rgba(234,241,237,.7) 75%,rgba(234,241,237,.4) 100%),
+    url("../assets/workout-hero-bg.webp") center center/cover no-repeat,var(--bg-1)}
+:root[data-theme="light"] .dashboard-hero h2,:root[data-theme="light"] .workout-preview__title{color:var(--tx-0);text-shadow:0 1px 0 rgba(255,255,255,.6)}
+:root[data-theme="light"] .dashboard-hero .muted,:root[data-theme="light"] .dashboard-hero__greeting{color:var(--tx-1)}
+
+/* Feste helle Grautöne aus dem dunklen Design */
+:root[data-theme="light"] .progress-stat__body .stat__k,
+:root[data-theme="light"] .progress-stat__body .stat__u{color:var(--tx-1)}
+:root[data-theme="light"] .progress-chart__caption{color:var(--tx-2)}
+:root[data-theme="light"] .stat__k,:root[data-theme="light"] .stat__u{color:var(--tx-1)}
+:root[data-theme="light"] .dashboard-stat__k{color:var(--tx-1)}
+:root[data-theme="light"] .pill--muted{color:var(--tx-1);border-color:rgba(18,65,44,.22)}
+
+/* Farbige Kacheln: dunklere Akzentfarben für Text (Leuchten bleibt) */
+:root[data-theme="light"] .set-tile--green,:root[data-theme="light"] .set-tile[data-sec="personal"],:root[data-theme="light"] .dash-q--green,:root[data-theme="light"] .dash-q{--c:#05663D}
+:root[data-theme="light"] .set-tile--cyan,:root[data-theme="light"] .set-tile[data-sec="weight"],:root[data-theme="light"] .dash-q--cyan{--c:#0B6878}
+:root[data-theme="light"] .set-tile--violet,:root[data-theme="light"] .set-tile[data-sec="avatar"]{--c:#5B21B6}
+:root[data-theme="light"] .set-tile--gold,:root[data-theme="light"] .set-tile[data-sec="days"],:root[data-theme="light"] .dash-q--gold{--c:#7A4F00}
+:root[data-theme="light"] .set-tile--orange,:root[data-theme="light"] .set-tile[data-sec="start"]{--c:#A6420F}
+:root[data-theme="light"] .set-tile--blue,:root[data-theme="light"] .set-tile[data-sec="app"]{--c:#1D4FBF}
+:root[data-theme="light"] .set-tile__sum b{filter:none}
+:root[data-theme="light"] .set-tile__sum,:root[data-theme="light"] .dash-q__s{color:var(--tx-1)}
+:root[data-theme="light"] .set-tile::after,:root[data-theme="light"] .dash-q::after{opacity:1}
+:root[data-theme="light"] .set-tile,:root[data-theme="light"] .dash-q{border-color:rgba(var(--cr),.6);box-shadow:0 6px 16px rgba(31,72,53,.1)}
+
+/* Satzpause: Zahl kräftig */
+:root[data-theme="light"] .timer-overlay__v{color:#0B6878}
+:root[data-theme="light"] .rest-dlg__big b{color:#0B6878;text-shadow:none}
+
+/* Dunkler Schleier der Handy-Ansicht über den Startkacheln entfernen */
+:root[data-theme="light"] .dashboard-hero::after,
+:root[data-theme="light"] .workout-preview__hero::after{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0))}
+
+/* Startknöpfe in der Trainingsansicht kräftig */
+:root[data-theme="light"] .workout-preview__actions [data-act="start-plan"]{background:linear-gradient(180deg,#0A8A53,#05663D);color:#fff;border-color:#05663D;box-shadow:0 6px 16px rgba(6,118,71,.28)}
+:root[data-theme="light"] .workout-preview__actions [data-act="open-free"]{background:#fff;color:#0B5866;border-color:rgba(11,104,120,.55);box-shadow:0 4px 12px rgba(11,104,120,.14)}
+:root[data-theme="light"] .dashboard-hero__actions .btn--primary{color:#04261A}
