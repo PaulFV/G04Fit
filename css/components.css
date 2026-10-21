@@ -912,26 +912,3 @@
 .rest-dlg__chips{justify-content:center}
 .rest-dlg__go{margin-top:4px}
 .rest-dlg__go .btn--primary{flex:1}
-
-/* Tablet: Kacheln füllen die Breite gleichmäßig (20.10.2026) */
-@media (min-width:701px){
-  .set-tiles{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
-  .set-tile{min-height:140px;padding:16px}
-  .set-tile__title{font-size:16px}
-  .set-tile__sum{font-size:12.5px}
-}
-@media (min-width:701px){.set-tiles--4{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media (min-width:701px){.set-tile__title--long{font-size:14px}}
-
-/* Tablet: Satzpause groß und aus der Entfernung lesbar (21.10.2026) */
-@media (min-width:701px){
-  .timer-overlay__card{min-width:min(540px,84vw);max-width:min(620px,90vw);padding:44px 48px;gap:10px;border-radius:32px}
-  .timer-overlay__card > span:first-child svg{width:36px;height:36px}
-  .timer-overlay__v{font-size:clamp(130px,18vw,180px);letter-spacing:-.03em}
-  .timer-overlay__card .tiny{font-size:18px}
-  .timer-overlay .btn-row{margin-top:22px;gap:14px}
-  .timer-overlay .btn-row .btn{min-height:60px;font-size:19px;border-radius:18px}
-  .rest-dlg__big b{font-size:84px}
-  .rest-dlg__big span{font-size:18px}
-  .rest-dlg__chips .chip{font-size:16px;padding:10px 16px}
-}
