@@ -343,6 +343,29 @@
   }
 
   /* ------------------------------------------------------------
+     Bildschirm bleibt an, solange eine Einheit läuft (Screen Wake
+     Lock API; iOS ab 16.4, Android Chrome). Ohne Unterstützung
+     passiert einfach nichts. (21.10.2026)
+     ------------------------------------------------------------ */
+  var wakeLock = null;
+  function wantAwake() { var s = G.store.state.session; return !!(s && s.startedAt); }
+  function syncWakeLock() {
+    if (!('wakeLock' in navigator)) return;
+    if (wantAwake() && document.visibilityState === 'visible') {
+      if (wakeLock) return;
+      navigator.wakeLock.request('screen').then(function (l) {
+        wakeLock = l;
+        l.addEventListener('release', function () { wakeLock = null; });
+      }).catch(function () { /* z. B. Energiesparmodus — ohne Wirkung */ });
+    } else if (wakeLock) {
+      wakeLock.release().catch(function () {});
+      wakeLock = null;
+    }
+  }
+  document.addEventListener('visibilitychange', syncWakeLock);
+  setInterval(syncWakeLock, 15000);
+
+  /* ------------------------------------------------------------
      Laufende Einheit
      ------------------------------------------------------------ */
   /** Liegestütze: kein Gewichtsfeld, stattdessen steht das eigene Körpergewicht
@@ -353,7 +376,26 @@
     return '<div class="input-suffix"><input class="input" type="text" readonly tabindex="-1" value="' +
       (bw ? u.esc(u.fmt(bw)) : '–') + '" aria-label="Eigengewicht"><span>kg</span></div>';
   }
-  function setRow(bi, si, set, ex) {
+  /** Sätze dieser Übung aus dem letzten abgeschlossenen Training (für
+      „Letztes Mal“ unter jedem Satz, 21.10.2026). */
+  function lastSetsFor(exId) {
+    var h = G.store.state.history;
+    for (var i = h.length - 1; i >= 0; i--) {
+      var b = (h[i].exercises || []).filter(function (x) { return x.exId === exId; })[0];
+      if (b) {
+        var done = (b.sets || []).filter(function (x) { return x.done; });
+        if (done.length) return { day: h[i].day, sets: done };
+      }
+    }
+    return null;
+  }
+  function prevLabel(p, ex) {
+    if (!p) return '';
+    if (ex.time) return (+p.reps || 0) + ' s';
+    if (ownWeightOnly(ex) || !+p.weight) return '× ' + (+p.reps || 0);
+    return u.fmt(+p.weight) + ' kg × ' + (+p.reps || 0);
+  }
+  function setRow(bi, si, set, ex, last) {
     return '<div class="set-row' + (set.done ? ' is-done' : '') + '" data-b="' + bi + '" data-s="' + si + '">' +
       '<span class="set-row__n">' + (si + 1) + '</span>' +
       (ex.time
@@ -365,6 +407,8 @@
       set.reps + '" data-f="reps" aria-label="' + (ex.time ? 'Sekunden' : 'Wiederholungen') + '"><span>' +
       (ex.time ? 's' : '×') + '</span></div>' +
       '<button class="set-check" data-act="toggle" aria-label="Satz abhaken">' + u.icon('check', 18) + '</button>' +
+      (last ? '<span class="set-row__prev">' + u.icon('refresh', 11) + '<span>Letztes Mal ' +
+        u.esc(prevLabel(last.sets[Math.min(si, last.sets.length - 1)], ex)) + '</span></span>' : '') +
       '</div>';
   }
 
@@ -387,6 +431,7 @@
     var done = b.sets.filter(function (x) { return x.done; }).length;
     var all = b.sets.length;
     var mv = G.MUSCLES[ex.muscle];
+    var last = lastSetsFor(b.exId);
 
     return '<div class="card' + (done ? ' has-done' : '') + '" data-block="' + bi + '">' +
       '<div class="card__head">' +
@@ -413,7 +458,7 @@
 
       '<div class="set-head"><span>#</span><span>' + (ex.time ? '' : ownWeightOnly(ex) ? 'Eigengewicht' : 'Gewicht') + '</span><span>' +
       (ex.time ? 'Sekunden' : 'Wdh.') + '</span><span></span></div>' +
-      b.sets.map(function (s, si) { return setRow(bi, si, s, ex); }).join('') +
+      b.sets.map(function (s, si) { return setRow(bi, si, s, ex, last); }).join('') +
 
       '<div class="btn-row" style="margin-top:12px">' +
       '<button class="btn btn--sm" data-act="add-set" data-b="' + bi + '">' + u.icon('plus', 15) + ' Satz</button>' +
@@ -888,6 +933,7 @@
     // wenn innerhalb von G04Fit eine andere Ansicht geöffnet wird.
     unmount: function () {},
     mount: function (host) {
+      syncWakeLock();
       var s = G.store.state;
 
       // Alte Handler eines früheren mount() zuerst abmelden (siehe Hinweis
@@ -1044,6 +1090,7 @@
         }
         refreshHero();
         updateFinishCue(host, set.done);
+        syncWakeLock();
         G.store.save();
       }, signal);
 

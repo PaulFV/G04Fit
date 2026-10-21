@@ -144,6 +144,76 @@
   /* ------------------------------------------------------------
      Tab: Überblick
      ------------------------------------------------------------ */
+  /* ------------------------------------------------------------
+     Wochen-Rückblick (21.10.2026): Einheiten, Volumen, Sätze,
+     Trainingszeit und neue Rekorde einer Woche im Vergleich zur
+     Vorwoche. Als Karte im Überblick (laufende Woche) und einmal
+     pro Woche als Fenster beim App-Start (abgeschlossene Vorwoche).
+     ------------------------------------------------------------ */
+  function weekStats(start, days) {
+    var s = G.store.state, end = u.addDays(start, days == null ? 6 : days);
+    var list = s.history.filter(function (h) { return h.day >= start && h.day <= end; });
+    var prs = Object.keys(s.records).filter(function (id) { var d = s.records[id].date; return d >= start && d <= end; });
+    return {
+      start: start, end: end, n: list.length,
+      vol: u.sum(list, function (h) { return h.volume || 0; }),
+      sets: u.sum(list, function (h) { return h.totalSets || 0; }),
+      time: u.sum(list, function (h) { return u.sessionDuration(h); }),
+      prs: prs
+    };
+  }
+  function delta(cur, prev, fmtFn) {
+    if (!prev && !cur) return '<span class="wr-d wr-d--eq">–</span>';
+    if (!prev) return '<span class="wr-d wr-d--up">neu</span>';
+    var d = cur - prev;
+    if (Math.abs(d) < 0.0001) return '<span class="wr-d wr-d--eq">= Vorwoche</span>';
+    return '<span class="wr-d ' + (d > 0 ? 'wr-d--up' : 'wr-d--down') + '">' + (d > 0 ? '▲ +' : '▼ −') + fmtFn(Math.abs(d)) + '</span>';
+  }
+  function fmtVol(v) { return v >= 1000 ? u.fmt(v / 1000, 1) + ' t' : u.fmt(v) + ' kg'; }
+  function fmtTime(sec) { var m = Math.round(sec / 60); return m >= 60 ? Math.floor(m / 60) + ' h ' + (m % 60) + ' min' : m + ' min'; }
+  function weekReviewHtml(start, title) {
+    // Laufende Woche fair vergleichen: nur bis zum gleichen Wochentag der Vorwoche
+    var running = start === u.weekStart(u.today());
+    var days = running ? Math.max(0, Math.min(6, u.daysBetween(start, u.today()))) : 6;
+    var c = weekStats(start, days), p = weekStats(u.addDays(start, -7), days);
+    var range = u.fmtDateShort(c.start) + ' – ' + u.fmtDateShort(running ? u.addDays(start, 6) : c.end);
+    var cmp = running ? 'im Vergleich zum gleichen Zeitraum der Vorwoche' : 'im Vergleich zur Vorwoche';
+    var tiles = [
+      { k: 'Einheiten', v: String(c.n), d: delta(c.n, p.n, function (x) { return String(x); }), cls: 'green', ic: 'dumbbell' },
+      { k: 'Volumen', v: fmtVol(c.vol), d: delta(c.vol, p.vol, fmtVol), cls: 'cyan', ic: 'progress' },
+      { k: 'Sätze', v: String(c.sets), d: delta(c.sets, p.sets, function (x) { return String(x); }), cls: 'violet', ic: 'exercises' },
+      { k: 'Trainingszeit', v: fmtTime(c.time), d: delta(c.time, p.time, fmtTime), cls: 'gold', ic: 'clock' }
+    ];
+    var prNames = c.prs.map(function (id) { var ex = G.ex.byId(id); return ex ? ex.name : null; }).filter(Boolean);
+    return '<section class="card week-review">' +
+      '<div class="week-review__head">' + u.icon('progress', 20) +
+      '<div><h3>' + u.esc(title) + '</h3><span>' + u.esc(range) + ' · ' + cmp + '</span></div></div>' +
+      '<div class="week-review__grid">' + tiles.map(function (x) {
+        return '<div class="wr-tile wr-tile--' + x.cls + '"><span class="wr-tile__k">' + u.icon(x.ic, 14) + '<span>' + u.esc(x.k) + '</span></span>' +
+          '<b class="wr-tile__v">' + u.esc(x.v) + '</b>' + x.d + '</div>';
+      }).join('') + '</div>' +
+      '<div class="week-review__pr">' + u.icon('medal', 16) +
+      (prNames.length
+        ? '<span><b>' + prNames.length + (prNames.length === 1 ? ' neuer Rekord' : ' neue Rekorde') + '</b> · ' + u.esc(prNames.slice(0, 3).join(', ')) + (prNames.length > 3 ? ' …' : '') + '</span>'
+        : '<span>Keine neuen Rekorde in dieser Woche</span>') +
+      '</div></section>';
+  }
+  /** Einmal pro Woche beim App-Start: Rückblick auf die abgeschlossene Vorwoche */
+  function maybeShowWeekReview() {
+    var s = G.store.state;
+    if (!G.store.hasConsent('history') || s.session) return;
+    var thisWeek = u.weekStart(u.today());
+    if (s.settings.lastReviewWeek === thisWeek) return;
+    var last = u.addDays(thisWeek, -7);
+    s.settings.lastReviewWeek = thisWeek;
+    G.store.commit('settings');
+    if (!weekStats(last).n) return;
+    u.openSheet('Dein Wochen-Rückblick', weekReviewHtml(last, 'Letzte Woche') +
+      '<button type="button" class="btn btn--primary btn--block" data-act="wr-close" style="margin-top:14px">Weiter so!</button>',
+      function (root) { var b = root.querySelector('[data-act="wr-close"]'); if (b) b.onclick = function () { u.closeSheet(); }; });
+  }
+  G.weekReview = { html: weekReviewHtml, maybeShow: maybeShowWeekReview, stats: weekStats };
+
   function tabOverview() {
     var s = G.store.state;
     var vol = weeklyVolume(8);
@@ -162,6 +232,7 @@
     ];
 
     return '<div class="progress-overview">' + levelCard() +
+      weekReviewHtml(u.weekStart(u.today()), 'Diese Woche') +
       '<div class="progress-stats">' +
       cards.map(function (i) {
         return '<article class="card progress-stat ' + i.cls + '">' +

@@ -291,6 +291,11 @@
     current = G.views[start] ? start : 'dashboard';
     render();
     if (G.intro) G.intro.play();
+    // Einmal pro Woche: Rückblick auf die Vorwoche — erst nach der Start-Animation
+    if (G.weekReview) (function waitIntro(n) {
+      if (document.getElementById('intro') && n < 30) return setTimeout(function () { waitIntro(n + 1); }, 300);
+      setTimeout(G.weekReview.maybeShow, 400);
+    })(0);
 
     if (G.store.hasConsent('push')) G.reminders.start();
 

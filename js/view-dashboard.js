@@ -168,82 +168,45 @@
   }
 
   /* ------------------------------------------------------------
-     Einklappbare Karten unter den Kennzahlen (20.10.2026):
-     Kopf zeigt das Wichtigste, Antippen klappt auf. Zustand bleibt
-     beim Neuzeichnen erhalten (laufende Sitzung).
+     Schnellzugriff (20.10.2026): Journey, Coach und letzter Rekord
+     als drei kleine farbige Kacheln in einer Reihe — die Hauptseite
+     passt damit ohne Scrollen auf einen Bildschirm. Antippen öffnet
+     die jeweilige Seite.
      ------------------------------------------------------------ */
-  var FOLD = { journey: false, coach: false, records: false };
-  function foldHead(key, icon, title, summary, extra) {
-    return '<button type="button" class="card__head dashboard-card__head fold__head" data-fold="' + key + '" aria-expanded="' + !!FOLD[key] + '">' +
-      u.icon(icon, 18) +
-      '<span class="fold__title"><h3>' + u.esc(title) + '</h3>' +
-      (summary ? '<span class="fold__sum">' + summary + '</span>' : '') + '</span>' +
-      '<span class="spacer"></span>' + (extra || '') +
-      '<span class="fold__chev">' + u.icon('chevron', 18) + '</span></button>';
-  }
-  function foldOpen(key) { return FOLD[key] ? ' is-open' : ''; }
-
-  function levelCard() {
-    var li = G.store.levelInfo();
-    return '<section class="dashboard-journey card fold' + foldOpen('journey') + '">' +
-      foldHead('journey', 'journey', 'Journey',
-        '<b>Level ' + li.level + '</b> · ' + u.esc(li.title) + ' · ' + li.into + ' / ' + li.need + ' XP',
-        '<span class="pill pill--muted fold__pill">' + u.esc(li.region.icon + ' ' + li.region.name) + '</span>') +
-      '<div class="fold__body">' +
-      '<div class="row dashboard-journey__body" style="gap:18px">' +
-      G.charts.ring(li.pct, { size: 104, value: li.level, label: 'Level' }) +
-      '<div style="flex:1;min-width:0">' +
-      '<b style="font-size:16px">' + u.esc(li.title) + '</b>' +
-      '<p class="small muted" style="margin:4px 0 12px">' + li.into + ' / ' + li.need + ' XP bis Level ' + (li.level + 1) + '</p>' +
-      '<div class="bar"><span class="bar__fill" style="width:' + Math.round(li.pct * 100) + '%"></span></div>' +
-      '<p class="tiny dim" style="margin-top:10px">' + u.esc(li.region.tag) + '</p>' +
-      '</div></div>' +
-      '<button class="btn btn--sm btn--block dashboard-card__action" style="margin-top:16px" data-go="journey">Weltkarte öffnen</button>' +
-      '</div></section>';
-  }
-
-  function coachCard() {
-    var tip = G.coach.dailyTip();
-    return '<section class="dashboard-coach card fold' + foldOpen('coach') + '">' +
-      foldHead('coach', 'coach', 'G04Fit Coach',
-        '<span class="fold__sum-line">' + u.esc(tip.text) + '</span>') +
-      '<div class="fold__body">' +
-      '<div class="coach dashboard-coach__body">' +
-      '<div class="coach__av">' + u.icon(tip.locked ? 'lock' : 'coach', 20) + '</div>' +
-      '<div class="coach__msg">' + u.esc(tip.text) + '</div>' +
-      '</div>' +
-      '<button class="btn btn--sm btn--block" style="margin-top:14px" data-go="coach">' +
-      (tip.locked ? 'Einwilligung prüfen' : 'Alle Empfehlungen') + '</button>' +
-      '</div></section>';
-  }
-
-  function recordsCard() {
+  function quickRow() {
     var s = G.store.state;
-    var all = Object.keys(s.records).filter(function (id) { return G.ex.byId(id); })
-      .sort(function (a, b) { return s.records[b].date < s.records[a].date ? -1 : 1; });
-    var ids = all.slice(0, 4);
-    function val(ex, r) { return ex.time ? r.reps + ' s' : u.fmt(r.weight) + '×' + r.reps; }
+    var li = G.store.levelInfo();
 
-    var sum = 'Noch keine Bestleistungen';
-    if (ids.length) {
-      var ex0 = G.ex.byId(ids[0]), r0 = s.records[ids[0]];
-      sum = '<span>Zuletzt:</span> <b>' + u.esc(ex0.name) + ' ' + val(ex0, r0) + '</b>';
+    var coachV, coachS;
+    if (!G.coach.allowed()) { coachV = 'Ausgeschaltet'; coachS = 'Auswertung erlauben'; }
+    else {
+      var ins = G.coach.insights();
+      coachV = ins.length ? ins.length + (ins.length === 1 ? ' Tipp' : ' Tipps') : 'Alles gut';
+      coachS = ins.length ? ins[0].title : G.coach.dailyTip().text;
     }
 
-    return '<section class="dashboard-records card fold' + foldOpen('records') + '">' +
-      foldHead('records', 'medal', ids.length ? 'Neueste Rekorde' : 'Rekorde', sum) +
-      '<div class="fold__body">' +
-      (ids.length
-        ? '<div class="stack" style="--sp:8px">' + ids.map(function (id) {
-          var ex = G.ex.byId(id), r = s.records[id];
-          return '<div class="pr">' +
-            '<div class="pr__medal">' + u.icon('medal', 16) + '</div>' +
-            '<div class="pr__main"><b>' + u.esc(ex.name) + '</b><span>' + u.esc(u.relDay(r.date)) + '</span></div>' +
-            '<div class="pr__v">' + val(ex, r) + '</div>' +
-            '</div>';
-        }).join('') + '</div>'
-        : '<p class="small muted">Noch keine Bestleistungen erfasst. Nach der ersten abgeschlossenen Einheit erscheinen sie hier.</p>') +
-      '</div></section>';
+    var ids = Object.keys(s.records).filter(function (id) { return G.ex.byId(id); })
+      .sort(function (a, b) { return s.records[b].date < s.records[a].date ? -1 : 1; });
+    var recV = '–', recS = 'Noch kein Rekord';
+    if (ids.length) {
+      var ex = G.ex.byId(ids[0]), r = s.records[ids[0]];
+      recV = ex.time ? r.reps + ' s' : u.fmt(r.weight) + '×' + r.reps;
+      recS = ex.name;
+    }
+
+    function tile(cls, go, icon, head, v, sub, extra) {
+      return '<button type="button" class="dash-q dash-q--' + cls + '" data-q="' + go + '">' +
+        '<span class="dash-q__h">' + u.icon(icon, 14) + '<span>' + u.esc(head) + '</span></span>' +
+        '<b class="dash-q__v">' + u.esc(v) + '</b>' +
+        '<span class="dash-q__s">' + u.esc(sub) + '</span>' + (extra || '') + '</button>';
+    }
+
+    return '<section class="dash-quick" aria-label="Schnellzugriff">' +
+      tile('green', 'journey', 'journey', 'Journey', 'Level ' + li.level, li.title,
+        '<span class="dash-q__bar"><i style="width:' + Math.round(li.pct * 100) + '%"></i></span>') +
+      tile('cyan', 'coach', 'coach', 'Coach', coachV, coachS) +
+      tile('gold', 'records', 'medal', 'Rekord', recV, recS) +
+      '</section>';
   }
 
   G.views.dashboard = {
@@ -259,17 +222,17 @@
         '<span class="spacer"></span><span class="pill pill--muted dashboard-week__count">' + weekCount() + '</span></div>' +
         weekStrip() + '</section>' +
         quickStats() +
-        levelCard() + coachCard() + recordsCard() +
+        quickRow() +
         '</div>';
     },
     mount: function (host) {
-      /* Karten auf- und zuklappen, ohne neu zu zeichnen */
-      u.on(host, 'click', '[data-fold]', function (e, t) {
-        var key = t.getAttribute('data-fold');
-        FOLD[key] = !FOLD[key];
-        var card = t.closest('.fold');
-        if (card) card.classList.toggle('is-open', FOLD[key]);
-        t.setAttribute('aria-expanded', String(FOLD[key]));
+      /* Schnellzugriff */
+      u.on(host, 'click', '[data-q]', function (e, t) {
+        var q = t.getAttribute('data-q');
+        if (q === 'records') {
+          if (G.views.progress && G.views.progress.setTab) G.views.progress.setTab('rekorde');
+          G.app.go('progress');
+        } else G.app.go(q);
       });
       u.on(host, 'click', '[data-act="start"]', function () {
         var plan = G.planner.todayPlan();
