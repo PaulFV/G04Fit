@@ -4,7 +4,7 @@ Trainingsplaner für **Brust, Rücken, Schulter, Bizeps, Trizeps, Bauch und Bein
 Journey, regelbasiertem Coach, Fortschrittsauswertung und einem
 Datenschutzkonzept, das ohne Einwilligung nichts speichert.
 
-Umgesetzt als eigenständige Web-App: läuft auf **Desktop, iPhone und Android**, offline,
+Umgesetzt als eigenständige Web-App: läuft auf **Desktop, iPhone, iPad/Tablet und Android**, offline,
 ohne Backend, ohne Konto, ohne Tracking.
 
 ---
@@ -16,22 +16,29 @@ Die App hat vier Reiter in der unteren Leiste (am Desktop in der Seitenleiste):
 
 | Reiter | Beschreibung |
 |:--|:--|
-| **Dashboard** | Begrüßung mit Profilbild, Tagesplan mit den Knöpfen **„Training starten“** und **„Freies Training“** (am Ruhetag nur „Freies Training“), Wochenleiste mit Legende (erledigt / geplant / verpasst / heute), Kennzahlen, Coach-Tipp, nächste Erinnerung |
-| **Training** | Unterreiter *Training* und *Übungen*. **Training:** geplantes oder freies Training, „Letztes Training wiederholen“, Start-Knopf mit Trainingszeit, Sätze und Gewichte (bei Eigengewicht ohne Gewichtsfeld), Satzpause mit Ton, Fokus auf die nächste Übung, Coach-Hinweise. **Freies Training:** per Muskelgruppe (Vorschlag änderbar) oder „Übungen selbst auswählen“ mit Suche, Standard 3 Sätze; noch nicht begonnene Übungen lassen sich wieder entfernen. **Übungen:** 99 Übungen in sieben Muskelgruppen mit Suche, Geräte-Filter, animierter Ausführung, anatomischer Muskelkarte, Technikhinweisen und häufigen Fehlern |
+| **Dashboard** | Passt ohne Scrollen auf einen Bildschirm: Begrüßung mit Profilbild, Tagesplan mit den Knöpfen **„Training starten“** und **„Freies Training“** (am Ruhetag nur „Freies Training“), Wochenleiste mit Legende (erledigt / geplant / verpasst / heute), fünf kleine Kennzahlen in einer Reihe (Einheiten, Serie, Volumen und Sätze der letzten 7 Tage, Rekorde 30 Tage) und drei Schnellzugriff-Kacheln **Journey · Coach · Rekord**, die die jeweilige Seite öffnen |
+| **Training** | Unterreiter *Training* und *Übungen*. **Training:** geplantes oder freies Training, „Letztes Training wiederholen“, Start-Knopf mit Trainingszeit, Sätze und Gewichte (bei Eigengewicht ohne Gewichtsfeld), Satzpause mit Ton (auf dem Tablet extra groß), Sätze und Übungen in beliebiger Reihenfolge, Coach-Hinweise. **Vor jedem Start** erscheint der Dialog *Pause einstellen*: Pause an/aus, Dauer (−15 s / +15 s oder Schnellwahl 0:30–3:00), Ton am Ende an/aus mit Klangauswahl — die Wahl wird als Standard gemerkt. **Freies Training:** per Muskelgruppe (Vorschlag änderbar) oder „Übungen selbst auswählen“ mit Suche, Standard 3 Sätze; noch nicht begonnene Übungen lassen sich wieder entfernen. **Übungen:** 99 Übungen in sieben Muskelgruppen mit Suche, Geräte-Filter, animierter Ausführung, anatomischer Muskelkarte, Technikhinweisen und häufigen Fehlern |
 | **Fortschritt** | Unterreiter *Überblick · Journey · Kraft · Rekorde · Historie*. Level-Karte, Volumen, Kraftentwicklung, Rekorde (Bestwert und neuester Rekord hervorgehoben), Muskelbalance, Leistungsprofil, Historie mit Trainingszeit. **Journey:** einklappbare Kachel zur aktuellen Region, Weltkarte mit sechs Regionen, Level und XP, Modi von Easy bis Beast. Ohne Einwilligung in die Historie sind nur Überblick und Journey sichtbar |
-| **Einstellungen** | Unterreiter *Profil · Coach · Erinnerungen · Datenschutz · Feedback*. **Profil:** persönliche Angaben, Gewichtsverlauf, Erfahrungsstufe, Ziele, Trainingstage, Startgewichte, Trainings-Avatar, Sprache, App-Einstellungen (u. a. Start-Animation, Animationen reduzieren). **Coach:** Vorschläge zu Gewicht, Wiederholungen, Progression und Wiedereinstieg. **Erinnerungen:** Trainingstage, Uhrzeit, Benachrichtigungen, Wiedereinstiegsmodus. **Datenschutz:** vier einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung und Copyright-Hinweise. **Feedback:** Formular „Feedback & Ideen“ |
+| **Einstellungen** | Unterreiter *Profil · Coach · Erinnerungen · Datenschutz · Feedback*. Profil, Coach und Erinnerungen bestehen aus **farbigen Kacheln** mit Kurzinfo; ein Tipp öffnet den Bereich in einem eigenen Fenster. **Profil:** persönliche Angaben, Gewichtsverlauf, Erfahrungsstufe, Ziele, Trainingstage, Startgewichte, Trainings-Avatar, Sprache, App-Einstellungen (u. a. Start-Animation, Animationen reduzieren). **Coach:** Vorschläge zu Gewicht, Wiederholungen, Progression und Wiedereinstieg. **Erinnerungen:** nächste Termine, Uhrzeit und Trainingstage, Wiedereinstiegsmodus, Benachrichtigungen. **Datenschutz:** vier einzelne Einwilligungen, Export, Löschung, Datenschutzerklärung und Copyright-Hinweise. **Feedback:** Formular „Feedback & Ideen“ |
 
 Alte Links wie `#journey`, `#exercises`, `#profile`, `#coach`, `#reminders`, `#privacy` oder
 `#feedback` funktionieren weiter und öffnen den passenden Reiter.
 
 ### Start-Animation
 
-Beim Öffnen der App füllt die Anatomie-Figur aus den Übungen den ganzen Bildschirm: Die Kamera
-fährt an den Oberkörper heran, Schultern, Brust, Bizeps und Bauch spannen sich nacheinander an
-(schwellen leicht an und leuchten), danach erscheinen Begrüßung und Level. Dauer rund 3,5 Sekunden,
-Antippen überspringt. Sie erscheint einmal pro App-Start, ist standardmäßig an und lässt sich
-unter *Einstellungen → Profil → Start-Animation* abschalten. Bei „Animationen reduzieren“ oder
-reduzierter Bewegung im System läuft eine ruhige Kurzfassung.
+Beim Öffnen der App erscheint die Anatomie-Figur aus den Übungen von Kopf bis Oberschenkel:
+Schultern, Brust, Bizeps und Bauch spannen sich nacheinander an (schwellen leicht an und leuchten),
+danach erscheinen Begrüßung und Level. Dauer rund 3,5 Sekunden, Antippen überspringt. Die Figur passt
+sich an Handy und Tablet (hoch und quer) an. Sie erscheint einmal pro App-Start, ist standardmäßig an
+und lässt sich unter *Einstellungen → Profil → App-Einstellungen* abschalten. Bei „Animationen
+reduzieren“ oder reduzierter Bewegung im System läuft eine ruhige Kurzfassung.
+
+### Tablet, iPad und heller Modus
+
+- **Tablet hoch:** Fenster erscheinen als mittiger Dialog statt im Vollbild, Kennzahlen und Kacheln sind größer.
+- **Tablet quer / Desktop:** Hauptseite zweispaltig (links Startkachel, rechts Woche, Kennzahlen, Schnellzugriff).
+- **Satzpause:** auf dem Tablet sehr große Zeitanzeige, aus der Entfernung lesbar.
+- **Heller Modus:** eigene Datei `css/light.css` mit kräftigen, gut lesbaren Farben (Texte mindestens 4,5:1 Kontrast).
 
 ---
 
@@ -175,10 +182,11 @@ G04Fit/
 │   ├── dashboard-preview.css   Dashboard
 │   ├── workout-preview.css     Workout-Vorschau und laufende Einheit
 │   ├── progress-overview.css   Fortschritt
-│   └── anim.css                Übungsanimationen, Muskelkarte, Start-Animation
+│   ├── anim.css                Übungsanimationen, Muskelkarte, Start-Animation
+│   └── light.css               Heller Modus (kräftige Farben, zuletzt geladen)
 │
 ├── js/
-│   ├── util.js                 Hilfsfunktionen, Icons, Toasts, Sheets
+│   ├── util.js                 Hilfsfunktionen, Icons, Toasts, Sheets, farbige Kacheln
 │   ├── i18n.js                 Sprachumschaltung Deutsch/Englisch
 │   ├── i18n-exercises-en.js    Englische Übungstexte
 │   ├── data-exercises.js       Übungsdatenbank (99 Übungen, 7 Muskelgruppen)
