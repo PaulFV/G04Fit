@@ -88,3 +88,13 @@
 :root[data-theme="light"] .rest-dlg__num{background:#0B6878;color:#fff}
 :root[data-theme="light"] .rest-dlg__sec--sound .rest-dlg__num{background:#05663D;color:#fff}
 :root[data-theme="light"] .rest-dlg__sec{background:rgba(255,255,255,.7)}
+
+/* Wochen-Rückblick und „Letztes Mal" im hellen Modus */
+:root[data-theme="light"] .wr-tile{background:linear-gradient(160deg,rgba(var(--cr),.14),#fff);--c:#05663D}
+:root[data-theme="light"] .wr-tile--cyan{--c:#0B6878}
+:root[data-theme="light"] .wr-tile--violet{--c:#5B21B6}
+:root[data-theme="light"] .wr-tile--gold{--c:#7A4F00}
+:root[data-theme="light"] .wr-d--up{color:#05663D}
+:root[data-theme="light"] .wr-d--down{color:#B0244F}
+:root[data-theme="light"] .week-review__pr .ui-icon{color:#7A4F00}
+:root[data-theme="light"] .set-row.is-done .set-row__prev{color:#05663D}
