@@ -425,6 +425,68 @@
     return sess.restEnabled ? 'Pause ' + sess.restSeconds + ' s' : 'Pause aus';
   }
 
+  /* ------------------------------------------------------------
+     Aufwärmsätze (21.10.2026): vor Übungen mit Zusatzgewicht ab
+     20 kg zwei leichte Sätze (50 % × 8, 75 % × 5). Sie zählen nicht
+     zu Volumen, Rekorden oder Satzanzahl, sind nur zum Abhaken.
+     ------------------------------------------------------------ */
+  var WARM = [{ p: 0.5, r: 8 }, { p: 0.75, r: 5 }];
+  function warmupHtml(b, bi, ex) {
+    if (ex.time || ownWeightOnly(ex)) return '';
+    var w = +((b.sets[0] || {}).weight) || 0;
+    if (w < 20) return '';
+    var inc = ex.inc || 2.5, done = b.warm || [];
+    var allDone = WARM.every(function (x, i) { return done[i]; });
+    return '<div class="warmup' + (allDone ? ' is-done' : '') + '">' +
+      '<span class="warmup__label">' + u.icon('flame', 14) + '<span>Aufwärmen</span></span>' +
+      WARM.map(function (x, i) {
+        var kg = Math.max(inc, u.roundWeight(w * x.p, inc));
+        return '<button type="button" class="warmup__set' + (done[i] ? ' is-on' : '') + '" data-act="warm" data-b="' + bi + '" data-w="' + i + '" aria-pressed="' + (done[i] ? 'true' : 'false') + '">' +
+          '<b>' + u.fmt(kg) + ' kg × ' + x.r + '</b>' + (done[i] ? u.icon('check', 13) : '') + '</button>';
+      }).join('') + '</div>';
+  }
+
+  /* ------------------------------------------------------------
+     Notiz pro Übung (21.10.2026): z. B. „Sitz Stufe 4“. Wird im
+     Profil gespeichert und bei jeder Einheit wieder angezeigt.
+     ------------------------------------------------------------ */
+  function exNote(exId) { var n = G.store.state.profile.exNotes || {}; return n[exId] || ''; }
+  function noteHtml(ex) {
+    var n = exNote(ex.id);
+    return n ? '<button type="button" class="ex-note" data-act="ex-note" data-ex-note="' + ex.id + '" title="Notiz bearbeiten">' +
+      u.icon('exercises', 14) + '<span>' + u.esc(n) + '</span></button>' : '';
+  }
+  function openExNote(exId) {
+    var ex = G.ex.byId(exId); if (!ex) return;
+    var cur = exNote(exId);
+    var html = '<div class="ex-note-edit">' +
+      '<p class="small muted" style="margin:0">' + u.esc(ex.name) + '</p>' +
+      '<textarea id="exNoteText" class="textarea textarea--prose" rows="3" maxlength="300" placeholder="z. B. Sitz Stufe 4 · enger greifen · Bank 30°">' + u.esc(cur) + '</textarea>' +
+      '<p class="tiny dim" style="margin:0">Wird bei dieser Übung jedes Mal angezeigt.</p>' +
+      '<div class="btn-row">' +
+      (cur ? '<button class="btn btn--sm btn--danger" data-act="note-del">' + u.icon('trash', 15) + ' Notiz löschen</button>' : '') +
+      '<span class="spacer"></span>' +
+      '<button class="btn btn--primary" data-act="note-save">' + u.icon('check', 16) + ' Speichern</button>' +
+      '</div></div>';
+    function store(val) {
+      var p = G.store.state.profile;
+      p.exNotes = p.exNotes || {};
+      val = (val || '').trim();
+      if (val) p.exNotes[exId] = val; else delete p.exNotes[exId];
+      G.store.commit('profile');
+      u.closeSheet();
+      G.app.rerender();
+    }
+    u.openSheet('Notiz zur Übung', html, function (root) {
+      var ta = root.querySelector('#exNoteText');
+      if (ta) setTimeout(function () { try { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); } catch (e) {} }, 60);
+      var sv = root.querySelector('[data-act="note-save"]');
+      var dl = root.querySelector('[data-act="note-del"]');
+      if (sv) sv.addEventListener('click', function () { store(ta.value); });
+      if (dl) dl.addEventListener('click', function () { store(''); });
+    });
+  }
+
   function block(b, bi) {
     var ex = G.ex.byId(b.exId);
     if (!ex) return '';
@@ -457,6 +519,7 @@
         '<div class="coach__av" style="width:32px;height:32px;border-radius:10px">' + u.icon('coach', 16) + '</div>' +
         '<div class="coach__msg small">' + u.esc(b.hint) + '</div></div>' : '') +
 
+      noteHtml(ex) + warmupHtml(b, bi, ex) +
       '<div class="set-head"><span>#</span><span>' + (ex.time ? '' : ownWeightOnly(ex) ? 'Eigengewicht' : 'Gewicht') + '</span><span>' +
       (ex.time ? 'Sekunden' : 'Wdh.') + '</span><span></span></div>' +
       b.sets.map(function (s, si) { return setRow(bi, si, s, ex, last); }).join('') +
@@ -465,6 +528,7 @@
       '<button class="btn btn--sm" data-act="add-set" data-b="' + bi + '">' + u.icon('plus', 15) + ' Satz</button>' +
       '<button class="btn btn--sm" data-act="rpe" data-b="' + bi + '" data-v="easy">War leicht</button>' +
       '<button class="btn btn--sm" data-act="rpe" data-b="' + bi + '" data-v="hard">War schwer</button>' +
+      '<button class="btn btn--sm btn--note' + (exNote(ex.id) ? ' has-note' : '') + '" data-act="ex-note" data-ex-note="' + ex.id + '">' + u.icon('exercises', 14) + ' Notiz</button>' +
       '<span class="spacer"></span>' +
       '<span class="tiny dim nowrap" data-reps-total="' + bi + '">' +
       u.esc(repsDoneLabel(b, ex) + ' · ' + pauseLabel(G.store.state.session)) + '</span>' +
@@ -1167,6 +1231,19 @@
         syncWakeLock();
         G.store.save();
       }, signal);
+
+      /* --- Aufwärmsätze abhaken --- */
+      u.on(host, 'click', '[data-act="warm"]', function (e, t) {
+        var b = s.session.exercises[+t.getAttribute('data-b')];
+        var i = +t.getAttribute('data-w');
+        b.warm = b.warm || [];
+        b.warm[i] = !b.warm[i];
+        G.store.save();
+        G.app.rerender();
+      }, signal);
+
+      /* --- Notiz pro Übung --- */
+      u.on(host, 'click', '[data-act="ex-note"]', function (e, t) { openExNote(t.getAttribute('data-ex-note')); }, signal);
 
       /* --- Hantelscheiben-Rechner --- */
       u.on(host, 'click', '[data-act="plates"]', function (e, t) { openPlates(+t.getAttribute('data-b')); }, signal);

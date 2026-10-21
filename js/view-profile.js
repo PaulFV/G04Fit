@@ -398,6 +398,27 @@
     );
   }
 
+  /* Als App installieren (übernommen aus G04TV, 21.10.2026) */
+  function installCard() {
+    var done = G.app.isInstalled && G.app.isInstalled();
+    var can = G.app.canInstall && G.app.canInstall();
+    var en = G.i18n.locale() === 'en';
+    var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    return '<div class="card fold' + foldOpen('install') + '">' +
+      foldHead('install', 'download', 'Als App installieren',
+        done ? '<b>Installiert</b> · läuft als App' : (can ? '<b>Bereit</b> · mit einem Tipp installieren' : 'iPhone, iPad, Android, PC')) +
+      '<div class="fold__body"><div class="app-install">' +
+      (done ? '<div class="note note--ok">' + u.icon('check', 17) + '<div>G04Fit läuft bereits als installierte App.</div></div>' : '') +
+      '<div class="app-install__list">' +
+      '<div class="app-install__os' + (ios ? ' is-me' : '') + '"><span class="app-install__n">1</span><b>iPhone / iPad</b><span>' + (en ? 'Open in <b>Safari</b> · tap <b>Share</b> · <b>Add to Home Screen</b>' : 'In <b>Safari</b> öffnen · <b>Teilen</b> antippen · <b>Zum Home-Bildschirm</b>') + '</span></div>' +
+      '<div class="app-install__os' + (!ios && /Android/.test(navigator.userAgent) ? ' is-me' : '') + '"><span class="app-install__n">2</span><b>Android</b><span>' + (en ? 'Open in <b>Chrome</b> · menu ⋮ · <b>Install app</b>' : 'In <b>Chrome</b> öffnen · Menü ⋮ · <b>App installieren</b>') + '</span></div>' +
+      '<div class="app-install__os' + (!ios && !/Android/.test(navigator.userAgent) ? ' is-me' : '') + '"><span class="app-install__n">3</span><b>PC / Mac</b><span>' + (en ? '<b>Chrome</b> or <b>Edge</b> · install icon in the address bar' : 'In <b>Chrome</b> oder <b>Edge</b> · Installieren-Symbol in der Adresszeile') + '</span></div>' +
+      '</div>' +
+      '<p class="tiny dim" style="margin:0">Danach startet G04Fit im Vollbild wie eine normale App, auch ohne Internet. Deine Daten bleiben dieselben.</p>' +
+      (can && !done ? '<button class="btn btn--primary app-install__go" id="setInstall">' + u.icon('download', 16) + ' Jetzt installieren</button>' : '') +
+      '</div></div></div>';
+  }
+
   function appCard() {
     var s = G.store.state;
     return (
@@ -449,7 +470,8 @@
     { k: 'avatar', card: function () { return avatarCard(); } },
     { k: 'days', card: function () { return daysCard(); } },
     { k: 'start', card: function () { return startWeightsCard(); } },
-    { k: 'app', card: function () { return appCard(); } }
+    { k: 'app', card: function () { return appCard(); } },
+    { k: 'install', card: function () { return installCard(); } }
   ];
   var OPEN = null;
 
@@ -548,6 +570,9 @@
 
   function mountProfile(host) {
       var s = G.store.state;
+
+      /* Als App installieren */
+      u.on(host, 'click', '#setInstall', function () { G.app.install(); });
 
       /* Karten auf- und zuklappen, ohne neu zu zeichnen */
       u.on(host, 'click', '[data-fold]', function (e, t) {

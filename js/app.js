@@ -338,11 +338,37 @@
     }).catch(function () { /* offline-Betrieb bleibt optional */ });
   }
 
+  /* Als App installieren (übernommen aus G04TV, 21.10.2026):
+     Chrome/Edge/Android liefern ein Installations-Ereignis, das der
+     Knopf „Jetzt installieren“ auslöst. iPhone/iPad: Anleitung. */
+  var installEvent = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    installEvent = e;
+    if (current === 'settings') rerender();
+  });
+  window.addEventListener('appinstalled', function () {
+    installEvent = null;
+    if (G.u && G.u.toast) G.u.toast('G04Fit wurde installiert', '', 'ok');
+    if (current === 'settings') rerender();
+  });
+  function install() {
+    if (!installEvent) return;
+    installEvent.prompt();
+    installEvent.userChoice.then(function () { installEvent = null; if (current === 'settings') rerender(); });
+  }
+  function isInstalled() {
+    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+  }
+
   G.app = {
     NAV: NAV,
     go: go,
     rerender: rerender,
     setTheme: setTheme,
+    install: install,
+    canInstall: function () { return !!installEvent; },
+    isInstalled: isInstalled,
     get current() { return current; }
   };
 
