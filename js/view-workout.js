@@ -621,40 +621,50 @@
     var sec = u.clamp(s.settings.restSeconds || 90, 15, 500);
     var snd = s.settings.restSound !== false;
     var kind = s.settings.alarmSound || 'signal';
+    function mmss(v) { return Math.floor(v / 60) + ':' + ('0' + (v % 60)).slice(-2); }
     var body =
       '<div class="rest-dlg">' +
-      '<p class="small muted" style="margin:0">' + u.esc(title) + '</p>' +
-      '<label class="switch rest-dlg__sw"><input type="checkbox" id="rdOn"' + (on ? ' checked' : '') + '>' +
-      '<span class="switch__track"></span><span class="switch__label"><b>Pause zwischen Sätzen</b>' +
-      '<span>Startet nach jedem abgehakten Satz automatisch.</span></span></label>' +
+      '<div class="rest-dlg__title">' + u.icon('dumbbell', 16) + '<span>' + u.esc(title) + '</span></div>' +
+
+      /* 1 — Pause */
+      '<section class="rest-dlg__sec rest-dlg__sec--pause">' +
+      '<div class="rest-dlg__head"><span class="rest-dlg__num">1</span>' +
+      '<div class="rest-dlg__htxt"><b>Pause zwischen Sätzen</b><span>Startet nach jedem abgehakten Satz.</span></div>' +
+      '<label class="switch rest-dlg__toggle"><input type="checkbox" id="rdOn"' + (on ? ' checked' : '') + '><span class="switch__track"></span></label></div>' +
       '<div class="rest-dlg__time"' + (on ? '' : ' hidden') + ' id="rdTime">' +
-      '<div class="rest-dlg__big"><b id="rdVal">' + sec + '</b><span>Sekunden</span></div>' +
-      '<div class="chips rest-dlg__chips">' + REST_CHIPS.map(function (v) {
-        return '<button type="button" class="chip' + (v === sec ? ' is-on' : '') + '" data-rs="' + v + '">' + (v < 60 ? v + ' s' : (v % 60 ? (v / 60).toString().replace('.', ',') : v / 60) + ' min') + '</button>';
-      }).join('') + '</div>' +
-      '<div class="row" style="gap:8px;align-items:center;justify-content:center">' +
-      '<button type="button" class="btn btn--sm" data-rs-step="-15">−15 s</button>' +
-      '<button type="button" class="btn btn--sm" data-rs-step="15">+15 s</button></div>' +
+      '<div class="rest-dlg__dial">' +
+      '<button type="button" class="rest-dlg__step rest-dlg__step--minus" data-rs-step="-15" aria-label="15 Sekunden weniger">−15 s</button>' +
+      '<div class="rest-dlg__big"><b id="rdVal">' + mmss(sec) + '</b><span>Minuten</span></div>' +
+      '<button type="button" class="rest-dlg__step rest-dlg__step--plus" data-rs-step="15" aria-label="15 Sekunden mehr">+15 s</button>' +
       '</div>' +
-      '<label class="switch rest-dlg__sw"><input type="checkbox" id="rdSnd"' + (snd ? ' checked' : '') + '>' +
-      '<span class="switch__track"></span><span class="switch__label"><b>Ton am Ende der Pause</b>' +
-      '<span>Signal, wenn die Pause vorbei ist.</span></span></label>' +
-      '<div class="row rest-dlg__sound"' + (snd ? '' : ' hidden') + ' id="rdSound" style="gap:8px">' +
-      '<select class="select" id="rdKind" style="flex:1">' +
+      '<div class="rest-dlg__chips">' + REST_CHIPS.map(function (v) {
+        return '<button type="button" class="rest-dlg__chip' + (v === sec ? ' is-on' : '') + '" data-rs="' + v + '">' + mmss(v) + '</button>';
+      }).join('') + '</div>' +
+      '</div></section>' +
+
+      /* 2 — Ton */
+      '<section class="rest-dlg__sec rest-dlg__sec--sound">' +
+      '<div class="rest-dlg__head"><span class="rest-dlg__num">2</span>' +
+      '<div class="rest-dlg__htxt"><b>Ton am Ende der Pause</b><span>Signal, wenn die Pause vorbei ist.</span></div>' +
+      '<label class="switch rest-dlg__toggle"><input type="checkbox" id="rdSnd"' + (snd ? ' checked' : '') + '><span class="switch__track"></span></label></div>' +
+      '<div class="rest-dlg__sound"' + (snd ? '' : ' hidden') + ' id="rdSound">' +
+      '<select class="select" id="rdKind">' +
       '<option value="signal"' + (kind === 'signal' ? ' selected' : '') + '>Signal</option>' +
       '<option value="pulse"' + (kind === 'pulse' ? ' selected' : '') + '>Puls</option>' +
       '<option value="chime"' + (kind === 'chime' ? ' selected' : '') + '>Glockenspiel</option>' +
-      '</select><button type="button" class="btn btn--sm" data-act="rd-test">' + u.icon('play', 14) + ' Anhören</button></div>' +
-      '<div class="btn-row rest-dlg__go">' +
-      '<button type="button" class="btn btn--ghost" data-act="rd-cancel">Abbrechen</button>' +
-      '<button type="button" class="btn btn--primary btn--lg" data-act="rd-go">' + u.icon('play', 16) + ' Los geht’s</button>' +
-      '</div></div>';
+      '</select><button type="button" class="btn rest-dlg__test" data-act="rd-test">' + u.icon('play', 14) + ' Anhören</button></div>' +
+      '</section>' +
+
+      '<button type="button" class="btn btn--primary btn--lg btn--block rest-dlg__go" data-act="rd-go">' + u.icon('play', 18) + ' Los geht’s</button>' +
+      '<button type="button" class="rest-dlg__cancel" data-act="rd-cancel">Abbrechen</button>' +
+      '</div>';
 
     u.openSheet('Pause einstellen', body, function (root) {
       var val = root.querySelector('#rdVal');
       function setSec(v) {
         sec = u.clamp(v, 15, 500);
-        val.textContent = sec;
+        val.textContent = mmss(sec);
+        val.classList.remove('is-bump'); void val.offsetWidth; val.classList.add('is-bump');
         root.querySelectorAll('[data-rs]').forEach(function (b) { b.classList.toggle('is-on', +b.getAttribute('data-rs') === sec); });
       }
       root.querySelector('#rdOn').onchange = function (e) { on = e.target.checked; root.querySelector('#rdTime').hidden = !on; };
