@@ -55,8 +55,9 @@
           '<path class="intro__zone" style="--i:' + zi + '" d="' + d + '"/></g>';
       });
     });
-    return '<svg class="intro__fig" viewBox="0 30 400 740" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">' +
+    return '<svg class="intro__fig" viewBox="0 40 400 520" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' +
       '<defs>' + defs +
+      '<mask id="introShineMask" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="800" style="mask-type:alpha"><image href="' + IMG + '" width="400" height="800"/></mask>' +
       '<linearGradient id="introShine" x1="0" y1="0" x2="1" y2="0">' +
       '<stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/>' +
       '<stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>' +
@@ -65,7 +66,7 @@
       '<g class="intro__cam"><g class="intro__body">' +
       '<image class="intro__img" href="' + IMG + '" width="400" height="800"/>' +
       bulge +
-      '<rect class="intro__shine" x="-160" y="150" width="120" height="280" fill="url(#introShine)"/>' +
+      '<g mask="url(#introShineMask)"><rect class="intro__shine" x="-160" y="150" width="120" height="280" fill="url(#introShine)"/></g>' +
       '</g></g></svg>';
   }
 
