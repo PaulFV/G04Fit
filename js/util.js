@@ -355,7 +355,7 @@ G04Fit.VERSION = '2.1.0';
      cyan, violet, gold, orange, blue. st: { open: null } je Ansicht.
      ------------------------------------------------------------ */
   function tileGrid(items) {
-    return '<div class="set-tiles">' + items.map(function (x) {
+    return '<div class="set-tiles set-tiles--' + items.length + '">' + items.map(function (x) {
       return '<button type="button" class="set-tile card set-tile--' + (x.color || 'green') + '" data-tile="' + x.k + '">' +
         '<span class="set-tile__top"><span class="set-tile__ic">' + icon(x.icon || 'info', 18) + '</span>' + (x.state || '') + '</span>' +
         '<b class="set-tile__title' + (String(x.title).length > 16 ? ' set-tile__title--long' : '') + '">' + esc(x.title) + '</b>' +

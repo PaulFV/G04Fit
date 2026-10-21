@@ -388,7 +388,7 @@
         '<div class="chips" style="margin-top:6px">' +
         G.MUSCLE_ORDER.map(function (m) {
           return '<button class="chip' + ((p.focus || []).indexOf(m) >= 0 ? ' is-on' : '') +
-            '" data-focus="' + m + '">' + G.MUSCLES[m].icon + ' ' + u.esc(G.MUSCLES[m].name) + '</button>';
+            '" data-focus="' + m + '">' + u.icon(G.MUSCLES[m].icon, 15) + ' ' + u.esc(G.MUSCLES[m].name) + '</button>';
         }).join('') + '</div>' +
         '<span class="field__hint" style="margin-top:8px">Ausgewählte Gruppen bekommen im Plan eine Übung mehr.</span></div>' +
 
