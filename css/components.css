@@ -985,3 +985,53 @@
 .week-review__pr{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:14px;font-size:13px;color:var(--tx-1);
   background:rgba(255,200,87,.08);border:1px solid rgba(255,200,87,.3)}
 .week-review__pr .ui-icon{flex:none;color:var(--gold)}
+
+/* Hantelscheiben-Rechner (21.10.2026) */
+.plate-btn{display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;border-radius:10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;
+  color:var(--gold);background:rgba(255,200,87,.1);border:1px solid rgba(255,200,87,.45)}
+.plates{display:flex;flex-direction:column;gap:12px}
+.plates__row{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:18px;border:1px solid var(--glass-br);background:rgba(255,255,255,.03)}
+.plates__w{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.plates__w b{font-size:22px;font-family:var(--mono)}
+.plates__w span{font-size:12.5px;color:var(--tx-2)}
+.plates__list{margin:0;font-family:var(--mono);font-size:14px;font-weight:700;color:var(--tx-1)}
+.plate-bar{position:relative;display:flex;align-items:center;justify-content:flex-start;height:96px;padding-left:4px}
+.plate-bar__rod{flex:1;height:10px;border-radius:0 5px 5px 0;background:linear-gradient(180deg,#d9e1e0,#8a9594)}
+.plate-bar__collar{width:10px;height:26px;border-radius:3px;background:linear-gradient(90deg,#9aa5a4,#e2e8e7,#9aa5a4)}
+.plate-bar__sleeve{width:14px;height:14px;border-radius:4px 0 0 4px;background:#9aa5a4}
+.plate{display:grid;place-items:center;width:22px;margin-right:2px;border-radius:5px;font-size:9px;font-weight:800;writing-mode:vertical-rl;transform:rotate(180deg);
+  color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25),0 2px 6px rgba(0,0,0,.35)}
+.plate--25{height:92px;background:#D7263D}
+.plate--20{height:86px;background:#1E64D8}
+.plate--15{height:76px;background:#E6B400;color:#1b1400}
+.plate--10{height:64px;background:#13A35B}
+.plate--5{height:52px;width:18px;background:#F2F5F4;color:#1b2420}
+.plate--2_5{height:40px;width:15px;background:#2D3133}
+.plate--1_25{height:32px;width:13px;background:#B8C1C0;color:#1b2420}
+
+/* Rekord-Feier (21.10.2026) */
+.pr-party{position:fixed;inset:0;z-index:9500;display:grid;place-items:center;cursor:pointer;overflow:hidden;
+  background:radial-gradient(80% 60% at 50% 40%,rgba(255,200,87,.28),rgba(3,10,9,.92) 70%);animation:fadeIn .3s var(--ease)}
+.pr-party.is-out{animation:prOut .4s ease forwards}
+.pr-party__stage{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px;gap:6px;animation:prPop .6s cubic-bezier(.2,.9,.3,1.3) both}
+.pr-party__fig{width:min(46vw,230px);aspect-ratio:400/520;overflow:hidden;filter:drop-shadow(0 0 28px rgba(255,200,87,.55));animation:prPump .6s .3s ease-in-out 3 alternate}
+.pr-party__fig img{width:100%;display:block;transform:translateY(-6%)}
+.pr-party__medal{display:grid;place-items:center;width:84px;height:84px;margin-top:-34px;border-radius:50%;color:#3a2600;
+  background:radial-gradient(circle at 35% 30%,#fff3c4,#FFC857 45%,#C98A00);box-shadow:0 0 30px rgba(255,200,87,.7),inset 0 -4px 10px rgba(0,0,0,.25);animation:prMedal .7s .2s cubic-bezier(.2,.9,.3,1.5) both}
+.pr-party h2{margin:10px 0 0;font-size:32px;font-weight:900;color:#FFC857;text-shadow:0 0 22px rgba(255,200,87,.6)}
+.pr-party p{margin:0;max-width:320px;font-size:15px;font-weight:700;color:#f2fbf7}
+.pr-party__tap{margin-top:12px;font-size:11px;color:rgba(230,240,235,.55)}
+.pr-party__conf i{position:absolute;top:-20px;left:calc(var(--x) * 1%);width:9px;height:14px;border-radius:2px;background:var(--c);
+  transform:rotate(var(--r));animation:prConf 2.6s var(--d) cubic-bezier(.3,.6,.4,1) forwards;opacity:0}
+.pr-party--calm *,.pr-party--calm{animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important}
+@keyframes prPop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+@keyframes prPump{from{transform:scale(1)}to{transform:scale(1.06)}}
+@keyframes prMedal{from{transform:scale(0) rotate(-40deg)}to{transform:none}}
+@keyframes prConf{0%{opacity:1;transform:translateY(0) rotate(var(--r))}100%{opacity:0;transform:translateY(105vh) rotate(calc(var(--r) + 540deg))}}
+@keyframes prOut{to{opacity:0}}
+
+/* Erinnerung an die Datensicherung (21.10.2026) */
+.backup-ask{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.backup-ask p{margin:0}
+.backup-ask__ic{display:grid;place-items:center;width:72px;height:72px;border-radius:22px;color:var(--cyan);background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.45)}
+.backup-ask .btn{margin-top:8px}

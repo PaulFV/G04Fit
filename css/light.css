@@ -98,3 +98,7 @@
 :root[data-theme="light"] .wr-d--down{color:#B0244F}
 :root[data-theme="light"] .week-review__pr .ui-icon{color:#7A4F00}
 :root[data-theme="light"] .set-row.is-done .set-row__prev{color:#05663D}
+
+/* Scheiben-Knopf, Rekord-Feier, Sicherung im hellen Modus */
+:root[data-theme="light"] .plate-btn{color:#7A4F00;background:rgba(138,90,0,.08);border-color:rgba(138,90,0,.45)}
+:root[data-theme="light"] .backup-ask__ic{color:#0B6878;background:rgba(11,104,120,.08);border-color:rgba(11,104,120,.4)}

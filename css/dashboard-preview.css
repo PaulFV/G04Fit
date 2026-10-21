@@ -377,3 +377,48 @@
   .dash-q__s,.dash-q__h{font-size:13px}
   .dashboard-week-cell{min-height:92px}
 }
+
+/* Tablet hoch: Hauptseite nutzt den Platz (21.10.2026) */
+@media (min-width:701px) and (max-width:980px){
+  .dashboard-view .dashboard-hero{min-height:400px;padding:28px 30px}
+  .dashboard-view .dashboard-hero h2.big{font-size:46px}
+  .dashboard-view .dashboard-hero__actions .btn{min-height:60px;font-size:18px}
+  .dashboard-week{padding:20px 22px}
+  .dashboard-week-cell{min-height:110px}
+  .dashboard-week-cell > span{font-size:24px}
+  .dashboard-stats--row .dashboard-stat{padding:20px 8px}
+  .dashboard-stats--row .dashboard-stat__art{width:52px;height:52px}
+  .dashboard-stats--row .dashboard-stat__v{font-size:34px}
+  .dash-q{min-height:150px;padding:20px 22px;gap:6px}
+  .dash-q__v{font-size:30px}
+  .dash-q__h{font-size:14px}
+  .dash-q__s{font-size:14px}
+}
+/* Kleine iPhones (z. B. SE): alles ohne Scrollen (21.10.2026) */
+@media (max-width:700px) and (max-height:700px){
+  .dashboard-view{--sp:7px}
+  .dashboard-view .dashboard-hero{padding:10px 12px 10px}
+  .dashboard-view .dashboard-hero h2.big{font-size:22px}
+  .dashboard-view .dashboard-hero .small.dim{display:none}
+  .dashboard-view .dashboard-hero__greeting{margin-bottom:2px;font-size:13px}
+  .dashboard-view .dashboard-hero__actions{margin-top:8px}
+  .dashboard-view .dashboard-hero__actions .btn{min-height:40px;padding:7px 8px;font-size:13px}
+  .dashboard-week{padding:9px 9px 8px}
+  .dashboard-week .dashboard-card__head{margin-bottom:8px}
+  .dashboard-week .dashboard-card__head h3{font-size:16px}
+  .dashboard-view .dashboard-week-cell{min-height:50px}
+  .dashboard-stats--row .dashboard-stat{padding:6px 2px 5px}
+  .dashboard-stats--row .dashboard-stat__art{width:22px;height:22px}
+  .dashboard-stats--row .dashboard-stat__v{font-size:17px}
+  .dash-q{padding:7px 9px}
+  .dash-q__v{font-size:14px}
+  .dashboard-view .dashboard-hero__copy > .row{display:none}
+  .dashboard-view .dashboard-hero h2.big{margin-top:2px}
+  .dashboard-week-legend{display:none}
+  .dashboard-view .dashboard-week-cell{min-height:44px;padding-top:3px;padding-bottom:3px;gap:1px}
+  .dashboard-view .dashboard-week-cell > span{font-size:14px}
+  .dashboard-view .dashboard-hero{padding-top:8px;padding-bottom:8px}
+  .dashboard-view .dashboard-hero__profile .avatar{width:50px!important;height:50px!important}
+  .dashboard-view .dashboard-hero__profile{transform:scale(.8);transform-origin:top left;margin-right:-12px;margin-bottom:-14px}
+  .dashboard-stats--row .dashboard-stat__art{display:none}
+}
