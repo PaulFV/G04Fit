@@ -79,3 +79,12 @@
 :root[data-theme="light"] .workout-preview__actions [data-act="start-plan"]{background:linear-gradient(180deg,#0A8A53,#05663D);color:#fff;border-color:#05663D;box-shadow:0 6px 16px rgba(6,118,71,.28)}
 :root[data-theme="light"] .workout-preview__actions [data-act="open-free"]{background:#fff;color:#0B5866;border-color:rgba(11,104,120,.55);box-shadow:0 4px 12px rgba(11,104,120,.14)}
 :root[data-theme="light"] .dashboard-hero__actions .btn--primary{color:#04261A}
+
+/* Pausen-Dialog im hellen Modus */
+:root[data-theme="light"] .rest-dlg__step--minus{color:#B0244F;background:rgba(176,36,79,.08);border-color:rgba(176,36,79,.55);box-shadow:none}
+:root[data-theme="light"] .rest-dlg__step--plus{color:#05663D;background:rgba(6,118,71,.08);border-color:rgba(6,118,71,.55);box-shadow:none}
+:root[data-theme="light"] .rest-dlg__chip{color:#0B6878;background:rgba(11,104,120,.06);border-color:rgba(11,104,120,.45)}
+:root[data-theme="light"] .rest-dlg__chip.is-on{color:#fff;background:#0B6878;border-color:#0B6878;box-shadow:none}
+:root[data-theme="light"] .rest-dlg__num{background:#0B6878;color:#fff}
+:root[data-theme="light"] .rest-dlg__sec--sound .rest-dlg__num{background:#05663D;color:#fff}
+:root[data-theme="light"] .rest-dlg__sec{background:rgba(255,255,255,.7)}

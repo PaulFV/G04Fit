@@ -900,15 +900,63 @@
 .set-tile--blue{--cr:96,165,250;--c:#60A5FA}
 .set-tile__title{hyphens:auto;-webkit-hyphens:auto}.set-tile__title--long{font-size:13px;letter-spacing:-.01em}
 
-/* Pausen-Dialog vor dem Trainingsstart (20.10.2026) */
+/* Pausen-Dialog vor dem Trainingsstart (übersichtlich, 21.10.2026) */
 .rest-dlg{display:flex;flex-direction:column;gap:14px}
-.rest-dlg__sw{padding:12px 14px;border-radius:16px;border:1px solid var(--glass-br);background:rgba(255,255,255,.03)}
-.rest-dlg__time{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:18px;border:1px solid rgba(34,211,238,.35);
-  background:radial-gradient(120% 90% at 50% 0%,rgba(34,211,238,.14),transparent 65%)}
+.rest-dlg__title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--tx-1)}
+.rest-dlg__title .ui-icon{color:var(--neon)}
+.rest-dlg__sec{display:flex;flex-direction:column;gap:14px;padding:14px;border-radius:20px;border:1px solid var(--glass-br);background:rgba(255,255,255,.03)}
+.rest-dlg__sec--pause{border-color:rgba(34,211,238,.35);background:radial-gradient(120% 80% at 50% 0%,rgba(34,211,238,.1),transparent 65%)}
+.rest-dlg__head{display:flex;align-items:center;gap:12px}
+.rest-dlg__num{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;color:#03161b;background:var(--cyan)}
+.rest-dlg__sec--sound .rest-dlg__num{background:var(--neon);color:#04120a}
+.rest-dlg__htxt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.rest-dlg__htxt b{font-size:15px}
+.rest-dlg__htxt span{font-size:12.5px;color:var(--tx-2)}
+.rest-dlg__toggle{flex:none;padding:0;border:0;background:none}
+.rest-dlg__time,.rest-dlg__sound{display:flex}
+.rest-dlg__time{flex-direction:column;gap:14px}
 .rest-dlg__time[hidden],.rest-dlg__sound[hidden]{display:none!important}
-.rest-dlg__big{display:flex;align-items:baseline;justify-content:center;gap:8px}
-.rest-dlg__big b{font-family:var(--mono);font-size:52px;line-height:1;font-weight:800;color:var(--cyan);text-shadow:0 0 22px rgba(34,211,238,.35)}
-.rest-dlg__big span{color:var(--tx-2);font-size:14px}
-.rest-dlg__chips{justify-content:center}
-.rest-dlg__go{margin-top:4px}
-.rest-dlg__go .btn--primary{flex:1}
+.rest-dlg__dial{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
+.rest-dlg__step{min-width:78px;height:64px;border-radius:18px;font:inherit;font-size:17px;font-weight:800;cursor:pointer;transition:transform .12s var(--ease)}
+.rest-dlg__step:active{transform:scale(.95)}
+.rest-dlg__step--minus{color:#FF6B81;background:rgba(255,77,109,.12);border:2px solid rgba(255,77,109,.6);box-shadow:0 0 16px rgba(255,77,109,.18)}
+.rest-dlg__step--plus{color:#3DFF9E;background:rgba(61,255,158,.12);border:2px solid rgba(61,255,158,.6);box-shadow:0 0 16px rgba(61,255,158,.18)}
+.rest-dlg__big{display:flex;flex-direction:column;align-items:center;gap:0}
+.rest-dlg__big b{font-family:var(--mono);font-size:56px;line-height:1;font-weight:800;color:var(--cyan);text-shadow:0 0 22px rgba(34,211,238,.35)}
+.rest-dlg__big b.is-bump{animation:rdBump .25s var(--ease)}
+.rest-dlg__big span{font-size:12px;color:var(--tx-2);text-transform:uppercase;letter-spacing:.12em;margin-top:4px}
+@keyframes rdBump{0%{transform:scale(1)}40%{transform:scale(1.08)}100%{transform:scale(1)}}
+.rest-dlg__chips{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.rest-dlg__chip{height:42px;border-radius:13px;font:inherit;font-family:var(--mono);font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;
+  color:var(--cyan);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.4)}
+.rest-dlg__chip.is-on{color:#03161b;background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 16px rgba(34,211,238,.35)}
+.rest-dlg__sound{gap:8px;align-items:center}
+.rest-dlg__sound .select{flex:1;min-width:0}
+.rest-dlg__test{flex:none}
+.rest-dlg__go{min-height:58px;font-size:18px;margin-top:2px}
+.rest-dlg__cancel{align-self:center;background:none;border:0;font:inherit;font-size:14px;color:var(--tx-2);padding:6px 14px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* Tablet: Kacheln füllen die Breite gleichmäßig (20.10.2026) */
+@media (min-width:701px){
+  .set-tiles{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+  .set-tile{min-height:140px;padding:16px}
+  .set-tile__title{font-size:16px}
+  .set-tile__sum{font-size:12.5px}
+}
+@media (min-width:701px){.set-tiles--4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (min-width:701px){.set-tile__title--long{font-size:14px}}
+
+/* Tablet: Satzpause groß und aus der Entfernung lesbar (21.10.2026) */
+@media (min-width:701px){
+  .timer-overlay__card{min-width:min(540px,84vw);max-width:min(620px,90vw);padding:44px 48px;gap:10px;border-radius:32px}
+  .timer-overlay__card > span:first-child svg{width:36px;height:36px}
+  .timer-overlay__v{font-size:clamp(130px,18vw,180px);letter-spacing:-.03em}
+  .timer-overlay__card .tiny{font-size:18px}
+  .timer-overlay .btn-row{margin-top:22px;gap:14px}
+  .timer-overlay .btn-row .btn{min-height:60px;font-size:19px;border-radius:18px}
+  .rest-dlg__big b{font-size:88px}
+  .rest-dlg__big span{font-size:14px}
+  .rest-dlg__step{min-width:110px;height:84px;font-size:22px;border-radius:22px}
+  .rest-dlg__chip{height:52px;font-size:16px}
+  .rest-dlg__go{min-height:64px;font-size:20px}
+}
