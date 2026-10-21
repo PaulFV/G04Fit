@@ -341,3 +341,15 @@
     padding-right:env(safe-area-inset-right);
   }
 }
+
+/* ---------- Tablet / iPad (20.10.2026) ---------- */
+/* Hochformat (701–980 px): Fenster als zentrierter Dialog statt Vollbild */
+@media (min-width:701px) and (max-width:980px){
+  .sheet{
+    left:50%;top:50%;right:auto;bottom:auto;width:min(660px,92vw);height:auto;max-height:88vh;max-height:88dvh;
+    border-radius:var(--r-xl);border-width:1px;transform:translate(-50%,-50%);
+    animation:sheetPop .32s var(--ease) both;
+  }
+  .sheet__body{padding-bottom:22px}
+}
+@keyframes sheetPop{from{opacity:0;transform:translate(-50%,-46%) scale(.97)}to{opacity:1;transform:translate(-50%,-50%)}}

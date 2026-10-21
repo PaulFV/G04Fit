@@ -912,3 +912,13 @@
 .rest-dlg__chips{justify-content:center}
 .rest-dlg__go{margin-top:4px}
 .rest-dlg__go .btn--primary{flex:1}
+
+/* Tablet: Kacheln füllen die Breite gleichmäßig (20.10.2026) */
+@media (min-width:701px){
+  .set-tiles{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+  .set-tile{min-height:140px;padding:16px}
+  .set-tile__title{font-size:16px}
+  .set-tile__sum{font-size:12.5px}
+}
+@media (min-width:701px){.set-tiles--4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (min-width:701px){.set-tile__title--long{font-size:14px}}
