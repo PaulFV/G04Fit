@@ -119,3 +119,19 @@
 :root[data-theme="light"] .app-install__os{background:#fff;border-color:rgba(11,110,98,.3)}
 :root[data-theme="light"] .app-install__os.is-me{background:rgba(11,110,98,.08);border-color:rgba(11,110,98,.6);box-shadow:none}
 :root[data-theme="light"] .app-install__n{color:#0B6E62;background:rgba(11,110,98,.1);border-color:rgba(11,110,98,.45)}
+
+/* Haltezeit-Countdown im hellen Modus */
+:root[data-theme="light"] .hold-start{color:#7A4F00;background:rgba(138,90,0,.08);border-color:rgba(138,90,0,.5)}
+:root[data-theme="light"] .hold-overlay{background:rgba(27,48,38,.35)}
+:root[data-theme="light"] .hold-card{background:linear-gradient(160deg,#fff,#EEF5F1);border-color:rgba(138,90,0,.4);box-shadow:0 24px 60px rgba(31,72,53,.25)}
+:root[data-theme="light"] .hold-ring__bg{stroke:rgba(138,90,0,.14)}
+:root[data-theme="light"] .hold-ring__fg{stroke:#D69E00;filter:none}
+:root[data-theme="light"] .hold-ring__v{color:#8A5A00}
+:root[data-theme="light"] .hold-ring.is-lead .hold-ring__v,:root[data-theme="light"] .hold-ring.is-lead .hold-ring__l{color:#0B6878}
+:root[data-theme="light"] .hold-ring.is-lead .hold-ring__fg{stroke:#0B6878;filter:none}
+:root[data-theme="light"] .hold-ring.is-lead .hold-ring__bg{stroke:rgba(11,104,120,.14)}
+:root[data-theme="light"] .hold-ring.is-red .hold-ring__fg{stroke:#D12F4E;filter:none}
+:root[data-theme="light"] .hold-ring.is-red .hold-ring__bg{stroke:rgba(209,47,78,.14)}
+:root[data-theme="light"] .hold-ring.is-red .hold-ring__v{color:#C0213F}
+:root[data-theme="light"] .hold-ring.is-done .hold-ring__fg{stroke:#05663D}
+:root[data-theme="light"] .hold-ring.is-done .hold-ring__l{color:#05663D}
