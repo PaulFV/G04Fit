@@ -667,53 +667,106 @@
     });
   }
 
+  /* Übersicht im Training (22.10.2026): erledigte Übungen klappen auf
+     eine Zeile zu (mit „Wie war's?“), Info/Scheiben/Entfernen im ⋯-Menü,
+     Coach-Tipp einzeilig zum Aufklappen. */
+  var FEEL = [{ v: 'easy', n: 'Leicht' }, { v: 'ok', n: 'Passt' }, { v: 'hard', n: 'Schwer' }];
+  function blockDone(b) { return b.sets.length > 0 && b.sets.every(function (x) { return x.done; }); }
+  function doneSummary(b, ex) {
+    var vol = u.volume(b.sets.filter(function (x) { return x.done; }));
+    return b.sets.length + ' Sätze · ' + (vol > 0 ? u.fmt(vol) + ' kg' : repsDoneLabel(b, ex));
+  }
+  function collapsedBlock(b, bi, ex) {
+    return '<div class="card ex-done has-done" data-block="' + bi + '">' +
+      '<button type="button" class="ex-done__row" data-act="ex-open" data-b="' + bi + '" aria-expanded="false">' +
+      '<span class="ex-done__ic">' + u.icon('check', 18) + '</span>' +
+      '<span class="ex-done__txt"><b>' + u.esc(ex.name) + '</b><span>' + u.esc(doneSummary(b, ex)) + '</span></span>' +
+      '<span class="ex-done__chev">' + u.icon('chevron', 18) + '</span></button>' +
+      (b.feel ? '' :
+        '<div class="ex-feel"><span>Wie war’s?</span>' + FEEL.map(function (f) {
+          return '<button type="button" class="ex-feel__b ex-feel__b--' + f.v + '" data-act="rpe" data-b="' + bi + '" data-v="' + f.v + '">' + f.n + '</button>';
+        }).join('') + '</div>') +
+      '</div>';
+  }
+
   function block(b, bi) {
     var ex = G.ex.byId(b.exId);
     if (!ex) return '';
     var done = b.sets.filter(function (x) { return x.done; }).length;
     var all = b.sets.length;
-    var mv = G.MUSCLES[ex.muscle];
     var last = lastSetsFor(b.exId);
+    var complete = blockDone(b);
+    if (complete && !b.open) return collapsedBlock(b, bi, ex);
 
     return '<div class="card' + (done ? ' has-done' : '') + '" data-block="' + bi + '">' +
-      '<div class="card__head">' +
+      '<div class="card__head ex-head">' +
       '<span class="map-chip" style="width:44px;height:46px" title="Beanspruchte Muskeln">' +
       G.anim.muscleMap(ex.muscle, ex.sec, { view: 'auto' }) + '</span>' +
-      '<div style="min-width:0;flex:1">' +
+      '<div class="ex-head__t">' +
       '<h3>' + u.esc(ex.name) + '</h3>' +
       '<span class="tiny dim" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' +
       u.esc(G.MUSCLES[ex.muscle].name) +
       (ex.sec.length ? ' · ' + u.esc(ex.sec.map(function (m) { return G.MUSCLES[m].name; }).join(', ')) : '') +
       '</span></div>' +
-      '<span class="spacer"></span>' +
       '<span class="pill ' + (done === all ? 'pill--neon' : 'pill--muted') + '">' + done + '/' + all + '</span>' +
-      (ex.equip === 'Langhantel' ? '<button class="plate-btn" data-act="plates" data-b="' + bi + '" title="Hantelscheiben berechnen">' + u.icon('plate', 15) + '<span>Scheiben</span></button>' : '') +
-      '<button class="icon-btn" data-act="info" data-ex="' + ex.id + '" title="Übung ansehen" style="width:32px;height:32px">' +
-      u.icon('info', 16) + '</button>' +
-      (G.store.state.session.exercises.length > 1
-        ? '<button class="icon-btn ex-remove" data-act="del-ex" data-b="' + bi + '" title="Übung entfernen" aria-label="Übung entfernen" style="width:32px;height:32px">' +
-          u.icon('trash', 16) + '</button>' : '') +
+      (complete ? '<button class="icon-btn ex-head__btn" data-act="ex-close" data-b="' + bi + '" title="Zuklappen" aria-label="Zuklappen">' + u.icon('chevron', 18) + '</button>' : '') +
+      '<button class="icon-btn ex-head__btn ex-more" data-act="ex-menu" data-b="' + bi + '" title="Mehr" aria-label="Mehr zur Übung">' + u.icon('more', 18) + '</button>' +
       '</div>' +
 
-      (b.hint ? '<div class="coach" style="margin-bottom:14px">' +
-        '<div class="coach__av" style="width:32px;height:32px;border-radius:10px">' + u.icon('coach', 16) + '</div>' +
-        '<div class="coach__msg small">' + u.esc(b.hint) + '</div></div>' : '') +
+      (b.hint ? '<button type="button" class="ex-tip" data-act="ex-tip" aria-expanded="false">' +
+        '<span class="ex-tip__ic">' + u.icon('coach', 14) + '</span>' +
+        '<span class="ex-tip__t">' + u.esc(b.hint) + '</span>' +
+        '<span class="ex-tip__chev">' + u.icon('chevron', 15) + '</span></button>' : '') +
 
       noteHtml(ex) + warmupHtml(b, bi, ex) +
       '<div class="set-head"><span>#</span><span>' + (ex.time ? '' : ownWeightOnly(ex) ? 'Eigengewicht' : 'Gewicht') + '</span><span>' +
       (ex.time ? 'Sekunden' : 'Wdh.') + '</span><span></span></div>' +
       b.sets.map(function (s, si) { return setRow(bi, si, s, ex, last); }).join('') +
 
-      '<div class="btn-row" style="margin-top:12px">' +
+      '<div class="btn-row ex-foot">' +
       '<button class="btn btn--sm" data-act="add-set" data-b="' + bi + '">' + u.icon('plus', 15) + ' Satz</button>' +
-      '<button class="btn btn--sm" data-act="rpe" data-b="' + bi + '" data-v="easy">War leicht</button>' +
-      '<button class="btn btn--sm" data-act="rpe" data-b="' + bi + '" data-v="hard">War schwer</button>' +
       '<button class="btn btn--sm btn--note' + (exNote(ex.id) ? ' has-note' : '') + '" data-act="ex-note" data-ex-note="' + ex.id + '">' + u.icon('exercises', 14) + ' Notiz</button>' +
       '<span class="spacer"></span>' +
       '<span class="tiny dim nowrap" data-reps-total="' + bi + '">' +
       u.esc(repsDoneLabel(b, ex) + ' · ' + pauseLabel(G.store.state.session)) + '</span>' +
       '</div>' +
       '</div>';
+  }
+
+  /** ⋯-Menü einer Übung: Ansehen, Hantelscheiben, Notiz, Entfernen. */
+  function openExMenu(host, bi) {
+    var sess = G.store.state.session;
+    var b = sess && sess.exercises[bi];
+    var ex = b && G.ex.byId(b.exId);
+    if (!ex) return;
+    var canDel = sess.exercises.length > 1 && !b.sets.some(function (x) { return x.done; });
+    var items = [
+      { a: 'info', ic: 'info', n: 'Übung ansehen', d: 'Ausführung, Muskeln, Technik' }
+    ];
+    if (ex.equip === 'Langhantel') items.push({ a: 'plates', ic: 'plate', n: 'Hantelscheiben', d: 'Was kommt pro Seite auf die Stange' });
+    items.push({ a: 'ex-note', ic: 'exercises', n: exNote(ex.id) ? 'Notiz bearbeiten' : 'Notiz hinzufügen', d: 'z. B. Sitz Stufe 4' });
+    if (canDel) items.push({ a: 'del-ex', ic: 'trash', n: 'Übung entfernen', d: 'Aus dieser Einheit', danger: true });
+    var html = '<div class="ex-menu">' + items.map(function (it) {
+      return '<button type="button" class="ex-menu__i' + (it.danger ? ' ex-menu__i--danger' : '') + '" data-m="' + it.a + '">' +
+        '<span class="ex-menu__ic">' + u.icon(it.ic, 18) + '</span>' +
+        '<span class="ex-menu__t"><b>' + u.esc(it.n) + '</b><span>' + u.esc(it.d) + '</span></span>' +
+        u.icon('chevron', 16) + '</button>';
+    }).join('') + '</div>';
+    u.openSheet(ex.name, html, function (root) {
+      root.querySelectorAll('[data-m]').forEach(function (btn) {
+        btn.onclick = function () {
+          var a = btn.getAttribute('data-m');
+          u.closeSheet();
+          if (a === 'info') { if (G.views.exercises && G.views.exercises.openDetail) G.views.exercises.openDetail(ex.id); return; }
+          if (a === 'plates') { openPlates(bi); return; }
+          if (a === 'ex-note') { openExNote(ex.id); return; }
+          if (a === 'del-ex') {
+            var tmp = u.el('<button hidden data-act="del-ex" data-b="' + bi + '"></button>');
+            host.appendChild(tmp); tmp.click(); tmp.remove();
+          }
+        };
+      });
+    });
   }
 
   /** Wiederholungszähler + Pausenanzeige einer Übung (Fußzeile der Karte)
@@ -797,25 +850,10 @@
       '</div>' +
       '</div>' +
 
-      '<div class="row row--wrap" style="gap:12px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--glass-br)">' +
-      '<label class="switch" style="padding:0;flex:1;min-width:190px">' +
-      '<input type="checkbox" id="restToggle"' + (sess.restEnabled ? ' checked' : '') + '>' +
-      '<span class="switch__track"></span>' +
-      '<span class="switch__label"><b>Pause zwischen Sätzen</b>' +
-      '<span>Countdown in der Mitte nach jedem Satz</span></span>' +
-      '</label>' +
-      '<div class="input-suffix" style="max-width:120px">' +
-      '<input class="input" type="number" id="restSecondsInput" min="15" max="500" step="5" ' +
-      'value="' + sess.restSeconds + '"' + (sess.restEnabled ? '' : ' disabled') + '>' +
-      '<span>s</span>' +
-      '</div>' +
-      '</div>' +
-      '<label class="switch workout-rest-sound">' +
-      '<input type="checkbox" id="restSoundToggle"' + (G.reminders.restSoundOn() ? ' checked' : '') + '>' +
-      '<span class="switch__track"></span>' +
-      '<span class="switch__label"><b>Ton am Ende der Pause</b>' +
-      '<span>Signalton, wenn die Zeit abgelaufen ist</span></span>' +
-      '</label>' +
+      '<button type="button" class="rest-chip" data-act="rest-edit">' +
+      '<span class="rest-chip__i">' + u.icon('clock', 16) + '<b>' + (sess.restEnabled ? 'Pause ' + mss(sess.restSeconds) : 'Pause aus') + '</b></span>' +
+      '<span class="rest-chip__i rest-chip__snd' + (G.reminders.restSoundOn() ? '' : ' is-off') + '">' + u.icon('play', 13) + '<span>' + (G.reminders.restSoundOn() ? 'Ton an' : 'Ton aus') + '</span></span>' +
+      '<span class="rest-chip__edit">Ändern</span></button>' +
       '</div>' +
 
       '<div id="restHost"></div>' +
@@ -905,10 +943,11 @@
      wird als neuer Standard gespeichert und gilt für die Einheit.
      ------------------------------------------------------------ */
   var REST_CHIPS = [30, 60, 90, 120, 180];
-  function restDialog(title, onGo) {
+  function restDialog(title, onGo, opts) {
+    opts = opts || {};
     var s = G.store.state;
-    var on = s.settings.restTimer !== false;
-    var sec = u.clamp(s.settings.restSeconds || 90, 15, 500);
+    var on = opts.on != null ? !!opts.on : s.settings.restTimer !== false;
+    var sec = u.clamp(opts.sec || s.settings.restSeconds || 90, 15, 500);
     var snd = s.settings.restSound !== false;
     var kind = s.settings.alarmSound || 'signal';
     function mmss(v) { return Math.floor(v / 60) + ':' + ('0' + (v % 60)).slice(-2); }
@@ -945,7 +984,7 @@
       '</select><button type="button" class="btn rest-dlg__test" data-act="rd-test">' + u.icon('play', 14) + ' Anhören</button></div>' +
       '</section>' +
 
-      '<button type="button" class="btn btn--primary btn--lg btn--block rest-dlg__go" data-act="rd-go">' + u.icon('play', 18) + ' Los geht’s</button>' +
+      '<button type="button" class="btn btn--primary btn--lg btn--block rest-dlg__go" data-act="rd-go">' + u.icon(opts.go ? 'check' : 'play', 18) + ' ' + (opts.go || 'Los geht’s') + '</button>' +
       '<button type="button" class="rest-dlg__cancel" data-act="rd-cancel">Abbrechen</button>' +
       '</div>';
 
@@ -1401,7 +1440,16 @@
           if (allSetsDone(s.session)) stopRest();
           else startRest(s.session.restSeconds, s.session.exercises[bi].exId);
           if (!wasComplete && s.session.exercises[bi].sets.every(function (x) { return x.done; })) {
-            setTimeout(function () { focusNextBlock(host, bi); }, 350);
+            s.session.exercises[bi].open = false;
+            setTimeout(function () {
+              if (!s.session) return;
+              G.store.save();
+              G.app.rerender();
+              setTimeout(function () {
+                var h2 = document.getElementById('viewHost') || host;
+                if (allSetsDone(s.session)) updateFinishCue(h2, true); else focusNextBlock(h2, bi);
+              }, 60);
+            }, 550);
           }
         } else {
           stopRest();
@@ -1410,6 +1458,30 @@
         updateFinishCue(host, set.done);
         syncWakeLock();
         G.store.save();
+      }, signal);
+
+      /* --- Übersicht: Pause ändern, Übung auf/zu, ⋯-Menü, Tipp --- */
+      u.on(host, 'click', '[data-act="rest-edit"]', function () {
+        restDialog('Laufende Einheit', function () {
+          s.session.restEnabled = s.settings.restTimer !== false;
+          s.session.restSeconds = s.settings.restSeconds || 90;
+          if (!s.session.restEnabled) stopRest();
+          G.store.save();
+          G.app.rerender();
+        }, { on: s.session.restEnabled, sec: s.session.restSeconds, go: 'Übernehmen' });
+      }, signal);
+      u.on(host, 'click', '[data-act="ex-open"]', function (e, t) {
+        var b = s.session.exercises[+t.getAttribute('data-b')]; if (!b) return;
+        b.open = true; G.store.save(); G.app.rerender();
+      }, signal);
+      u.on(host, 'click', '[data-act="ex-close"]', function (e, t) {
+        var b = s.session.exercises[+t.getAttribute('data-b')]; if (!b) return;
+        b.open = false; G.store.save(); G.app.rerender();
+      }, signal);
+      u.on(host, 'click', '[data-act="ex-menu"]', function (e, t) { openExMenu(host, +t.getAttribute('data-b')); }, signal);
+      u.on(host, 'click', '[data-act="ex-tip"]', function (e, t) {
+        var o = !t.classList.contains('is-open');
+        t.classList.toggle('is-open', o); t.setAttribute('aria-expanded', String(o));
       }, signal);
 
       /* --- Haltezeit-Countdown starten --- */
@@ -1452,9 +1524,12 @@
       /* --- Anstrengung markieren --- */
       u.on(host, 'click', '[data-act="rpe"]', function (e, t) {
         var bi = +t.getAttribute('data-b'), v = t.getAttribute('data-v');
-        s.session.exercises[bi].sets.forEach(function (x) { if (x.done) x.rpe = v; });
+        var bl = s.session.exercises[bi];
+        bl.sets.forEach(function (x) { if (x.done) x.rpe = v === 'ok' ? null : v; });
+        bl.feel = v;
         G.store.save();
-        u.toast('Notiert', v === 'easy'
+        G.app.rerender();
+        if (v !== 'ok') u.toast('Notiert', v === 'easy'
           ? 'Der Coach erhöht beim nächsten Mal stärker.'
           : 'Der Coach geht beim nächsten Mal vorsichtiger vor.', 'ok', 2600);
       }, signal);

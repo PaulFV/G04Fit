@@ -283,6 +283,7 @@ G04Fit.VERSION = '2.1.0';
     machine: '<path d="M6 20V5h12v15M6 9h12M9 13h6v4H9z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
     bench: '<path d="M5 15h14M7 15v4m10-4v4M8 11h8v4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>',
     privacy: '<path d="M12 3l7 3v6c0 4.2-2.8 7.7-7 9-4.2-1.3-7-4.8-7-9V6l7-3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+    more: '<circle cx="5" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="19" cy="12" r="2" fill="currentColor"/>',
     check: '<path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
     plus: '<path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
     play: '<path d="M8 5.5l11 6.5-11 6.5v-13z"/>',
