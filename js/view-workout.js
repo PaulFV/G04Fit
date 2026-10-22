@@ -162,6 +162,186 @@
     if (el) el.remove();
   }
 
+  /* ------------------------------------------------------------
+     Haltezeit-Countdown (22.10.2026): bei Übungen mit Zeit (Plank,
+     Seitstütz, Mountain Climbers …) startet „Starten“ im Satz einen
+     Vollbild-Countdown: 3-2-1 Vorlauf, dann läuft die Zeit im gelben
+     Ring rückwärts, die letzten 10 s rot. Bei 3-2-1 ein Piep, am Ende
+     Ton + Vibration, der Satz wird abgehakt und die Pause startet.
+     „Fertig“ trägt die tatsächlich gehaltene Zeit ein.
+     ------------------------------------------------------------ */
+  var LEAD = 3, RED_AT = 10, RING_C = 2 * Math.PI * 96;
+  var hold = { bi: -1, si: -1, total: 0, endAt: 0, left: 0, phase: '', pausedLeft: 0, timer: null, lastSec: -1 };
+
+  function holdSound(kind) {
+    if (!G.reminders.restSoundOn()) return;
+    if (kind === 'end') G.reminders.playAlarm(true);
+    else if (kind === 'go') G.reminders.beep(1175, 0.32);
+    else if (kind === 'lead') G.reminders.beep(660, 0.12);
+    else G.reminders.beep(880, 0.14);
+  }
+  function mss(sec) { sec = Math.max(0, sec); return Math.floor(sec / 60) + ':' + ('0' + (sec % 60)).slice(-2); }
+
+  function holdHtml() {
+    var sess = G.store.state.session;
+    var b = sess && sess.exercises[hold.bi];
+    var ex = b ? G.ex.byId(b.exId) : null;
+    var paused = hold.phase === 'paused';
+    var label = hold.phase === 'lead' ? 'Gleich geht’s los' : paused ? 'Angehalten' : hold.phase === 'done' ? 'Geschafft!' : 'Halten';
+    return '<div class="hold-card">' +
+      '<div class="hold-card__head"><b>' + u.esc(ex ? ex.name : '') + '</b>' +
+      '<span><span>Satz</span> ' + (hold.si + 1) + '/' + (b ? b.sets.length : 1) + '</span></div>' +
+      '<div class="hold-ring" id="holdRing">' +
+      '<svg viewBox="0 0 220 220" aria-hidden="true"><circle class="hold-ring__bg" cx="110" cy="110" r="96"/>' +
+      '<circle class="hold-ring__fg" id="holdArc" cx="110" cy="110" r="96" stroke-dasharray="' + RING_C.toFixed(1) + '" stroke-dashoffset="0"/></svg>' +
+      '<b class="hold-ring__v" id="holdV" aria-live="off"></b>' +
+      '<small class="hold-ring__l" id="holdL">' + u.esc(label) + '</small></div>' +
+      '<div class="hold-card__btns">' +
+      (hold.phase === 'done' ? '' :
+        '<button class="btn" data-hold="pause">' + u.icon(paused ? 'play' : 'clock', 16) + ' <span>' + (paused ? 'Fortsetzen' : 'Anhalten') + '</span></button>' +
+        '<button class="btn btn--primary" data-hold="done">' + u.icon('check', 16) + ' <span>Fertig</span></button>') +
+      '</div>' +
+      (hold.phase === 'done' ? '' : '<button class="hold-card__x" data-hold="cancel">Abbrechen</button>') +
+      '</div>';
+  }
+
+  function holdDraw() {
+    var box = u.$('#holdBox');
+    if (!box) return;
+    var v = u.$('#holdV'), arc = u.$('#holdArc'), ring = u.$('#holdRing');
+    var lead = hold.phase === 'lead';
+    var frac = lead ? 1 : hold.total ? hold.left / hold.total : 0;
+    if (v) v.textContent = lead ? String(hold.left) : mss(hold.left);
+    if (arc) arc.setAttribute('stroke-dashoffset', (RING_C * (1 - frac)).toFixed(1));
+    if (ring) {
+      ring.classList.toggle('is-lead', lead);
+      ring.classList.toggle('is-red', !lead && hold.phase !== 'done' && hold.left <= RED_AT);
+      ring.classList.toggle('is-done', hold.phase === 'done');
+    }
+  }
+
+  function holdRender() {
+    var old = u.$('#holdBox');
+    if (old) old.remove();
+    if (!hold.phase) return;
+    var el = u.el('<div class="hold-overlay" id="holdBox" role="dialog" aria-label="Haltezeit">' + holdHtml() + '</div>');
+    el.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-hold]');
+      if (!t) return;
+      var a = t.getAttribute('data-hold');
+      if (a === 'pause') holdPause();
+      else if (a === 'done') holdFinish(true);
+      else if (a === 'cancel') stopHold();
+    });
+    document.body.appendChild(el);
+    holdDraw();
+  }
+
+  function holdRun(seconds, phase) {
+    hold.phase = phase;
+    hold.left = seconds;
+    hold.endAt = Date.now() + seconds * 1000;
+    hold.lastSec = seconds;
+    if (hold.timer) clearInterval(hold.timer);
+    hold.timer = setInterval(holdTick, 200);
+  }
+
+  function holdTick() {
+    if (!G.store.state.session) { stopHold(); return; }
+    if (hold.phase !== 'lead' && hold.phase !== 'run') return;
+    var left = Math.max(0, Math.ceil((hold.endAt - Date.now()) / 1000));
+    if (left === hold.lastSec) return;
+    hold.lastSec = left;
+    hold.left = left;
+    if (hold.phase === 'lead') {
+      if (left <= 0) {
+        holdSound('go');
+        holdRun(hold.total, 'run');
+        holdRender();
+        return;
+      } else holdSound('lead');
+      holdDraw();
+      return;
+    }
+    if (left <= 0) { holdDraw(); holdFinish(false); return; }
+    if (left <= 3) holdSound('tick');
+    holdDraw();
+  }
+
+  function startHold(bi, si) {
+    var sess = G.store.state.session;
+    var set = sess && sess.exercises[bi] && sess.exercises[bi].sets[si];
+    if (!set) return;
+    stopRest();
+    stopHold();
+    G.reminders.prepareAlarm(true);
+    hold.bi = bi; hold.si = si;
+    hold.total = Math.max(5, Math.round(+set.reps || 30));
+    holdRun(LEAD, 'lead');
+    holdSound('lead');
+    holdRender();
+    syncWakeLock();
+  }
+
+  function holdPause() {
+    if (hold.phase === 'run') {
+      hold.pausedLeft = Math.max(0, (hold.endAt - Date.now()) / 1000);
+      hold.phase = 'paused';
+      if (hold.timer) { clearInterval(hold.timer); hold.timer = null; }
+      holdRender();
+    } else if (hold.phase === 'paused') {
+      hold.phase = 'run';
+      hold.endAt = Date.now() + hold.pausedLeft * 1000;
+      hold.timer = setInterval(holdTick, 200);
+      holdRender();
+    } else if (hold.phase === 'lead') {
+      stopHold();
+    }
+  }
+
+  function holdFinish(early) {
+    var sess = G.store.state.session;
+    if (!sess || !hold.phase) return;
+    if (early && hold.phase === 'lead') { stopHold(); return; }
+    var bi = hold.bi, si = hold.si;
+    var set = sess.exercises[bi] && sess.exercises[bi].sets[si];
+    if (hold.timer) { clearInterval(hold.timer); hold.timer = null; }
+    if (set && early) {
+      var leftNow = hold.phase === 'paused' ? hold.pausedLeft : Math.max(0, (hold.endAt - Date.now()) / 1000);
+      set.reps = Math.max(1, Math.round(hold.total - leftNow));
+    }
+    if (!early) {
+      holdSound('end');
+      if (navigator.vibrate && G.reminders.restSoundOn()) { try { navigator.vibrate([250, 120, 250]); } catch (e) {} }
+    }
+    hold.phase = 'done';
+    hold.left = 0;
+    holdRender();
+    setTimeout(function () {
+      stopHold();
+      if (!set) return;
+      var row = document.querySelector('#viewHost .set-row[data-b="' + bi + '"][data-s="' + si + '"]');
+      if (row) {
+        var inp = row.querySelector('input[data-f="reps"]');
+        if (inp) inp.value = set.reps;
+      }
+      if (!set.done) {
+        var btn = row && row.querySelector('[data-act="toggle"]');
+        if (btn) btn.click();
+        else { set.done = true; G.store.save(); }
+      } else G.store.save();
+    }, early ? 350 : 1100);
+  }
+
+  function stopHold() {
+    if (hold.timer) clearInterval(hold.timer);
+    hold.timer = null;
+    hold.phase = '';
+    var el = u.$('#holdBox');
+    if (el) el.remove();
+    syncWakeLock();
+  }
+
   /** Zeigt die Satzpause zentriert als Overlay — entweder den laufenden
       Countdown oder, sobald er abgelaufen ist, den "fertig"-Zustand zum
       Antippen (rest.finished). Wird auch beim erneuten mount() aufgerufen,
@@ -348,7 +528,7 @@
      passiert einfach nichts. (21.10.2026)
      ------------------------------------------------------------ */
   var wakeLock = null;
-  function wantAwake() { var s = G.store.state.session; return !!(s && s.startedAt); }
+  function wantAwake() { var s = G.store.state.session; return !!(s && s.startedAt) || !!hold.phase; }
   function syncWakeLock() {
     if (!('wakeLock' in navigator)) return;
     if (wantAwake() && document.visibilityState === 'visible') {
@@ -399,7 +579,7 @@
     return '<div class="set-row' + (set.done ? ' is-done' : '') + '" data-b="' + bi + '" data-s="' + si + '">' +
       '<span class="set-row__n">' + (si + 1) + '</span>' +
       (ex.time
-        ? '<span class="small dim center">Halten</span>'
+        ? '<button type="button" class="hold-start" data-act="hold" data-b="' + bi + '" data-s="' + si + '">' + u.icon('play', 14) + '<span>Starten</span></button>'
         : ownWeightOnly(ex) ? ownWeightCell()
         : '<div class="input-suffix"><input class="input" type="number" inputmode="decimal" step="' +
         (ex.inc || 2.5) + '" min="0" value="' + set.weight + '" data-f="weight" aria-label="Gewicht"><span>kg</span></div>') +
@@ -1230,6 +1410,11 @@
         updateFinishCue(host, set.done);
         syncWakeLock();
         G.store.save();
+      }, signal);
+
+      /* --- Haltezeit-Countdown starten --- */
+      u.on(host, 'click', '[data-act="hold"]', function (e, t) {
+        startHold(+t.getAttribute('data-b'), +t.getAttribute('data-s'));
       }, signal);
 
       /* --- Aufwärmsätze abhaken --- */

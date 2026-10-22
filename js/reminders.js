@@ -363,6 +363,27 @@
     }
   }
 
+  /** Kurzer Piep (Haltezeit-Countdown, 22.10.2026). */
+  function beep(hz, len) {
+    prepareAlarm(true);
+    if (!audioContext) return;
+    if (audioContext.state === 'suspended') audioContext.resume().catch(function () {});
+    try {
+      var now = audioContext.currentTime;
+      var osc = audioContext.createOscillator();
+      var gain = audioContext.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(hz || 880, now);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.25, now + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + (len || 0.12));
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.start(now);
+      osc.stop(now + (len || 0.12) + 0.02);
+    } catch (e) { /* ohne Ton weiter */ }
+  }
+
   /** Ton am Ende der Satzpause: eigener Schalter, nicht von 'Benachrichtigungen stumm' abhängig. */
   function restSoundOn() { return st().settings.restSound !== false; }
 
@@ -528,6 +549,7 @@
     prepareAlarm: prepareAlarm,
     restSoundOn: restSoundOn,
     playAlarm: playAlarm,
+    beep: beep,
     restFinished: restFinished,
     ringAlarm: ringAlarm,
     stopRingAlarm: stopRingAlarm,
