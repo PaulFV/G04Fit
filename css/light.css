@@ -149,3 +149,13 @@
 :root[data-theme="light"] .ex-feel__b--hard{color:#A6420F;border-color:rgba(166,66,15,.5)}
 :root[data-theme="light"] .ex-menu__i{background:#fff}
 :root[data-theme="light"] .ex-menu__ic{color:#05663D;background:rgba(6,118,71,.08);border-color:rgba(6,118,71,.35)}
+
+/* Übungsliste im hellen Modus */
+:root[data-theme="light"] .ex-row{background:#fff;border-color:rgba(18,65,44,.16)}
+:root[data-theme="light"] .ex-mchip{background:#fff;color:var(--tx-1)}
+:root[data-theme="light"] .ex-mchip.is-on{color:var(--tx-0)}
+:root[data-theme="light"] .ex-row__rec{color:#7A4F00;border-color:rgba(138,90,0,.45);background:rgba(138,90,0,.07)}
+
+/* Einstellungen-Gruppen im hellen Modus */
+:root[data-theme="light"] .set-group__h .ui-icon{color:#05663D}
+:root[data-theme="light"] .set-back{color:#05663D;background:#fff;border-color:rgba(6,118,71,.45)}

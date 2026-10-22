@@ -1156,3 +1156,54 @@
 .ex-menu__t span{font-size:12px;color:var(--tx-2)}
 .ex-menu__i--danger{color:var(--danger)}
 .ex-menu__i--danger .ex-menu__ic{color:var(--danger);background:rgba(255,92,122,.1);border-color:rgba(255,92,122,.4)}
+
+/* Übungen als kompakte Liste mit Muskel-Chips (22.10.2026) */
+.ex-mchips{display:flex;gap:7px;overflow-x:auto;margin:12px -4px 0;padding:2px 4px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.ex-mchips::-webkit-scrollbar{display:none}
+.ex-mchip{--mc:var(--neon);flex:none;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:999px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;
+  color:var(--tx-1);background:rgba(255,255,255,.03);border:1px solid var(--glass-br)}
+.ex-mchip small{font-size:11px;font-weight:600;color:var(--tx-2)}
+.ex-mchip.is-on{color:var(--tx-0);border-color:var(--mc);background:color-mix(in srgb,var(--mc) 16%,transparent);box-shadow:0 0 12px color-mix(in srgb,var(--mc) 30%,transparent)}
+.ex-mchip.is-on small{color:var(--tx-1)}
+.ex-list{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.ex-row{min-width:0}
+@media (min-width:701px){.ex-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+@media (min-width:1200px){.ex-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ex-row{--mc:var(--neon);position:relative;display:flex;align-items:center;gap:12px;min-height:76px;padding:8px 10px 8px 8px;border-radius:16px;cursor:pointer;
+  border:1px solid var(--glass-br);background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(4,16,14,.6));transition:border-color .15s,transform .15s}
+.ex-row::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:0 3px 3px 0;background:var(--mc);opacity:.85}
+.ex-row:hover{border-color:var(--neon-line)}
+.ex-row:active{transform:scale(.985)}
+.ex-row__fig{position:relative;flex:none;width:62px;height:62px;border-radius:12px;overflow:hidden;background:var(--exercise-canvas,#0b1a16)}
+.ex-row__fig > .fig{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.ex-row__fig .fig__mark{display:none}
+.ex-row__body{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.ex-row__body b{font-size:14.5px;line-height:1.25;font-weight:680;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ex-row__meta{font-size:12px;color:var(--tx-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-row__tags{display:flex;align-items:center;gap:6px;min-width:0;font-size:11.5px}
+.ex-row__m{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:var(--tx-1);flex:none}
+.ex-row__sec{color:var(--tx-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-row__rec{flex:none;display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:11.5px;font-weight:700;color:var(--gold);background:rgba(255,200,87,.1);border:1px solid rgba(255,200,87,.4)}
+.ex-row__chev{flex:none;color:var(--tx-2)}
+
+/* Fortschritt: Gesamt-Reihe (22.10.2026) */
+.progress-total{display:flex;flex-direction:column;gap:8px}
+.progress-total__h{display:flex;align-items:center;gap:7px;margin:0;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--tx-1)}
+.progress-total__h .ui-icon{color:var(--gold)}
+.progress-total__h small{margin-left:auto;font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--tx-2)}
+
+/* Einstellungen auf einer Seite (22.10.2026) */
+.set-group{display:flex;flex-direction:column;gap:9px}
+.set-group__h{display:flex;align-items:center;gap:7px;margin:4px 2px 0;font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-1)}
+.set-group__h .ui-icon{color:var(--neon)}
+.set-group .set-tile{min-height:112px}
+.set-group .set-tile[data-sec="install"]{grid-column:auto;flex-direction:column;align-items:flex-start;gap:6px}
+.set-group .set-tile[data-sec="install"] .set-tile__top{width:100%}
+.set-group .set-tile[data-sec="install"] .set-tile__sum{-webkit-line-clamp:3}
+.set-tile__badge{position:static!important;display:grid;place-items:center}
+@media (max-width:899px){.set-group .set-tiles > :last-child:nth-child(odd){grid-column:1 / -1;min-height:0}}
+.set-back-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.set-back{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 14px 0 8px;border-radius:12px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;
+  color:var(--neon);background:rgba(61,255,158,.08);border:1px solid rgba(61,255,158,.35)}
+.set-back .ui-icon{transform:rotate(180deg)}
+.set-back-bar__t{margin:0;font-size:18px}
