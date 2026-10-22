@@ -1201,7 +1201,7 @@
 .set-group .set-tile[data-sec="install"] .set-tile__top{width:100%}
 .set-group .set-tile[data-sec="install"] .set-tile__sum{-webkit-line-clamp:3}
 .set-tile__badge{position:static!important;display:grid;place-items:center}
-@media (max-width:899px){.set-group .set-tiles > :last-child:nth-child(odd){grid-column:1 / -1;min-height:0}}
+@media (max-width:700px){.set-group .set-tiles > :last-child:nth-child(odd){grid-column:1 / -1;min-height:0}}
 .set-back-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .set-back{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 14px 0 8px;border-radius:12px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;
   color:var(--neon);background:rgba(61,255,158,.08);border:1px solid rgba(61,255,158,.35)}
