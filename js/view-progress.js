@@ -23,7 +23,7 @@
       var we = u.addDays(ws, 6);
       var sessions = G.store.sessionsInRange(ws, we);
       out.push({
-        label: 'KW' + isoWeek(ws),
+        label: (G.i18n && G.i18n.locale() === 'en' ? 'W' : 'KW') + isoWeek(ws),
         value: u.sum(sessions, function (x) { return x.volume || 0; }),
         sessions: sessions.length
       });

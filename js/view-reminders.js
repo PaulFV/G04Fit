@@ -85,7 +85,7 @@
         sum: '<b>' + u.esc(s.profile.reminderTime || '18:00') + '</b>' + (dn.length ? ' · ' + u.esc(dn.join(' · ')) : '') },
       { k: 're', color: 'orange', icon: 'refresh', title: 'Wiedereinstieg',
         sum: (s.settings.reentry ? '<b>Eingeschaltet</b>' : '<span>Ausgeschaltet</span>') + ' · <span>' + (days == null ? 'noch kein Training'
-          : days === 0 ? 'heute trainiert' : 'letzte Einheit vor ' + days + ' Tagen') + '</span>' },
+          : days === 0 ? 'heute trainiert' : (G.i18n && G.i18n.locale() === 'en' ? 'last workout ' + days + ' days ago' : 'letzte Einheit vor ' + days + ' Tagen')) + '</span>' },
       { k: 'push', color: 'cyan', icon: 'info', title: 'Benachrichtigungen', sum: permTxt }
     ];
   }

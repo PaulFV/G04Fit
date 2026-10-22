@@ -190,7 +190,7 @@
     var recV = '–', recS = 'Noch kein Rekord';
     if (ids.length) {
       var ex = G.ex.byId(ids[0]), r = s.records[ids[0]];
-      recV = ex.time ? r.reps + ' s' : u.fmt(r.weight) + '×' + r.reps;
+      recV = ex.time ? r.reps + ' s' : (+r.weight > 0 ? u.fmt(r.weight) + '×' + r.reps : r.reps + ' Wdh.');
       recS = ex.name;
     }
 

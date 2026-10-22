@@ -1221,8 +1221,8 @@
     if (res.level.leveled) {
       var r = G.journey.regionForLevel(res.level.after);
       lines.push('<div class="note note--neon">' + u.icon('arrowUp', 18) +
-        '<div><b>Level ' + res.level.after + ' erreicht</b><br>' +
-        'Titel: ' + u.esc(G.journey.titleFor(res.level.after)) + ' · Region ' + r.icon + ' ' + u.esc(r.name) + '</div></div>');
+        '<div><b>' + (G.i18n.locale() === 'en' ? 'Level ' + res.level.after + ' reached' : 'Level ' + res.level.after + ' erreicht') + '</b><br>' +
+        '<span>' + (G.i18n.locale() === 'en' ? 'Title' : 'Titel') + '</span>: ' + u.esc(G.journey.titleFor(res.level.after)) + ' · Region ' + r.icon + ' ' + u.esc(r.name) + '</div></div>');
     }
 
     if (!G.store.hasConsent('history')) {
