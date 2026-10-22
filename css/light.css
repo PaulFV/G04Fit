@@ -135,3 +135,17 @@
 :root[data-theme="light"] .hold-ring.is-red .hold-ring__v{color:#C0213F}
 :root[data-theme="light"] .hold-ring.is-done .hold-ring__fg{stroke:#05663D}
 :root[data-theme="light"] .hold-ring.is-done .hold-ring__l{color:#05663D}
+
+/* Übersicht im Training — heller Modus */
+:root[data-theme="light"] .rest-chip{background:#fff;border-color:rgba(11,104,120,.4)}
+:root[data-theme="light"] .rest-chip__i,:root[data-theme="light"] .rest-chip__edit{color:#0B6878}
+:root[data-theme="light"] .rest-chip__snd{color:#05663D;background:rgba(6,118,71,.08);border-color:rgba(6,118,71,.4)}
+:root[data-theme="light"] .ex-tip{background:rgba(6,118,71,.05);border-color:rgba(6,118,71,.25)}
+:root[data-theme="light"] .ex-tip__ic{color:#05663D;background:rgba(6,118,71,.1)}
+:root[data-theme="light"] .ex-done{border-color:rgba(6,118,71,.4)}
+:root[data-theme="light"] .ex-done__ic{background:#05663D;color:#fff;box-shadow:none}
+:root[data-theme="light"] .ex-feel__b--easy{color:#0B6878;border-color:rgba(11,104,120,.5)}
+:root[data-theme="light"] .ex-feel__b--ok{color:#05663D;border-color:rgba(6,118,71,.5)}
+:root[data-theme="light"] .ex-feel__b--hard{color:#A6420F;border-color:rgba(166,66,15,.5)}
+:root[data-theme="light"] .ex-menu__i{background:#fff}
+:root[data-theme="light"] .ex-menu__ic{color:#05663D;background:rgba(6,118,71,.08);border-color:rgba(6,118,71,.35)}
