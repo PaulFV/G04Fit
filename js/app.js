@@ -191,8 +191,11 @@
   }
 
   function go(key, params) {
+    var orig = key;
     key = resolve(key);
     if (!G.views[key]) return;
+    // Einstellungen über die Navigation: immer auf der Übersichtsseite starten
+    if (orig === 'settings' && current !== 'settings' && G.views.settings && G.views.settings.setTab) G.views.settings.setTab('home');
     current = key;
     currentParams = params || null;
     closeMobileNav();

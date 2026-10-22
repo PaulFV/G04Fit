@@ -222,27 +222,26 @@
     var totalSets = u.sum(s.history, function (x) { return x.totalSets || 0; });
     var totalReps = u.sum(s.history, function (x) { return x.totalReps || 0; });
 
-    var cards = [
-      { k: 'Einheiten', v: s.journey.completed, cls: '', art: 'assets/nav/nav-workout.png' },
-      { k: 'Gesamtvolumen', v: totalVol >= 1000 ? u.fmt(totalVol / 1000, 1) : u.fmt(totalVol), d: totalVol >= 1000 ? 't' : 'kg', cls: 'stat--neon', art: 'assets/progress/stat-volume.png' },
-      { k: 'Sätze gesamt', v: totalSets, cls: '', art: 'assets/nav/nav-exercises.png' },
-      { k: 'Wiederholungen gesamt', v: totalReps, cls: '', art: 'assets/progress/stat-reps.png' },
-      { k: 'Serie', v: s.journey.streak, d: 'Wochen', cls: 'stat--gold', art: 'assets/progress/stat-streak.png' },
-      { k: 'Beste Serie', v: s.journey.bestStreak || 0, d: 'Wochen', cls: '', art: 'assets/progress/stat-best-streak.png' },
-      { k: 'Rekorde', v: Object.keys(s.records).length, cls: 'stat--cyan', art: 'assets/progress/stat-records.png' }
+    /* Gesamt-Kennzahlen kompakt in einer Reihe (22.10.2026) — die
+       Wochenwerte stehen im Wochen-Rückblick darüber, nichts doppelt. */
+    var items = [
+      { k: 'Einheiten gesamt', v: s.journey.completed, art: 'assets/nav/nav-workout.png', tone: '' },
+      { k: 'Volumen gesamt', v: totalVol >= 1000 ? u.fmt(totalVol / 1000, 1) : u.fmt(totalVol), d: totalVol >= 1000 ? 't' : 'kg', art: 'assets/progress/stat-volume.png', tone: 'neon' },
+      { k: 'Serie (Wochen)', v: s.journey.streak, art: 'assets/progress/stat-streak.png', tone: 'gold' },
+      { k: 'Beste Serie', v: s.journey.bestStreak || 0, art: 'assets/progress/stat-best-streak.png', tone: '' },
+      { k: 'Rekorde', v: Object.keys(s.records).length, art: 'assets/progress/stat-records.png', tone: 'cyan' }
     ];
 
     return '<div class="progress-overview">' + levelCard() +
       weekReviewHtml(u.weekStart(u.today()), 'Diese Woche') +
-      '<div class="progress-stats">' +
-      cards.map(function (i) {
-        return '<article class="card progress-stat ' + i.cls + '">' +
-          '<div class="progress-stat__icon"><img class="progress-stat__art" src="' + i.art + '?v=2.5.0" alt="" aria-hidden="true"></div>' +
-          '<div class="stat progress-stat__body ' + i.cls + '">' +
-          '<span class="stat__k">' + u.esc(i.k) + '</span>' +
-          '<span class="stat__v">' + u.esc(String(i.v)) +
-          (i.d ? '<span class="stat__u">' + u.esc(i.d) + '</span>' : '') + '</span></div></article>';
-      }).join('') + '</div>' +
+      '<section class="progress-total"><h3 class="progress-total__h">' + u.icon('medal', 15) + '<span>Gesamt</span>' +
+      '<small>' + totalSets + ' Sätze · ' + totalReps + ' Wdh.</small></h3>' +
+      '<div class="dashboard-stats dashboard-stats--row">' + items.map(function (i) {
+        return '<div class="dashboard-stat card' + (i.tone ? ' dashboard-stat--' + i.tone : '') + '">' +
+          '<img class="dashboard-stat__art" src="' + u.esc(i.art) + '?v=2.5.0" alt="">' +
+          '<span class="dashboard-stat__v">' + u.esc(String(i.v)) + (i.d ? '<span class="dashboard-stat__u">' + u.esc(i.d) + '</span>' : '') + '</span>' +
+          '<span class="dashboard-stat__k">' + u.esc(i.k) + '</span></div>';
+      }).join('') + '</div></section>' +
       volumeChart(vol) +
       '<div class="progress-lower-grid">' +
       '<section class="card progress-balance-card">' +

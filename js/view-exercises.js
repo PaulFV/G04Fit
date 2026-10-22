@@ -84,9 +84,25 @@
     return '<div class="row ex-results"><span class="small muted"><b>' + list.length + '</b> Übungen</span><span class="spacer"></span>' +
       '<span class="tiny dim ex-results__hint">Tippen für Ausführung, Muskelkarte und Technik</span></div>' +
       (list.length
-        ? '<div class="grid grid--auto">' + list.map(card).join('') + '</div>'
+        ? '<div class="ex-list">' + list.map(row).join('') + '</div>'
         : '<div class="empty">' + u.icon('exercises', 40) + '<b>Nichts gefunden</b>' +
         '<p>Ändere Suchbegriff oder Filter.</p></div>');
+  }
+
+  /** Kompakte Zeile (22.10.2026): kleines Bild, Name, Gerät · Stufe,
+      Muskelgruppe, ggf. Rekord — statt großer Karte. */
+  function row(ex) {
+    var rec = G.store.state.records[ex.id];
+    return '<article class="ex-row" data-ex="' + ex.id + '" tabindex="0" style="--mc:var(--m-' + ex.muscle + ')">' +
+      '<span class="ex-row__fig">' + G.anim.figure(ex) + '</span>' +
+      '<span class="ex-row__body">' +
+      '<b>' + u.esc(ex.name) + '</b>' +
+      '<span class="ex-row__meta">' + u.esc(ex.equip) + ' · ' + levelLabel(ex.level) + '</span>' +
+      '<span class="ex-row__tags"><span class="ex-row__m"><i class="mdot m-' + ex.muscle + '"></i>' + u.esc(G.MUSCLES[ex.muscle].name) + '</span>' +
+      (ex.sec.length ? '<span class="ex-row__sec">+ ' + u.esc(ex.sec.map(function (m) { return G.MUSCLES[m].name; }).join(', ')) + '</span>' : '') +
+      '</span></span>' +
+      (rec ? '<span class="ex-row__rec">' + u.icon('medal', 12) + (ex.time ? rec.reps + ' s' : u.fmt(rec.weight) + '×' + rec.reps) + '</span>' : '') +
+      '<span class="ex-row__chev">' + u.icon('chevron', 16) + '</span></article>';
   }
 
   function card(ex) {
@@ -284,7 +300,7 @@
       });
       if (filter.equip !== 'all' && !counts[filter.equip]) filter.equip = 'all';
       var equips = ['all'].concat(EQUIP_ORDER.filter(function (c) { return counts[c]; }));
-      var activeFilters = (filter.muscle !== 'all' ? 1 : 0) + (filter.equip !== 'all' ? 1 : 0);
+      var activeFilters = filter.equip !== 'all' ? 1 : 0;
 
       return '<div class="view stack">' +
         '<div class="card ex-filters' + (filtersOpen ? ' is-open' : '') + '">' +
@@ -292,20 +308,22 @@
         '<label class="ex-search" aria-label="Übung suchen">' + u.icon('search', 18) +
         '<input class="input" id="exSearch" type="search" placeholder="Übung suchen …" value="' + u.esc(filter.q) + '"></label>' +
         '<button class="btn ex-filter-toggle' + (activeFilters ? ' btn--primary' : '') + '" data-act="filters" aria-expanded="' +
-        (filtersOpen ? 'true' : 'false') + '">' + u.icon('filter', 17) + '<span>Filter</span>' +
+        (filtersOpen ? 'true' : 'false') + '">' + u.icon('filter', 17) + '<span>Geräte</span>' +
         (activeFilters ? '<b>' + activeFilters + '</b>' : '') + '</button></div>' +
         '<div class="ex-filter-options">' +
-        '<div class="tabs" id="exTabs">' +
-        '<button class="tabs__b' + (filter.muscle === 'all' ? ' is-on' : '') + '" data-m="all">Alle</button>' +
-        G.MUSCLE_ORDER.map(function (m) {
-          return '<button class="tabs__b' + (filter.muscle === m ? ' is-on' : '') + '" data-m="' + m + '">' +
-            u.icon(G.MUSCLES[m].icon, 17) + '<span>' + u.esc(G.MUSCLES[m].name) + '</span></button>';
-        }).join('') + '</div>' +
         '<div class="chips">' + equips.map(function (e) {
           return '<button class="chip' + (filter.equip === e ? ' is-on' : '') + '" data-tone="' + equipTone(e) + '" data-eq="' + u.esc(e) + '">' +
             u.icon(equipIcon(e), 15) + '<span>' + (e === 'all' ? 'Alle Geräte' : u.esc(e) + ' <small>' + counts[e] + '</small>') + '</span></button>';
         }).join('') + '</div>' +
-        '</div></div>' +
+        '</div>' +
+        '<div class="ex-mchips" role="tablist" aria-label="Muskelgruppe">' +
+        '<button class="ex-mchip' + (filter.muscle === 'all' ? ' is-on' : '') + '" data-m="all">Alle <small>' + G.EXERCISES.length + '</small></button>' +
+        G.MUSCLE_ORDER.map(function (m) {
+          var n = G.EXERCISES.filter(function (e) { return e.muscle === m; }).length;
+          return '<button class="ex-mchip' + (filter.muscle === m ? ' is-on' : '') + '" data-m="' + m + '" style="--mc:var(--m-' + m + ')">' +
+            '<i class="mdot m-' + m + '"></i>' + u.esc(G.MUSCLES[m].name) + ' <small>' + n + '</small></button>';
+        }).join('') + '</div>' +
+        '</div>' +
 
         '<div id="exResults">' + resultsHtml() + '</div>' +
         '</div>';

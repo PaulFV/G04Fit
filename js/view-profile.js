@@ -490,14 +490,30 @@
     };
   }
 
+  function secTile(key) {
+    var sec = SECTIONS.filter(function (x) { return x.k === key; })[0];
+    if (!sec) return '';
+    var x = sectionParts(sec);
+    return '<button type="button" class="set-tile card" data-sec="' + sec.k + '">' +
+      '<span class="set-tile__top"><span class="set-tile__ic">' + x.icon + '</span>' + x.state + '</span>' +
+      '<b class="set-tile__title">' + u.esc(x.title) + '</b>' +
+      '<span class="set-tile__sum">' + x.sum + '</span></button>';
+  }
+  /* Einstellungen auf einer Seite (22.10.2026): drei Gruppen */
   function sectionTiles() {
-    return '<div class="set-tiles">' + SECTIONS.map(function (sec) {
-      var x = sectionParts(sec);
-      return '<button type="button" class="set-tile card" data-sec="' + sec.k + '">' +
-        '<span class="set-tile__top"><span class="set-tile__ic">' + x.icon + '</span>' + x.state + '</span>' +
-        '<b class="set-tile__title">' + u.esc(x.title) + '</b>' +
-        '<span class="set-tile__sum">' + x.sum + '</span></button>';
-    }).join('') + '</div>';
+    var st = G.views.settings && G.views.settings.linkTile;
+    function group(title, icon, tiles) {
+      return '<section class="set-group"><h3 class="set-group__h">' + u.icon(icon, 15) + '<span>' + u.esc(title) + '</span></h3>' +
+        '<div class="set-tiles">' + tiles.join('') + '</div></section>';
+    }
+    return group('Ich & Training', 'profile', ['personal', 'weight', 'avatar', 'days', 'start'].map(secTile)) +
+      group('App', 'settings', [secTile('app'),
+        st ? st('coach', 'violet', 'coach', 'Coach') : '',
+        st ? st('reminders', 'orange', 'clock', 'Erinnerungen') : '',
+        secTile('install')]) +
+      group('Daten & Hilfe', 'privacy', [
+        st ? st('privacy', 'green', 'privacy', 'Datenschutz & Sicherung') : '',
+        st ? st('feedback', 'gold', 'share', 'Feedback & Ideen') : '']);
   }
 
   function openSection(key) {
