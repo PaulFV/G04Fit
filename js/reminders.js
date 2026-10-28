@@ -387,13 +387,19 @@
   /** Ton am Ende der Satzpause: eigener Schalter, nicht von 'Benachrichtigungen stumm' abhängig. */
   function restSoundOn() { return st().settings.restSound !== false; }
 
+  /** Ende der Satzpause (28.10.2026): nur Ton/Vibration und die Anzeige
+      in der App — keine System-Benachrichtigung und kein Hinweis-Kärtchen
+      mehr nach jedem Satz. Alte „Pause vorbei“-Meldungen werden entfernt. */
   function restFinished() {
     playAlarm(restSoundOn());
-    return notify('G04Fit · Pause vorbei', 'Weiter mit dem nächsten Satz.', 'g04fit-rest', {
-      silent: !restSoundOn(),
-      requireInteraction: true,
-      url: './index.html#workout'
-    });
+    try {
+      if ('serviceWorker' in navigator && navigator.serviceWorker.getRegistration) {
+        navigator.serviceWorker.getRegistration().then(function (reg) {
+          if (reg && reg.getNotifications) reg.getNotifications({ tag: 'g04fit-rest' }).then(function (list) { list.forEach(function (n) { n.close(); }); });
+        }).catch(function () {});
+      }
+    } catch (e) {}
+    return Promise.resolve(false);
   }
 
   /* ---------- Klingeln bei Pausenende ---------- */
